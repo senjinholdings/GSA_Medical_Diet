@@ -1851,7 +1851,7 @@ class RankingApp {
             // タブタイトルの更新
             const tabTexts = document.querySelectorAll('.tips-container .tab-text');
             if (tabTexts.length >= 3) {
-                tabTexts[0].textContent = this.dataManager.getCommonText('Tipsタブ1タイトル', '脂肪溶解注射の効果');
+                tabTexts[0].textContent = this.dataManager.getCommonText('Tipsタブ1タイトル', '脂肪冷却の効果');
                 tabTexts[1].textContent = this.dataManager.getCommonText('Tipsタブ2タイトル', 'クリニック選び');
                 tabTexts[2].textContent = this.dataManager.getCommonText('Tipsタブ3タイトル', '今がおすすめ');
                 console.log('✅ Tips tab titles updated');
@@ -1862,7 +1862,7 @@ class RankingApp {
             if (tabContents.length >= 3) {
                 const tips1P = tabContents[0].querySelector('p');
                 if (tips1P) {
-                    const tips1Content = this.dataManager.getCommonText('Tips1内容', '本気で痩せたいなら脂肪溶解注射が最短！科学的根拠に基づき、脂肪細胞そのものを破壊・減少させる痩身治療です。リバウンドしにくく、部分痩せも可能。自己流ダイエットで失敗続きの方にこそ試してほしい、確実な痩身方法です。');
+                    const tips1Content = this.dataManager.getCommonText('Tips1内容', '本気で痩せたいなら脂肪冷却が最短！科学的根拠に基づき、脂肪細胞そのものを凍結・減少させる痩身治療です。リバウンドしにくく、部分痩せも可能。自己流ダイエットで失敗続きの方にこそ試してほしい、確実な痩身方法です。');
                     tips1P.innerHTML = this.dataManager.processDecoTags(tips1Content);
                 }
                 
@@ -3507,11 +3507,11 @@ function initializeDisclaimers() {
             disclaimerHTML += `
                 <!-- 第2段階: ${clinic.rank}位 ${clinic.name} -->
                 <div class="disclaimer-item">
-                    <button class="disclaimer-header" onclick="toggleDisclaimer('${clinic.code === 'dio' && clinic.rank === 1 ? 'dio-campaign-first-choice' : clinic.code}')" style="width: 100%; text-align: left; padding: 6px 10px; background-color: #f8f8f8; border: 1px solid #eeeeee; border-radius: 2px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
+                    <button class="disclaimer-header" onclick="toggleDisclaimer('${clinic.code}')" style="width: 100%; text-align: left; padding: 6px 10px; background-color: #f8f8f8; border: 1px solid #eeeeee; border-radius: 2px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
                         <span style="font-size: 9px; font-weight: 400; color: #777;">${clinic.name}</span>
-                        <span id="${clinic.code === 'dio' && clinic.rank === 1 ? 'dio-campaign-first-choice-arrow' : clinic.code + '-arrow'}" style="font-size: 7px; color: #aaa; transition: transform 0.2s;">▼</span>
+                        <span id="${clinic.code + '-arrow'}" style="font-size: 7px; color: #aaa; transition: transform 0.2s;">▼</span>
                     </button>
-                    <div id="${clinic.code === 'dio' && clinic.rank === 1 ? 'dio-campaign-first-choice-content' : clinic.code + '-content'}" class="disclaimer-content" style="display: none; padding: 6px 10px; background-color: #fefefe; border: 1px solid #eeeeee; border-top: none; border-radius: 0 0 2px 2px; margin-top: -2px;">
+                    <div id="${clinic.code + '-content'}" class="disclaimer-content" style="display: none; padding: 6px 10px; background-color: #fefefe; border: 1px solid #eeeeee; border-top: none; border-radius: 0 0 2px 2px; margin-top: -2px;">
                         <div style="font-size: 9px; color: #777; line-height: 1.4;">
                             ${disclaimerText.split('<br>').map(text => text.trim()).filter(text => text).map(text => `<p>${text}</p>`).join('\n                            ')}
                         </div>
