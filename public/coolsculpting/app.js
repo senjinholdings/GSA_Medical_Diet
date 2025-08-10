@@ -1592,9 +1592,6 @@ class RankingApp {
             // 地域名の更新
             this.displayManager.updateSelectedRegionName(region.name);
             
-            // ページタイトルを更新
-            document.title = `2025年${region.name}版｜医療ダイエット比較ランキング`;
-            
             // 比較表の地域名も更新
             const comparisonRegionElement = document.getElementById('comparison-region-name');
             if (comparisonRegionElement) {
@@ -1728,10 +1725,6 @@ class RankingApp {
             console.log(`🎯 現在のクリニック: ${currentClinic}`);
 
             // ページタイトルの更新
-            const pageTitle = this.dataManager.getClinicText(currentClinic, 'サイトタイトル', '2025年全国版｜脂肪冷却比較ランキング');
-            document.title = pageTitle;
-            console.log(`✅ Page title updated: ${pageTitle}`);
-
             // メタディスクリプションの更新
             const metaDesc = document.querySelector('meta[name="description"]');
             if (metaDesc) {
