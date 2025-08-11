@@ -2314,8 +2314,26 @@ class RankingApp {
                 ${(() => {
                     const clinicMap = { '1': 'dio', '2': 'eminal', '3': 'urara', '4': 'lieto', '5': 'sbc', '6': 'dsc' };
                     const clinicSlug = clinicMap[clinic.id];
+                    console.log('=== Case Section Debug ===');
                     console.log('Clinic ID:', clinic.id, 'Slug:', clinicSlug, 'Rank:', rank);
-                    const caseImages = window.getCaseImages ? window.getCaseImages(clinicSlug) : [];
+                    console.log('window.getCaseImages exists?', typeof window.getCaseImages);
+                    
+                    // getCaseImages関数が存在しない場合はここで定義
+                    if (!window.getCaseImages) {
+                        console.log('Defining getCaseImages function inline');
+                        window.getCaseImages = function(slug) {
+                            const map = {
+                                'dio': [
+                                    { src: '/images/clinics/dio/dio_case/dio_case01.jpg', alt: 'CASE 01 - ボディメイクコース（脂肪冷却＋EMS等）68.4kg → 54.3kg' },
+                                    { src: '/images/clinics/dio/dio_case/dio_case02.jpg', alt: 'CASE 02 - ボディメイクコース（脂肪冷却＋ハイフ等）97.3kg → 65.8kg' },
+                                    { src: '/images/clinics/dio/dio_case/dio_case03.jpg', alt: 'CASE 03 - ボディメイクコース（内服薬＋EMS等）118.4kg → 81.6kg' }
+                                ]
+                            };
+                            return map[slug] || [];
+                        };
+                    }
+                    
+                    const caseImages = window.getCaseImages(clinicSlug);
                     console.log('Case Images:', caseImages);
                     let caseCarouselHtml = '';
 

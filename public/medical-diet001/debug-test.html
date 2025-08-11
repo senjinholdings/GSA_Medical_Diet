@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>Debug Test</title>
+</head>
+<body>
+    <h1>Debug Test for Case Images</h1>
+    <div id="result"></div>
+    
+    <script>
+        // getCaseImages関数を定義
+        window.getCaseImages = function(clinicSlug) {
+            console.log('getCaseImages called with:', clinicSlug);
+            const caseImagesMap = {
+                'dio': [
+                    {
+                        src: '/images/clinics/dio/dio_case/dio_case01.jpg',
+                        alt: 'CASE 01'
+                    },
+                    {
+                        src: '/images/clinics/dio/dio_case/dio_case02.jpg',
+                        alt: 'CASE 02'
+                    },
+                    {
+                        src: '/images/clinics/dio/dio_case/dio_case03.jpg',
+                        alt: 'CASE 03'
+                    }
+                ]
+            };
+            return caseImagesMap[clinicSlug] || [];
+        }
+        
+        // テスト実行
+        const clinic = { id: '1' };
+        const rank = 1;
+        const clinicMap = { '1': 'dio', '2': 'eminal', '3': 'urara', '4': 'lieto', '5': 'sbc', '6': 'dsc' };
+        const clinicSlug = clinicMap[clinic.id];
+        const caseImages = window.getCaseImages(clinicSlug);
+        
+        console.log('Test Results:');
+        console.log('Clinic ID:', clinic.id);
+        console.log('Clinic Slug:', clinicSlug);
+        console.log('Case Images:', caseImages);
+        
+        // HTMLを生成
+        let html = '';
+        if (rank === 1 && caseImages && caseImages.length > 0) {
+            html = `
+                <h2>Images found:</h2>
+                ${caseImages.map(img => `
+                    <div>
+                        <p>Path: ${img.src}</p>
+                        <img src="${img.src}" alt="${img.alt}" style="width: 200px;">
+                    </div>
+                `).join('')}
+            `;
+        } else {
+            html = '<p>No images found or not rank 1</p>';
+        }
+        
+        document.getElementById('result').innerHTML = html;
+    </script>
+</body>
+</html>
