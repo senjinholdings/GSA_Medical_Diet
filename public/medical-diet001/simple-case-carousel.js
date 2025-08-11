@@ -24,8 +24,13 @@ class SimpleCaseCarousel {
     }
     
     init() {
-        this.createDots();
-        this.createNavigation();
+        // HTMLに既にドットとナビゲーションがある場合は作成しない
+        if (this.dots.length === 0) {
+            this.createDots();
+        }
+        if (!this.prevBtn || !this.nextBtn) {
+            this.createNavigation();
+        }
         this.setupEventListeners();
         this.updateActiveStates();
     }
@@ -61,6 +66,24 @@ class SimpleCaseCarousel {
     }
     
     setupEventListeners() {
+        // 既存のナビゲーションボタンにイベントリスナーを追加
+        if (this.prevBtn && !this.prevBtn.hasAttribute('data-listener-added')) {
+            this.prevBtn.addEventListener('click', () => this.prevSlide());
+            this.prevBtn.setAttribute('data-listener-added', 'true');
+        }
+        if (this.nextBtn && !this.nextBtn.hasAttribute('data-listener-added')) {
+            this.nextBtn.addEventListener('click', () => this.nextSlide());
+            this.nextBtn.setAttribute('data-listener-added', 'true');
+        }
+        
+        // 既存のドットにイベントリスナーを追加
+        this.dots.forEach((dot, index) => {
+            if (!dot.hasAttribute('data-listener-added')) {
+                dot.addEventListener('click', () => this.goToSlide(index));
+                dot.setAttribute('data-listener-added', 'true');
+            }
+        });
+        
         // スクロール位置の監視
         let scrollTimeout;
         this.carousel.addEventListener('scroll', () => {

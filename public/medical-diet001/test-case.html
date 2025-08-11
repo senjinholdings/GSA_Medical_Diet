@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>Case Image Test</title>
+</head>
+<body>
+    <h1>症例写真テスト</h1>
+    
+    <script>
+        // Test getCaseImages function
+        window.getCaseImages = function(clinicSlug) {
+            const caseImagesMap = {
+                'dio': [
+                    {
+                        src: '/images/clinics/dio/dio_case/dio_case01.jpg',
+                        alt: 'CASE 01'
+                    },
+                    {
+                        src: '/images/clinics/dio/dio_case/dio_case02.jpg',
+                        alt: 'CASE 02'
+                    },
+                    {
+                        src: '/images/clinics/dio/dio_case/dio_case03.jpg',
+                        alt: 'CASE 03'
+                    }
+                ]
+            };
+            return caseImagesMap[clinicSlug] || [];
+        }
+        
+        // Test
+        const images = window.getCaseImages('dio');
+        console.log('Images:', images);
+        
+        // Display images
+        images.forEach(img => {
+            const imgEl = document.createElement('img');
+            imgEl.src = img.src;
+            imgEl.alt = img.alt;
+            imgEl.style.width = '200px';
+            imgEl.style.margin = '10px';
+            document.body.appendChild(imgEl);
+        });
+    </script>
+</body>
+</html>

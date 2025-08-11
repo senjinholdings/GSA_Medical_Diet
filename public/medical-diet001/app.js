@@ -2314,11 +2314,14 @@ class RankingApp {
                 ${(() => {
                     const clinicMap = { '1': 'dio', '2': 'eminal', '3': 'urara', '4': 'lieto', '5': 'sbc', '6': 'dsc' };
                     const clinicSlug = clinicMap[clinic.id];
+                    console.log('Clinic ID:', clinic.id, 'Slug:', clinicSlug, 'Rank:', rank);
                     const caseImages = window.getCaseImages ? window.getCaseImages(clinicSlug) : [];
+                    console.log('Case Images:', caseImages);
                     let caseCarouselHtml = '';
 
                     // CASEセクションは1位のクリニックのみ表示
                     if (rank === 1 && caseImages && caseImages.length > 0) {
+                        console.log('Generating case carousel for rank 1');
                         caseCarouselHtml = `
                             <div class="clinic-points-section">
                                 <h4 class="section-title">症例写真</h4>
