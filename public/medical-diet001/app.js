@@ -2314,7 +2314,7 @@ class RankingApp {
                 ${(() => {
                     const clinicMap = { '1': 'dio', '2': 'eminal', '3': 'urara', '4': 'lieto', '5': 'sbc', '6': 'dsc' };
                     const clinicSlug = clinicMap[clinic.id];
-                    const caseImages = getCaseImages(clinicSlug);
+                    const caseImages = window.getCaseImages ? window.getCaseImages(clinicSlug) : [];
                     let caseCarouselHtml = '';
 
                     // CASEセクションは1位のクリニックのみ表示

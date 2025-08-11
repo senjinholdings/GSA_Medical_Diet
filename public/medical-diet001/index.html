@@ -1206,19 +1206,19 @@ text-align: center;
     <!-- Case Images Script -->
     <script>
         // クリニックごとの症例画像を管理
-        function getCaseImages(clinicSlug) {
+        window.getCaseImages = function(clinicSlug) {
             const caseImagesMap = {
                 'dio': [
                     {
-                        src: '../images/clinics/dio/dio_case/dio_case01.jpg',
+                        src: '/images/clinics/dio/dio_case/dio_case01.jpg',
                         alt: 'CASE 01 - ボディメイクコース（脂肪冷却＋EMS等）68.4kg → 54.3kg'
                     },
                     {
-                        src: '../images/clinics/dio/dio_case/dio_case02.jpg',
+                        src: '/images/clinics/dio/dio_case/dio_case02.jpg',
                         alt: 'CASE 02 - ボディメイクコース（脂肪冷却＋ハイフ等）97.3kg → 65.8kg'
                     },
                     {
-                        src: '../images/clinics/dio/dio_case/dio_case03.jpg',
+                        src: '/images/clinics/dio/dio_case/dio_case03.jpg',
                         alt: 'CASE 03 - ボディメイクコース（内服薬＋EMS等）118.4kg → 81.6kg'
                     }
                 ]
