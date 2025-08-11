@@ -1222,6 +1222,7 @@ text-align: center;
                         alt: 'CASE 03 - ボディメイクコース（内服薬＋EMS等）118.4kg → 81.6kg'
                     }
                 ]
+                // 他のクリニックの症例画像は今後追加予定
             };
             return caseImagesMap[clinicSlug] || [];
         }
@@ -1562,84 +1563,6 @@ text-align: center;
                 existingCase.remove();
             }
             return;
-        }
-        
-        // クリニックごとの症例画像を管理
-        function getCaseImages(clinicSlug) {
-            const caseImagesMap = {
-                'dio': [
-                    {
-                        src: '../images/case01.jpg',
-                        alt: 'CASE 01 - ボディメイクコース（脂肪冷却＋EMS等）68.4kg → 54.3kg'
-                    },
-                    {
-                        src: '../images/case02.jpg',
-                        alt: 'CASE 02 - ボディメイクコース（脂肪冷却＋ハイフ等）97.3kg → 65.8kg'
-                    },
-                    {
-                        src: '../images/case03.jpg',
-                        alt: 'CASE 03 - ボディメイクコース（内服薬＋EMS等）118.4kg → 81.6kg'
-                    }
-                ],
-                'lieto': [
-                    {
-                        src: '../images/case-lieto01.jpg',
-                        alt: 'CASE 01 - リエートクリニックの症例'
-                    },
-                    {
-                        src: '../images/case-lieto02.jpg',
-                        alt: 'CASE 02 - リエートクリニックの症例'
-                    },
-                    {
-                        src: '../images/case-lieto03.jpg',
-                        alt: 'CASE 03 - リエートクリニックの症例'
-                    }
-                ],
-                'sbc': [
-                    {
-                        src: '../images/case-sbc01.jpg',
-                        alt: 'CASE 01 - 湘南美容クリニックの症例'
-                    },
-                    {
-                        src: '../images/case-sbc02.jpg',
-                        alt: 'CASE 02 - 湘南美容クリニックの症例'
-                    },
-                    {
-                        src: '../images/case-sbc03.jpg',
-                        alt: 'CASE 03 - 湘南美容クリニックの症例'
-                    }
-                ],
-                'eminal': [
-                    {
-                        src: '../images/case-eminal01.jpg',
-                        alt: 'CASE 01 - エミナルクリニックの症例'
-                    },
-                    {
-                        src: '../images/case-eminal02.jpg',
-                        alt: 'CASE 02 - エミナルクリニックの症例'
-                    },
-                    {
-                        src: '../images/case-eminal03.jpg',
-                        alt: 'CASE 03 - エミナルクリニックの症例'
-                    }
-                ],
-                'urara': [
-                    {
-                        src: '../images/case-urara01.jpg',
-                        alt: 'CASE 01 - ウララクリニックの症例'
-                    },
-                    {
-                        src: '../images/case-urara02.jpg',
-                        alt: 'CASE 02 - ウララクリニックの症例'
-                    },
-                    {
-                        src: '../images/case-urara03.jpg',
-                        alt: 'CASE 03 - ウララクリニックの症例'
-                    }
-                ]
-            };
-            
-            return caseImagesMap[clinicSlug] || [];
         }
 
 
