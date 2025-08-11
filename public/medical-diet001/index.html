@@ -121,6 +121,97 @@
                 font-size: 16px !important;
             }
         }
+        
+        /* 症例写真セクションのスタイル */
+        .case-slider {
+            margin: 20px 0;
+            position: relative;
+            min-height: 400px;
+        }
+        
+        .case-carousel-container {
+            position: relative;
+            width: 100%;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+        }
+        
+        .case-carousel-container::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .case-slide {
+            position: relative;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        
+        .case-slide img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .case-table {
+            margin-top: 10px;
+            background: white;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .case-table td {
+            padding: 8px;
+            border: 1px solid #e0e0e0;
+            font-size: 12px;
+        }
+        
+        .case-table td:first-child {
+            background-color: #f8f8f8;
+            font-weight: bold;
+            width: 30%;
+        }
+        
+        .case-dot {
+            background: #ccc;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .case-dot.active {
+            background: #ff6b6b;
+        }
+        
+        .case-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .case-nav:hover {
+            background: rgba(0, 0, 0, 0.7);
+        }
+        
+        .case-nav-prev {
+            left: 10px;
+        }
+        
+        .case-nav-next {
+            right: 10px;
+        }
     </style>
     <!-- Font loading detection -->
     <script>'fonts' in document&&document.fonts.ready.then(function(){document.documentElement.classList.add('fonts-loaded')})</script>
@@ -1111,6 +1202,30 @@ text-align: center;
     <!-- Tracking Parameters -->
     <script src="../tracking-params.js"></script>
     <script src="app.js?v=2025080108" defer></script>
+    
+    <!-- Case Images Script -->
+    <script>
+        // クリニックごとの症例画像を管理
+        function getCaseImages(clinicSlug) {
+            const caseImagesMap = {
+                'dio': [
+                    {
+                        src: '../images/clinics/dio/dio_case/dio_case01.jpg',
+                        alt: 'CASE 01 - ボディメイクコース（脂肪冷却＋EMS等）68.4kg → 54.3kg'
+                    },
+                    {
+                        src: '../images/clinics/dio/dio_case/dio_case02.jpg',
+                        alt: 'CASE 02 - ボディメイクコース（脂肪冷却＋ハイフ等）97.3kg → 65.8kg'
+                    },
+                    {
+                        src: '../images/clinics/dio/dio_case/dio_case03.jpg',
+                        alt: 'CASE 03 - ボディメイクコース（内服薬＋EMS等）118.4kg → 81.6kg'
+                    }
+                ]
+            };
+            return caseImagesMap[clinicSlug] || [];
+        }
+    </script>
     
     <!-- Debug Script -->
     <script>
