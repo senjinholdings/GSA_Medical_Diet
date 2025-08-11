@@ -1,13 +1,5 @@
 {
-  "name": "kiro-site-test",
-  "version": "1.0.0",
-  "description": "Test for map modal",
-  "main": "test-map-modal.js",
-  "scripts": {
-    "test": "node test-map-modal.js"
-  },
   "dependencies": {
-    "glob": "^11.0.3",
     "playwright": "^1.54.2"
   }
 }

@@ -1704,7 +1704,6 @@ class RankingApp {
             return;
         }
         
-        console.log('ランキングデータ:', ranking);
 
         // ランキング順のクリニックデータを取得（5位まで）
         const sortedRanks = Object.entries(ranking.ranks).sort((a, b) => {
@@ -1713,10 +1712,8 @@ class RankingApp {
             return numA - numB;
         }).slice(0, 5);
 
-        console.log('sortedRanks:', sortedRanks);
         sortedRanks.forEach(([position, clinicId]) => {
             const clinic = clinics.find(c => c.id === clinicId);
-            console.log('Processing clinic:', { position, clinicId, clinic });
             if (!clinic) {
                 console.error('クリニックが見つかりません:', clinicId);
                 return;
@@ -2803,7 +2800,7 @@ class RankingApp {
                 <!-- ディオクリニックの確認事項アコーディオン -->
                 <div class="disclaimer-accordion" style="margin-top: 15px;">
                     <button class="disclaimer-header" onclick="toggleDisclaimer('dio-campaign')" style="width: 100%; text-align: left; padding: 8px 12px; background-color: #fafafa; border: 1px solid #f0f0f0; border-radius: 3px; cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
-                        <span style="font-size: 10px; font-weight: 500; color: #666;">ディオクリニックの確認事項</span>
+                        <span style="font-size: 10px; font-weight: 500; color: #666;">ディオクリニック</span>
                         <span id="dio-campaign-arrow" style="font-size: 8px; color: #999; transition: transform 0.2s;">▼</span>
                     </button>
                     <div id="dio-campaign-content" class="disclaimer-content" style="display: none; padding: 8px 12px; background-color: #fcfcfc; border: 1px solid #f0f0f0; border-top: none; border-radius: 0 0 3px 3px; margin-top: -1px;">

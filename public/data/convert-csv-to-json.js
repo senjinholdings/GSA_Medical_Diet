@@ -184,16 +184,17 @@ async function convertCSVtoJSON() {
         };
     });
 
-    // 店舗ビューデータを地域ごとに整理（動的にクリニック数に対応）
+    // 店舗ビューデータを地域ごとに整理（新しいヘッダー構造に対応）
     const storeViewsByRegion = {};
     storeViews.forEach(view => {
         const regionId = view.parameter_no;
         const regionData = {};
         
-        // 動的にクリニックフィールドを処理
+        // 新しいヘッダー構造に対応（dio_stores, eminal_stores, sbc_stores等）
         Object.keys(view).forEach(key => {
-            if (key.startsWith('clinic_') && key !== 'parameter_no') {
-                regionData[key] = view[key] ? view[key].split('/') : [];
+            // parameter_no以外のすべての_storesフィールドを処理
+            if (key !== 'parameter_no' && key.endsWith('_stores')) {
+                regionData[key] = view[key] && view[key] !== '-' ? view[key].split('/') : [];
             }
         });
         

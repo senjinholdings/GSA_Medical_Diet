@@ -1434,8 +1434,8 @@
         {
           "id": "dio_004",
           "name": "大阪梅田院",
-          "address": "広島県広島市中区紙屋町2-3-20 ソシオスクエア紙屋町ビル 3F",
-          "zipcode": "〒730-0031",
+          "address": "大阪府大阪市北区曽根崎2-13-17 曽根崎渡辺ビル 3F",
+          "zipcode": "〒530-0057",
           "access": "大阪駅徒歩7分 東梅田駅徒歩1分"
         },
         {
@@ -3806,20 +3806,13 @@
         "299",
         "300"
       ],
-      "storeCount": 2,
+      "storeCount": 1,
       "bodyParts": [
         "stomach",
         "thigh"
       ],
       "features": "医療ダイエット専門クリニック",
       "stores": [
-        {
-          "id": "ds_001",
-          "name": "渋谷院",
-          "address": "東京都渋谷区神南1-20-13 トリルヴィラ3F",
-          "zipcode": "〒150-0041",
-          "access": "渋谷駅から徒歩4分"
-        },
         {
           "id": "dsc_001",
           "name": "渋谷院",
@@ -5941,4027 +5934,1727 @@
   },
   "storeViews": {
     "100": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": [
+        "sbc_085",
+        "sbc_096",
+        "sbc_097"
       ]
     },
     "101": {
-      "clinic_1": [
+      "dio_stores": [
         "dio_013"
       ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [
         "lieto_002"
       ],
-      "clinic_5": [
+      "eminal_stores": [
         "eminal_040"
       ],
-      "clinic_6": [
-        "-"
+      "sbc_stores": [
+        "sbc_079",
+        "sbc_081",
+        "sbc_082"
       ]
     },
     "102": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": [
+        "sbc_075",
+        "sbc_076"
       ]
     },
     "103": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": [
+        "sbc_066",
+        "sbc_070",
+        "sbc_071"
       ]
     },
     "104": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [
         "eminal_051"
       ],
-      "clinic_6": [
-        "-"
+      "sbc_stores": [
+        "sbc_065",
+        "sbc_068"
       ]
     },
     "105": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": [
+        "sbc_070"
       ]
     },
     "106": {
-      "clinic_1": [
+      "dio_stores": [
         "dio_014"
       ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [
         "eminal_053"
       ],
-      "clinic_6": [
-        "-"
+      "sbc_stores": [
+        "sbc_061",
+        "sbc_063",
+        "sbc_064"
       ]
     },
     "107": {
-      "clinic_1": [
+      "dio_stores": [
         "dio_014"
       ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [
         "eminal_053"
       ],
-      "clinic_6": [
-        "-"
+      "sbc_stores": [
+        "sbc_063",
+        "sbc_064"
       ]
     },
     "108": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": [
+        "sbc_059",
+        "sbc_094"
       ]
     },
     "109": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": [
+        "sbc_059",
+        "sbc_062",
+        "sbc_070",
+        "sbc_092",
+        "sbc_094"
       ]
     },
     "110": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [
         "eminal_054"
       ],
-      "clinic_6": [
-        "-"
+      "sbc_stores": [
+        "sbc_113"
       ]
     },
     "111": {
-      "clinic_1": [
+      "dio_stores": [
         "dio_008"
       ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [
         "eminal_026"
       ],
-      "clinic_6": [
-        "-"
+      "sbc_stores": [
+        "sbc_027",
+        "sbc_028",
+        "sbc_029"
       ]
     },
     "112": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [
         "eminal_013"
       ],
-      "clinic_6": [
-        "-"
+      "sbc_stores": [
+        "sbc_013"
       ]
     },
     "113": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "114": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [
         "eminal_036"
       ],
-      "clinic_6": [
-        "-"
+      "sbc_stores": [
+        "sbc_040"
       ]
     },
     "115": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "116": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [
         "eminal_056"
       ],
-      "clinic_6": [
-        "-"
+      "sbc_stores": [
+        "sbc_112"
       ]
     },
     "117": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [
         "eminal_060"
       ],
-      "clinic_6": [
-        "-"
-      ]
+      "sbc_stores": []
     },
     "118": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "119": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": [
+        "sbc_018"
       ]
     },
     "120": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [
         "eminal_014"
       ],
-      "clinic_6": [
-        "-"
+      "sbc_stores": [
+        "sbc_015"
       ]
     },
     "121": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "122": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "123": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [
         "eminal_031"
       ],
-      "clinic_6": [
-        "-"
+      "sbc_stores": [
+        "sbc_046"
       ]
     },
     "124": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "125": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "126": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [
         "eminal_055"
       ],
-      "clinic_6": [
-        "-"
+      "sbc_stores": [
+        "sbc_114"
       ]
     },
     "127": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "128": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [
         "eminal_006"
       ],
-      "clinic_6": [
-        "-"
-      ]
+      "sbc_stores": []
     },
     "129": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "130": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "131": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": [
+        "sbc_043"
       ]
     },
     "132": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [
         "eminal_057"
       ],
-      "clinic_6": [
-        "-"
-      ]
+      "sbc_stores": []
     },
     "133": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [
         "eminal_028"
       ],
-      "clinic_6": [
-        "-"
+      "sbc_stores": [
+        "sbc_050"
       ]
     },
     "134": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "135": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [
         "eminal_028"
       ],
-      "clinic_6": [
-        "-"
+      "sbc_stores": [
+        "sbc_050"
       ]
     },
     "136": {
-      "clinic_1": [
+      "dio_stores": [
         "dio_021"
       ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [
         "eminal_059"
       ],
-      "clinic_6": [
-        "-"
+      "sbc_stores": [
+        "sbc_118"
       ]
     },
     "137": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "138": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "139": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "140": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "141": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "142": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "143": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "144": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "145": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "146": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "147": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "148": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "149": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "150": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "151": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "152": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "153": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "154": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "155": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "156": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "157": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "158": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "159": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "160": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "161": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "162": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "163": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "164": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "165": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "166": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "167": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "168": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "169": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "170": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "171": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "172": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "173": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "174": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "175": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "176": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "177": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "178": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "179": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "180": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "181": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "182": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "183": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "184": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "185": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "186": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "187": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "188": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "189": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "190": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "191": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "192": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "193": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "194": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "195": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "196": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "197": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "198": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "199": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "200": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "201": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "202": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "203": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "204": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "205": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "206": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "207": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "208": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "209": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "210": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "211": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "212": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "213": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "214": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "215": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "216": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "217": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "218": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "219": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "220": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "221": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "222": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "223": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "224": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "225": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "226": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "227": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "228": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "229": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "230": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "231": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "232": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "233": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "234": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "235": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "236": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "237": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "238": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "239": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "240": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "241": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "242": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "243": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "244": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "245": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "246": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "247": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "248": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "249": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "250": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "251": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "252": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "253": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "254": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "255": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "256": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "257": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "258": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "259": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "260": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "261": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "262": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "263": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "264": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "265": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "266": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "267": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "268": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "269": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "270": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "271": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "272": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "273": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "274": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "275": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "276": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "277": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "278": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "279": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "280": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "281": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "282": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "283": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "284": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "285": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "286": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "287": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "288": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "289": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "290": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "291": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "292": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "293": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "294": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "295": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "296": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "297": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "298": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "299": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "300": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "000": {
-      "clinic_1": [
+      "dio_stores": [
         "dio_001",
         "dio_002",
         "dio_003",
@@ -9983,19 +7676,19 @@
         "dio_021",
         "dio_022"
       ],
-      "clinic_2": [
+      "urara_stores": [
         "urara_001",
         "urara_002"
       ],
-      "clinic_3": [
+      "dsc_stores": [
         "dsc_001"
       ],
-      "clinic_4": [
+      "lieto_stores": [
         "lieto_001",
         "lieto_002",
         "lieto_003"
       ],
-      "clinic_5": [
+      "eminal_stores": [
         "eminal_001",
         "eminal_002",
         "eminal_003",
@@ -10060,254 +7753,302 @@
         "eminal_062",
         "eminal_063"
       ],
-      "clinic_6": [
-        "-"
+      "sbc_stores": [
+        "sbc_001",
+        "sbc_002",
+        "sbc_003",
+        "sbc_004",
+        "sbc_005",
+        "sbc_006",
+        "sbc_007",
+        "sbc_008",
+        "sbc_009",
+        "sbc_010",
+        "sbc_011",
+        "sbc_012",
+        "sbc_013",
+        "sbc_014",
+        "sbc_015",
+        "sbc_016",
+        "sbc_017",
+        "sbc_018",
+        "sbc_019",
+        "sbc_020",
+        "sbc_021",
+        "sbc_022",
+        "sbc_023",
+        "sbc_024",
+        "sbc_025",
+        "sbc_026",
+        "sbc_027",
+        "sbc_028",
+        "sbc_029",
+        "sbc_030",
+        "sbc_031",
+        "sbc_032",
+        "sbc_033",
+        "sbc_034",
+        "sbc_035",
+        "sbc_036",
+        "sbc_037",
+        "sbc_038",
+        "sbc_039",
+        "sbc_040",
+        "sbc_041",
+        "sbc_042",
+        "sbc_043",
+        "sbc_044",
+        "sbc_045",
+        "sbc_046",
+        "sbc_047",
+        "sbc_048",
+        "sbc_049",
+        "sbc_050",
+        "sbc_051",
+        "sbc_052",
+        "sbc_053",
+        "sbc_054",
+        "sbc_055",
+        "sbc_056",
+        "sbc_057",
+        "sbc_058",
+        "sbc_059",
+        "sbc_060",
+        "sbc_061",
+        "sbc_062",
+        "sbc_063",
+        "sbc_064",
+        "sbc_065",
+        "sbc_066",
+        "sbc_067",
+        "sbc_068",
+        "sbc_069",
+        "sbc_070",
+        "sbc_071",
+        "sbc_072",
+        "sbc_073",
+        "sbc_074",
+        "sbc_075",
+        "sbc_076",
+        "sbc_077",
+        "sbc_078",
+        "sbc_079",
+        "sbc_080",
+        "sbc_081",
+        "sbc_082",
+        "sbc_083",
+        "sbc_084",
+        "sbc_085",
+        "sbc_086",
+        "sbc_087",
+        "sbc_088",
+        "sbc_089",
+        "sbc_090",
+        "sbc_091",
+        "sbc_092",
+        "sbc_093",
+        "sbc_094",
+        "sbc_095",
+        "sbc_096",
+        "sbc_097",
+        "sbc_098",
+        "sbc_099",
+        "sbc_100",
+        "sbc_101",
+        "sbc_102",
+        "sbc_103",
+        "sbc_104",
+        "sbc_105",
+        "sbc_106",
+        "sbc_107",
+        "sbc_108",
+        "sbc_109",
+        "sbc_110",
+        "sbc_111",
+        "sbc_112",
+        "sbc_113",
+        "sbc_114",
+        "sbc_115",
+        "sbc_116",
+        "sbc_117",
+        "sbc_118",
+        "sbc_119",
+        "sbc_120",
+        "sbc_121",
+        "sbc_122",
+        "sbc_123",
+        "sbc_124"
       ]
     },
     "001": {
-      "clinic_1": [
+      "dio_stores": [
         "dio_022"
       ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [
         "eminal_062",
         "eminal_063"
       ],
-      "clinic_6": [
-        "-"
+      "sbc_stores": [
+        "sbc_122",
+        "sbc_123",
+        "sbc_124"
       ]
     },
     "002": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [
         "eminal_061"
       ],
-      "clinic_6": [
-        "-"
+      "sbc_stores": [
+        "sbc_121"
       ]
     },
     "003": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [
         "eminal_060"
       ],
-      "clinic_6": [
-        "-"
-      ]
+      "sbc_stores": []
     },
     "004": {
-      "clinic_1": [
+      "dio_stores": [
         "dio_021"
       ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [
         "eminal_059"
       ],
-      "clinic_6": [
-        "-"
+      "sbc_stores": [
+        "sbc_118"
       ]
     },
     "005": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [
         "eminal_058"
       ],
-      "clinic_6": [
-        "-"
+      "sbc_stores": [
+        "sbc_120"
       ]
     },
     "006": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": [
+        "sbc_119"
       ]
     },
     "007": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [
         "eminal_057"
       ],
-      "clinic_6": [
-        "-"
+      "sbc_stores": [
+        "sbc_115",
+        "sbc_116",
+        "sbc_117"
       ]
     },
     "008": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [
         "eminal_056"
       ],
-      "clinic_6": [
-        "-"
+      "sbc_stores": [
+        "sbc_112"
       ]
     },
     "009": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [
         "eminal_055"
       ],
-      "clinic_6": [
-        "-"
+      "sbc_stores": [
+        "sbc_114"
       ]
     },
     "010": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [
         "eminal_054"
       ],
-      "clinic_6": [
-        "-"
+      "sbc_stores": [
+        "sbc_113"
       ]
     },
     "011": {
-      "clinic_1": [
+      "dio_stores": [
         "dio_014"
       ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [
         "eminal_053"
       ],
-      "clinic_6": [
-        "-"
+      "sbc_stores": [
+        "sbc_057",
+        "sbc_058",
+        "sbc_059",
+        "sbc_060",
+        "sbc_061",
+        "sbc_062",
+        "sbc_063",
+        "sbc_064"
       ]
     },
     "012": {
-      "clinic_1": [
+      "dio_stores": [
         "dio_011"
       ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [
         "eminal_051",
         "eminal_052"
       ],
-      "clinic_6": [
-        "-"
+      "sbc_stores": [
+        "sbc_065",
+        "sbc_066",
+        "sbc_067",
+        "sbc_068",
+        "sbc_069",
+        "sbc_070",
+        "sbc_071"
       ]
     },
     "013": {
-      "clinic_1": [
+      "dio_stores": [
         "dio_015",
         "dio_016",
         "dio_017",
@@ -10315,17 +8056,17 @@
         "dio_019",
         "dio_020"
       ],
-      "clinic_2": [
+      "urara_stores": [
         "urara_001",
         "urara_002"
       ],
-      "clinic_3": [
+      "dsc_stores": [
         "dsc_001"
       ],
-      "clinic_4": [
+      "lieto_stores": [
         "lieto_003"
       ],
-      "clinic_5": [
+      "eminal_stores": [
         "eminal_041",
         "eminal_042",
         "eminal_043",
@@ -10336,1852 +8077,1182 @@
         "eminal_049",
         "eminal_050"
       ],
-      "clinic_6": [
-        "-"
+      "sbc_stores": [
+        "sbc_086",
+        "sbc_087",
+        "sbc_088",
+        "sbc_089",
+        "sbc_090",
+        "sbc_091",
+        "sbc_092",
+        "sbc_093",
+        "sbc_094",
+        "sbc_095",
+        "sbc_096",
+        "sbc_097",
+        "sbc_098",
+        "sbc_099",
+        "sbc_100",
+        "sbc_101",
+        "sbc_102",
+        "sbc_103",
+        "sbc_104",
+        "sbc_105",
+        "sbc_106",
+        "sbc_107",
+        "sbc_108",
+        "sbc_109",
+        "sbc_110",
+        "sbc_111"
       ]
     },
     "014": {
-      "clinic_1": [
+      "dio_stores": [
         "dio_012",
         "dio_013"
       ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [
         "lieto_002"
       ],
-      "clinic_5": [
+      "eminal_stores": [
         "eminal_039",
         "eminal_040"
       ],
-      "clinic_6": [
-        "-"
+      "sbc_stores": [
+        "sbc_072",
+        "sbc_073",
+        "sbc_074",
+        "sbc_075",
+        "sbc_076",
+        "sbc_077",
+        "sbc_078",
+        "sbc_079",
+        "sbc_080",
+        "sbc_081",
+        "sbc_082",
+        "sbc_083",
+        "sbc_084",
+        "sbc_085"
       ]
     },
     "015": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [
         "eminal_038"
       ],
-      "clinic_6": [
-        "-"
+      "sbc_stores": [
+        "sbc_042",
+        "sbc_043"
       ]
     },
     "016": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [
         "eminal_037"
       ],
-      "clinic_6": [
-        "-"
+      "sbc_stores": [
+        "sbc_039"
       ]
     },
     "017": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [
         "eminal_036"
       ],
-      "clinic_6": [
-        "-"
+      "sbc_stores": [
+        "sbc_040"
       ]
     },
     "018": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [
         "eminal_035"
       ],
-      "clinic_6": [
-        "-"
+      "sbc_stores": [
+        "sbc_041"
       ]
     },
     "019": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": [
+        "sbc_044"
       ]
     },
     "020": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [
         "eminal_034"
       ],
-      "clinic_6": [
-        "-"
+      "sbc_stores": [
+        "sbc_045"
       ]
     },
     "021": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [
         "eminal_033"
       ],
-      "clinic_6": [
-        "-"
+      "sbc_stores": [
+        "sbc_049"
       ]
     },
     "022": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [
         "eminal_031",
         "eminal_032"
       ],
-      "clinic_6": [
-        "-"
+      "sbc_stores": [
+        "sbc_046",
+        "sbc_047",
+        "sbc_048"
       ]
     },
     "023": {
-      "clinic_1": [
+      "dio_stores": [
         "dio_009",
         "dio_010"
       ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [
         "lieto_001"
       ],
-      "clinic_5": [
+      "eminal_stores": [
         "eminal_029",
         "eminal_030"
       ],
-      "clinic_6": [
-        "-"
+      "sbc_stores": [
+        "sbc_051",
+        "sbc_052",
+        "sbc_053",
+        "sbc_054",
+        "sbc_055",
+        "sbc_056"
       ]
     },
     "024": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [
         "eminal_028"
       ],
-      "clinic_6": [
-        "-"
+      "sbc_stores": [
+        "sbc_050"
       ]
     },
     "025": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [
         "eminal_027"
       ],
-      "clinic_6": [
-        "-"
-      ]
+      "sbc_stores": []
     },
     "026": {
-      "clinic_1": [
+      "dio_stores": [
         "dio_008"
       ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [
         "eminal_026"
       ],
-      "clinic_6": [
-        "-"
+      "sbc_stores": [
+        "sbc_027",
+        "sbc_028",
+        "sbc_029"
       ]
     },
     "027": {
-      "clinic_1": [
-        "dio_003"
+      "dio_stores": [
+        "dio_003",
+        "dio_004"
       ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [
         "eminal_023",
         "eminal_024",
         "eminal_025"
       ],
-      "clinic_6": [
-        "-"
+      "sbc_stores": [
+        "sbc_030",
+        "sbc_031",
+        "sbc_032",
+        "sbc_033",
+        "sbc_034",
+        "sbc_035",
+        "sbc_036",
+        "sbc_037",
+        "sbc_038"
       ]
     },
     "028": {
-      "clinic_1": [
+      "dio_stores": [
         "dio_006"
       ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [
         "eminal_021",
         "eminal_022"
       ],
-      "clinic_6": [
-        "-"
+      "sbc_stores": [
+        "sbc_022",
+        "sbc_023",
+        "sbc_024",
+        "sbc_025"
       ]
     },
     "029": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [
         "eminal_020"
       ],
-      "clinic_6": [
-        "-"
+      "sbc_stores": [
+        "sbc_026"
       ]
     },
     "030": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [
         "eminal_019"
       ],
-      "clinic_6": [
-        "-"
+      "sbc_stores": [
+        "sbc_021"
       ]
     },
     "031": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "032": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "033": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [
         "eminal_018"
       ],
-      "clinic_6": [
-        "-"
+      "sbc_stores": [
+        "sbc_017",
+        "sbc_018"
       ]
     },
     "034": {
-      "clinic_1": [
-        "dio_002",
-        "dio_004"
+      "dio_stores": [
+        "dio_002"
       ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [
         "eminal_017"
       ],
-      "clinic_6": [
-        "-"
+      "sbc_stores": [
+        "sbc_019",
+        "sbc_020"
       ]
     },
     "035": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [
         "eminal_016"
       ],
-      "clinic_6": [
-        "-"
+      "sbc_stores": [
+        "sbc_016"
       ]
     },
     "036": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [
         "eminal_015"
       ],
-      "clinic_6": [
-        "-"
-      ]
+      "sbc_stores": []
     },
     "037": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [
         "eminal_014"
       ],
-      "clinic_6": [
-        "-"
+      "sbc_stores": [
+        "sbc_015"
       ]
     },
     "038": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [
         "eminal_013"
       ],
-      "clinic_6": [
-        "-"
+      "sbc_stores": [
+        "sbc_013"
       ]
     },
     "039": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [
         "eminal_012"
       ],
-      "clinic_6": [
-        "-"
+      "sbc_stores": [
+        "sbc_014"
       ]
     },
     "040": {
-      "clinic_1": [
+      "dio_stores": [
         "dio_001"
       ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [
         "eminal_008",
         "eminal_009",
         "eminal_010",
         "eminal_011"
       ],
-      "clinic_6": [
-        "-"
+      "sbc_stores": [
+        "sbc_009",
+        "sbc_010",
+        "sbc_011",
+        "sbc_012"
       ]
     },
     "041": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "042": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [
         "eminal_006",
         "eminal_007"
       ],
-      "clinic_6": [
-        "-"
+      "sbc_stores": [
+        "sbc_006"
       ]
     },
     "043": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [
         "eminal_004"
       ],
-      "clinic_6": [
-        "-"
+      "sbc_stores": [
+        "sbc_007"
       ]
     },
     "044": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [
         "eminal_005"
       ],
-      "clinic_6": [
-        "-"
+      "sbc_stores": [
+        "sbc_008"
       ]
     },
     "045": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [
         "eminal_003"
       ],
-      "clinic_6": [
-        "-"
+      "sbc_stores": [
+        "sbc_005"
       ]
     },
     "046": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [
         "eminal_002"
       ],
-      "clinic_6": [
-        "-"
+      "sbc_stores": [
+        "sbc_003",
+        "sbc_004"
       ]
     },
     "047": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [
         "eminal_001"
       ],
-      "clinic_6": [
-        "-"
+      "sbc_stores": [
+        "sbc_002"
       ]
     },
     "048": {
-      "clinic_1": [
+      "dio_stores": [
         "dio_017"
       ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [
         "lieto_003"
       ],
-      "clinic_5": [
+      "eminal_stores": [
         "eminal_044",
         "eminal_045"
       ],
-      "clinic_6": [
-        "-"
+      "sbc_stores": [
+        "sbc_101",
+        "sbc_102"
       ]
     },
     "049": {
-      "clinic_1": [
+      "dio_stores": [
         "dio_018"
       ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [
         "eminal_043"
       ],
-      "clinic_6": [
-        "-"
+      "sbc_stores": [
+        "sbc_098",
+        "sbc_099"
       ]
     },
     "050": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "051": {
-      "clinic_1": [
+      "dio_stores": [
         "dio_015"
       ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [
         "eminal_047",
         "eminal_048"
       ],
-      "clinic_6": [
-        "-"
+      "sbc_stores": [
+        "sbc_108",
+        "sbc_109"
       ]
     },
     "052": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": [
+        "sbc_089"
       ]
     },
     "053": {
-      "clinic_1": [
+      "dio_stores": [
         "dio_020"
       ],
-      "clinic_2": [
+      "urara_stores": [
         "urara_001"
       ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [
         "eminal_046"
       ],
-      "clinic_6": [
-        "-"
+      "sbc_stores": [
+        "sbc_103",
+        "sbc_104",
+        "sbc_105",
+        "sbc_106"
       ]
     },
     "054": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": [
+        "sbc_092"
       ]
     },
     "055": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": [
+        "sbc_107"
       ]
     },
     "056": {
-      "clinic_1": [
+      "dio_stores": [
         "dio_015"
       ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
+      "urara_stores": [],
+      "dsc_stores": [
         "dsc_001"
       ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
+      "lieto_stores": [],
+      "eminal_stores": [
         "eminal_047",
         "eminal_048"
       ],
-      "clinic_6": [
-        "ds_001"
+      "sbc_stores": [
+        "sbc_108",
+        "sbc_109"
       ]
     },
     "057": {
-      "clinic_1": [
+      "dio_stores": [
         "dio_016"
       ],
-      "clinic_2": [
+      "urara_stores": [
         "urara_002"
       ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [
         "eminal_049",
         "eminal_050"
       ],
-      "clinic_6": [
-        "-"
+      "sbc_stores": [
+        "sbc_110",
+        "sbc_111"
       ]
     },
     "058": {
-      "clinic_1": [
+      "dio_stores": [
         "dio_019"
       ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [
         "eminal_042"
       ],
-      "clinic_6": [
-        "-"
+      "sbc_stores": [
+        "sbc_087"
       ]
     },
     "059": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "060": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [
         "eminal_041"
       ],
-      "clinic_6": [
-        "-"
+      "sbc_stores": [
+        "sbc_090"
       ]
     },
     "061": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [
         "lieto_003"
       ],
-      "clinic_5": [
+      "eminal_stores": [
         "eminal_044",
         "eminal_045"
       ],
-      "clinic_6": [
-        "-"
+      "sbc_stores": [
+        "sbc_101"
       ]
     },
     "062": {
-      "clinic_1": [
+      "dio_stores": [
         "dio_020"
       ],
-      "clinic_2": [
+      "urara_stores": [
         "urara_001"
       ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [
         "eminal_046"
       ],
-      "clinic_6": [
-        "-"
+      "sbc_stores": [
+        "sbc_103",
+        "sbc_104",
+        "sbc_105",
+        "sbc_106"
       ]
     },
     "063": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "064": {
-      "clinic_1": [
+      "dio_stores": [
         "dio_018"
       ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [
         "eminal_043"
       ],
-      "clinic_6": [
-        "-"
+      "sbc_stores": [
+        "sbc_098",
+        "sbc_099"
       ]
     },
     "065": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [
         "dsc_001"
       ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
+      "lieto_stores": [],
+      "eminal_stores": [
         "eminal_047",
         "eminal_048"
       ],
-      "clinic_6": [
-        "-"
-      ]
+      "sbc_stores": []
     },
     "066": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": [
+        "sbc_108"
       ]
     },
     "067": {
-      "clinic_1": [
+      "dio_stores": [
         "dio_020"
       ],
-      "clinic_2": [
+      "urara_stores": [
         "urara_001"
       ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [
         "eminal_046"
       ],
-      "clinic_6": [
-        "-"
+      "sbc_stores": [
+        "sbc_103",
+        "sbc_104",
+        "sbc_105",
+        "sbc_106"
       ]
     },
     "068": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "069": {
-      "clinic_1": [
+      "dio_stores": [
         "dio_018"
       ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [
         "eminal_043"
       ],
-      "clinic_6": [
-        "-"
+      "sbc_stores": [
+        "sbc_098",
+        "sbc_099"
       ]
     },
     "070": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "071": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": [
+        "sbc_100"
       ]
     },
     "072": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "073": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": [
+        "sbc_094"
       ]
     },
     "074": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": [
+        "sbc_035"
       ]
     },
     "075": {
-      "clinic_1": [
+      "dio_stores": [
         "dio_003"
       ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [
         "eminal_024"
       ],
-      "clinic_6": [
-        "-"
+      "sbc_stores": [
+        "sbc_034",
+        "sbc_037"
       ]
     },
     "076": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "077": {
-      "clinic_1": [
+      "dio_stores": [
         "dio_003"
       ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [
         "eminal_023",
         "eminal_024"
       ],
-      "clinic_6": [
-        "-"
+      "sbc_stores": [
+        "sbc_034",
+        "sbc_036",
+        "sbc_037"
       ]
     },
     "078": {
-      "clinic_1": [
+      "dio_stores": [
         "dio_003"
       ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [
         "eminal_024"
       ],
-      "clinic_6": [
-        "-"
+      "sbc_stores": [
+        "sbc_034",
+        "sbc_037"
       ]
     },
     "079": {
-      "clinic_1": [
-        "-"
+      "dio_stores": [
+        "dio_004"
       ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [
         "eminal_025"
       ],
-      "clinic_6": [
-        "-"
+      "sbc_stores": [
+        "sbc_033",
+        "sbc_038"
       ]
     },
     "080": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "081": {
-      "clinic_1": [
+      "dio_stores": [
         "dio_009",
         "dio_010"
       ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [
         "lieto_001"
       ],
-      "clinic_5": [
+      "eminal_stores": [
         "eminal_030"
       ],
-      "clinic_6": [
-        "-"
+      "sbc_stores": [
+        "sbc_054",
+        "sbc_055",
+        "sbc_056"
       ]
     },
     "082": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": [
+        "sbc_052"
       ]
     },
     "083": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [
         "eminal_029"
       ],
-      "clinic_6": [
-        "-"
+      "sbc_stores": [
+        "sbc_051"
       ]
     },
     "084": {
-      "clinic_1": [
+      "dio_stores": [
         "dio_009",
         "dio_010"
       ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [
         "lieto_001"
       ],
-      "clinic_5": [
+      "eminal_stores": [
         "eminal_030"
       ],
-      "clinic_6": [
-        "-"
+      "sbc_stores": [
+        "sbc_053",
+        "sbc_054",
+        "sbc_055",
+        "sbc_056"
       ]
     },
     "085": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [
         "eminal_008"
       ],
-      "clinic_6": [
-        "-"
+      "sbc_stores": [
+        "sbc_010"
       ]
     },
     "086": {
-      "clinic_1": [
+      "dio_stores": [
         "dio_001"
       ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [
         "eminal_010",
         "eminal_011"
       ],
-      "clinic_6": [
-        "-"
+      "sbc_stores": [
+        "sbc_011",
+        "sbc_012"
       ]
     },
     "087": {
-      "clinic_1": [
+      "dio_stores": [
         "dio_001"
       ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [
         "eminal_010",
         "eminal_011"
       ],
-      "clinic_6": [
-        "-"
+      "sbc_stores": [
+        "sbc_011",
+        "sbc_012"
       ]
     },
     "088": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [
         "eminal_009"
       ],
-      "clinic_6": [
-        "-"
+      "sbc_stores": [
+        "sbc_009",
+        "sbc_016"
       ]
     },
     "089": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [
         "eminal_062"
       ],
-      "clinic_6": [
-        "-"
+      "sbc_stores": [
+        "sbc_122"
       ]
     },
     "090": {
-      "clinic_1": [
+      "dio_stores": [
         "dio_022"
       ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [
         "eminal_063"
       ],
-      "clinic_6": [
-        "-"
+      "sbc_stores": [
+        "sbc_123",
+        "sbc_124"
       ]
     },
     "091": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
-      ]
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": []
     },
     "092": {
-      "clinic_1": [
+      "dio_stores": [
         "dio_006"
       ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [
         "eminal_022"
       ],
-      "clinic_6": [
-        "-"
+      "sbc_stores": [
+        "sbc_025"
       ]
     },
     "093": {
-      "clinic_1": [
+      "dio_stores": [
         "dio_006"
       ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [
         "eminal_022"
       ],
-      "clinic_6": [
-        "-"
+      "sbc_stores": [
+        "sbc_025"
       ]
     },
     "094": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": [
+        "sbc_022"
       ]
     },
     "095": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [
         "eminal_021"
       ],
-      "clinic_6": [
-        "-"
+      "sbc_stores": [
+        "sbc_023"
       ]
     },
     "096": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": [
+        "sbc_077"
       ]
     },
     "097": {
-      "clinic_1": [
+      "dio_stores": [
         "dio_012"
       ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [
         "eminal_039"
       ],
-      "clinic_6": [
-        "-"
+      "sbc_stores": [
+        "sbc_084",
+        "sbc_085",
+        "sbc_095"
       ]
     },
     "098": {
-      "clinic_1": [
-        "-"
-      ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
-        "-"
-      ],
-      "clinic_6": [
-        "-"
+      "dio_stores": [],
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [],
+      "sbc_stores": [
+        "sbc_073",
+        "sbc_076"
       ]
     },
     "099": {
-      "clinic_1": [
+      "dio_stores": [
         "dio_015"
       ],
-      "clinic_2": [
-        "-"
-      ],
-      "clinic_3": [
-        "-"
-      ],
-      "clinic_4": [
-        "-"
-      ],
-      "clinic_5": [
+      "urara_stores": [],
+      "dsc_stores": [],
+      "lieto_stores": [],
+      "eminal_stores": [
         "eminal_048"
       ],
-      "clinic_6": [
-        "-"
+      "sbc_stores": [
+        "sbc_085",
+        "sbc_088",
+        "sbc_096",
+        "sbc_097",
+        "sbc_109"
       ]
     }
   },
-  "campaigns": [
-    {
-      "id": "0",
-      "regionId": "013",
-      "clinicId": "1",
-      "title": "ディオクリニック東京限定キャンペーン",
-      "headerText": "INFORMATION!",
-      "logoSrc": "/img/dio-logo.png",
-      "logoAlt": "ディオクリニック",
-      "description": "【ランキング1位獲得記念】<br>全身脱毛5回コースが<br>特別価格で提供中！",
-      "ctaText": "DIO公式はこちら",
-      "ctaUrl": "https://dio-clinic.jp/campaign/tokyo",
-      "footerText": "東京で最も選ばれているクリニック！"
-    },
-    {
-      "id": "1",
-      "regionId": "013",
-      "clinicId": "2",
-      "title": "フレイアの6周年記念",
-      "headerText": "INFORMATION!",
-      "logoSrc": "/img/info_logo.png",
-      "logoAlt": "FREY-A",
-      "description": "人気プランが最大10万円OFF<br>ペア・学割・のりかえ割併用も<br>OK♪",
-      "ctaText": "フレイア公式はこちら",
-      "ctaUrl": "https://xn--eckp2g630n3ukyzxne8a.com/freya_url?page=vio-iryou&p=quick_bt&location=tokyo&no=ivio-kantou&gclid=EAIaIQobChMIqNGJ5qWbjgMVIcJMAh2n5DtZEAAYAyAAEgJNsfD_BwE&ca=11027584297&gr=110882177929&k=kwd-407066983568&sid=1752560034179.128009585659",
-      "footerText": "コスパと効果のどっちも譲れない人におすすめ！"
-    },
-    {
-      "id": "2",
-      "regionId": "014",
-      "clinicId": "2",
-      "title": "フレイアの6周年記念",
-      "headerText": "INFORMATION!",
-      "logoSrc": "/img/info_logo.png",
-      "logoAlt": "FREY-A",
-      "description": "人気プランが最大10万円OFF<br>ペア・学割・のりかえ割併用も<br>OK♪",
-      "ctaText": "フレイア公式はコチラ",
-      "ctaUrl": "https://xn--eckp2g630n3ukyzxne8a.com/freya_url?page=vio-iryou&p=quick_bt&location=kanagawa&no=ivio-kantou&gclid=EAIaIQobChMIqNGJ5qWbjgMVIcJMAh2n5DtZEAAYAyAAEgJNsfD_BwE&ca=11027584297&gr=110882177929&k=kwd-407066983568&sid=1752560034179.128009585659",
-      "footerText": "コスパと効果のどっちも譲れない人におすすめ！"
-    },
-    {
-      "id": "3",
-      "regionId": "012",
-      "clinicId": "5",
-      "title": "湘南美容クリニック特別プラン",
-      "headerText": "SPECIAL OFFER!",
-      "logoSrc": "/img/shonan-logo.png",
-      "logoAlt": "湘南美容クリニック",
-      "description": "全身脱毛6回コースが<br>特別価格で受けられる<br>期間限定キャンペーン！",
-      "ctaText": "湘南美容クリニック公式サイト",
-      "ctaUrl": "https://www.s-b-c.net/",
-      "footerText": "信頼と実績の湘南美容クリニック"
-    },
-    {
-      "id": "3",
-      "regionId": "013",
-      "clinicId": "4",
-      "title": "リエートクリニック東京院",
-      "headerText": "SPECIAL OFFER!",
-      "logoSrc": "/img/lieto-logo.png",
-      "logoAlt": "リエートクリニック",
-      "description": "【ランキング3位記念】<br>VIO脱毛5回コースが<br>今なら半額で受けられる！",
-      "ctaText": "リエート公式はこちら",
-      "ctaUrl": "https://lieto-clinic.jp/tokyo",
-      "footerText": "東京で話題の美容クリニック"
-    },
-    {
-      "id": "4",
-      "regionId": "027",
-      "clinicId": "1",
-      "title": "ディオクリニック限定",
-      "headerText": "今だけ限定!",
-      "logoSrc": "/img/dio-logo.png",
-      "logoAlt": "ディオクリニック",
-      "description": "初回カウンセリング無料<br>さらに全身脱毛プランが<br>20%OFF！",
-      "ctaText": "DIO公式はこちら",
-      "ctaUrl": "https://dio-clinic.jp/",
-      "footerText": "大阪で人気No.1の脱毛クリニック"
-    },
-    {
-      "id": "5",
-      "regionId": "001",
-      "clinicId": "5",
-      "title": "湘南美容クリニック札幌院",
-      "headerText": "北海道限定!",
-      "logoSrc": "/img/shonan-logo.png",
-      "logoAlt": "湘南美容クリニック",
-      "description": "札幌院オープン記念<br>全身脱毛5回コースが<br>通常価格から30%OFF",
-      "ctaText": "湘南美容クリニック公式はこちら",
-      "ctaUrl": "https://www.s-b-c.net/clinic/branch/sapporo/",
-      "footerText": "北海道で安心の医療脱毛"
-    }
-  ],
+  "campaigns": [],
   "metadata": {
-    "lastUpdated": "2025-08-08T06:13:53.660Z",
+    "lastUpdated": "2025-08-11T01:19:38.215Z",
     "totalClinics": 6,
-    "totalStores": 216,
+    "totalStores": 215,
     "totalRegions": 301
   }
 }
