@@ -2344,30 +2344,50 @@ class RankingApp {
                             <div class="clinic-points-section">
                                 <h4 class="section-title">症例写真</h4>
                                 <div class="case-slider" style="position: relative;">
-                                    <div class="case-carousel-container" style="display: flex !important; overflow-x: auto !important; scroll-snap-type: x mandatory !important; scrollbar-width: none !important; -ms-overflow-style: none !important;">
-                                        ${caseImages.map(image => `
-                                            <div class="case-slide" style="flex: 0 0 100% !important; scroll-snap-align: center !important; padding: 0 2% !important; display: flex !important; flex-direction: column !important;">
-                                                <img src="${image.src}" alt="${image.alt}" loading="lazy" style="width: auto !important; height: auto !important; max-width: 100% !important; object-fit: contain !important; margin: 0 auto !important; display: block !important; padding: 0 !important; box-sizing: content-box !important; padding-top: 2% !important;">
-                                                <div class="case-info" style="margin-top: 5px; padding: 0 5%; text-align: left; font-size: 12px; line-height: 1.6; width: 100%;">
-                                                    <table class="case-table" style="width: 100% !important; border-collapse: collapse !important; font-size: 8px !important; line-height: 1.6 !important; display: table !important; table-layout: fixed !important;">
-                                                        <tbody style="display: table-row-group !important;">
-                                                            <tr style="display: table-row !important;">
-                                                                <td style="padding: 0 8px !important; background-color: #f8f8f8 !important; font-weight: bold !important; width: 30% !important; display: table-cell !important; vertical-align: top !important;">コース名</td>
-                                                                <td style="padding: 0 8px !important; display: table-cell !important; vertical-align: top !important;">医療痩身ボディメイクコース</td>
-                                                            </tr>
-                                                            <tr style="display: table-row !important;">
-                                                                <td style="padding: 0 8px !important; background-color: #f8f8f8 !important; font-weight: bold !important; display: table-cell !important; vertical-align: top !important;">施術の説明</td>
-                                                                <td style="padding: 0 8px !important; display: table-cell !important; vertical-align: top !important;">直流EMS、電磁場EMS、脂肪冷却、ボディハイフ、医師監修ダイエット食事指導、オーダーメイド薬セット・医師による薬指導、医師推奨プロテイン</td>
-                                                            </tr>
-                                                            <tr style="display: table-row !important;">
-                                                                <td style="padding: 0 8px !important; background-color: #f8f8f8 !important; font-weight: bold !important; display: table-cell !important; vertical-align: top !important;">副作用<br>（リスク）</td>
-                                                                <td style="padding: 0 8px !important; color: #666 !important; display: table-cell !important; vertical-align: top !important;">筋肉痛、赤み、腫れ、内出血、しこり、低血糖、吐気、嘔吐、便秘、下痢の症状が出る場合があります。</td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
+                                    <div class="case-carousel-container">
+                                        ${caseImages.map((image, index) => {
+                                            // 画像から体重情報を抽出（例: "68.4kg → 54.3kg"）
+                                            const weightMatch = image.alt.match(/(\d+\.\d+kg)\s*→\s*(\d+\.\d+kg)/);
+                                            const beforeWeight = weightMatch ? weightMatch[1] : '施術前';
+                                            const afterWeight = weightMatch ? weightMatch[2] : '施術後';
+                                            const caseNumber = `CASE ${String(index + 1).padStart(2, '0')}`;
+                                            
+                                            return `
+                                            <div class="case-slide">
+                                                <div class="case-header" style="color: #5DCCCA; font-size: 24px; font-weight: bold; margin-bottom: 10px; text-align: left;">
+                                                    ${caseNumber}
+                                                </div>
+                                                <div class="case-title" style="font-size: 14px; margin-bottom: 15px; text-align: left;">
+                                                    ボディメイクコース（脂肪冷却・EMS等）
+                                                </div>
+                                                <div class="case-images-wrapper" style="display: flex; gap: 20px; margin-bottom: 20px; align-items: center;">
+                                                    <div class="before-image" style="flex: 1; text-align: center;">
+                                                        <img src="${image.src}" alt="施術前" style="width: 100%; max-width: 200px; height: auto; border: 3px solid #5DCCCA; border-radius: 8px;">
+                                                        <div style="margin-top: 10px; font-size: 24px; font-weight: bold; color: #333;">${beforeWeight}</div>
+                                                    </div>
+                                                    <div class="arrow" style="font-size: 40px; color: #5DCCCA;">➤</div>
+                                                    <div class="after-image" style="flex: 1; text-align: center;">
+                                                        <img src="${image.src}" alt="施術後" style="width: 100%; max-width: 200px; height: auto; border: 3px solid #5DCCCA; border-radius: 8px;">
+                                                        <div style="margin-top: 10px; font-size: 24px; font-weight: bold; color: #5DCCCA;">${afterWeight}</div>
+                                                    </div>
+                                                </div>
+                                                <div class="case-info-table" style="background: #f8f8f8; padding: 15px; border-radius: 8px;">
+                                                    <div style="display: flex; margin-bottom: 10px;">
+                                                        <div style="width: 100px; font-weight: bold; color: #666;">コース名</div>
+                                                        <div style="flex: 1; padding-left: 20px;">医療痩身ボディメイクコース</div>
+                                                    </div>
+                                                    <div style="display: flex; margin-bottom: 10px;">
+                                                        <div style="width: 100px; font-weight: bold; color: #666;">施術の説明</div>
+                                                        <div style="flex: 1; padding-left: 20px;">直流EMS、電磁場EMS、脂肪冷却、ボディハイフ、医師監修ダイエット食事指導、オーダーメイド薬セット・医師による薬指導、医師推奨プロテイン</div>
+                                                    </div>
+                                                    <div style="display: flex;">
+                                                        <div style="width: 100px; font-weight: bold; color: #666;">副作用<br>（リスク）</div>
+                                                        <div style="flex: 1; padding-left: 20px; color: #888;">筋肉痛、赤み、腫れ、内出血、しこり、低血糖、吐気、嘔吐、便秘、下痢の症状が出る場合があります。</div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        `).join('')}
+                                            `;
+                                        }).join('')}
                                     </div>
                                     <button class="case-nav case-nav-prev" style="position: absolute; top: 150px; left: 10px; transform: translateY(-50%); z-index: 10; background: rgba(0,0,0,0.5); color: white; border: none; border-radius: 50%; width: 40px; height: 40px; font-size: 20px; cursor: pointer;">&lt;</button>
                                     <button class="case-nav case-nav-next" style="position: absolute; top: 150px; right: 10px; transform: translateY(-50%); z-index: 10; background: rgba(0,0,0,0.5); color: white; border: none; border-radius: 50%; width: 40px; height: 40px; font-size: 20px; cursor: pointer;">&gt;</button>
