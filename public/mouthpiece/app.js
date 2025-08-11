@@ -273,7 +273,7 @@ class DisplayManager {
             // 小数部分の処理
             if (decimalPart > 0) {
                 const percentage = Math.round(decimalPart * 100);
-                starsHtml += `<i class="far fa-star" style="background: linear-gradient(90deg, #6bd1d0 ${percentage}%, transparent ${percentage}%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"></i>`;
+                starsHtml += `<i class="fas fa-star" style="background: linear-gradient(90deg, #6bd1d0 ${percentage}%, transparent ${percentage}%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"></i>`;
             }
             
             // 残りの空の星を表示

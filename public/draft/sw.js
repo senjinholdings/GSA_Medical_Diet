@@ -1,4 +1,4 @@
-const CACHE_NAME = 'medical-diet-v1';
+const CACHE_NAME = 'medical-diet-v2';
 const urlsToCache = [
   '/',
   '/styles.css',
