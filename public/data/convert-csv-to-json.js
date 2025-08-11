@@ -120,7 +120,7 @@ async function convertCSVtoJSON() {
             return store.clinic_name === clinicName || 
                    store.clinic_name === clinicCode.toUpperCase() || 
                    store.clinic_name === 'DIO' && clinicCode === 'dio' ||
-                   store.clinic_name === 'DSクリニック' && clinicCode === 'ds';
+                   store.clinic_name === 'DSクリニック' && clinicCode === 'dsc';
         });
         
         // 店舗が存在する地域IDを取得

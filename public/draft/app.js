@@ -90,7 +90,7 @@ class UrlParamHandler {
             'urara': './go/urara/',
             'lieto': './go/lieto/',
             'sbc': './go/sbc/',
-            'ds': './go/dsc/'
+            'dsc': './go/dsc/'
         };
         
         const redirectUrl = redirectUrls[clinicName];
@@ -2392,7 +2392,7 @@ class RankingApp {
                 </div>
                 
                 ${(() => {
-                    const clinicMap = { '1': 'dio', '2': 'eminal', '3': 'urara', '4': 'lieto', '5': 'sbc', '6': 'ds' };
+                    const clinicMap = { '1': 'dio', '2': 'eminal', '3': 'urara', '4': 'lieto', '5': 'sbc', '6': 'dsc' };
                     const clinicSlug = clinicMap[clinic.id];
                     const caseImages = getCaseImages(clinicSlug);
                     let caseCarouselHtml = '';
@@ -2739,7 +2739,7 @@ class RankingApp {
             '3': 'urara',
             '4': 'lieto',
             '5': 'sbc',
-            '6': 'ds'
+            '6': 'dsc'
         };
         const clinicName = clinicNames[clinicId] || 'dio';
         if (!stores || stores.length === 0) {
