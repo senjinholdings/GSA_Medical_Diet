@@ -338,7 +338,7 @@ select {
 }
 
 .pink-text {
-    color: #6bd1d0;
+    color: #f69ca8;
 }
 
 .point-icon {
@@ -443,7 +443,7 @@ select {
 
 #review_tab_box .wrap_long2 {
     padding: 10px 10px 0px;
-    border: 2px solid #6bd1d0;
+    border: 2px solid #ffd700;
     /* overflow: hidden; */
     background: #ffffff;
     font-size: 14px;
@@ -489,11 +489,11 @@ select {
 
 #review_tab_box .review_tab2 ul li.select2 {
     border-radius: 10px 10px 0 0;
-    border-top: 1px solid #6bd1d0;
-    border-left: 1px solid #6bd1d0;
-    border-right: 1px solid #6bd1d0;
+    border-top: 1px solid #ffd700;
+    border-left: 1px solid #ffd700;
+    border-right: 1px solid #ffd700;
     color: #fff;
-    background-color: #6bd1d0;
+    background-color: #f69ca8;
     padding: 5px 0 5px;
 }
 
@@ -541,7 +541,7 @@ select {
 }
 
 .review_tab_box_txt {
-    background: #6bd1d00f;
+    background: #ffd7000f;
     padding: 6px;
     border-radius: 7px;
 }
@@ -890,7 +890,7 @@ select {
 }
 
 .store-detail i {
-    color: #6bd1d0;
+    color: #f69ca8;
     font-size: 0.9rem;
     margin-top: 2px;
     flex-shrink: 0;
@@ -965,7 +965,7 @@ select {
 }
 
 .campaign-header {
-    background-color: #6bd1d0;
+    background-color: #f69ca8;
     color: #fff;
     text-align: center;
     padding: 12px 0;
@@ -1502,8 +1502,8 @@ body > .container main section {
     width: 45px;
     height: 45px;
     background-color: #fff;
-    border: 2px solid #6bd1d0;
-    color: #6bd1d0;
+    border: 2px solid #ffd700;
+    color: #f69ca8;
     font-weight: 600;
     font-size: 1rem;
     text-decoration: none;
@@ -1851,29 +1851,29 @@ section.clinic-rankings .ranking-header-banner {
 }
 
 .rank-1 .stars {
-    color: #6bd1d0;
+    color: #f69ca8;
 }
 
 .rank-2 .stars {
-    color: #6bd1d0;
+    color: #f69ca8;
 }
 
 .rank-3 .stars {
-    color: #6bd1d0;
+    color: #f69ca8;
 }
 
 .rank-4 .stars {
-    color: #6bd1d0;
+    color: #f69ca8;
 }
 
 .rank-5 .stars {
-    color: #6bd1d0;
+    color: #f69ca8;
 }
 
 .rating-score {
     font-size: 2.5rem;
     font-weight: 600;
-    color: #6bd1d0;
+    color: #f69ca8;
     font-style: normal;
 }
 
@@ -2094,7 +2094,7 @@ section.clinic-rankings .ranking-header-banner {
 }
 
 .pink-text {
-    color: #6bd1d0;
+    color: #f69ca8;
 }
 
 .comparison-subtitle {
@@ -2121,9 +2121,9 @@ section.clinic-rankings .ranking-header-banner {
 
 .comparison-tab-menu .comparison-tab-menu-item {
     border-radius: 4px 4px 0 0;
-    border-left: 1px solid #6bd1d0;
-    border-right: 1px solid #6bd1d0;
-    border-top: 1px solid #6bd1d0;
+    border-left: 1px solid #ffd700;
+    border-right: 1px solid #ffd700;
+    border-top: 1px solid #ffd700;
     width: 32%;
     text-align: center;
     padding: 8px 0 8px;
@@ -2132,12 +2132,12 @@ section.clinic-rankings .ranking-header-banner {
     font-size: 14px;
     cursor: pointer;
     background: #ffffff;
-    color: #6bd1d0;
+    color: #f69ca8;
     transition: all 0.3s;
 }
 
 .comparison-tab-menu-item.tab-active {
-    background: #6bd1d0;
+    background: #ffd700;
     color: #fff;
     pointer-events: none;
     position: relative;
@@ -2381,13 +2381,13 @@ section.clinic-rankings .ranking-header-banner {
 
 /* 良い・普通・悪いの記号 */
 .sogood {
-    color: #6bd1d0;
+    color: #f69ca8;
     font-size: 1.2em;
     font-weight: 600;
 }
 
 .good {
-    color: #6bd1d0;
+    color: #f69ca8;
     font-size: 1.2em;
     font-weight: 600;
 }
@@ -3243,7 +3243,7 @@ section.clinic-rankings .ranking-header-banner {
 }
 
 .medical-columns-section .toc-link {
-    color: #6bd1d0;
+    color: #f69ca8;
     text-decoration: underline;
     font-size: 14px;
     line-height: 1.5;
@@ -3284,7 +3284,7 @@ section.clinic-rankings .ranking-header-banner {
 }
 
 .medical-columns-section .highlight-box .section-title {
-    color: #6bd1d0;
+    color: #f69ca8;
     margin-bottom: 12px;
 }
 
@@ -3299,7 +3299,7 @@ section.clinic-rankings .ranking-header-banner {
 }
 
 .medical-columns-section .table-header {
-    background-color: #6bd1d0;
+    background-color: #f69ca8;
     color: white;
 }
 
@@ -3433,7 +3433,7 @@ section.clinic-rankings .ranking-header-banner {
 }
 
 .medical-columns-section .contact-link {
-    color: #6bd1d0;
+    color: #f69ca8;
     text-decoration: underline;
     font-size: 14px;
     line-height: 1.5;
@@ -3498,7 +3498,7 @@ section.clinic-rankings .ranking-header-banner {
 }
 
 .footer_contents a {
-    color: #6bd1d0;
+    color: #f69ca8;
     text-decoration: none;
     transition: color 0.3s ease;
 }
@@ -3812,7 +3812,7 @@ section.clinic-rankings .ranking-header-banner {
         padding: 20px 5px;
         font-size: 16px;
         border-radius: 8px;
-        background: #6bd1d0;
+        background: #ffd700;
         color: white;
         text-align: center;
     }
@@ -5336,12 +5336,12 @@ section.clinic-rankings .ranking-header-banner {
 }
 
 .brand-section .shop-name {
-    color: #6bd1d0;
+    color: #f69ca8;
     font-weight: 600;
 }
 
 .brand-section .shop-name a {
-    color: #6bd1d0;
+    color: #f69ca8;
     text-decoration: none;
 }
 
@@ -5355,7 +5355,7 @@ section.clinic-rankings .ranking-header-banner {
     margin-left: auto;
     padding: 10px 10px 10px 8px;
     border-radius: 4px;
-    background-color: #6bd1d0;
+    background-color: #f69ca8;
     color: #fff;
     font-weight: 600;
     white-space: nowrap;
@@ -5443,7 +5443,7 @@ section.clinic-rankings .ranking-header-banner {
 }
 
 .detail-item .brand-section .shop-name {
-    color: #6bd1d0;
+    color: #f69ca8;
     font-weight: 600;
 }
 
@@ -5576,7 +5576,7 @@ section.clinic-rankings .ranking-header-banner {
 
 .map-detail-item i {
     margin-right: 8px;
-    color: #6bd1d0;
+    color: #f69ca8;
     font-size: 14px;
     flex-shrink: 0;
     margin-top: 2px;

@@ -1,6 +1,6 @@
 /* ===== 医療系クリニック比較サイト専用CSS ===== */
 
-/* Vercel deployment trigger - 2025/01/22 17:47 */
+/* Vercel deployment trigger - 2025/08/05 08:32:19 */
 
 /* グローバルリセット */
 *, *::before, *::after {
@@ -270,6 +270,17 @@ section, main, header, footer, nav, aside, article {
     padding-right: 40px;
 }
 
+/* clinic-card border update for medical-diet001 style matching */
+.clinic-card {
+    border: 1px solid #E0E0E0 !important;
+}
+
+/* CSV deco tag styling */
+.deco-text {
+    color: #fa7794;
+    font-weight: 600;
+}
+
 /* 全てのselect要素の矢印を黒色に統一 */
 select {
     appearance: none;
@@ -337,7 +348,7 @@ select {
     transform: translateX(5px);
 }
 
-.pink-text {
+.accent-text {
     color: #6bd1d0;
 }
 
@@ -672,9 +683,10 @@ select {
 
 /* POINTセクション - クリニック詳細内 */
 .clinic-points-section {
-    margin: 30px 0;
-    padding: 0;
-    background: white;
+    margin: 20px 0 !important;
+    padding: 2% !important;
+    background: #fff !important;
+    border-radius: 8px !important;
 }
 
 .clinic-points-section .section-title {
@@ -1775,24 +1787,21 @@ section.clinic-rankings .ranking-header-banner {
 
 /* クリニックカード */
 .clinic-card {
-    margin: 0%;
     padding: 38px 4px 8px;
-    border-radius: 15px;
-    border-width: 1px;
-    border-style: solid;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    min-height: 310px;
+    border-radius: 5px;
+    border: 1px solid #E0E0E0;
+    width: 100%;
+    background-color: #FFFFFF;
+    text-align: center;
+    display: inline-block;
     position: relative;
-    transition: border-color 0.3s ease;
 }
 
 .rank-1 .clinic-card {
     border-color: #E0E0E0;
     background-color: #FFFFFF;
     text-align: center;
+    background: rgb(247 255 0 / 21%);
 }
 
 .rank-2 .clinic-card {
@@ -2098,7 +2107,7 @@ section.clinic-rankings .ranking-header-banner {
     font-weight: 600;
 }
 
-.pink-text {
+.accent-text {
     color: #6bd1d0;
 }
 
@@ -3872,13 +3881,12 @@ section.clinic-rankings .ranking-header-banner {
     
     .clinic-card {
         padding: 38px 4px 8px;
-        border-radius: 15px;
-        border-width: 3px;
-        box-sizing: border-box;
-        display: flex;
-        flex-direction: column;
-        height: 100%;
-        min-height: 310px;
+        border-radius: 5px;
+        border: 1px solid #E0E0E0;
+        width: 100%;
+        background-color: #FFFFFF;
+        text-align: center;
+        display: inline-block;
         position: relative;
     }
     
@@ -5228,7 +5236,7 @@ section.clinic-rankings .ranking-header-banner {
         padding: 5px 0px;
         font-size: 0.7rem;
         gap: 0px;
-        border-radius: 8px;
+        border-radius: 4px;
     }
     
     .clinic-card .btn.btn_second_primary .bt_s {
@@ -6600,61 +6608,351 @@ section.clinic-rankings .ranking-header-banner {
     }
 }
 
-
-/* CASE情報のスタイル */
-.case-slide {
-    display: flex !important;
-    flex-direction: column !important;
+/* 詳細店舗情報セクション（medical-diet001スタイル） */
+.detail-item .brand-section {
+    margin-top: 30px;
+    padding: 0% 2% 2% 2%;
+    border-top: 1px solid #E0E0E0;
+    border-bottom: 1px solid #E0E0E0;
+    background-color: #F1F1F1;
 }
 
-.case-info {
-    margin-top: 15px;
-    padding: 0 15px;
-    text-align: left;
+.detail-item .brand-section .section-heading {
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: fit-content;
+    margin: 0 auto;
+    padding: 8px 12px;
+    border: 1px solid #E0E0E0;
+    border-top: none;
+    background-color: #fff;
+    font-size: 15px;
+    font-weight: 600;
+    color: #6a6a6a;
+}
+
+.detail-item .brand-section .shops {
+    margin-top: 16px;
+}
+
+.detail-item .brand-section .shops>.shop {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    background-color: #fff;
+    border: 1px solid #E0E0E0;
+    border-radius: 4px;
+}
+
+.detail-item .brand-section .shops>.shop:not(:first-child) {
+    margin-top: 8px;
+}
+
+.detail-item .brand-section .shop-image {
+    flex-shrink: 0;
+    width: 14vw;
+    height: 8vw;
+    margin-right: 8px;
+}
+
+.detail-item .brand-section .shop-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.detail-item .brand-section .shop-info {
+    margin-right: 8px;
+    flex: 1;
+}
+
+.detail-item .brand-section .shop-name {
+    color: #6bd1d0;
+    font-weight: 600;
+}
+
+.detail-item .brand-section .shop-name a {
+    color: #6a6a6a;
+    text-decoration: none;
+}
+
+.detail-item .brand-section .shop-address {
+    margin-top: 2px;
+    font-size: clamp(9px, 2.1vw, 12px);
+    color: #5c5c5c;
+}
+
+.detail-item .brand-section .shop-btn {
+    margin-left: auto;
+    padding: 10px 10px 10px 8px;
+    border-radius: 4px;
+    background-color: #f39ea7;
+    color: #fff;
+    font-weight: 600;
+    white-space: nowrap;
+    text-decoration: none;
     font-size: 12px;
-    line-height: 1.6;
+    transition: background-color 0.3s;
+}
+
+.detail-item .brand-section .shop-btn .btn-icon {
+    position: relative;
+    top: 1px;
+    font-size: 18px;
+}
+
+.no-stores {
+    text-align: center;
+    color: #999;
+    padding: 20px;
+    font-size: 14px;
+}
+
+/* 地図アコーディオンスタイル */
+.map-accordion {
+    margin-top: 10px;
+    border: 1px solid #E0E0E0;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+    overflow: hidden;
     width: 100%;
 }
 
-.case-course-name {
-    font-weight: bold;
-    margin-bottom: 8px;
+.map-content {
+    padding: 15px;
+}
+
+.map-iframe-container {
+    width: 100%;
+    margin-bottom: 15px;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.map-iframe-container iframe {
+    width: 100%;
+    height: 250px;
+    border: none;
+}
+
+.map-details {
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 4px;
+    border: 1px solid #E8E8E8;
+}
+
+.map-detail-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 10px;
+    font-size: 13px;
+    color: #5c5c5c;
+    line-height: 1.5;
+}
+
+.map-detail-item:last-child {
+    margin-bottom: 0;
+}
+
+.map-detail-item i {
+    margin-right: 8px;
+    color: #6bd1d0;
+    font-size: 14px;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.map-detail-label {
+    font-weight: 600;
+    margin-right: 5px;
+    color: #4C4C4C;
+}
+
+/* 地図ボタンのホバー効果 */
+.map-toggle-btn {
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.1s;
+}
+
+.map-toggle-btn:hover {
+    background-color: #e58a93 !important;
+    transform: scale(1.02);
+}
+
+.map-toggle-btn:active {
+    transform: scale(0.98);
+}
+
+/* 店舗レイアウトの修正 */
+.detail-item .brand-section .shop {
+    display: grid;
+    grid-template-columns: 72px 1fr auto;
+    gap: 10px;
+    align-items: center;
+    padding: 15px;
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+/* レスポンシブ対応 */
+@media (min-width: 720px) {
+    .detail-item .brand-section .shop-image {
+        width: 72px;
+        height: 72px;
+    }
+    
+    .map-iframe-container iframe {
+        height: 300px;
+    }
+    
+    .map-detail-item {
+        font-size: 14px;
+    }
+}
+
+/* 地図モーダルのスタイル */
+.map-modal {
+    position: fixed;
+    z-index: 10000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: none; /* デフォルトは非表示 */
+    align-items: center;
+    justify-content: center;
+}
+
+.map-modal-overlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.map-modal-content {
+    background-color: #fefefe;
+    position: relative;
+    padding: 0;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.map-modal-header {
+    background-color: #f5f5f5;
+    padding: 15px 20px;
+    border-bottom: 1px solid #e0e0e0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.map-modal-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+    margin: 0;
+}
+
+.map-modal-close {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #999;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s;
+}
+
+.map-modal-close:hover {
     color: #333;
 }
 
-.case-treatment {
-    margin-bottom: 8px;
-    color: #555;
+.map-modal-body {
+    padding: 0;
 }
 
-.case-risk {
+.map-modal-map {
+    width: 100%;
+    height: 250px;
+    background-color: #f0f0f0;
+}
+
+.map-modal-map iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+.map-modal-info {
+    padding: 20px;
+}
+
+.map-modal-info-table {
+    width: calc(100% - 40px);
+    border-collapse: collapse;
+    margin: 20px;
+}
+
+.map-modal-info-table th,
+.map-modal-info-table td {
+    padding: 12px 6px;
+    text-align: left;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.map-modal-info-table th {
+    background-color: #f5f5f5;
     color: #666;
-    font-size: 11px;
+    font-size: 13px;
+    font-weight: 600;
+    width: 86px;
 }
 
-/* CASE画像の配置調整 */
-.case-slide img {
-    max-width: 100% !important;
-    height: auto !important;
-    display: block !important;
-    margin: 0 auto !important;
+.map-modal-info-table td {
+    font-size: 12px;
+    line-height: 1.6;
+    color: #333;
 }
 
-/* SP版対応 */
-@media (max-width: 768px) {
-    .case-slide {
-        display: flex !important;
-        flex-direction: column !important;
-        align-items: center !important;
-    }
-    
-    .case-info {
-        padding: 0 10px;
-        font-size: 11px;
-        width: 100%;
-    }
-    
-    .case-risk {
-        font-size: 10px;
-    }
+.map-modal-info-table tr:last-child th,
+.map-modal-info-table tr:last-child td {
+    border-bottom: none;
+}
+
+.map-modal-footer {
+    padding: 0 20px 20px;
+    text-align: center;
+}
+
+.map-modal-footer .btn_second_primary {
+    display: block;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.map-modal-footer .btn_second_primary a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 16px 20px;
+    font-size: 16px;
 }
