@@ -2196,7 +2196,7 @@ class RankingApp {
                     title: '20年以上の実績を誇るオーダーメイド医療痩身<span class="info-icon" onclick="showDisclaimerInfo(\'ds-success-rate\')" title="詳細情報">ⓘ</span>',
                     subtitle: '医師・管理栄養士のチーム医療であなたを徹底サポート',
                     link: 'DSクリニック ＞',
-                    banner: '/images/clinics/dsc/ds_detail_bnr.jpg',
+                    banner: '/images/clinics/dsc/dsc_detail_bnr.jpg',
                     features: [
                         '医療ダイエット', '医療痩身', '部分痩せ',
                         '医師監修', '管理栄養士指導', '漢方処方',
@@ -2331,7 +2331,7 @@ class RankingApp {
                         'リエートクリニック': '/images/clinics/lieto/lieto_detail_bnr.webp',
                         'エミナルクリニック': '/images/clinics/eminal/eminal_detail_bnr.webp',
                         '湘南美容クリニック': '/images/clinics/sbc/sbc_detail_bnr.webp',
-                        'DSクリニック': '/images/clinics/dsc/ds_detail_bnr.jpg'
+                        'DSクリニック': '/images/clinics/dsc/dsc_detail_bnr.jpg'
                     };
                     const correctBanner = clinicNameToBannerMap[clinic.name] || data.banner;
                     return correctBanner ? `
