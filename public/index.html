@@ -20,13 +20,15 @@
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
     <!-- 重要なリソースのpreload -->
     <link rel="preload" as="image" href="images/MV2.webp" fetchpriority="high" type="image/webp">
-    <link rel="preload" as="style" href="styles.css?v=2025072201">
-    <link rel="preload" as="script" href="app.js?v=2025072201">
+    <link rel="preload" as="style" href="styles.css?v=2025080104">
+    <link rel="preload" as="script" href="app.js?v=2025080104">
     <!-- Google Fontsはプリロードせず、通常のロードのみにする -->
     <!-- スタイルシート -->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" media="print" onload="this.media='all'">
-    <link rel="stylesheet" href="styles.css?v=2025072201" media="all">
+    <link rel="stylesheet" href="styles.css?v=2025080104" media="all">
+    <link rel="stylesheet" href="responsive-fix-480-768.css?v=2025080104" media="all">
+    <link rel="stylesheet" href="simple-case-carousel-override.css?v=2025080114" media="all">
     <link rel="icon" type="image/png" href="images/favicon.png">
     <!-- Critical CSS -->
     <style>
@@ -133,38 +135,19 @@
 
                         <!-- タブコンテンツコンテナ -->
                         <div class="tab-contents" style="position: relative; background-color: #FFFFFF; border: 1px solid #E0E0E0; border-radius: 0 0 4px 4px; padding: 15px;">
-                            <!-- タブ1: POTENZAの効果 -->
+                            <!-- タブ1 -->
                             <div class="tab-content active" data-tab="0" style="display: block;">
-                                <div style="width: 100%; margin-bottom: 15px;">
-                                    <img src="/images/Tips1.webp" alt="POTENZAの効果" style="width: 100%; height: auto; border-radius: 4px;" loading="lazy">
-                                </div>
-                                <p style="font-size: 14px; line-height: 1.8; color: #4C4C4C; margin-bottom: 15px;">
-                                    最新のマイクロニードルRF技術！極細の針から高周波を照射し、真皮層に直接アプローチ。ニキビ跡、毛穴、肝斑など様々な肌悩みを根本から改善する次世代治療法です。
-                                </p>
+                                <!-- 動的に生成される -->
                             </div>
 
-                            <!-- タブ2: クリニック選び -->
+                            <!-- タブ2 -->
                             <div class="tab-content" data-tab="1" style="display: none;">
-                                <div style="width: 100%; margin-bottom: 15px;">
-                                    <img src="/images/Tips2.webp" alt="クリニック選びのポイント" style="width: 100%; height: auto; border-radius: 4px;" loading="lazy">
-                                </div>
-                                <p style="font-size: 14px; line-height: 1.8; color: #4C4C4C; margin-bottom: 15px;">
-                                    POTENZA治療の成功はクリニック選びが鍵。<br>
-                                    症例実績と技術力を重視して選びましょう。<br><br>
-                                    ☑️POTENZA導入実績・症例数<br>
-                                    ☑️使用チップ・薬剤の種類<br>
-                                    ☑️皮膚科専門医の在籍
-                                </p>
+                                <!-- 動的に生成される -->
                             </div>
 
-                            <!-- タブ3: 今がおすすめ -->
+                            <!-- タブ3 -->
                             <div class="tab-content" data-tab="2" style="display: none;">
-                                <div style="width: 100%; margin-bottom: 15px;">
-                                    <img src="/images/Tips3.webp" alt="今がおすすめの理由" style="width: 100%; height: auto; border-radius: 4px;" loading="lazy">
-                                </div>
-                                <p style="font-size: 14px; line-height: 1.8; color: #4C4C4C; margin-bottom: 15px;">
-                                    肌のターンオーバーを考えると、今始めるのがベスト！初回限定価格やモニター割引も充実。マスクを外す機会が増える前に、美肌を手に入れるチャンスです。
-                                </p>
+                                <!-- 動的に生成される -->
                             </div>
                         </div>
                     </div>
@@ -275,72 +258,7 @@
                             </tr>
                         </thead>
                         <tbody id="comparison-tbody">
-                            <tr style="background-color: rgb(255, 251, 220);">
-                                <td class="ranking-table_td1">
-                                    <img src="/images/clinics/dio/dio-logo.webp" alt="ディオクリニック" width="80">
-                                    <a href="#clinic1" class="clinic-link">ディオクリニック</a>
-                                </td>
-                                <td class="">
-                                    <span class="ranking_evaluation">4.9</span><br>
-                                    <span class="star5_rating" data-rate="4.9"></span>
-                                </td>
-                                <td class="">ニキビ跡改善率98%<br>毛穴引き締め効果</td>
-                                <td class="">POTENZA<br>初回8,320円〜</td>
-                                <td class="th-none" style="display: none;">POTENZA</td>
-                                <td class="th-none" style="display: none;">POTENZA<br>マイクロニードル<br>RF照射<br>ドラッグデリバリー</td>
-                                <td class="th-none" style="display: none;">肝斑治療<br>ニキビ跡治療<br>毛穴改善<br>赤ら顔改善<br>タイトニング</td>
-                                <td class="th-none" style="display: none;">専門医<br>による診断</td>
-                                <td class="th-none" style="display: none;">あり<br>初回限定価格</td>
-                                <td class="th-none" style="display: none;">効果保証制度あり</td>
-                                <td>
-                                    <a class="link_btn" href="#" target="_blank">公式サイト</a>
-                                    <a class="detail_btn detail-static-link" href="#clinic-details-list" data-rank="1">詳細をみる</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="ranking-table_td1">
-                                    <img src="/images/clinics/urara/urara-logo.webp" alt="URARAクリニック" width="80">
-                                    <a href="#clinic2" class="clinic-link">URARAクリニック</a>
-                                </td>
-                                <td class="">
-                                    <span class="ranking_evaluation">4.6</span><br>
-                                    <span class="star5_rating" data-rate="4.6"></span>
-                                </td>
-                                <td class="">美肌再生率96%<br>施術満足度4.8</td>
-                                <td class="">POTENZA<br>モニター価格実施中</td>
-                                <td class="th-none" style="display: none;">POTENZA</td>
-                                <td class="th-none" style="display: none;">POTENZA<br>最新型RF機器<br>ニードル治療<br>複合型治療</td>
-                                <td class="th-none" style="display: none;">酒さ治療<br>小じわ改善<br>たるみ治療<br>肌質改善<br>色素沈着改善</td>
-                                <td class="th-none" style="display: none;">認定医<br>による施術</td>
-                                <td class="th-none" style="display: none;">あり<br>モニター割引</td>
-                                <td class="th-none" style="display: none;">満足保証制度</td>
-                                <td>
-                                    <a class="link_btn" href="#" target="_blank">公式サイト</a>
-                                    <a class="detail_btn detail-static-link" href="#clinic-details-list" data-rank="2">詳細をみる</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="ranking-table_td1">
-                                    <img src="/images/clinics/lieto/lieto-logo.webp" alt="リエートクリニック" width="80">
-                                    <a href="#clinic3" class="clinic-link">リエートクリニック</a>
-                                </td>
-                                <td class="">
-                                    <span class="ranking_evaluation">4.4</span><br>
-                                    <span class="star5_rating" data-rate="4.4"></span>
-                                </td>
-                                <td class="">肌トラブル改善率93%<br>リピート率89%</td>
-                                <td class="">POTENZA体験<br>特別価格実施中</td>
-                                <td class="th-none" style="display: none;">POTENZA</td>
-                                <td class="th-none" style="display: none;">POTENZA<br>薬剤導入<br>RF治療</td>
-                                <td class="th-none" style="display: none;">毛穴治療<br>ニキビ跡改善<br>美白治療<br>エイジングケア<br>肌再生治療</td>
-                                <td class="th-none" style="display: none;">美容皮膚科医<br>による診察</td>
-                                <td class="th-none" style="display: none;">あり<br>体験価格</td>
-                                <td class="th-none" style="display: none;">アフターケア保証</td>
-                                <td>
-                                    <a class="link_btn" href="#" target="_blank">公式サイト</a>
-                                    <a class="detail_btn detail-static-link" href="#clinic-details-list" data-rank="3">詳細をみる</a>
-                                </td>
-                            </tr>
+                            <!-- 動的に生成される -->
                         </tbody>
                     </table>
                     <!-- 注意事項アコーディオン -->
@@ -940,7 +858,7 @@
         </div>
     </div>
 
-    <script src="app.js?v=2025072201" defer></script>
+    <script src="app.js?v=2025080104" defer></script>
     <script>
         // 比較表のタブ切り替え機能
         // 全てのパラメータを引き継ぐ共通処理
@@ -1159,10 +1077,37 @@
     </script>
     
     <!-- Analytics Tracking Script -->
-    <script src="analytics-tracking.js?v=2025072201" defer></script>
+    <script src="analytics-tracking.js?v=2025080104" defer></script>
     
     <!-- URL Parameter Tracking -->
-    <script src="/url-tracking.js?v=2025072201" defer></script>
+    <script src="/url-tracking.js?v=2025080104" defer></script>
+    
+    <!-- getCaseImages Function for Case Photos -->
+    <script>
+        window.getCaseImages = function(clinicSlug) {
+            const caseImagesMap = {
+                'dio': [
+                    {
+                        src: '/images/clinics/dio/dio_case/dio_case01.jpg',
+                        alt: 'CASE 01 - ボディメイクコース（脂肪冷却＋EMS等）68.4kg → 54.3kg'
+                    },
+                    {
+                        src: '/images/clinics/dio/dio_case/dio_case02.jpg',
+                        alt: 'CASE 02 - ボディメイクコース（脂肪冷却＋ハイフ等）97.3kg → 65.8kg'
+                    },
+                    {
+                        src: '/images/clinics/dio/dio_case/dio_case03.jpg',
+                        alt: 'CASE 03 - ボディメイクコース（内服薬＋EMS等）118.4kg → 81.6kg'
+                    }
+                ]
+                // 他のクリニックの症例画像は今後追加予定
+            };
+            return caseImagesMap[clinicSlug] || [];
+        }
+    </script>
+    
+    <!-- Case Carousel Script -->
+    <script src="simple-case-carousel.js?v=2025080114"></script>
     
     <!-- Service Worker登録 -->
     <script>

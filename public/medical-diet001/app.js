@@ -54,7 +54,8 @@ class UrlParamHandler {
             '2': './go/eminal/',
             '3': './go/urara/',
             '4': './go/lieto/',
-            '5': './go/sbc/'
+            '5': './go/sbc/',
+            '6': './go/dsc/'
         };
         
         const redirectUrl = redirectUrls[clinicId];
@@ -88,7 +89,8 @@ class UrlParamHandler {
             'eminal': './go/eminal/',
             'urara': './go/urara/',
             'lieto': './go/lieto/',
-            'sbc': './go/sbc/'
+            'sbc': './go/sbc/',
+            'dsc': './go/dsc/'
         };
         
         const redirectUrl = redirectUrls[clinicName];
@@ -231,7 +233,8 @@ class DisplayManager {
                 2: `${imagesPath}/clinics/eminal/eminal-logo.webp`,
                 3: `${imagesPath}/clinics/urara/urara-logo.webp`,
                 4: `${imagesPath}/clinics/lieto/lieto-logo.webp`,
-                5: `${imagesPath}/clinics/sbc/sbc-logo.webp`
+                5: `${imagesPath}/clinics/sbc/sbc-logo.webp`,
+                6: `${imagesPath}/clinics/dsc/dsc-logo.jpg`
             };
             const bannerImage = bannerImages[clinic.id] || `${imagesPath}/clinics/dio/dio-logo.webp`;
 
@@ -1322,7 +1325,7 @@ class RankingApp {
             const imagesPath = window.SITE_CONFIG ? window.SITE_CONFIG.imagesPath + '/images' : '/images';
             const clinicLogos = {
                 'ディオクリニック': `${imagesPath}/clinics/dio/dio-logo.webp`,
-                'ディオクリニック': `${imagesPath}/clinics/dio/dio-logo.webp`,
+                'DSクリニック': `${imagesPath}/clinics/dsc/dsc-logo.jpg`,
                 'ウララクリニック': `${imagesPath}/clinics/urara/urara-logo.webp`,
                 'URARAクリニック': `${imagesPath}/clinics/urara/urara-logo.webp`,
                 'リエートクリニック': `${imagesPath}/clinics/lieto/lieto-logo.webp`,
@@ -2189,6 +2192,81 @@ class RankingApp {
                         ctaText: '湘南美容クリニックの公式サイト',
                         microcopy: '＼症例実績30万件以上の実績／'
                     }
+                },
+                '6': { // DSクリニック
+                    title: '20年以上の実績を誇るオーダーメイド医療痩身<span class="info-icon" onclick="showDisclaimerInfo(\'ds-success-rate\')" title="詳細情報">ⓘ</span>',
+                    subtitle: '医師・管理栄養士のチーム医療であなたを徹底サポート',
+                    link: 'DSクリニック ＞',
+                    banner: '/images/clinics/dsc/dsc_detail_bnr.jpg',
+                    features: [
+                        '医療ダイエット', '医療痩身', '部分痩せ',
+                        '医師監修', '管理栄養士指導', '漢方処方',
+                        '20時まで診療', '駅チカ', '完全個室'
+                    ],
+                    priceMain: '痩身治療プラン',
+                    priceValue: '月々8,800円〜',
+                    priceDetail: {
+                        '料金': '痩身治療プラン<br>月々8,800円〜',
+                        '施術機械': '高周波治療<br>クールスカルプティングエリート<br>医療EMS(Exe\'t/エグゼット)',
+                        '目安期間': '2ヶ月プラン、3ヶ月以上のプランあり',
+                        '営業時間': '11:00〜20:00<br>休診日：年末年始',
+                        '対応部位': '顔／二の腕／腹部／上半身／下半身／その他',
+                        '店舗': '東京（渋谷、新宿）',
+                        '公式サイト': 'https://ds-clinic.jp/'
+                    },
+                    vioPlans: {
+                        vioOnly: {
+                            title: '部分痩身',
+                            price: '月々8,800円',
+                            sessions: '2ヶ月プラン',
+                            monthly: '月々8,800円'
+                        },
+                        fullBody: {
+                            title: '全身痩身',
+                            price: '応相談',
+                            sessions: '3ヶ月以上',
+                            monthly: '応相談'
+                        }
+                    },
+                    points: [
+                        {
+                            icon: 'users',
+                            title: '専門家チームによるオーダーメイド治療',
+                            description: '医師、看護師、管理栄養士、カウンセラーがチームとなり、一人ひとりの体質や目標に合わせた最適な治療プランを提案。測定結果をもとに、施術、漢方、内服薬、食事改善などを組み合わせ、総合的にサポートします。'
+                        },
+                        {
+                            icon: 'network-wired',
+                            title: '豊富な痩身メニューで内外からアプローチ',
+                            description: '最新の医療機器による施術で脂肪細胞に直接アプローチするだけでなく、脂肪溶解注射による部分痩せ、漢方や内服薬による体質改善、管理栄養士による食事指導など、体の外と内の両方から理想の体型へと導きます。'
+                        },
+                        {
+                            icon: 'shield-alt',
+                            title: '痩せなかった場合の「返金保証」と「永久サポート」',
+                            description: '痩身治療プランでは、万が一痩せなかった場合に適応される返金保証制度があります。また、ダイエット成功後もリバウンドしないよう、タイミングに合わせた体の測定やアドバイスを行う「永久サポート保証」も用意されています。'
+                        }
+                    ],
+                    reviews: [
+                        {
+                            rating: 5,
+                            date: '2024年1月',
+                            text: '2ヶ月で4kg減！プランに高周波治療をつけた内容で2ヶ月間通いました。体重が4kgほど落ちたのでよかったです。'
+                        },
+                        {
+                            rating: 5,
+                            date: '2023年12月',
+                            text: '渋谷駅から歩いて行きやすいの場所にあり、通いやすいです。スタッフの方もフレンドリーで、いろいろおすすめの情報を教えていただき助かっています。'
+                        }
+                    ],
+                    campaignInfo: {
+                        header: 'INFORMATION!',
+                        title: 'DSクリニックの今月のお得な情報',
+                        logoSrc: '/images/clinics/dsc/dsc-logo.jpg',
+                        logoAlt: 'DSクリニック',
+                        description: '脂肪買取キャンペーン<br>1kg痩せるごとに1万円キャッシュバック',
+                        ctaUrl: 'https://ds-clinic.jp/campaign/',
+                        ctaText: 'DSクリニックの公式サイト',
+                        microcopy: '＼20年以上の実績とチーム医療で安心／'
+                    }
                 }
             };
 
@@ -2198,7 +2276,8 @@ class RankingApp {
                 'ウララクリニック': '2',
                 'リエートクリニック': '3',
                 'エミナルクリニック': '4',
-                '湘南美容クリニック': '5'
+                '湘南美容クリニック': '5',
+                'DSクリニック': '6'
             };
             
             const correctClinicId = clinicNameToIdMap[clinic.name] || clinicId;
@@ -2252,7 +2331,8 @@ class RankingApp {
                         'ウララクリニック': '/images/clinics/urara/urara_detail_bnr.webp',
                         'リエートクリニック': '/images/clinics/lieto/lieto_detail_bnr.webp',
                         'エミナルクリニック': '/images/clinics/eminal/eminal_detail_bnr.webp',
-                        '湘南美容クリニック': '/images/clinics/sbc/sbc_detail_bnr.webp'
+                        '湘南美容クリニック': '/images/clinics/sbc/sbc_detail_bnr.webp',
+                        'DSクリニック': '/images/clinics/dsc/dsc_detail_bnr.jpg'
                     };
                     const correctBanner = clinicNameToBannerMap[clinic.name] || data.banner;
                     return correctBanner ? `
@@ -2314,80 +2394,39 @@ class RankingApp {
                 ${(() => {
                     const clinicMap = { '1': 'dio', '2': 'eminal', '3': 'urara', '4': 'lieto', '5': 'sbc', '6': 'dsc' };
                     const clinicSlug = clinicMap[clinic.id];
-                    console.log('=== Case Section Debug ===');
-                    console.log('Clinic ID:', clinic.id, 'Slug:', clinicSlug, 'Rank:', rank);
-                    console.log('window.getCaseImages exists?', typeof window.getCaseImages);
-                    
-                    // getCaseImages関数が存在しない場合はここで定義
-                    if (!window.getCaseImages) {
-                        console.log('Defining getCaseImages function inline');
-                        window.getCaseImages = function(slug) {
-                            const map = {
-                                'dio': [
-                                    { src: '/images/clinics/dio/dio_case/dio_case01.jpg', alt: 'CASE 01 - ボディメイクコース（脂肪冷却＋EMS等）68.4kg → 54.3kg' },
-                                    { src: '/images/clinics/dio/dio_case/dio_case02.jpg', alt: 'CASE 02 - ボディメイクコース（脂肪冷却＋ハイフ等）97.3kg → 65.8kg' },
-                                    { src: '/images/clinics/dio/dio_case/dio_case03.jpg', alt: 'CASE 03 - ボディメイクコース（内服薬＋EMS等）118.4kg → 81.6kg' }
-                                ]
-                            };
-                            return map[slug] || [];
-                        };
-                    }
-                    
-                    const caseImages = window.getCaseImages(clinicSlug);
-                    console.log('Case Images:', caseImages);
+                    const caseImages = getCaseImages(clinicSlug);
                     let caseCarouselHtml = '';
 
                     // CASEセクションは1位のクリニックのみ表示
                     if (rank === 1 && caseImages && caseImages.length > 0) {
-                        console.log('Generating case carousel for rank 1');
                         caseCarouselHtml = `
                             <div class="clinic-points-section">
                                 <h4 class="section-title">症例写真</h4>
                                 <div class="case-slider" style="position: relative;">
-                                    <div class="case-carousel-container">
-                                        ${caseImages.map((image, index) => {
-                                            // 画像から体重情報を抽出（例: "68.4kg → 54.3kg"）
-                                            const weightMatch = image.alt.match(/(\d+\.\d+kg)\s*→\s*(\d+\.\d+kg)/);
-                                            const beforeWeight = weightMatch ? weightMatch[1] : '施術前';
-                                            const afterWeight = weightMatch ? weightMatch[2] : '施術後';
-                                            const caseNumber = `CASE ${String(index + 1).padStart(2, '0')}`;
-                                            
-                                            return `
-                                            <div class="case-slide">
-                                                <div class="case-header" style="color: #5DCCCA; font-size: 24px; font-weight: bold; margin-bottom: 10px; text-align: left;">
-                                                    ${caseNumber}
-                                                </div>
-                                                <div class="case-title" style="font-size: 14px; margin-bottom: 15px; text-align: left;">
-                                                    ボディメイクコース（脂肪冷却・EMS等）
-                                                </div>
-                                                <div class="case-images-wrapper" style="display: flex; gap: 20px; margin-bottom: 20px; align-items: center;">
-                                                    <div class="before-image" style="flex: 1; text-align: center;">
-                                                        <img src="${image.src}" alt="施術前" style="width: 100%; max-width: 200px; height: auto; border: 3px solid #5DCCCA; border-radius: 8px;">
-                                                        <div style="margin-top: 10px; font-size: 24px; font-weight: bold; color: #333;">${beforeWeight}</div>
-                                                    </div>
-                                                    <div class="arrow" style="font-size: 40px; color: #5DCCCA;">➤</div>
-                                                    <div class="after-image" style="flex: 1; text-align: center;">
-                                                        <img src="${image.src}" alt="施術後" style="width: 100%; max-width: 200px; height: auto; border: 3px solid #5DCCCA; border-radius: 8px;">
-                                                        <div style="margin-top: 10px; font-size: 24px; font-weight: bold; color: #5DCCCA;">${afterWeight}</div>
-                                                    </div>
-                                                </div>
-                                                <div class="case-info-table" style="background: #f8f8f8; padding: 15px; border-radius: 8px;">
-                                                    <div style="display: flex; margin-bottom: 10px;">
-                                                        <div style="width: 100px; font-weight: bold; color: #666;">コース名</div>
-                                                        <div style="flex: 1; padding-left: 20px;">医療痩身ボディメイクコース</div>
-                                                    </div>
-                                                    <div style="display: flex; margin-bottom: 10px;">
-                                                        <div style="width: 100px; font-weight: bold; color: #666;">施術の説明</div>
-                                                        <div style="flex: 1; padding-left: 20px;">直流EMS、電磁場EMS、脂肪冷却、ボディハイフ、医師監修ダイエット食事指導、オーダーメイド薬セット・医師による薬指導、医師推奨プロテイン</div>
-                                                    </div>
-                                                    <div style="display: flex;">
-                                                        <div style="width: 100px; font-weight: bold; color: #666;">副作用<br>（リスク）</div>
-                                                        <div style="flex: 1; padding-left: 20px; color: #888;">筋肉痛、赤み、腫れ、内出血、しこり、低血糖、吐気、嘔吐、便秘、下痢の症状が出る場合があります。</div>
-                                                    </div>
+                                    <div class="case-carousel-container" style="display: flex !important; overflow-x: auto !important; scroll-snap-type: x mandatory !important; scrollbar-width: none !important; -ms-overflow-style: none !important;">
+                                        ${caseImages.map(image => `
+                                            <div class="case-slide" style="flex: 0 0 100% !important; scroll-snap-align: center !important; padding: 0 2% !important; display: flex !important; flex-direction: column !important;">
+                                                <img src="${image.src}" alt="${image.alt}" loading="lazy" style="width: auto !important; height: auto !important; max-width: 100% !important; object-fit: contain !important; margin: 0 auto !important; display: block !important; padding: 0 !important; box-sizing: content-box !important; padding-top: 2% !important;">
+                                                <div class="case-info" style="margin-top: 5px; padding: 0 5%; text-align: left; font-size: 12px; line-height: 1.6; width: 100%;">
+                                                    <table class="case-table" style="width: 100% !important; border-collapse: collapse !important; font-size: 8px !important; line-height: 1.6 !important; display: table !important; table-layout: fixed !important;">
+                                                        <tbody style="display: table-row-group !important;">
+                                                            <tr style="display: table-row !important;">
+                                                                <td style="padding: 0 8px !important; background-color: #f8f8f8 !important; font-weight: bold !important; width: 30% !important; display: table-cell !important; vertical-align: top !important;">コース名</td>
+                                                                <td style="padding: 0 8px !important; display: table-cell !important; vertical-align: top !important;">医療痩身ボディメイクコース</td>
+                                                            </tr>
+                                                            <tr style="display: table-row !important;">
+                                                                <td style="padding: 0 8px !important; background-color: #f8f8f8 !important; font-weight: bold !important; display: table-cell !important; vertical-align: top !important;">施術の説明</td>
+                                                                <td style="padding: 0 8px !important; display: table-cell !important; vertical-align: top !important;">直流EMS、電磁場EMS、脂肪冷却、ボディハイフ、医師監修ダイエット食事指導、オーダーメイド薬セット・医師による薬指導、医師推奨プロテイン</td>
+                                                            </tr>
+                                                            <tr style="display: table-row !important;">
+                                                                <td style="padding: 0 8px !important; background-color: #f8f8f8 !important; font-weight: bold !important; display: table-cell !important; vertical-align: top !important;">副作用<br>（リスク）</td>
+                                                                <td style="padding: 0 8px !important; color: #666 !important; display: table-cell !important; vertical-align: top !important;">筋肉痛、赤み、腫れ、内出血、しこり、低血糖、吐気、嘔吐、便秘、下痢の症状が出る場合があります。</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
                                                 </div>
                                             </div>
-                                            `;
-                                        }).join('')}
+                                        `).join('')}
                                     </div>
                                     <button class="case-nav case-nav-prev" style="position: absolute; top: 150px; left: 10px; transform: translateY(-50%); z-index: 10; background: rgba(0,0,0,0.5); color: white; border: none; border-radius: 50%; width: 40px; height: 40px; font-size: 20px; cursor: pointer;">&lt;</button>
                                     <button class="case-nav case-nav-next" style="position: absolute; top: 150px; right: 10px; transform: translateY(-50%); z-index: 10; background: rgba(0,0,0,0.5); color: white; border: none; border-radius: 50%; width: 40px; height: 40px; font-size: 20px; cursor: pointer;">&gt;</button>
@@ -2400,6 +2439,7 @@ class RankingApp {
                     }
                     return caseCarouselHtml;
                 })()}
+                
                 
                 <!-- 口コミ -->
                 <div class="reviews-section">
@@ -2698,7 +2738,8 @@ class RankingApp {
             '2': 'eminal',
             '3': 'urara',
             '4': 'lieto',
-            '5': 'sbc'
+            '5': 'sbc',
+            '6': 'dsc'
         };
         const clinicName = clinicNames[clinicId] || 'dio';
         if (!stores || stores.length === 0) {
