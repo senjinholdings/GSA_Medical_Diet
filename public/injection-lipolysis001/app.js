@@ -687,17 +687,23 @@ class DataManager {
                 clinicStores: {}
             };
             
-            // clinic_1からclinic_5までの店舗IDを取得
-            for (let i = 1; i <= 5; i++) {
-                const clinicKey = `clinic_${i}`;
-                if (row[clinicKey] && row[clinicKey] !== '-') {
+            // 各クリニックの店舗IDを取得（新しいヘッダー構造に対応）
+            // dio_stores, urara_stores, dsc_stores, lieto_stores, eminal_stores, sbc_stores
+            const clinicKeys = ['dio_stores', 'urara_stores', 'dsc_stores', 'lieto_stores', 'eminal_stores', 'sbc_stores'];
+            clinicKeys.forEach(key => {
+                if (row[key] && row[key] !== '-') {
                     // 複数店舗は/で区切られている
-                    view.clinicStores[clinicKey] = row[clinicKey].split('/');
+                    view.clinicStores[key] = row[key].split('/');
                 }
+            });
+            
+            // 056のデータをデバッグ
+            if (row.parameter_no === '056') {
             }
             
             return view;
         });
+        
     }
 
     // キャンペーンデータの読み込み
@@ -1143,27 +1149,40 @@ class DataManager {
 
     // 地域IDで店舗を取得（store_viewデータを使用してランキングに対応した店舗を取得）
     getStoresByRegionId(regionId) {
+        
         // store_viewから該当地域のデータを取得
         const storeView = this.storeViews.find(sv => sv.regionId === regionId);
-        if (!storeView) return [];
+        if (!storeView) {
+            return [];
+        }
         
         // ランキングデータを取得して、表示されているクリニックを特定
         const ranking = this.getRankingByRegionId(regionId);
         
-        if (!ranking) return [];
+        if (!ranking) {
+            return [];
+        }
         
         // 表示する店舗IDのリストを作成
         const storeIdsToShow = [];
         
         // ランキングに表示されているクリニックIDに対応する店舗IDを取得
-        // 注意: storeView.clinicStoresのキーはclinic_1〜clinic_5で、これは「ランキング順位」に対応
+        // 新しい構造: クリニックコードベースのキー（dio_stores, sbc_stores等）
         Object.entries(ranking.ranks).forEach(([position, clinicId]) => {
-            // positionはno1, no2等の文字列なので、数字部分だけ抽出
-            const positionNumber = position.replace('no', '');
-            const clinicKey = `clinic_${positionNumber}`;
+            // クリニックIDからクリニックを取得
+            const clinic = this.clinics.find(c => c.id === clinicId);
+            if (!clinic) {
+                console.warn(`  ⚠️ Clinic not found for ID: ${clinicId}`);
+                return;
+            }
+            
+            // クリニックコードから対応するキーを作成
+            const clinicKey = `${clinic.code}_stores`;
             
             if (storeView.clinicStores[clinicKey]) {
                 storeIdsToShow.push(...storeView.clinicStores[clinicKey]);
+            } else {
+                console.warn(`  ⚠️ No stores found for key: ${clinicKey}`);
             }
         });
         
@@ -1339,7 +1358,6 @@ class RankingApp {
                 this.displayManager.hamburgerMenu.classList.toggle('active');
                 this.displayManager.sidebarMenu.classList.toggle('active');
                 this.displayManager.sidebarOverlay.classList.toggle('active');
-                
             });
         } else {
         }
@@ -1551,9 +1569,6 @@ class RankingApp {
             // 地域名の更新
             this.displayManager.updateSelectedRegionName(region.name);
             
-            // ページタイトルを更新
-            document.title = `2025年${region.name}版｜医療ダイエット比較ランキング`;
-            
             // 比較表の地域名も更新
             const comparisonRegionElement = document.getElementById('comparison-region-name');
             if (comparisonRegionElement) {
@@ -1636,6 +1651,7 @@ class RankingApp {
             this.displayManager.updateFooterClinics(allClinics, ranking);
 
             // 店舗リストの取得と表示（クリニックごとにグループ化）
+            // 店舗一覧表示は無効化（不要なUIのため）
             // const stores = this.dataManager.getStoresByRegionId(regionId);
             // const clinicsWithStores = this.groupStoresByClinics(stores, ranking, allClinics);
             // this.displayManager.updateStoresDisplay(stores, clinicsWithStores);
@@ -1675,9 +1691,6 @@ class RankingApp {
             const currentClinic = this.dataManager.getCurrentClinic();
 
             // ページタイトルの更新
-            const pageTitle = this.dataManager.getClinicText(currentClinic, 'サイトタイトル', '2025年全国版｜クールスカルプティング比較ランキング');
-            document.title = pageTitle;
-
             // メタディスクリプションの更新
             const metaDesc = document.querySelector('meta[name="description"]');
             if (metaDesc) {
@@ -1763,7 +1776,7 @@ class RankingApp {
             // 案件詳細バナーのalt属性を更新（共通テキスト）
             const detailsBannerImg = document.querySelector('.details-banner-image');
             if (detailsBannerImg) {
-                const detailsBannerAlt = this.dataManager.getCommonText('案件詳細バナーalt', 'コスパ×効果×通いやすさで選ぶクールスカルプティングBEST3');
+                const detailsBannerAlt = this.dataManager.getCommonText('案件詳細バナーalt', 'コスパ×効果×通いやすさで選ぶ脂肪冷却BEST3');
                 detailsBannerImg.setAttribute('alt', detailsBannerAlt);
             }
             
@@ -1785,7 +1798,7 @@ class RankingApp {
             // タブタイトルの更新
             const tabTexts = document.querySelectorAll('.tips-container .tab-text');
             if (tabTexts.length >= 3) {
-                tabTexts[0].textContent = this.dataManager.getCommonText('Tipsタブ1タイトル', 'クールスカルプティングの効果');
+                tabTexts[0].textContent = this.dataManager.getCommonText('Tipsタブ1タイトル', '脂肪冷却の効果');
                 tabTexts[1].textContent = this.dataManager.getCommonText('Tipsタブ2タイトル', 'クリニック選び');
                 tabTexts[2].textContent = this.dataManager.getCommonText('Tipsタブ3タイトル', '今がおすすめ');
             }
@@ -1795,7 +1808,7 @@ class RankingApp {
             if (tabContents.length >= 3) {
                 const tips1P = tabContents[0].querySelector('p');
                 if (tips1P) {
-                    const tips1Content = this.dataManager.getCommonText('Tips1内容', '本気で痩せたいならクールスカルプティング！科学的根拠に基づき、脂肪細胞そのものを凍結・減少させる痩身治療です。リバウンドしにくく、部分痩せも可能。自己流ダイエットで失敗続きの方にこそ試してほしい、確実な痩身方法です。');
+                    const tips1Content = this.dataManager.getCommonText('Tips1内容', '本気で痩せたいなら脂肪冷却が最短！科学的根拠に基づき、脂肪細胞そのものを凍結・減少させる痩身治療です。リバウンドしにくく、部分痩せも可能。自己流ダイエットで失敗続きの方にこそ試してほしい、確実な痩身方法です。');
                     tips1P.innerHTML = this.dataManager.processDecoTags(tips1Content);
                 }
                 
@@ -2473,7 +2486,9 @@ class RankingApp {
             const storeClinicName = clinic.name;
             
             // 現在のクリニックに属する店舗のみをフィルタリング
-            data.stores = allStores.filter(store => store.clinicName === storeClinicName);
+            data.stores = allStores.filter(store => {
+                return store.clinicName === storeClinicName;
+            });
 
             detailItem.innerHTML = `
                 <div class="ranking_box_in">
@@ -3335,7 +3350,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // グローバルなクリックイベントリスナーも追加（デバッグ用）
         document.addEventListener('click', (e) => {
             if (e.target.tagName === 'A' && (e.target.textContent.includes('詳細を見る') || e.target.textContent.includes('詳細をみる'))) {
-                // Track detail link clicks
+                // Track detail link click
             }
         }, true);
     }, 500);
