@@ -2629,6 +2629,7 @@ class RankingApp {
                                         ${caseImages.map((_, index) => `<button class="case-dot${index === 0 ? ' active' : ''}" data-index="${index}" style="width: 7px !important; height: 7px !important; border-radius: 50% !important; cursor: pointer !important; transition: all 0.3s ease !important; border: none !important; padding: 0 !important;"></button>`).join('')}
                                     </div>
                                 </div>
+                                <p style="font-size:8px;text-align:right;margin-top:10px;">※3ヶ月医療痩身ボディメイクを契約されたモニター対象の会員の代表的な事例を提示しています。</p>
                             </div>
                         `;
                     }
