@@ -1749,6 +1749,27 @@ class RankingApp {
                 svgText2Element.textContent = svgText2;
             }
 
+            // detail-rank-count要素の更新（RANK_COUNTと同じ値を使用）
+            const detailRankCountElement = document.getElementById('detail-rank-count');
+            if (detailRankCountElement) {
+                // 既に計算済みのrankCountを使用（上のSVGテキスト2で計算済み）
+                let displayRankCount = 3; // デフォルト値
+                const ranking = this.dataManager.getRankingByRegionId(regionId);
+                if (ranking && ranking.ranks) {
+                    let validRanks = 0;
+                    for (let i = 1; i <= 5; i++) {
+                        const clinicId = ranking.ranks[`no${i}`];
+                        if (clinicId && clinicId !== '-' && clinicId !== '') {
+                            validRanks++;
+                        }
+                    }
+                    if (validRanks > 0) {
+                        displayRankCount = Math.min(validRanks, 5);
+                    }
+                }
+                detailRankCountElement.textContent = displayRankCount;
+            }
+
             // ランキングバナーのalt属性更新（共通テキスト）
             const rankingBanner = document.querySelector('.ranking-banner-image');
             if (rankingBanner) {

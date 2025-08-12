@@ -1127,6 +1127,25 @@ class RankingApp {
             const ranking = this.dataManager.getRankingByRegionId(regionId);
             const allClinics = this.dataManager.getAllClinics();
             this.displayManager.updateRankingDisplay(allClinics, ranking);
+            
+            // detail-rank-count要素の更新（RANK_COUNTと同じ値を使用）
+            const detailRankCountElement = document.getElementById('detail-rank-count');
+            if (detailRankCountElement) {
+                let displayRankCount = 3; // デフォルト値
+                if (ranking && ranking.ranks) {
+                    let validRanks = 0;
+                    for (let i = 1; i <= 5; i++) {
+                        const clinicId = ranking.ranks[`no${i}`];
+                        if (clinicId && clinicId !== '-' && clinicId !== '') {
+                            validRanks++;
+                        }
+                    }
+                    if (validRanks > 0) {
+                        displayRankCount = Math.min(validRanks, 5);
+                    }
+                }
+                detailRankCountElement.textContent = displayRankCount;
+            }
 
             // フッターの人気クリニックを更新
             this.displayManager.updateFooterClinics(allClinics, ranking);
