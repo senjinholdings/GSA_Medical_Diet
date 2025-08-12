@@ -3332,7 +3332,8 @@ function initializeDisclaimers() {
     let disclaimerCount = 0;
     
     topClinics.forEach(clinic => {
-        const disclaimerText = window.dataManager.getClinicText(clinic.code, 'INFORMATION確認事項', '');
+        // 比較表の注意事項フィールドから取得
+        const disclaimerText = window.dataManager.getClinicText(clinic.code, '比較表の注意事項', '');
         
         // 注意事項がある場合のみ表示
         if (disclaimerText && disclaimerText.trim() !== '') {
