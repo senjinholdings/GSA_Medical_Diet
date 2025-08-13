@@ -1793,7 +1793,10 @@ class RankingApp {
             // 2番目の詳細セクションの地域名も更新
             const detailRegionElement2 = document.getElementById('detail-region-name-2');
             if (detailRegionElement2) {
-                detailRegionElement2.textContent = region.name;
+                const region2 = this.dataManager.getRegionById(regionId);
+                if (region2) {
+                    detailRegionElement2.textContent = region2.name + 'で人気のクリニック';
+                }
             }
 
             // ランキングバナーのalt属性更新（共通テキスト）
@@ -2541,7 +2544,7 @@ class RankingApp {
                 <div class="ranking_box_in">
                     <div class="detail-rank">
                         <div class="detail-rank-header">
-                            <div class="detail-rank-badge ${badgeClass}">No.${rank}</div>
+                            <div class="detail-rank-badge ${badgeClass}">${rank}</div>
                             <div class="detail-title">
                                 <h3>${data.title}</h3>
                                 <p>${data.subtitle}</p>
