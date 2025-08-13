@@ -1769,6 +1769,32 @@ class RankingApp {
                 }
                 detailRankCountElement.textContent = displayRankCount;
             }
+            
+            // 2番目のdetail-rank-count要素も更新
+            const detailRankCountElement2 = document.getElementById('detail-rank-count-2');
+            if (detailRankCountElement2) {
+                let displayRankCount2 = 3; // デフォルト値
+                const ranking2 = this.dataManager.getRankingByRegionId(regionId);
+                if (ranking2 && ranking2.ranks) {
+                    let validRanks2 = 0;
+                    for (let i = 1; i <= 5; i++) {
+                        const clinicId = ranking2.ranks[`no${i}`];
+                        if (clinicId && clinicId !== '-' && clinicId !== '') {
+                            validRanks2++;
+                        }
+                    }
+                    if (validRanks2 > 0) {
+                        displayRankCount2 = Math.min(validRanks2, 5);
+                    }
+                }
+                detailRankCountElement2.textContent = displayRankCount2;
+            }
+            
+            // 2番目の詳細セクションの地域名も更新
+            const detailRegionElement2 = document.getElementById('detail-region-name-2');
+            if (detailRegionElement2) {
+                detailRegionElement2.textContent = region.name;
+            }
 
             // ランキングバナーのalt属性更新（共通テキスト）
             const rankingBanner = document.querySelector('.ranking-banner-image');
