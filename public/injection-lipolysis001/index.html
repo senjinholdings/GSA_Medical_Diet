@@ -219,6 +219,21 @@
                         <div class="comparison-tab-menu-item" data-tab="tab3">サービス</div>
                     </div>
                     <table>
+                        <thead>
+                            <tr>
+                                <th>クリニック</th>
+                                <th class="">総合評価</th>
+                                <th class="">実績</th>
+                                <th class="">特典</th>
+                                <th class="th-none">人気プラン</th>
+                                <th class="th-none">医療機器</th>
+                                <th class="th-none">注射治療</th>
+                                <th class="th-none">対応部位</th>
+                                <th class="th-none">モニター割</th>
+                                <th class="th-none">返金保証</th>
+                                <th>公式サイト</th>
+                            </tr>
+                        </thead>
                         <tbody id="comparison-tbody">
                          
                         </tbody>
@@ -881,11 +896,65 @@ text-align: center;
 
     <!-- 1位クリニック動的表示機能 -->
     <script>
+        // クリニックIDからスラッグへのマッピング
+        const clinicIdToSlugMap = {
+            '1': 'dio',
+            '2': 'lieto',
+            '3': 'sbc',
+            '4': 'eminal',
+            '5': 'urara',
+            '6': 'dsc',
+            '7': 'tbs'
+        };
+        
+        // クリニック名からスラッグへのマッピング
+        const clinicNameToSlugMap = {
+            'ディオクリニック': 'dio',
+            'リエートクリニック': 'lieto',
+            '湘南美容クリニック': 'sbc',
+            'エミナルクリニック': 'eminal',
+            'ウララクリニック': 'urara',
+            'DSクリニック': 'dsc',
+            '東京美容外科': 'tbs'
+        };
+        
+        // クリニックコードから日本語名に変換
+        function getClinicNameFromCode(clinicCode) {
+            const codeToNameMap = {
+                'dio': 'ディオクリニック',
+                'lieto': 'リエートクリニック',
+                'sbc': '湘南美容クリニック',
+                'eminal': 'エミナルクリニック',
+                'urara': 'ウララクリニック',
+                'dsc': 'DSクリニック',
+                'tbs': '東京美容外科'
+            };
+            return codeToNameMap[clinicCode] || 'ディオクリニック';
+        }
+        
+        // フォールバック用の理由マップ
+        const reasonsMap = {
+            'dio': [
+                {
+                    title: '圧倒的な実績＆成功率99％',
+                    description: 'ダイエット成功率99％、平均13.7kg減の実績。科学的根拠に基づいた医療痩身プログラムで、確実に結果を出します。'
+                },
+                {
+                    title: '最新の医療機器を完備',
+                    description: '脂肪冷却・医療用EMS・医療ハイフ・医療ラジオ波など、最新の痩身機器を多数完備。一人一人の悩みに合わせた最適な治療を提供します。'
+                },
+                {
+                    title: '管理栄養士による完全サポート',
+                    description: '管理栄養士による食事指導で健康的にダイエット。痩せなかったら全額返金、リバウンド防止プログラム付きで安心です。'
+                }
+            ]
+        };
+        
         // 1位クリニックの情報を設定
         function setFirstChoiceClinic(clinicData) {
             if (!clinicData) return;
             
-            
+            const clinicName = clinicData.name || 'ディオクリニック';
             const clinicSlug = clinicIdToSlugMap[clinicData.id] || clinicNameToSlugMap[clinicName] || 'dio';
             
             console.log('Setting first choice clinic:', {
@@ -1008,8 +1077,12 @@ text-align: center;
 
         // 3つの理由を設定
         function setThreeReasons(clinicSlug) {
+            console.log('setThreeReasons called with clinicSlug:', clinicSlug);
             const pointsContainer = document.getElementById('first-choice-points');
-            if (!pointsContainer) return;
+            if (!pointsContainer) {
+                console.error('Points container not found');
+                return;
+            }
             
             // JSONファイルから動的にPOINTタイトルと内容を取得
             fetch('./data/clinic-texts.json')
@@ -1017,9 +1090,26 @@ text-align: center;
                 .then(clinicTexts => {
                     // クリニックコードから日本語名に変換
                     const clinicName = getClinicNameFromCode(clinicSlug);
+                    console.log('Looking for clinic name:', clinicName, 'in JSON data');
                     const clinicData = clinicTexts[clinicName] || clinicTexts['ディオクリニック'];
+                    console.log('Clinic data found:', clinicData);
                     
                     const officialUrl = `https://www.xn--ecki4eoz3204ct89aepry34c.com/go/${clinicSlug}/?max_scroll=100&region_id=013`;
+                    
+                    // POINTデータを動的に取得
+                    const points = [];
+                    for (let i = 1; i <= 3; i++) {
+                        const title = clinicData[`POINT${i}タイトル`];
+                        const content = clinicData[`POINT${i}内容`];
+                        console.log(`POINT${i}:`, { title, content });
+                        if (title && content) {
+                            points.push({ title, description: content });
+                        }
+                    }
+                    
+                    // POINTデータが取得できない場合はフォールバック
+                    const reasons = points.length > 0 ? points : (reasonsMap[clinicSlug] || reasonsMap['dio']);
+                    console.log('Final reasons to display:', reasons);
                     
                     let html = '';
                     reasons.forEach(reason => {
@@ -1041,7 +1131,9 @@ text-align: center;
                         officialLink.innerHTML = `【公式】<a href="${officialUrl}" target="_blank" rel="noopener"><strong>${clinicUrl}</strong></a>`;
                     }
                     
-                    pointsContainer.innerHTML = html + pointsContainer.innerHTML.match(/<div class="ribbon_point_link"[\s\S]*?<\/div>/)?.[0] || '';
+                    // 公式リンク部分を保持
+                    const officialLinkHtml = pointsContainer.querySelector('.ribbon_point_link')?.outerHTML || '';
+                    pointsContainer.innerHTML = html + officialLinkHtml;
                 })
                 .catch(error => {
                     console.error('Error loading clinic texts:', error);
@@ -1068,7 +1160,9 @@ text-align: center;
                         officialLink.innerHTML = `【公式】<a href="${officialUrl}" target="_blank" rel="noopener"><strong>https://dioclinic.jp/</strong></a>`;
                     }
                     
-                    pointsContainer.innerHTML = html + pointsContainer.innerHTML.match(/<div class="ribbon_point_link"[\s\S]*?<\/div>/)?.[0] || '';
+                    // 公式リンク部分を保持
+                    const officialLinkHtml = pointsContainer.querySelector('.ribbon_point_link')?.outerHTML || '';
+                    pointsContainer.innerHTML = html + officialLinkHtml;
                 });
         }
 

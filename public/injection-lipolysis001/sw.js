@@ -7,7 +7,7 @@ const urlsToCache = [
   '/images/favicon.png',
   '/images/ranking_header_banner.webp',
   '/images/clinics/dsc/dsc-logo.webp',
-  '/images/clinics/dsc/dsc-logo.jpg',
+  '/images/clinics/dsc/dsc-logo.webp',
   '/images/clinics/dsc/dsc_detail_bnr.webp',
   '/images/clinics/dsc/dsc_detail_bnr.jpg'
 ];
