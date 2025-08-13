@@ -115,6 +115,7 @@
                     constructor() {
                         this.clinicTexts = {};
                         this.clinics = [];
+                        this.rankings = {};
                     }
                     
                     async loadClinicTexts() {
@@ -124,11 +125,25 @@
                     
                     async loadCompiledData() {
                         console.log('📊 compiled-data.json読み込み中...');
-                        const response = await fetch('../data/compiled-data.json');
+                        const response = await fetch('./data/compiled-data.json');
                         const data = await response.json();
                         this.clinics = data.clinics || [];
+                        this.rankings = data.rankings || {};
                         console.log('📊 クリニック数:', this.clinics.length);
                         console.log('📊 読み込まれたクリニック:', this.clinics.map(c => `${c.id}:${c.name}`));
+                    }
+
+                    getRankForClinic(regionId, clinicId) {
+                        if (!this.rankings || !regionId) return null;
+                        const mapping = this.rankings[String(regionId)] || this.rankings[regionId] || null;
+                        if (!mapping) return null;
+                        for (const [key, value] of Object.entries(mapping)) {
+                            if (String(value) === String(clinicId)) {
+                                const m = key.match(/no(\d+)/);
+                                if (m) return parseInt(m[1], 10);
+                            }
+                        }
+                        return null;
                     }
                     
                     getClinicText(clinicCode, fieldName, defaultValue = '') {
@@ -187,7 +202,7 @@
             // URLパラメータを取得
             const urlParams = new URLSearchParams(window.location.search);
             const clinicId = urlParams.get('clinic_id');
-            const rank = parseInt(urlParams.get('rank')) || 1;
+            let rank = parseInt(urlParams.get('rank')) || 1;
             
             console.log('📋 受け取ったパラメータ:');
             console.log(`  clinic_id: ${clinicId}`);
@@ -225,13 +240,20 @@
                 return;
             }
             
-            // 遷移先URLを取得
+            // ランキング順位を補正
+            const resolved = window.dataManager.getRankForClinic(urlParams.get('region_id') || '013', clinicId);
+            if (resolved) {
+                console.log(`  ランキング順位(補正前): ${rank}`);
+                rank = resolved;
+            }
+            console.log(`  ランキング順位: ${rank}`);
+
+            // 遷移先URLを取得（補正後のrankで）
             const urlFieldName = `遷移先URL（${rank}位）`;
             let targetUrl = window.dataManager.getClinicText(clinicCode, urlFieldName, '');
             
             console.log('🔍 URL取得情報:');
             console.log(`  クリニックコード: ${clinicCode}`);
-            console.log(`  ランキング順位: ${rank}`);
             console.log(`  URLフィールド名: ${urlFieldName}`);
             console.log(`  取得したURL: ${targetUrl}`);
             

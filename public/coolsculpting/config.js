@@ -1,6 +1,6 @@
-// injection-lipolysis001ディレクトリ用の設定
+// coolsculptingディレクトリ用の設定
 window.SITE_CONFIG = {
-    basePath: '/injection-lipolysis001',
+    basePath: '/coolsculpting',
     assetsPath: '.',
     dataPath: './data',
     imagesPath: './images'
