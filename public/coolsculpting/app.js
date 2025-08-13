@@ -1625,9 +1625,9 @@ class RankingApp {
             }
 
             //詳細セクションの地域名も更新
-            const detailRegionElement = document.getElementById('detail-region-name');
-            if (detailRegionElement) {
-                detailRegionElement.textContent = region.name + 'で人気のクリニック';
+            const detailRegionName2Element = document.getElementById('detail-region-name-2');
+            if (detailRegionName2Element) {
+                detailRegionName2Element.textContent = region.name + 'で人気のクリニック';
                 
                 // 地域名の文字数に応じてleftの位置を調整
                 const regionNameLength = region.name.length;
@@ -1639,7 +1639,7 @@ class RankingApp {
                     leftPosition = '1%'; // 3文字（例：神奈川、埼玉）
                 }
                 
-                detailRegionElement.style.left = leftPosition;
+                detailRegionName2Element.style.left = leftPosition;
             }
 
             // ランキングの取得と表示
@@ -1749,9 +1749,9 @@ class RankingApp {
                 svgText2Element.textContent = svgText2;
             }
 
-            // detail-rank-count要素の更新（RANK_COUNTと同じ値を使用）
-            const detailRankCountElement = document.getElementById('detail-rank-count');
-            if (detailRankCountElement) {
+            // detail-rank-count-2要素の更新（RANK_COUNTと同じ値を使用）
+            const detailRankCount2Element = document.getElementById('detail-rank-count-2');
+            if (detailRankCount2Element) {
                 // 既に計算済みのrankCountを使用（上のSVGテキスト2で計算済み）
                 let displayRankCount = 3; // デフォルト値
                 const ranking = this.dataManager.getRankingByRegionId(regionId);
@@ -1767,7 +1767,7 @@ class RankingApp {
                         displayRankCount = Math.min(validRanks, 5);
                     }
                 }
-                detailRankCountElement.textContent = displayRankCount;
+                detailRankCount2Element.textContent = displayRankCount;
             }
 
             // ランキングバナーのalt属性更新（共通テキスト）

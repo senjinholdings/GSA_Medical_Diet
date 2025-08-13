@@ -47,32 +47,29 @@ class UrlParamHandler {
         this.setParam('region_id', regionId);
     }
 
-    // クリニックURLを取得（CSVから直接URLを取得し、パラメータを適切に処理）
+    // クリニックURLを取得（必ずリダイレクトページ経由）
     getClinicUrlWithRegionId(clinicId, rank = 1) {
-        // DataManagerが初期化されているか確認
-        if (!window.dataManager) {
-            return '#';
-        }
-        
-        // 中間ページ経由でリダイレクトするURLを生成
-        const redirectUrl = new URL('./redirect.html', window.location.origin + window.location.pathname);
         const currentParams = new URLSearchParams(window.location.search);
-        
-        // 中間ページに渡すパラメータを設定
-        redirectUrl.searchParams.set('clinic_id', clinicId);
-        redirectUrl.searchParams.set('rank', rank);
-        
-        // region_idを追加
         const regionId = this.getRegionId();
-        if (regionId) {
-            redirectUrl.searchParams.set('region_id', regionId);
-        }
-        
-        // 現在のURLのパラメータをすべて転送
-        for (const [key, value] of currentParams) {
-            redirectUrl.searchParams.set(key, value);
-        }
-        
+        let resolvedRank = parseInt(rank, 10);
+        // 常に現在地域のランキングから正順位を再解決（提供されたrankが1でも上書き）
+        try {
+            if (window.dataManager && typeof window.dataManager.getRanking === 'function') {
+                const r = window.dataManager.getRanking(regionId);
+                if (r && r.ranks) {
+                    const found = Object.entries(r.ranks).find(([rk, id]) => String(id) === String(clinicId));
+                    if (found) resolvedRank = parseInt(found[0], 10);
+                }
+            }
+        } catch (_) {}
+        if (!resolvedRank || resolvedRank < 1) resolvedRank = 1;
+        const basePath = (window.SITE_CONFIG && window.SITE_CONFIG.basePath) ? window.SITE_CONFIG.basePath : window.location.pathname.replace(/\/index\.html$/, '');
+        const normalizedBase = basePath.endsWith('/') ? basePath : basePath + '/';
+        const redirectUrl = new URL('redirect.html', window.location.origin + normalizedBase);
+        redirectUrl.searchParams.set('clinic_id', clinicId);
+        redirectUrl.searchParams.set('rank', resolvedRank);
+        if (regionId) redirectUrl.searchParams.set('region_id', regionId);
+        for (const [key, value] of currentParams) redirectUrl.searchParams.set(key, value);
         return redirectUrl.toString();
     }
 
@@ -1566,6 +1563,12 @@ class RankingApp {
                 mvRegionElement.textContent = region.name;
             }
 
+            // 2つ目のバナーの地域名も更新
+            const detailRegionName2Element = document.getElementById('detail-region-name-2');
+            if (detailRegionName2Element) {
+                detailRegionName2Element.textContent = region.name + 'で人気のクリニック';
+            }
+
             // サイト全体のテキストを動的に更新
             // 初回はsetTimeoutで少し遅延させてDOMが完全に構築されるのを待つ
             if (!this.textsInitialized) {
@@ -1645,6 +1648,9 @@ class RankingApp {
             
             // 詳細コンテンツの更新
             this.updateClinicDetails(allClinics, ranking, regionId);
+            
+            // 静的比較表に残る href="#" のCTAリンクを補正（data-rank からURLを生成）
+            this.fixStaticComparisonLinks();
             
             // 比較表の注釈を更新（1位〜5位）
             setTimeout(() => {
@@ -1755,6 +1761,28 @@ class RankingApp {
                     }
                 }
                 detailRankCountElement.textContent = displayRankCount;
+            }
+
+            // 2つ目のdetail-rank-count要素の更新
+            const detailRankCount2Element = document.getElementById('detail-rank-count-2');
+            if (detailRankCount2Element) {
+                // 既に計算済みのrankCountを使用（上のSVGテキスト2で計算済み）
+                let displayRankCount = 6; // デフォルト値
+                const ranking = this.dataManager.getRankingByRegionId(regionId);
+                if (ranking && ranking.ranks) {
+                    let validRanks = 0;
+                    // 6位以上のランキング数を計算
+                    for (let i = 1; i <= 10; i++) {
+                        const clinicId = ranking.ranks[`no${i}`];
+                        if (clinicId && clinicId !== '-' && clinicId !== '') {
+                            validRanks++;
+                        }
+                    }
+                    if (validRanks > 0) {
+                        displayRankCount = validRanks;
+                    }
+                }
+                detailRankCount2Element.textContent = displayRankCount;
             }
 
             // ランキングバナーのalt属性更新（共通テキスト）
@@ -2034,6 +2062,28 @@ class RankingApp {
             
             tbody.appendChild(tr);
         });
+    }
+
+    // 静的比較表の href="#" CTA を補正
+    fixStaticComparisonLinks() {
+        try {
+            const rows = document.querySelectorAll('#comparison-tbody tr');
+            rows.forEach(row => {
+                const link = row.querySelector('a.link_btn[href="#"]');
+                const detailLink = row.querySelector('.detail-static-link');
+                if (!link || !detailLink) return;
+                const rank = parseInt(detailLink.getAttribute('data-rank'), 10);
+                if (!rank || !this.dataManager) return;
+                const regionId = this.urlHandler.getRegionId();
+                const ranking = this.dataManager.getRanking(regionId);
+                if (!ranking || !ranking.ranks) return;
+                const clinicId = ranking.ranks[String(rank)];
+                if (!clinicId) return;
+                link.href = this.urlHandler.getClinicUrlWithRegionId(clinicId, rank);
+                link.setAttribute('target', '_blank');
+                link.setAttribute('rel', 'noopener');
+            });
+        } catch (e) {}
     }
 
     // 1位クリニックおすすめセクションの更新
