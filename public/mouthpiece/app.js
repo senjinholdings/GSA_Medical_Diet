@@ -2020,18 +2020,18 @@ class RankingApp {
         // clinic-texts.jsonから比較表ヘッダー設定を取得
         const headerConfig = this.dataManager.getClinicHeaderConfig();
         
-        // ヘッダーを動的に生成
+        // ヘッダーを動的に生成 - マウスピース矯正サイト用に更新
         const headers = [
             { key: '比較表ヘッダー1', default: 'クリニック', class: '' },
             { key: '比較表ヘッダー2', default: '総合評価', class: '' },
-            { key: '比較表ヘッダー3', default: '実績', class: '' },
-            { key: '比較表ヘッダー4', default: '特典', class: '' },
-            { key: '比較表ヘッダー5', default: '人気プラン', class: 'th-none', style: 'display: none;' },
-            { key: '比較表ヘッダー6', default: '医療機器', class: 'th-none', style: 'display: none;' },
-            { key: '比較表ヘッダー7', default: '注射治療', class: 'th-none', style: 'display: none;' },
-            { key: '比較表ヘッダー8', default: '対応部位', class: 'th-none', style: 'display: none;' },
-            { key: '比較表ヘッダー9', default: 'モニター割', class: 'th-none', style: 'display: none;' },
-            { key: '比較表ヘッダー10', default: '返金保証', class: 'th-none', style: 'display: none;' },
+            { key: '比較表ヘッダー3', default: '実績/症例数', class: '' },
+            { key: '比較表ヘッダー4', default: '特徴', class: '' },  // 特典→特徴に変更
+            { key: '比較表ヘッダー5', default: '対応部位', class: 'th-none', style: 'display: none;' },
+            { key: '比較表ヘッダー6', default: 'モニター割', class: 'th-none', style: 'display: none;' },
+            { key: '比較表ヘッダー7', default: '返金保証', class: 'th-none', style: 'display: none;' },
+            { key: '比較表ヘッダー8', default: '矯正範囲', class: 'th-none', style: 'display: none;' },
+            { key: '比較表ヘッダー9', default: '目安期間', class: 'th-none', style: 'display: none;' },
+            { key: '比較表ヘッダー10', default: '通院頻度', class: 'th-none', style: 'display: none;' },
             { key: '比較表ヘッダー11', default: '公式サイト', class: '' }
         ];
         
