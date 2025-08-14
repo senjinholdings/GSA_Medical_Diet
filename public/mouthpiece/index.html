@@ -1460,11 +1460,31 @@ text-align: center;
                 // コンテナにアクティブなタブを設定
                 tableContainer.setAttribute('data-active-tab', tabType);
                 
-                // タブに応じて動的にヘッダーテキストを更新
+                // タブに応じて動的にヘッダーテキストを更新（JSONファイルから取得）
+                const headerConfig = window.dataManager ? window.dataManager.getClinicHeaderConfig() : null;
+                
                 const headerTextMap = {
-                    'tab1': ['クリニック', '総合評価', '特徴', '費用', '公式サイト'],
-                    'tab2': ['クリニック', '矯正範囲', '目安期間', '通院頻度', '公式サイト'], 
-                    'tab3': ['クリニック', '実績/症例数', 'ワイヤー矯正の紹介', 'サポート', '公式サイト']
+                    'tab1': [
+                        'クリニック', 
+                        headerConfig && headerConfig['比較表ヘッダー2'] || '総合評価',
+                        headerConfig && headerConfig['比較表ヘッダー4'] || '特徴',
+                        headerConfig && headerConfig['比較表ヘッダー5'] || '費用',
+                        '公式サイト'
+                    ],
+                    'tab2': [
+                        'クリニック', 
+                        headerConfig && headerConfig['比較表ヘッダー8'] || '矯正範囲',
+                        headerConfig && headerConfig['比較表ヘッダー9'] || '目安期間',
+                        headerConfig && headerConfig['比較表ヘッダー11'] || '通院頻度',
+                        '公式サイト'
+                    ], 
+                    'tab3': [
+                        'クリニック', 
+                        headerConfig && headerConfig['比較表ヘッダー3'] || '実績/症例数',
+                        headerConfig && headerConfig['比較表ヘッダー12'] || 'ワイヤー矯正の紹介',
+                        headerConfig && headerConfig['比較表ヘッダー13'] || 'サポート',
+                        '公式サイト'
+                    ]
                 };
                 
                 const currentHeaderTexts = headerTextMap[tabType] || headerTextMap['tab1'];
