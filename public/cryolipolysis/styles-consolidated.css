@@ -2849,21 +2849,21 @@ section.clinic-rankings .ranking-header-banner {
 
 /* 各順位の背景色 */
 .ranking_box_1 {
-    background: #ffd27e; /* ゴールド */
+    background: #ffeac3; /* ゴールド */
 }
 
 .ranking_box_2 {
-    background: #AAC2E3; /* ライトブルー */
+    background: #d7e6fc; /* ライトブルー */
 }
 
 .ranking_box_3 {
-    background: #e4b997; /* ブラウン */
+    background: #ffead9; /* ブラウン */
 }
 .ranking_box_4 {
-    background: #c8c8c8; /* グレー */
+    background: #e1e1e1; /* グレー */
 }
 .ranking_box_5 {
-    background: #c8c8c8; /* グレー */
+    background: #e1e1e1; /* グレー */
 }
 
 .detail-rank {
