@@ -935,7 +935,7 @@ class DataManager {
                             <a href="./go/${clinicCode}/?region_id=${regionId}" target="_blank" rel="nofollow">${store.name}</a>
                         </div>
                         <div class='shop-address line-clamp'>
-                            ${store.address}
+                            ${store.address ? store.address.replace(/^["']|["']$/g, '').trim() : ''}
                         </div>
                     </div>
                     <a class="shop-btn map-toggle-btn" href="javascript:void(0);" data-store-id="${storeId}-${index}">
@@ -958,7 +958,7 @@ class DataManager {
                             <a href="./go/${clinicCode}/?region_id=${regionId}" target="_blank" rel="nofollow">${store.name}</a>
                         </div>
                         <div class='shop-address line-clamp'>
-                            ${store.address}
+                            ${store.address ? store.address.replace(/^["']|["']$/g, '').trim() : ''}
                         </div>
                     </div>
                     <a class="shop-btn map-toggle-btn" href="javascript:void(0);" data-store-id="${storeId}-${index + 3}">
