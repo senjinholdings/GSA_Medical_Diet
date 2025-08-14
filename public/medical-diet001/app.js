@@ -2279,7 +2279,7 @@ class RankingApp {
                     campaignInfo: {
                         header: 'INFORMATION!',
                         title: 'DSクリニックの今月のお得な情報',
-                        logoSrc: '/images/clinics/dsc/dsc-logo.jpg',
+                        logoSrc: '/images/clinics/dsc/dsc-logo.webp',
                         logoAlt: 'DSクリニック',
                         description: '脂肪買取キャンペーン<br>1kg痩せるごとに1万円キャッシュバック',
                         ctaUrl: 'https://ds-clinic.jp/campaign/',
@@ -2333,7 +2333,7 @@ class RankingApp {
                 <div class="ranking_box_in">
                     <div class="detail-rank">
                         <div class="detail-rank-header">
-                            <div class="detail-rank-badge ${badgeClass}">No.${rank}</div>
+                            <div class="detail-rank-badge ${badgeClass}">${rank}</div>
                             <div class="detail-title">
                                 <h3>${data.title}</h3>
                                 <p>${data.subtitle}</p>

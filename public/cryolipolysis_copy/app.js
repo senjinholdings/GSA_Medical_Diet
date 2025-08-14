@@ -2479,7 +2479,7 @@ class RankingApp {
                 <div class="ranking_box_in">
                     <div class="detail-rank">
                         <div class="detail-rank-header">
-                            <div class="detail-rank-badge ${badgeClass}">No.${rank}</div>
+                            <div class="detail-rank-badge ${badgeClass}">${rank}</div>
                             <div class="detail-title">
                                 <h3>${data.title}</h3>
                                 <p>${data.subtitle}</p>
