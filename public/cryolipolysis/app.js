@@ -807,7 +807,12 @@ class DataManager {
         if (!text || typeof text !== 'string') return text;
         
         // <deco>タグを<span class="deco-text">に変換
-        return text.replace(/<deco>(.*?)<\/deco>/g, '<span class="deco-text">$1</span>');
+        text = text.replace(/<deco>(.*?)<\/deco>/g, '<span class="deco-text">$1</span>');
+        
+        // <anno>タグを<span class="anno-text">に変換
+        text = text.replace(/<anno>(.*?)<\/anno>/g, '<span class="anno-text">$1</span>');
+        
+        return text;
     }
 
     // クリニックの口コミデータを動的に取得

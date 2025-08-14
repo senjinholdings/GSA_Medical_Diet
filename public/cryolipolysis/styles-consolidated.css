@@ -289,6 +289,12 @@ section, main, header, footer, nav, aside, article {
     font-weight: 600;
 }
 
+/* CSV anno tag styling */
+.anno-text {
+    color: #b4b4b4;
+    font-size: 10px;
+}
+
 /* 全てのselect要素の矢印を黒色に統一 */
 select {
     appearance: none;
