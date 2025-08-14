@@ -794,10 +794,40 @@ class DataManager {
         const clinic = this.clinics.find(c => c.code === clinicCode);
         const clinicName = clinic ? clinic.name : null;  // clinic_nameではなくname
         
-        if (clinicName && this.clinicTexts && this.clinicTexts[clinicName] && this.clinicTexts[clinicName][itemKey]) {
-            return this.clinicTexts[clinicName][itemKey];
+        // 比較表項目の汎用キーを実際のキーにマッピング
+        let actualKey = itemKey;
+        if (itemKey.startsWith('比較表項目')) {
+            const headerConfig = this.getClinicHeaderConfig();
+            if (headerConfig) {
+                // 比較表項目4 → 比較表ヘッダー4 → 実際のキー名（例：キャンペーン）
+                const headerKey = itemKey.replace('比較表項目', '比較表ヘッダー');
+                if (headerConfig[headerKey]) {
+                    actualKey = headerConfig[headerKey];
+                }
+            }
+        }
+        
+        // 詳細フィールドのマッピングをチェック
+        if (this.clinicTexts && this.clinicTexts['詳細フィールドマッピング']) {
+            const fieldMapping = this.clinicTexts['詳細フィールドマッピング'];
+            if (fieldMapping[itemKey]) {
+                actualKey = fieldMapping[itemKey];
+            }
+        }
+        
+        if (clinicName && this.clinicTexts && this.clinicTexts[clinicName] && this.clinicTexts[clinicName][actualKey]) {
+            return this.clinicTexts[clinicName][actualKey];
         }
         return defaultText;
+    }
+
+    // 比較表ヘッダー設定を取得
+    getClinicHeaderConfig() {
+        // clinic-texts.jsonの比較表ヘッダー設定を返す
+        if (this.clinicTexts && this.clinicTexts['比較表ヘッダー設定']) {
+            return this.clinicTexts['比較表ヘッダー設定'];
+        }
+        return null;
     }
 
     // クリニック評価を取得する関数
