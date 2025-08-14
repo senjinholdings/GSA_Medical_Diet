@@ -2025,14 +2025,17 @@ class RankingApp {
             { key: '比較表ヘッダー1', default: 'クリニック', class: '' },
             { key: '比較表ヘッダー2', default: '総合評価', class: '' },
             { key: '比較表ヘッダー3', default: '実績/症例数', class: '' },
-            { key: '比較表ヘッダー4', default: '特徴', class: '' },  // 特典→特徴に変更
-            { key: '比較表ヘッダー5', default: '対応部位', class: 'th-none', style: 'display: none;' },
-            { key: '比較表ヘッダー6', default: 'モニター割', class: 'th-none', style: 'display: none;' },
-            { key: '比較表ヘッダー7', default: '返金保証', class: 'th-none', style: 'display: none;' },
-            { key: '比較表ヘッダー8', default: '矯正範囲', class: 'th-none', style: 'display: none;' },
-            { key: '比較表ヘッダー9', default: '目安期間', class: 'th-none', style: 'display: none;' },
-            { key: '比較表ヘッダー10', default: '通院頻度', class: 'th-none', style: 'display: none;' },
-            { key: '比較表ヘッダー11', default: '公式サイト', class: '' }
+            { key: '比較表ヘッダー4', default: '特徴', class: '' },
+            { key: '比較表ヘッダー5', default: '費用', class: 'th-none', style: 'display: none;' },
+            { key: '比較表ヘッダー6', default: '対応部位', class: 'th-none', style: 'display: none;' },
+            { key: '比較表ヘッダー7', default: 'モニター割', class: 'th-none', style: 'display: none;' },
+            { key: '比較表ヘッダー8', default: '返金保証', class: 'th-none', style: 'display: none;' },
+            { key: '比較表ヘッダー9', default: '矯正範囲', class: 'th-none', style: 'display: none;' },
+            { key: '比較表ヘッダー10', default: '目安期間', class: 'th-none', style: 'display: none;' },
+            { key: '比較表ヘッダー11', default: '通院頻度', class: 'th-none', style: 'display: none;' },
+            { key: '比較表ヘッダー12', default: 'ワイヤー矯正の紹介', class: 'th-none', style: 'display: none;' },
+            { key: '比較表ヘッダー13', default: 'サポート', class: 'th-none', style: 'display: none;' },
+            { key: '比較表ヘッダー14', default: '公式サイト', class: '' }
         ];
         
         headers.forEach(header => {
@@ -2173,12 +2176,15 @@ class RankingApp {
                 </td>
                 <td class="" style="">${getAchievementFromJson(rankNum)}</td>
                 <td class="" style="">${getBenefitFromJson(rankNum)}</td>
+                <td class="th-none" style="display: none;">${getClinicDataByRank(rankNum, '費用', '')}</td>
                 <td class="th-none" style="display: none;">${getClinicDataByRank(rankNum, '対応部位', '')}</td>
                 <td class="th-none" style="display: none;">${getClinicDataByRank(rankNum, 'モニター割', '')}</td>
                 <td class="th-none" style="display: none;">${getClinicDataByRank(rankNum, '返金保証', '')}</td>
                 <td class="th-none" style="display: none;">${getClinicDataByRank(rankNum, '矯正範囲', '')}</td>
                 <td class="th-none" style="display: none;">${getClinicDataByRank(rankNum, '目安期間', '')}</td>
                 <td class="th-none" style="display: none;">${getClinicDataByRank(rankNum, '通院頻度', '')}</td>
+                <td class="th-none" style="display: none;">${getClinicDataByRank(rankNum, 'ワイヤー矯正の紹介', '')}</td>
+                <td class="th-none" style="display: none;">${getClinicDataByRank(rankNum, 'サポート', '')}</td>
                 <td>
                     <a class="link_btn" href="${this.urlHandler.getClinicUrlWithRegionId(clinic.id, clinic.rank || rankNum)}" target="_blank">公式サイト &gt;</a>
                     <a class="detail_btn" href="#clinic${rankNum}">詳細をみる</a>

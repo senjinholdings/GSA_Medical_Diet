@@ -252,12 +252,15 @@
                                 <th class="" style="">総合評価</th>
                                 <th class="" style="">実績/症例数</th>
                                 <th class="" style="">特徴</th>
+                                <th class="th-none" style="display: none;">費用</th>
                                 <th class="th-none" style="display: none;">対応部位</th>
                                 <th class="th-none" style="display: none;">モニター割</th>
                                 <th class="th-none" style="display: none;">返金保証</th>
                                 <th class="th-none" style="display: none;">矯正範囲</th>
                                 <th class="th-none" style="display: none;">目安期間</th>
                                 <th class="th-none" style="display: none;">通院頻度</th>
+                                <th class="th-none" style="display: none;">ワイヤー矯正の紹介</th>
+                                <th class="th-none" style="display: none;">サポート</th>
                                 <th>公式サイト</th>
                             </tr>
                         </thead>
@@ -1447,9 +1450,9 @@ text-align: center;
                 
                 // タブごとの表示列インデックス（PCもスマホも同じ5項目）
                 const tabColumnsMap = {
-                    'tab1': [0, 1, 2, 3, 10], // 総合: クリニック, 総合評価, 実績/症例数, 特典, 公式サイト
-                    'tab2': [0, 4, 7, 8, 10], // 施術内容: クリニック, 対応部位, 矯正範囲, 目安期間, 公式サイト
-                    'tab3': [0, 5, 6, 9, 10]  // サービス: クリニック, モニター割, 返金保証, 通院頻度, 公式サイト
+                    'tab1': [0, 1, 4, 3, 13], // 総合: クリニック, 総合評価, 費用, 特徴, 公式サイト
+                    'tab2': [0, 8, 9, 10, 13], // 施術内容: クリニック, 矯正範囲, 目安期間, 通院頻度, 公式サイト
+                    'tab3': [0, 2, 11, 12, 13]  // サービス: クリニック, 実績/症例数, ワイヤー矯正の紹介, サポート, 公式サイト
                 };
                 
                 const showIndexes = tabColumnsMap[tabType] || tabColumnsMap['tab1'];
@@ -1457,8 +1460,28 @@ text-align: center;
                 // コンテナにアクティブなタブを設定
                 tableContainer.setAttribute('data-active-tab', tabType);
                 
+                // タブに応じて動的にヘッダーテキストを更新
+                const headerTextMap = {
+                    'tab1': ['クリニック', '総合評価', '費用', '特徴', '公式サイト'],
+                    'tab2': ['クリニック', '矯正範囲', '目安期間', '通院頻度', '公式サイト'], 
+                    'tab3': ['クリニック', '実績/症例数', 'ワイヤー矯正の紹介', 'サポート', '公式サイト']
+                };
+                
+                const currentHeaderTexts = headerTextMap[tabType] || headerTextMap['tab1'];
+                
                 // requestAnimationFrameを使用して最適化
                 requestAnimationFrame(() => {
+                    // 表示される列のヘッダーテキストを動的に更新
+                    let headerTextIndex = 0;
+                    headers.forEach((th, index) => {
+                        if (showIndexes.includes(index)) {
+                            if (headerTextIndex < currentHeaderTexts.length) {
+                                th.textContent = currentHeaderTexts[headerTextIndex];
+                                headerTextIndex++;
+                            }
+                        }
+                    });
+                    
                     // ヘッダーの表示/非表示
                     headers.forEach((th, index) => {
                         if (showIndexes.includes(index)) {
