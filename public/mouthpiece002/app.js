@@ -865,24 +865,32 @@ class DataManager {
         // コードマッピング（clinic-texts.jsonのキーに合わせる）
         const codeToNameMap = {
             'omt': 'Oh my teeth',
+            'Oh my teeth': 'Oh my teeth',  // 直接名前が来た場合もサポート
             'zenyum': 'ゼニュム',
+            'ゼニュム': 'ゼニュム',
             'kireil': 'キレイライン矯正',
+            'キレイライン矯正': 'キレイライン矯正',
             'ws': 'ウィスマイル',
-            'inv': 'インビザライン'
+            'ウィスマイル': 'ウィスマイル',
+            'inv': 'インビザライン',
+            'インビザライン': 'インビザライン'
         };
         
-        const clinic = this.clinics.find(c => c.code === clinicCode);
-        const clinicName = codeToNameMap[clinicCode] || (clinic ? clinic.name : null);  // マッピングを優先
+        // まずマッピングをチェック
+        let clinicName = codeToNameMap[clinicCode];
         
-        // デバッグ用（本番環境では削除）
-        if (!clinic) {
-            console.warn(`Clinic not found for code: ${clinicCode}`);
+        // マッピングになければ、clinicsから探す
+        if (!clinicName) {
+            const clinic = this.clinics.find(c => c.code === clinicCode);
+            clinicName = clinic ? clinic.name : null;
         }
+        
+        console.log(`DataManager.getClinicText - Mapped ${clinicCode} to ${clinicName}`);
         
         if (clinicName && this.clinicTexts && this.clinicTexts[clinicName] && this.clinicTexts[clinicName][itemKey]) {
             const value = this.clinicTexts[clinicName][itemKey];
-            if (itemKey === 'INFORMATIONサブテキスト') {
-                console.log(`✅ Found INFORMATIONサブテキスト for ${clinicName}: "${value}"`);
+            if (itemKey === 'INFORMATIONサブテキスト' || itemKey.includes('POINT')) {
+                console.log(`✅ Found ${itemKey} for ${clinicName}: "${value}"`);
             }
             return value;
         }
@@ -890,8 +898,9 @@ class DataManager {
         // デバッグ用（本番環境では削除）
         if (clinicName && (!this.clinicTexts[clinicName])) {
             console.warn(`No clinic texts found for: ${clinicName}`);
-        } else if (itemKey === 'INFORMATIONサブテキスト') {
-            console.warn(`⚠️ INFORMATIONサブテキスト not found for ${clinicName}, using default: "${defaultText}"`);
+            console.log('Available clinic names:', Object.keys(this.clinicTexts || {}));
+        } else if (itemKey.includes('POINT') || itemKey === 'INFORMATIONサブテキスト') {
+            console.warn(`⚠️ ${itemKey} not found for ${clinicName}, using default: "${defaultText}"`);
             console.log('Available keys for this clinic:', this.clinicTexts[clinicName] ? Object.keys(this.clinicTexts[clinicName]) : 'Clinic not found');
         }
         
