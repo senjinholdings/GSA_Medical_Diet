@@ -1126,96 +1126,67 @@ text-align: center;
             const pointsContainer = document.getElementById('first-choice-points');
             if (!pointsContainer) return;
             
-            // JSONファイルから動的にPOINTタイトルと内容を取得
-            fetch('./data/clinic-texts.json')
-                .then(response => response.json())
-                .then(clinicTexts => {
-                    // クリニックコードから日本語名に変換
-                    const clinicName = getClinicNameFromCode(clinicSlug);
-                    const clinicData = clinicTexts[clinicName] || clinicTexts[Object.keys(clinicTexts)[0]];
-                    
-                    const reasons = [
-                        {
-                            title: clinicData['POINT1タイトル'] || '圧倒的な実績＆成功率99％',
-                            description: clinicData['POINT1内容'] || 'ダイエット成功率99％、平均13.7kg減の実績。科学的根拠に基づいた医療痩身プログラムで、確実に結果を出します。'
-                        },
-                        {
-                            title: clinicData['POINT2タイトル'] || '最新の医療機器を完備',
-                            description: clinicData['POINT2内容'] || '脂肪冷却・医療用EMS・医療ハイフ・医療ラジオ波など、最新の痩身機器を多数完備。一人一人の悩みに合わせた最適な治療を提供します。'
-                        },
-                        {
-                            title: clinicData['POINT3タイトル'] || '管理栄養士による完全サポート',
-                            description: clinicData['POINT3内容'] || '管理栄養士による食事指導で健康的にダイエット。痩せなかったら全額返金、リバウンド防止プログラム付きで安心です。'
-                        }
-                    ];
-                    
-                    const officialUrl = `https://www.xn--ecki4eoz3204ct89aepry34c.com/go/${clinicSlug}/?max_scroll=100&region_id=013`;
-                    
-                    let html = '';
-                    reasons.forEach(reason => {
-                        html += `
-                            <div class="ribbon_point_title2_s">
-                                <i class="fas fa-clock point-icon-inline"></i>
-                                <strong>${reason.title}</strong>
-                            </div>
-                            <div class="ribbon_point_txt">
-                                <p style="font-size:14px;">${reason.description}</p>
-                            </div>
-                        `;
-                    });
-                    
-                    // 公式リンクも更新
-                    const officialLink = document.getElementById('first-choice-official-link');
-                    if (officialLink) {
-                        const clinicUrl = clinicData['公式サイトURL'] || 'https://dioclinic.jp/';
-                        officialLink.innerHTML = `【公式】<a href="${officialUrl}" target="_blank" rel="noopener"><strong>${clinicUrl}</strong></a>`;
-                    }
-                    
-                    pointsContainer.innerHTML = html + pointsContainer.innerHTML.match(/<div class="ribbon_point_link"[\s\S]*?<\/div>/)?.[0] || '';
-                })
-                .catch(error => {
-                    console.error('Error loading clinic texts:', error);
-                    // フォールバック処理
-                    const reasonsMap = {
-                        'dio': [
-                            {
-                                title: '圧倒的な実績＆成功率99％',
-                                description: 'ダイエット成功率99％、平均13.7kg減の実績。科学的根拠に基づいた医療痩身プログラムで、確実に結果を出します。'
-                            },
-                            {
-                                title: '最新の医療機器を完備',
-                                description: '脂肪冷却・医療用EMS・医療ハイフ・医療ラジオ波など、最新の痩身機器を多数完備。一人一人の悩みに合わせた最適な治療を提供します。'
-                            },
-                            {
-                                title: '管理栄養士による完全サポート',
-                                description: '管理栄養士による食事指導で健康的にダイエット。痩せなかったら全額返金、リバウンド防止プログラム付きで安心です。'
-                            }
-                        ]
-                    };
-                    
-                    const reasons = reasonsMap[clinicSlug] || reasonsMap['dio'];
-                    const officialUrl = `https://www.xn--ecki4eoz3204ct89aepry34c.com/go/${clinicSlug}/?max_scroll=100&region_id=013`;
-                    
-                    let html = '';
-                    reasons.forEach(reason => {
-                        html += `
-                            <div class="ribbon_point_title2_s">
-                                <i class="fas fa-clock point-icon-inline"></i>
-                                <strong>${reason.title}</strong>
-                            </div>
-                            <div class="ribbon_point_txt">
-                                <p style="font-size:14px;">${reason.description}</p>
-                            </div>
-                        `;
-                    });
-                    
-                    const officialLink = document.getElementById('first-choice-official-link');
-                    if (officialLink) {
-                        officialLink.innerHTML = `【公式】<a href="${officialUrl}" target="_blank" rel="noopener"><strong>https://dioclinic.jp/</strong></a>`;
-                    }
-                    
-                    pointsContainer.innerHTML = html + pointsContainer.innerHTML.match(/<div class="ribbon_point_link"[\s\S]*?<\/div>/)?.[0] || '';
-                });
+            // DataManagerを使用して動的にPOINTタイトルと内容を取得
+            const dm = window.app?.dataManager || window.dataManager;
+            if (!dm) {
+                console.error('DataManager not found');
+                return;
+            }
+            
+            // クリニックコードから日本語名に変換
+            const clinicName = getClinicNameFromCode(clinicSlug);
+            console.log('setThreeReasons - clinicSlug:', clinicSlug, 'clinicName:', clinicName);
+            
+            // DataManagerを使ってPOINT情報を取得
+            const point1Title = dm.getClinicText(clinicName, 'POINT1タイトル', '前歯から奥歯まで全体矯正');
+            const point1Content = dm.getClinicText(clinicName, 'POINT1内容', '前歯だけでなく、奥歯まで含めた全体的な矯正が可能。噛み合わせまでしっかり整えられます。');
+            const point2Title = dm.getClinicText(clinicName, 'POINT2タイトル', '透明で目立たない');
+            const point2Content = dm.getClinicText(clinicName, 'POINT2内容', '透明なマウスピースで、装着していても目立ちません。仕事や日常生活に支障なく矯正できます。');
+            const point3Title = dm.getClinicText(clinicName, 'POINT3タイトル', '取り外し可能で衛生的');
+            const point3Content = dm.getClinicText(clinicName, 'POINT3内容', '食事や歯磨きの際は取り外し可能。お口の中を清潔に保ちながら矯正治療ができます。');
+            
+            console.log('POINT1:', { title: point1Title, content: point1Content });
+            console.log('POINT2:', { title: point2Title, content: point2Content });
+            console.log('POINT3:', { title: point3Title, content: point3Content });
+            
+            const reasons = [
+                {
+                    title: point1Title,
+                    description: point1Content
+                },
+                {
+                    title: point2Title,
+                    description: point2Content
+                },
+                {
+                    title: point3Title,
+                    description: point3Content
+                }
+            ];
+            
+            const officialUrl = `https://www.xn--ecki4eoz3204ct89aepry34c.com/go/${clinicSlug}/?max_scroll=100&region_id=013`;
+            
+            let html = '';
+            reasons.forEach(reason => {
+                html += `
+                    <div class="ribbon_point_title2_s">
+                        <i class="fas fa-clock point-icon-inline"></i>
+                        <strong>${reason.title}</strong>
+                    </div>
+                    <div class="ribbon_point_txt">
+                        <p style="font-size:14px;">${reason.description}</p>
+                    </div>
+                `;
+            });
+            
+            // 公式リンクも更新
+            const officialLink = document.getElementById('first-choice-official-link');
+            if (officialLink) {
+                const clinicUrl = dm.getClinicText(clinicName, '公式サイトURL', 'https://hanaravi.jp/');
+                officialLink.innerHTML = `【公式】<a href="${officialUrl}" target="_blank" rel="noopener"><strong>${clinicUrl}</strong></a>`;
+            }
+            
+            pointsContainer.innerHTML = html + (pointsContainer.innerHTML.match(/<div class="ribbon_point_link"[\s\S]*?<\/div>/)?.[0] || '');
         }
 
         // CASEセクションを設定 - 無効化

@@ -830,9 +830,11 @@ class DataManager {
         let text = defaultText;
         if (this.commonTexts && this.commonTexts[itemKey]) {
             text = this.commonTexts[itemKey];
-            console.log(`✅ 共通テキスト使用: ${itemKey} = "${text}"`);
+            // ログが多すぎる場合はコメントアウト
+            // console.log(`✅ 共通テキスト使用: ${itemKey} = "${text}"`);
         } else {
-            console.log(`⚠️ 共通テキストが見つかりません: ${itemKey}, デフォルト値使用: "${defaultText}"`);
+            // ログが多すぎる場合はコメントアウト
+            // console.log(`⚠️ 共通テキストが見つかりません: ${itemKey}, デフォルト値使用: "${defaultText}"`);
         }
         
         // プレースホルダーを置換
@@ -854,6 +856,11 @@ class DataManager {
     
     // クリニックコードと項目名でクリニック別テキストを取得
     getClinicText(clinicCode, itemKey, defaultText = '') {
+        // INFORMATIONサブテキストの取得を特別にログ出力
+        if (itemKey === 'INFORMATIONサブテキスト') {
+            console.log(`🔍 Getting INFORMATIONサブテキスト for clinicCode: ${clinicCode}`);
+        }
+        
         // クリニックコードからクリニック名を取得
         const clinic = this.clinics.find(c => c.code === clinicCode);
         const clinicName = clinic ? clinic.name : null;  // clinic_nameではなくname
@@ -864,12 +871,19 @@ class DataManager {
         }
         
         if (clinicName && this.clinicTexts && this.clinicTexts[clinicName] && this.clinicTexts[clinicName][itemKey]) {
-            return this.clinicTexts[clinicName][itemKey];
+            const value = this.clinicTexts[clinicName][itemKey];
+            if (itemKey === 'INFORMATIONサブテキスト') {
+                console.log(`✅ Found INFORMATIONサブテキスト for ${clinicName}: "${value}"`);
+            }
+            return value;
         }
         
         // デバッグ用（本番環境では削除）
         if (clinicName && (!this.clinicTexts[clinicName])) {
             console.warn(`No clinic texts found for: ${clinicName}`);
+        } else if (itemKey === 'INFORMATIONサブテキスト') {
+            console.warn(`⚠️ INFORMATIONサブテキスト not found for ${clinicName}, using default: "${defaultText}"`);
+            console.log('Available keys for this clinic:', this.clinicTexts[clinicName] ? Object.keys(this.clinicTexts[clinicName]) : 'Clinic not found');
         }
         
         return defaultText;
@@ -3102,10 +3116,18 @@ class RankingApp {
                         ${(() => {
                             // キャンペーン情報を動的に生成
                             const clinicCode = this.dataManager.getClinicCodeById(clinicId);
+                            console.log('🔍 Campaign generation - clinicId:', clinicId, 'clinicCode:', clinicCode);
+                            
                             const campaignHeader = this.dataManager.getClinicText(clinicCode, 'キャンペーンヘッダー', 'INFORMATION!');
                             const campaignDescription = this.dataManager.getClinicText(clinicCode, 'INFORMATIONキャンペーンテキスト', '');
-                            const campaignMicrocopy = this.dataManager.getClinicText(clinicCode, 'マイクロコピー', '＼月額・総額がリーズナブルなクリニック／');
+                            const campaignMicrocopy = this.dataManager.getClinicText(clinicCode, 'INFORMATIONサブテキスト', '＼月額・総額がリーズナブルなクリニック／');
                             const ctaText = this.dataManager.getClinicText(clinicCode, 'CTAボタンテキスト', `${clinic.name}の公式サイト`);
+                            
+                            console.log('📝 Campaign data loaded:');
+                            console.log('  - campaignHeader:', campaignHeader);
+                            console.log('  - campaignDescription:', campaignDescription ? campaignDescription.substring(0, 50) + '...' : '(empty)');
+                            console.log('  - campaignMicrocopy:', campaignMicrocopy);
+                            console.log('  - ctaText:', ctaText);
                             const logoSrc = `/images/clinics/${clinicCode}/${clinicCode}-logo.webp`;
                             const logoAlt = clinic.name;
                             
