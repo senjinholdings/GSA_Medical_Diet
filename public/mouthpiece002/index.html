@@ -274,9 +274,9 @@
                         <div class="main-disclaimer">
                             <button class="main-disclaimer-header" onclick="toggleMainDisclaimer()" style="width: 100%; text-align: left; padding: 8px 12px; background-color: #fafafa; border: 1px solid #f0f0f0; border-radius: 3px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
                                 <span style="font-size: 10px; font-weight: 500; color: #666;">各クリニックの注意事項</span>
-                                <span id="main-arrow" style="font-size: 8px; color: rgb(153, 153, 153); transition: transform 0.2s; transform: rotate(0deg);">▼</span>
+                                <span id="main-arrow" style="font-size: 8px; color: rgb(153, 153, 153); transition: transform 0.2s; transform: rotate(180deg);">▼</span>
                             </button>
-                            <div id="main-content" class="main-disclaimer-content" style="display: none; padding: 5px; background-color: rgb(252, 252, 252); border-right: 1px solid rgb(240, 240, 240); border-bottom: 1px solid rgb(240, 240, 240); border-left: 1px solid rgb(240, 240, 240); border-image: initial; border-top: none; border-radius: 0px 0px 3px 3px; margin-top: -5px;">
+                            <div id="main-content" class="main-disclaimer-content" style="display: block; padding: 5px; background-color: rgb(252, 252, 252); border-right: 1px solid rgb(240, 240, 240); border-bottom: 1px solid rgb(240, 240, 240); border-left: 1px solid rgb(240, 240, 240); border-image: initial; border-top: none; border-radius: 0px 0px 3px 3px; margin-top: -5px;">
                                 <!-- 動的に生成される注釈コンテンツ -->
                             </div>
                         </div>
@@ -915,6 +915,37 @@ text-align: center;
 
     <!-- 1位クリニック動的表示機能 -->
     <script>
+        // 注意事項アコーディオンのトグル関数
+        function toggleMainDisclaimer() {
+            const content = document.getElementById('main-content');
+            const arrow = document.getElementById('main-arrow');
+            
+            if (content) {
+                if (content.style.display === 'none') {
+                    content.style.display = 'block';
+                    if (arrow) arrow.style.transform = 'rotate(180deg)';
+                } else {
+                    content.style.display = 'none';
+                    if (arrow) arrow.style.transform = 'rotate(0deg)';
+                }
+            }
+        }
+        
+        function toggleDisclaimer(clinicSlug) {
+            const content = document.getElementById(`${clinicSlug}-content`);
+            const arrow = document.getElementById(`${clinicSlug}-arrow`);
+            
+            if (content) {
+                if (content.style.display === 'none') {
+                    content.style.display = 'block';
+                    if (arrow) arrow.style.transform = 'rotate(180deg)';
+                } else {
+                    content.style.display = 'none';
+                    if (arrow) arrow.style.transform = 'rotate(0deg)';
+                }
+            }
+        }
+        
         // 1位クリニックの情報を設定
         function setFirstChoiceClinic(clinicData) {
             if (!clinicData) return;

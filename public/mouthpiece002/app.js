@@ -3759,7 +3759,7 @@ function initializeDisclaimers() {
 
     console.log('initializeDisclaimers: Found', topClinics.length, 'clinics');
 
-    // HTMLを生成 - 比較表の注意事項を使用
+    // HTMLを生成 - cryolipolysisと同じスタイルで階層的なアコーディオン
     let disclaimerHTML = '';
     let disclaimerCount = 0;
     
@@ -3772,11 +3772,18 @@ function initializeDisclaimers() {
         // 注意事項がある場合のみ表示
         if (disclaimerText && disclaimerText.trim() !== '') {
             disclaimerCount++;
+            const clinicSlug = clinic.code.toLowerCase().replace(/\s+/g, '');
+            
             disclaimerHTML += `
-                <div style="margin-bottom: 15px; padding: 10px; border-left: 3px solid #6bd1d0;">
-                    <div style="font-weight: 600; color: #333; margin-bottom: 5px; font-size: 12px;">【${clinic.name}】</div>
-                    <div style="font-size: 10px; line-height: 1.6; color: #666;">
-                        ${disclaimerText}
+                <div class="disclaimer-item">
+                    <button class="disclaimer-header" onclick="toggleDisclaimer('${clinicSlug}')" style="width: 100%; text-align: left; padding: 6px 10px; background-color: #f8f8f8; border: 1px solid #eeeeee; border-radius: 2px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
+                        <span style="font-size: 9px; font-weight: 400; color: #777;">${clinic.name}</span>
+                        <span id="${clinicSlug}-arrow" style="font-size: 7px; color: #aaa; transition: transform 0.2s;">▼</span>
+                    </button>
+                    <div id="${clinicSlug}-content" class="disclaimer-content" style="display: none; padding: 6px 10px; background-color: #fefefe; border: 1px solid #eeeeee; border-top: none; border-radius: 0 0 2px 2px; margin-top: -2px;">
+                        <div style="font-size: 9px; color: #777; line-height: 1.4;">
+                            ${disclaimerText.split('\n').map(line => line.trim()).filter(line => line).map(line => `<p>${line}</p>`).join('\n                            ')}
+                        </div>
                     </div>
                 </div>
             `;
