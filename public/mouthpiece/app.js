@@ -2400,7 +2400,6 @@ class RankingApp {
             // 各リンクの詳細情報を表示
             dynamicLinks.forEach((link, index) => {
                 // Dynamic links processing
-            });
                 
                 // 既存のイベントリスナーを確認
                 const hasExistingListener = link.hasAttribute('data-listener-attached');
