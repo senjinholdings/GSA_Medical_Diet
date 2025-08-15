@@ -94,6 +94,15 @@ function convertClinicTextsToJson() {
         const description = row[1]; // 説明文
         if (!itemKey || !itemKey.trim()) continue; // 空の項目名をスキップ
         
+        // 25-30行目（0ベースで24-29）の項目を詳細フィールドマッピングに追加
+        // CSVの行番号は1ベース、配列インデックスは0ベース
+        // startRow + 1で項目行の開始位置なので、24行目は startRow + 24
+        const csvLineNumber = i - startRow + 1; // 現在のCSV行番号（項目名行を1とする）
+        if (csvLineNumber >= 24 && csvLineNumber <= 29) {
+            // 25-30行目の項目を詳細フィールドマッピングに追加
+            detailFieldMapping[itemKey] = itemKey;
+        }
+        
         // 比較表で使用される特定の項目を説明文で検出して連番マッピング
         if (itemKey === 'クリニック名' && description && description.includes('正式名称')) {
             headerConfig['比較表ヘッダー1'] = 'クリニック';
@@ -119,14 +128,7 @@ function convertClinicTextsToJson() {
             headerConfig['比較表ヘッダー11'] = '公式サイト';
         }
         
-        // 詳細セクションの項目を説明文で検出してマッピング
-        // マッピングフォーマット: 内部キー（固定） → 実際のCSVキー（変更可能）
-        if (description && description.includes('目安期間')) {
-            detailFieldMapping['目安期間'] = itemKey;
-        }
-        if (description && description.includes('案件詳細セクションの対応部位')) {
-            detailFieldMapping['対応部位'] = itemKey;
-        }
+        // 詳細セクションの項目は25-30行目で自動設定されるため、ここでは何もしない
         
         // 各クリニックのデータを格納
         for (let j = 0; j < clinicNames.length; j++) {
