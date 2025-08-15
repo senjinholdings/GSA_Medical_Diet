@@ -96,9 +96,9 @@ function convertClinicTextsToJson() {
         
         // 25-30行目（0ベースで24-29）の項目を詳細フィールドマッピングに追加
         // CSVの行番号は1ベース、配列インデックスは0ベース
-        // startRow + 1で項目行の開始位置なので、24行目は startRow + 24
+        // startRow + 1で項目行の開始位置なので、25行目は startRow + 25
         const csvLineNumber = i - startRow + 1; // 現在のCSV行番号（項目名行を1とする）
-        if (csvLineNumber >= 24 && csvLineNumber <= 29) {
+        if (csvLineNumber >= 25 && csvLineNumber <= 30) {
             // 25-30行目の項目を詳細フィールドマッピングに追加
             detailFieldMapping[itemKey] = itemKey;
         }
