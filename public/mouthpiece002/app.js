@@ -862,8 +862,17 @@ class DataManager {
         }
         
         // クリニックコードからクリニック名を取得
+        // コードマッピング（clinic-texts.jsonのキーに合わせる）
+        const codeToNameMap = {
+            'omt': 'Oh my teeth',
+            'zenyum': 'ゼニュム',
+            'kireil': 'キレイライン矯正',
+            'ws': 'ウィスマイル',
+            'inv': 'インビザライン'
+        };
+        
         const clinic = this.clinics.find(c => c.code === clinicCode);
-        const clinicName = clinic ? clinic.name : null;  // clinic_nameではなくname
+        const clinicName = codeToNameMap[clinicCode] || (clinic ? clinic.name : null);  // マッピングを優先
         
         // デバッグ用（本番環境では削除）
         if (!clinic) {

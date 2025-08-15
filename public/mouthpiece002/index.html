@@ -931,28 +931,26 @@ text-align: center;
             
             // クリニックIDまたは名前からslugを特定
             const clinicIdToSlugMap = {
-                '1': 'dio',
-                '2': 'eminal', 
-                '3': 'urara',
-                '4': 'lieto',
-                '5': 'sbc'
+                '1': 'omt',  // Oh my teeth
+                '2': 'zenyum',  // ゼニュム
+                '3': 'kireil',  // キレイライン矯正
+                '4': 'ws',  // ウィスマイル 
+                '5': 'inv'  // インビザライン
             };
             
             const clinicNameToSlugMap = {
-                'ディオクリニック': 'dio',
-                'エミナルクリニック': 'eminal',
-                'ウララクリニック': 'urara',
-                'リエートクリニック': 'lieto',
-                '湘南美容クリニック': 'sbc',
-                // 他の可能なクリニック名も追加
-                'エミナル': 'eminal',
-                'URARA': 'urara',
-                'リエート': 'lieto',
-                '湘南美容': 'sbc',
-                'SBC': 'sbc'
+                'Oh my teeth': 'omt',
+                'Ohmyteeth': 'omt',
+                'ゼニュム': 'zenyum',
+                'Zenyum': 'zenyum',
+                'キレイライン矯正': 'kireil',
+                'ウィスマイル': 'ws',
+                'WE Smile': 'ws',
+                'インビザライン': 'inv',
+                'Invisalign': 'inv'
             };
             
-            const clinicSlug = clinicIdToSlugMap[clinicData.id] || clinicNameToSlugMap[clinicName] || 'dio';
+            const clinicSlug = clinicData.code || clinicIdToSlugMap[clinicData.id] || clinicNameToSlugMap[clinicName] || clinicNameToSlugMap[clinicData.name] || 'omt';
             
             console.log('Setting first choice clinic:', {
                 id: clinicData.id,
@@ -1133,17 +1131,26 @@ text-align: center;
                 return;
             }
             
-            // クリニックコードから日本語名に変換
-            const clinicName = getClinicNameFromCode(clinicSlug);
-            console.log('setThreeReasons - clinicSlug:', clinicSlug, 'clinicName:', clinicName);
+            console.log('setThreeReasons - clinicSlug:', clinicSlug);
             
-            // DataManagerを使ってPOINT情報を取得
-            const point1Title = dm.getClinicText(clinicName, 'POINT1タイトル', '前歯から奥歯まで全体矯正');
-            const point1Content = dm.getClinicText(clinicName, 'POINT1内容', '前歯だけでなく、奥歯まで含めた全体的な矯正が可能。噛み合わせまでしっかり整えられます。');
-            const point2Title = dm.getClinicText(clinicName, 'POINT2タイトル', '透明で目立たない');
-            const point2Content = dm.getClinicText(clinicName, 'POINT2内容', '透明なマウスピースで、装着していても目立ちません。仕事や日常生活に支障なく矯正できます。');
-            const point3Title = dm.getClinicText(clinicName, 'POINT3タイトル', '取り外し可能で衛生的');
-            const point3Content = dm.getClinicText(clinicName, 'POINT3内容', '食事や歯磨きの際は取り外し可能。お口の中を清潔に保ちながら矯正治療ができます。');
+            // clinic-texts.jsonのキー名にマッピング
+            const slugToNameMap = {
+                'omt': 'Oh my teeth',
+                'zenyum': 'ゼニュム',
+                'kireil': 'キレイライン矯正',
+                'ws': 'ウィスマイル',
+                'inv': 'インビザライン'
+            };
+            const clinicKeyForTexts = slugToNameMap[clinicSlug] || clinicSlug;
+            console.log('Using clinic key for texts:', clinicKeyForTexts);
+            
+            // DataManagerを使ってPOINT情報を取得（正しいキーを使用）
+            const point1Title = dm.getClinicText(clinicKeyForTexts, 'POINT1タイトル', '前歯から奥歯まで全体矯正');
+            const point1Content = dm.getClinicText(clinicKeyForTexts, 'POINT1内容', '前歯だけでなく、奥歯まで含めた全体的な矯正が可能。噛み合わせまでしっかり整えられます。');
+            const point2Title = dm.getClinicText(clinicKeyForTexts, 'POINT2タイトル', '透明で目立たない');
+            const point2Content = dm.getClinicText(clinicKeyForTexts, 'POINT2内容', '透明なマウスピースで、装着していても目立ちません。仕事や日常生活に支障なく矯正できます。');
+            const point3Title = dm.getClinicText(clinicKeyForTexts, 'POINT3タイトル', '取り外し可能で衛生的');
+            const point3Content = dm.getClinicText(clinicKeyForTexts, 'POINT3内容', '食事や歯磨きの際は取り外し可能。お口の中を清潔に保ちながら矯正治療ができます。');
             
             console.log('POINT1:', { title: point1Title, content: point1Content });
             console.log('POINT2:', { title: point2Title, content: point2Content });
@@ -1182,7 +1189,7 @@ text-align: center;
             // 公式リンクも更新
             const officialLink = document.getElementById('first-choice-official-link');
             if (officialLink) {
-                const clinicUrl = dm.getClinicText(clinicName, '公式サイトURL', 'https://hanaravi.jp/');
+                const clinicUrl = dm.getClinicText(clinicKeyForTexts, '公式サイトURL', 'https://hanaravi.jp/');
                 officialLink.innerHTML = `【公式】<a href="${officialUrl}" target="_blank" rel="noopener"><strong>${clinicUrl}</strong></a>`;
             }
             
