@@ -1121,6 +1121,23 @@ class DataManager {
         const clinicCode = clinic.code;
         const clinicName = clinic.name;
         
+        // 詳細フィールドマッピングを取得
+        const fieldMapping = this.clinicTexts['詳細フィールドマッピング'] || {};
+        
+        // priceDetailを動的に生成
+        const priceDetail = {};
+        
+        // マッピングに基づいて動的にフィールドを設定
+        Object.entries(fieldMapping).forEach(([displayKey, csvKey]) => {
+            // 公式サイトの場合は特別な処理
+            if (csvKey === '公式サイトURL') {
+                priceDetail['公式サイト'] = this.getClinicText(clinicCode, csvKey, '');
+            } else {
+                // その他のフィールドはそのままマッピング
+                priceDetail[displayKey] = this.getClinicText(clinicCode, csvKey, '');
+            }
+        });
+        
         // clinic-texts.jsonから詳細データを動的に構築
         const detailData = {
             title: this.getClinicText(clinicCode, '詳細タイトル', '医療痩せプログラム'),
@@ -1139,15 +1156,7 @@ class DataManager {
                 const match = ryokin.match(/月々[\d,]+円/);
                 return match ? match[0] : '月々4,900円';
             })(),
-            priceDetail: {
-                '料金': this.getClinicText(clinicCode, '料金', '通常価格24,800円<br>月々4,900円'),
-                '注射治療': this.getClinicText(clinicCode, '注射治療', '脂肪溶解注射'),
-                '目安期間': this.getClinicText(clinicCode, '目安期間', '約3ヶ月'),
-                '営業時間': this.getClinicText(clinicCode, '営業時間', '10:00〜19:00'),
-                '対応部位': this.getClinicText(clinicCode, '対応部位', '顔全体／二の腕／お腹'),
-                '店舗': this.getClinicText(clinicCode, '店舗', '東京／大阪／福岡'),
-                '公式サイト': this.getClinicText(clinicCode, '公式サイトURL', '')
-            },
+            priceDetail: priceDetail, // 動的に生成されたpriceDetailを使用
             points: [
                 {
                     icon: 'lightbulb',
