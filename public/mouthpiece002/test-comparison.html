@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>Comparison Table Test</title>
+    <script src="./app.js"></script>
+</head>
+<body>
+    <h1>Comparison Table Test</h1>
+    <div id="test-output"></div>
+    
+    <script>
+        window.addEventListener('DOMContentLoaded', async () => {
+            const output = document.getElementById('test-output');
+            
+            // Wait for app initialization
+            setTimeout(async () => {
+                const results = {};
+                
+                // Check if dataManager exists
+                results.dataManagerExists = typeof window.dataManager !== 'undefined';
+                
+                if (window.dataManager) {
+                    // Check clinics
+                    results.clinicsCount = window.dataManager.clinics ? window.dataManager.clinics.length : 0;
+                    results.clinics = window.dataManager.clinics ? window.dataManager.clinics.map(c => ({
+                        id: c.id,
+                        name: c.name,
+                        code: c.code
+                    })) : [];
+                    
+                    // Check clinic texts
+                    results.clinicTextsLoaded = window.dataManager.clinicTexts ? true : false;
+                    results.clinicTextKeys = window.dataManager.clinicTexts ? Object.keys(window.dataManager.clinicTexts).slice(0, 5) : [];
+                    
+                    // Check rankings for region 13
+                    const ranking = window.dataManager.getRankingByRegionId('13');
+                    results.rankingFor13 = ranking ? ranking.ranks : null;
+                    
+                    // Test getting clinic text
+                    const testClinicText = window.dataManager.getClinicText('omt', '総合評価', 'Not found');
+                    results.testClinicText = testClinicText;
+                    
+                    // Check if we can find Oh my teeth
+                    const omtInTexts = window.dataManager.clinicTexts['Oh my teeth'];
+                    results.omtDataExists = omtInTexts ? true : false;
+                    if (omtInTexts) {
+                        results.omtRating = omtInTexts['総合評価'];
+                        results.omtFee = omtInTexts['費用'];
+                    }
+                }
+                
+                output.innerHTML = '<pre>' + JSON.stringify(results, null, 2) + '</pre>';
+                
+                // Log to console as well
+                console.log('Test Results:', results);
+            }, 2000);
+        });
+    </script>
+</body>
+</html>
