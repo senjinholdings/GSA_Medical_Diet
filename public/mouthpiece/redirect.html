@@ -118,17 +118,40 @@
                     }
                     
                     async loadClinicTexts() {
-                        const response = await fetch('./data/clinic-texts.json');
-                        this.clinicTexts = await response.json();
+                        try {
+                            const response = await fetch('./data/clinic-texts.json');
+                            if (!response.ok) {
+                                console.error('❌ clinic-texts.jsonの読み込みに失敗:', response.status);
+                                // フォールバック：data copy ディレクトリから読み込み
+                                const fallbackResponse = await fetch('./data copy/clinic-texts.json');
+                                this.clinicTexts = await fallbackResponse.json();
+                            } else {
+                                this.clinicTexts = await response.json();
+                            }
+                            console.log('✅ clinic-texts.json読み込み完了');
+                        } catch (error) {
+                            console.error('❌ clinic-texts.jsonの読み込みエラー:', error);
+                            this.clinicTexts = {};
+                        }
                     }
                     
                     async loadCompiledData() {
                         console.log('📊 compiled-data.json読み込み中...');
-                        const response = await fetch('../data/compiled-data.json');
-                        const data = await response.json();
-                        this.clinics = data.clinics || [];
-                        console.log('📊 クリニック数:', this.clinics.length);
-                        console.log('📊 読み込まれたクリニック:', this.clinics.map(c => `${c.id}:${c.name}`));
+                        try {
+                            // mouthpiece では data copy が正規のランキング/クリニックセット
+                            let response = await fetch('./data copy/compiled-data.json');
+                            if (!response.ok) {
+                                console.warn('⚠️ data copy/compiled-data.json が見つからないため data/ にフォールバックします');
+                                response = await fetch('./data/compiled-data.json');
+                            }
+                            const data = await response.json();
+                            this.clinics = data.clinics || [];
+                            console.log('📊 クリニック数:', this.clinics.length);
+                            console.log('📊 読み込まれたクリニック:', this.clinics.map(c => `${c.id}:${c.name}`));
+                        } catch (error) {
+                            console.error('❌ compiled-data.jsonの読み込みエラー:', error);
+                            this.clinics = [];
+                        }
                     }
                     
                     getClinicText(clinicCode, fieldName, defaultValue = '') {
@@ -151,7 +174,10 @@
                     getClinicNameByCode(clinicCode) {
                         // クリニックコードからクリニック名を取得
                         for (const clinicName in this.clinicTexts) {
-                            if (this.clinicTexts[clinicName]['クリニックコード'] === clinicCode) {
+                            const record = this.clinicTexts[clinicName] || {};
+                            const brandCode = record['ブランドコード'];
+                            const clinicTextCode = record['クリニックコード'];
+                            if (brandCode === clinicCode || clinicTextCode === clinicCode) {
                                 return clinicName;
                             }
                         }
@@ -184,20 +210,115 @@
         async function handleRedirect() {
             console.log('🚀 リダイレクト処理開始');
             
-            // URLパラメータを取得
-            const urlParams = new URLSearchParams(window.location.search);
-            const clinicId = urlParams.get('clinic_id');
-            const rank = parseInt(urlParams.get('rank')) || 1;
+            // パラメータ取得の複数の方法を試す
+            let clinicId = null;
+            let rank = null;
+            let regionId = null;
+            
+            // 方法1: localStorageを最優先で確認（サーバーがパラメータを削除する場合の対策）
+            const storedParams = localStorage.getItem('redirectParams');
+            if (storedParams) {
+                try {
+                    const params = JSON.parse(storedParams);
+                    clinicId = params.clinic_id;
+                    rank = params.rank;
+                    regionId = params.region_id;
+                    console.log('方法1 localStorage（優先）:', { clinicId, rank, regionId });
+                    // 使用後は削除
+                    localStorage.removeItem('redirectParams');
+                } catch (e) {
+                    console.error('localStorage解析エラー:', e);
+                }
+            }
+            
+            // 方法2: ハッシュからパラメータを取得
+            if (!clinicId && window.location.hash) {
+                const hashParams = new URLSearchParams(window.location.hash.substring(1));
+                clinicId = hashParams.get('clinic_id');
+                rank = hashParams.get('rank');
+                regionId = hashParams.get('region_id');
+                console.log('方法2 ハッシュ:', { clinicId, rank, regionId });
+            }
+            
+            // 方法3: 標準的なURLSearchParams
+            if (!clinicId) {
+                const searchParams = new URLSearchParams(window.location.search);
+                clinicId = searchParams.get('clinic_id');
+                rank = searchParams.get('rank');
+                regionId = searchParams.get('region_id');
+                console.log('方法3 URLSearchParams:', { clinicId, rank, regionId });
+            }
+            
+            // 方法3: パスから手動解析（/redirect?clinic_id=... の場合）
+            if (!clinicId) {
+                const fullUrl = window.location.href;
+                const match = fullUrl.match(/[?&#]clinic_id=([^&#]+)/);
+                if (match) {
+                    clinicId = match[1];
+                    const rankMatch = fullUrl.match(/[?&#]rank=([^&#]+)/);
+                    const regionMatch = fullUrl.match(/[?&#]region_id=([^&#]+)/);
+                    rank = rankMatch ? rankMatch[1] : null;
+                    regionId = regionMatch ? regionMatch[1] : null;
+                    console.log('方法3 正規表現:', { clinicId, rank, regionId });
+                }
+            }
+            
+            // 方法4: localStorageから取得（新しいタブ対応）
+            if (!clinicId) {
+                const storedParams = localStorage.getItem('redirectParams');
+                if (storedParams) {
+                    try {
+                        const params = JSON.parse(storedParams);
+                        clinicId = params.clinic_id;
+                        rank = params.rank;
+                        regionId = params.region_id;
+                        console.log('方法4 localStorage:', { clinicId, rank, regionId });
+                        localStorage.removeItem('redirectParams');
+                    } catch (e) {
+                        console.error('localStorage解析エラー:', e);
+                    }
+                }
+            }
+            
+            // 方法5: sessionStorageから取得（同一タブ内）
+            if (!clinicId) {
+                const storedParams = sessionStorage.getItem('redirectParams');
+                if (storedParams) {
+                    try {
+                        const params = JSON.parse(storedParams);
+                        clinicId = params.clinic_id;
+                        rank = params.rank;
+                        regionId = params.region_id;
+                        console.log('方法5 sessionStorage:', { clinicId, rank, regionId });
+                        sessionStorage.removeItem('redirectParams');
+                    } catch (e) {
+                        console.error('sessionStorage解析エラー:', e);
+                    }
+                }
+            }
+            
+            const currentUrl = new URL(window.location.href);
+            console.log('📍 現在の完全URL:', currentUrl.toString());
+            console.log('📍 location.search:', window.location.search);
+            console.log('📍 location.hash:', window.location.hash);
+            
+            rank = parseInt(rank) || 1;
             
             console.log('📋 受け取ったパラメータ:');
             console.log(`  clinic_id: ${clinicId}`);
             console.log(`  rank: ${rank}`);
+            console.log(`  region_id: ${regionId}`);
             console.log(`  現在のURL: ${window.location.href}`);
             
             if (!clinicId) {
                 console.error('❌ clinic_idが見つかりません');
-                window.location.href = './index.html';
-                return;
+                console.error('  URL:', window.location.href);
+                console.error('  Search:', window.location.search);
+                
+                // フォールバック：デフォルト値を設定
+                clinicId = '1';
+                rank = 1;
+                console.log('⚠️ フォールバック: clinic_id=1を使用');
             }
             
             console.log('🔄 データマネージャー初期化中...');
@@ -261,16 +382,15 @@
             // URLパラメータを処理
             const url = new URL(targetUrl);
             
-            // region_idを取得
-            const regionId = urlParams.get('region_id');
+            // region_idは既に上で取得済み
             
             // 追跡用パラメータをparam4に統合（medical-diet001と同じ形式）
             const currentPageWithParams = window.location.href;
             const baseReferrerUrl = currentPageWithParams.split('?')[0];
             const trackingParams = {
-                click_section: urlParams.get('click_section') || '',
-                click_clinic: urlParams.get('click_clinic') || clinicCode,
-                source_page: urlParams.get('source_page') || 'injection-lipolysis001',
+                click_section: currentUrl.searchParams.get('click_section') || '',
+                click_clinic: currentUrl.searchParams.get('click_clinic') || clinicCode,
+                source_page: currentUrl.searchParams.get('source_page') || 'mouthpiece',
                 region_id: regionId || '013',
                 referrer_url: baseReferrerUrl,  // パラメータを除いたベースURLのみ
                 timestamp: new Date().toISOString()
@@ -278,13 +398,13 @@
             
             // 全クリニック・全ランキング位に対して動的にパラメータを追加
             // param2にutm_creativeを設定
-            const utmCreative = urlParams.get('utm_creative') || '';
+            const utmCreative = currentUrl.searchParams.get('utm_creative') || '';
             if (utmCreative) {
                 url.searchParams.set('param2', utmCreative);
             }
             
             // param3にgclidを設定
-            const gclid = urlParams.get('gclid') || '';
+            const gclid = currentUrl.searchParams.get('gclid') || '';
             if (gclid) {
                 url.searchParams.set('param3', gclid);
             }
@@ -299,7 +419,7 @@
             
             // その他のUTMパラメータも転送
             ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'].forEach(param => {
-                const value = urlParams.get(param);
+                const value = currentUrl.searchParams.get(param);
                 if (value) {
                     url.searchParams.set(param, value);
                 }
