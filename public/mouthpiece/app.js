@@ -809,6 +809,12 @@ class DataManager {
         
         return text;
     }
+
+    // 比較表ヘッダー設定を取得
+    getClinicHeaderConfig() {
+        // site-common-texts.jsonから比較表ヘッダー設定を取得
+        return this.siteCommonTexts || {};
+    }
     
     // クリニックコードと項目名でクリニック別テキストを取得
     getClinicText(clinicCode, itemKey, defaultText = '') {
