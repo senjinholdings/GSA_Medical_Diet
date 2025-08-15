@@ -21,12 +21,12 @@
     <!-- 重要なリソースのpreload -->
     <link rel="preload" as="image" href="./images/OMT_MV.webp" fetchpriority="high" type="image/webp">
     <link rel="preload" as="style" href="styles.css?v=2025080101">
-    <link rel="preload" as="script" href="app.js?v=2025081315">
+    <link rel="preload" as="script" href="app.js?v=2025081417">
     <!-- Google Fontsはプリロードせず、通常のロードのみにする -->
     <!-- スタイルシート -->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" media="print" onload="this.media='all'">
-    <link rel="stylesheet" href="styles.css?v=2025080104" media="all">
+    <link rel="stylesheet" href="styles.css?v=2025081417" media="all">
     <link rel="stylesheet" href="responsive-fix-480-768.css?v=2025080104" media="all">
     <link rel="icon" type="image/png" href="../images/favicon.png">
     <!-- Critical CSS -->
@@ -244,7 +244,7 @@
                         <div class="comparison-tab-menu-item" data-tab="tab2">施術内容</div>
                         <div class="comparison-tab-menu-item" data-tab="tab3">サービス</div>
                     </div>
-                    <table>
+                    <table id="comparison-table">
                         <thead>
                             <tr id="comparison-header-row">
                                 <!-- Headers will be dynamically generated from site-common-texts.json -->
@@ -288,8 +288,8 @@
             <section class="clinic-details-section">
                 <div class="details-header-banner">
                     <img src="/images/details_header_bannar3.webp" alt="コスパ×効果×通いやすさで選ぶ医療痩身クリニックBEST3" class="details-banner-image">
-                    <div id="detail-region-name" style="position:absolute;top: 54%;left: 3%;text-align: center;color: #ffffff;font-size: clamp(16px, 4vw, 31px);font-weight: 600;z-index:10;pointer-events:none;padding: clamp(2px, 0.5vw, 4px) clamp(4px, 1vw, 8px);border-radius: 8px;">東京で人気のクリニック</div>
-                    <div id="detail-rank-count" style="position:absolute;top: 37%;left: 56%;text-align: center;color: #fbf050;font-size: clamp(32px, 10vw, 80px);font-weight: 700;z-index:10;pointer-events:none;padding: clamp(2px, 0.5vw, 4px) clamp(4px, 1vw, 8px);border-radius: 8px;-webkit-text-stroke: 1px #ff94ae;text-stroke: 1px #ff94ae;text-shadow: 1px 1px 0 #fff, -1px 1px 0 #fff, 1px -1px 0 #fff, -1px -1px 0 #fff, 1px 0 0 #fff, -1px 0 0 #fff, 0 1px 0 #fff, 0 -1px 0 #fff;">5</div><div id="detail-rank-best" style="position:absolute;top: 51%;left: 63%;text-align: center;color: #fbf050;font-size: clamp(20px, 7vw, 56px);font-weight: 700;z-index:10;pointer-events:none;padding: clamp(2px, 0.5vw, 4px) clamp(4px, 1vw, 8px);border-radius: 8px;text-shadow: 1px 1px 0 #ff94ae, -1px -1px 0 #ff94ae, 1px -1px 0 #ff94ae, -1px 1px 0 #ff94ae, 1px 0 0 #ff94ae, -1px 0 0 #ff94ae, 0 1px 0 #ff94ae, 0 -1px 0 #ff94ae, 2px 2px 0 #fff, -2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 0 0 #fff, -2px 0 0 #fff, 0 2px 0 #fff, 0 -2px 0 #fff;">選！</div>
+                    <div id="detail-region-name">東京で人気のクリニック</div>
+                    <div id="detail-rank-best">3<span style="font-size: 0.6em;"> 選！</span></div>
                 </div>
                 
                 <div id="clinic-details-list" class="clinic-details-container">
@@ -919,7 +919,7 @@ text-align: center;
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- Slick Carousel JS -->
     <!-- Slick.js削除済み -->
-    <script src="app.js?v=2025081315" defer></script>
+    <script src="app.js?v=2025081417" defer></script>
     
 
     <!-- 1位クリニック動的表示機能 -->
@@ -929,8 +929,14 @@ text-align: center;
             if (!clinicData) return;
             
             // クリニック名を動的に取得
-            const clinicCode = clinicData.code || window.dataManager?.getClinicCodeById(clinicData.id) || 'dio';
-            const clinicName = window.dataManager?.getClinicText(clinicCode, 'ブランド名', clinicData.name) || clinicData.name || 'ディオクリニック';
+            const clinicCode = clinicData.code 
+                || window.app?.dataManager?.getClinicCodeById?.(clinicData.id)
+                || window.dataManager?.getClinicCodeById?.(clinicData.id)
+                || 'dio';
+            const dmForText = window.app?.dataManager || window.dataManager;
+            const clinicName = (dmForText && typeof dmForText.getClinicText === 'function' 
+                ? dmForText.getClinicText(clinicCode, 'ブランド名', clinicData.name)
+                : null) || clinicData.name || 'ディオクリニック';
             
             // クリニックIDまたは名前からslugを特定
             const clinicIdToSlugMap = {
@@ -987,15 +993,16 @@ text-align: center;
             if (ctaText) ctaText.textContent = `${clinicName}の公式サイト`;
             
             // クリニック別の内容設定（DataManagerから動的に取得）
-            if (window.dataManager && window.dataManager.getClinicText) {
+            const dm = window.app?.dataManager || window.dataManager;
+            if (dm && typeof dm.getClinicText === 'function') {
                 const clinicCode = clinicData.code || clinicSlug;
                 
                 // キャンペーンテキストを動的に取得
-                const campaignInfo = window.dataManager.getClinicText(clinicCode, 'INFORMATIONキャンペーンテキスト', '期間限定キャンペーン<br>実施中');
+                const campaignInfo = dm.getClinicText(clinicCode, 'INFORMATIONキャンペーンテキスト', '期間限定キャンペーン<br>実施中');
                 if (campaignText) campaignText.innerHTML = campaignInfo;
                 
                 // マイクロコピーを動的に取得
-                const achievementInfo = window.dataManager.getClinicText(clinicCode, 'マイクロコピー', '＼実績多数で安心／');
+                const achievementInfo = dm.getClinicText(clinicCode, 'マイクロコピー', '＼実績多数で安心／');
                 if (achievementText) achievementText.textContent = achievementInfo;
                 
                 // URLを動的に生成
@@ -1058,8 +1065,9 @@ text-align: center;
             }
             
             // 確認事項の内容を動的に取得
-            if (window.dataManager && window.dataManager.getClinicText && disclaimerContent) {
-                const disclaimerText = window.dataManager.getClinicText(clinicCode, 'INFORMATION確認事項', '');
+            const dm2 = window.app?.dataManager || window.dataManager;
+            if (dm2 && typeof dm2.getClinicText === 'function' && disclaimerContent) {
+                const disclaimerText = dm2.getClinicText(clinicCode, 'INFORMATION確認事項', '');
                 if (disclaimerText) {
                     const disclaimerHtml = disclaimerText.split('<br>')
                         .map(text => text.trim())
@@ -1074,13 +1082,14 @@ text-align: center;
         // 動的にクリニック情報を取得（clinic-texts.jsonから）
         function getClinicInfo(clinicSlug) {
             // DataManagerが利用可能な場合は動的に取得
-            if (window.dataManager && window.dataManager.getClinicText) {
+            const dm3 = window.app?.dataManager || window.dataManager;
+            if (dm3 && typeof dm3.getClinicText === 'function') {
                 const clinicCode = clinicSlug;
                 const clinicName = getClinicNameFromCode(clinicCode);
                 return {
-                    campaign: window.dataManager.getClinicText(clinicCode, 'INFORMATIONキャンペーンテキスト', '期間限定キャンペーン<br>実施中'),
-                    achievement: '＼' + window.dataManager.getClinicText(clinicCode, '実績', 'ダイエット成功率の実績') + '／',
-                    ctaUrl: window.dataManager.getClinicText(clinicCode, '公式サイトURL', `https://www.example.com/go/${clinicSlug}/`)
+                    campaign: dm3.getClinicText(clinicCode, 'INFORMATIONキャンペーンテキスト', '期間限定キャンペーン<br>実施中'),
+                    achievement: '＼' + dm3.getClinicText(clinicCode, '実績', 'ダイエット成功率の実績') + '／',
+                    ctaUrl: dm3.getClinicText(clinicCode, '公式サイトURL', `https://www.example.com/go/${clinicSlug}/`)
                 };
             }
             
@@ -1095,9 +1104,10 @@ text-align: center;
         // クリニックURLを取得（CSVデータベースから動的に）
         function getClinicUrl(clinicSlug, rank = 1) {
             // DataManagerから動的に取得
-            if (window.dataManager) {
+            const dm4 = window.app?.dataManager || window.dataManager;
+            if (dm4 && typeof dm4.getClinicText === 'function') {
                 const urlKey = `遷移先URL（${rank}位）`;
-                const url = window.dataManager.getClinicText(clinicSlug, urlKey, '');
+                const url = dm4.getClinicText(clinicSlug, urlKey, '');
                 if (url) {
                     return url;
                 }
@@ -1116,7 +1126,8 @@ text-align: center;
                 'sbc': '湘南美容クリニック',
                 'dsc': 'DSクリニック'
             };
-            return codeToNameMap[clinicCode] || window.dataManager?.getClinicText(clinicCode, 'ブランド名', 'ディオクリニック') || 'ディオクリニック';
+            const dm5 = window.app?.dataManager || window.dataManager;
+            return codeToNameMap[clinicCode] || (dm5 && typeof dm5.getClinicText === 'function' ? dm5.getClinicText(clinicCode, 'ブランド名', 'ディオクリニック') : null) || 'ディオクリニック';
         }
 
         // 3つの理由を設定
@@ -1448,11 +1459,11 @@ text-align: center;
                 const headers = table.querySelectorAll('th');
                 const rows = table.querySelectorAll('tbody tr');
                 
-                // タブごとの表示列インデックス（PCもスマホも同じ5項目）
+                // タブごとの表示列インデックス（実際のHTMLの列番号に合わせて修正）
                 const tabColumnsMap = {
-                    'tab1': [0, 1, 3, 4, 13], // 総合: クリニック, 総合評価, 特徴, 費用, 公式サイト
-                    'tab2': [0, 8, 9, 10, 13], // 施術内容: クリニック, 矯正範囲, 目安期間, 通院頻度, 公式サイト
-                    'tab3': [0, 2, 11, 12, 13]  // サービス: クリニック, 実績/症例数, ワイヤー矯正の紹介, サポート, 公式サイト
+                    'tab1': [0, 1, 4, 3, 13], // 総合: クリニック名, 総合評価, 費用, 特徴, 公式サイトURL
+                    'tab2': [0, 8, 9, 10, 13], // 施術内容: クリニック名, 矯正範囲, 目安期間, 通院頻度, 公式サイトURL
+                    'tab3': [0, 2, 11, 12, 13]  // サービス: クリニック名, 実績/症例数, ワイヤー矯正の紹介, サポート, 公式サイトURL
                 };
                 
                 const showIndexes = tabColumnsMap[tabType] || tabColumnsMap['tab1'];
@@ -1465,25 +1476,25 @@ text-align: center;
                 
                 const headerTextMap = {
                     'tab1': [
-                        'クリニック', 
+                        headerConfig && headerConfig['比較表ヘッダー1'] || 'クリニック', 
                         headerConfig && headerConfig['比較表ヘッダー2'] || '総合評価',
+                        headerConfig && headerConfig['比較表ヘッダー3'] || '費用',
                         headerConfig && headerConfig['比較表ヘッダー4'] || '特徴',
-                        headerConfig && headerConfig['比較表ヘッダー5'] || '費用',
-                        '公式サイト'
+                        headerConfig && headerConfig['比較表ヘッダー11'] || '公式サイト'
                     ],
                     'tab2': [
-                        'クリニック', 
-                        headerConfig && headerConfig['比較表ヘッダー8'] || '矯正範囲',
-                        headerConfig && headerConfig['比較表ヘッダー9'] || '目安期間',
-                        headerConfig && headerConfig['比較表ヘッダー11'] || '通院頻度',
-                        '公式サイト'
+                        headerConfig && headerConfig['比較表ヘッダー1'] || 'クリニック', 
+                        headerConfig && headerConfig['比較表ヘッダー5'] || '矯正範囲',
+                        headerConfig && headerConfig['比較表ヘッダー6'] || '目安期間',
+                        headerConfig && headerConfig['比較表ヘッダー7'] || '通院頻度',
+                        headerConfig && headerConfig['比較表ヘッダー11'] || '公式サイト'
                     ], 
                     'tab3': [
-                        'クリニック', 
-                        headerConfig && headerConfig['比較表ヘッダー3'] || '実績/症例数',
-                        headerConfig && headerConfig['比較表ヘッダー12'] || 'ワイヤー矯正の紹介',
-                        headerConfig && headerConfig['比較表ヘッダー13'] || 'サポート',
-                        '公式サイト'
+                        headerConfig && headerConfig['比較表ヘッダー1'] || 'クリニック', 
+                        headerConfig && headerConfig['比較表ヘッダー8'] || '実績/症例数',
+                        headerConfig && headerConfig['比較表ヘッダー9'] || 'ワイヤー矯正の紹介',
+                        headerConfig && headerConfig['比較表ヘッダー10'] || 'サポート',
+                        headerConfig && headerConfig['比較表ヘッダー11'] || '公式サイト'
                     ]
                 };
                 

@@ -3,11 +3,7 @@
 
 /* 480〜768pxの範囲で適用される修正 */
 @media (min-width: 481px) and (max-width: 768px) {
-    /* 1. グローバルリセット - 異常な幅を防ぐ */
-    * {
-        max-width: 100vw !important;
-    }
-    
+      
     html, body {
         width: 100% !important;
         max-width: 100% !important;

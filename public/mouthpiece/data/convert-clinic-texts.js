@@ -94,41 +94,29 @@ function convertClinicTextsToJson() {
         const description = row[1]; // 説明文
         if (!itemKey || !itemKey.trim()) continue; // 空の項目名をスキップ
         
-        // 比較表で使用される特定の項目を説明文で検出してマッピング
+        // 比較表で使用される特定の項目を説明文で検出して連番マッピング
         if (itemKey === 'クリニック名' && description && description.includes('正式名称')) {
             headerConfig['比較表ヘッダー1'] = 'クリニック';
         } else if (description && description.includes('比較表の総合評価')) {
             headerConfig['比較表ヘッダー2'] = itemKey;
-        } else if (description && description.includes('比較表の実績')) {
+        } else if (description && description.includes('比較表の金額') || description && description.includes('比較表の費用')) {
             headerConfig['比較表ヘッダー3'] = itemKey;
         } else if (description && description.includes('比較表の特徴')) {
             headerConfig['比較表ヘッダー4'] = itemKey;
-        } else if (description && description.includes('比較表の金額') || description && description.includes('比較表の費用')) {
+        } else if (itemKey === '矯正範囲') {
             headerConfig['比較表ヘッダー5'] = itemKey;
-        } else if (description && description.includes('比較表の人気プラン')) {
+        } else if (itemKey === '目安期間') {
             headerConfig['比較表ヘッダー6'] = itemKey;
-        } else if (description && description.includes('比較表の医療機器')) {
-            headerConfig['比較表ヘッダー6'] = itemKey;
-        } else if (description && description.includes('比較表の注射治療')) {
+        } else if (itemKey === '通院頻度') {
             headerConfig['比較表ヘッダー7'] = itemKey;
-        } else if (description && description.includes('比較表の対応部位')) {
+        } else if (itemKey === '実績/症例数') {
             headerConfig['比較表ヘッダー8'] = itemKey;
-        } else if (description && description.includes('比較表のモニター')) {
+        } else if (itemKey === 'ワイヤー矯正の紹介') {
             headerConfig['比較表ヘッダー9'] = itemKey;
-        } else if (description && description.includes('比較表の返金保証')) {
+        } else if (itemKey === 'サポート') {
             headerConfig['比較表ヘッダー10'] = itemKey;
-        } else if (description && description.includes('比較表の対応範囲')) {
-            if (itemKey === '矯正範囲') {
-                headerConfig['比較表ヘッダー8'] = itemKey;
-            } else if (itemKey === '通院頻度') {
-                headerConfig['比較表ヘッダー11'] = itemKey;
-            }
-        } else if (description && description.includes('比較表の目安期間')) {
-            headerConfig['比較表ヘッダー9'] = itemKey;
-        } else if (description && description.includes('比較表のワイヤー矯正')) {
-            headerConfig['比較表ヘッダー12'] = itemKey;
-        } else if (description && description.includes('比較表のサポート')) {
-            headerConfig['比較表ヘッダー13'] = itemKey;
+        } else if (itemKey === '公式サイトURL' || description && description.includes('公式サイト')) {
+            headerConfig['比較表ヘッダー11'] = '公式サイト';
         }
         
         // 詳細セクションの項目を説明文で検出してマッピング

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'injection-lipolysis-v1';
+const CACHE_NAME = 'mouthpiece-v2';
 const urlsToCache = [
   '/',
   '/styles.css',
