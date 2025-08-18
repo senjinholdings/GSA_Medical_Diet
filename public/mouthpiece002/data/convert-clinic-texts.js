@@ -131,7 +131,7 @@ function convertClinicTextsToJson() {
             for (let j = 0; j < clinicNames.length; j++) {
                 const clinicName = clinicNames[j];
                 if (clinicName && clinicName.trim() && clinicsData[clinicName]) {
-                    const value = row[j + 2] || '';
+                    const value = row[j + 3] || ''; // j+3に修正（list_name、項目名、目的・注意事項をスキップ）
                     // 詳細項目は「詳細_」プレフィックスを付けて保存
                     clinicsData[clinicName][`詳細_${fieldName}`] = value;
                 }
@@ -141,7 +141,7 @@ function convertClinicTextsToJson() {
             for (let j = 0; j < clinicNames.length; j++) {
                 const clinicName = clinicNames[j];
                 if (clinicName && clinicName.trim() && clinicsData[clinicName]) {
-                    const value = row[j + 2] || '';
+                    const value = row[j + 3] || ''; // j+3に修正（list_name、項目名、目的・注意事項をスキップ）
                     // タグは詳細_プレフィックス付きで保存
                     clinicsData[clinicName][`詳細_${fieldName}`] = value;
                 }
@@ -151,7 +151,7 @@ function convertClinicTextsToJson() {
             for (let j = 0; j < clinicNames.length; j++) {
                 const clinicName = clinicNames[j];
                 if (clinicName && clinicName.trim() && clinicsData[clinicName]) {
-                    const value = row[j + 2] || '';
+                    const value = row[j + 3] || ''; // j+3に修正（list_name、項目名、目的・注意事項をスキップ）
                     clinicsData[clinicName][fieldName] = value;
                 }
             }
@@ -160,7 +160,7 @@ function convertClinicTextsToJson() {
             for (let j = 0; j < clinicNames.length; j++) {
                 const clinicName = clinicNames[j];
                 if (clinicName && clinicName.trim() && clinicsData[clinicName]) {
-                    const value = row[j + 2] || '';
+                    const value = row[j + 3] || ''; // j+3に修正（list_name、項目名、目的・注意事項をスキップ）
                     clinicsData[clinicName][fieldName] = value;
                 }
             }
