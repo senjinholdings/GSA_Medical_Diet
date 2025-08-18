@@ -1203,14 +1203,27 @@ class DataManager {
         // priceDetailを動的に生成
         const priceDetail = {};
         
+        // 日本語の表示名マッピング
+        const displayNameMap = {
+            'priceDetail': '費用',
+            'planCount': '特徴',
+            'periods': '目安期間',
+            'stores': '店舗',
+            'ranges': '矯正範囲',
+            'hours': '営業時間'
+        };
+        
         // マッピングに基づいて動的にフィールドを設定
         Object.entries(fieldMapping).forEach(([displayKey, csvKey]) => {
+            // 日本語の表示名を取得
+            const japaneseKey = displayNameMap[displayKey] || displayKey;
+            
             // 公式サイトの場合は特別な処理
             if (csvKey === '公式サイトURL') {
                 priceDetail['公式サイト'] = this.getClinicText(clinicCode, csvKey, '');
             } else {
-                // その他のフィールドはそのままマッピング
-                priceDetail[displayKey] = this.getClinicText(clinicCode, csvKey, '');
+                // その他のフィールドは日本語キーでマッピング
+                priceDetail[japaneseKey] = this.getClinicText(clinicCode, csvKey, '');
             }
         });
         
