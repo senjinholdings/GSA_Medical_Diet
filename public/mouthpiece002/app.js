@@ -54,28 +54,30 @@ class UrlParamHandler {
             return '#';
         }
         
-        // 中間ページ経由でリダイレクトするURLを生成
-        const redirectUrl = new URL('./redirect.html', window.location.origin + window.location.pathname);
-        const currentParams = new URLSearchParams(window.location.search);
+        // パラメータをlocalStorageに保存（サーバーがURLパラメータを削除する対策）
+        const regionId = this.getRegionId();
+        const redirectParams = {
+            clinic_id: clinicId,
+            rank: rank,
+            region_id: regionId || '013'
+        };
         
-        // 中間ページに渡すパラメータを設定
+        // クリックイベントでlocalStorageに保存するため、データ属性として埋め込む
+        // 実際の保存はクリック時に行う
+        const redirectUrl = new URL('./redirect.html', window.location.origin + window.location.pathname);
+        
+        // URLパラメータも念のため設定（サーバーが保持する場合に備えて）
         redirectUrl.searchParams.set('clinic_id', clinicId);
         redirectUrl.searchParams.set('rank', rank);
-        
-        // region_idを追加
-        const regionId = this.getRegionId();
         if (regionId) {
             redirectUrl.searchParams.set('region_id', regionId);
         }
         
-        // 現在のURLのパラメータを転送（既に設定したキーは上書きしない）
-        const reservedKeys = new Set(['clinic_id', 'rank', 'region_id']);
-        for (const [key, value] of currentParams) {
-            if (reservedKeys.has(key)) continue; // 重要パラメータは保持
-            if (!redirectUrl.searchParams.has(key)) {
-                redirectUrl.searchParams.set(key, value);
-            }
-        }
+        // データ属性用のJSON文字列を作成
+        const dataJson = JSON.stringify(redirectParams);
+        
+        // カスタムデータ属性として埋め込むため、特殊なハッシュを使用
+        redirectUrl.hash = `params=${encodeURIComponent(dataJson)}`;
         
         return redirectUrl.toString();
     }
@@ -2373,8 +2375,48 @@ class RankingApp {
         });
     }
 
+    // タブボタンのHTMLを動的に生成
+    createTabButtons() {
+        const comparisonSection = document.querySelector('.comparison-section');
+        if (!comparisonSection) return;
+        
+        // 既存のタブコンテナがあれば削除
+        const existingTabs = comparisonSection.querySelector('.comparison-tabs');
+        if (existingTabs) {
+            existingTabs.remove();
+        }
+        
+        // タブコンテナを作成
+        const tabContainer = document.createElement('div');
+        tabContainer.className = 'comparison-tabs';
+        
+        // タブボタンを作成
+        const tabs = [
+            { id: 'tab1', label: '総合', active: true },
+            { id: 'tab2', label: '施術内容', active: false },
+            { id: 'tab3', label: 'サービス', active: false }
+        ];
+        
+        tabs.forEach(tab => {
+            const button = document.createElement('button');
+            button.className = `comparison-tab-menu-item tab-btn${tab.active ? ' tab-active' : ''}`;
+            button.setAttribute('data-tab', tab.id);
+            button.textContent = tab.label;
+            tabContainer.appendChild(button);
+        });
+        
+        // 比較表の前に挿入
+        const comparisonTable = comparisonSection.querySelector('.comparison-table');
+        if (comparisonTable && comparisonTable.parentNode) {
+            comparisonTable.parentNode.insertBefore(tabContainer, comparisonTable);
+        }
+    }
+
     // 比較表タブ機能のセットアップ
     setupComparisonTabs() {
+        // タブボタンのHTMLを動的に生成
+        this.createTabButtons();
+        
         const tabItems = document.querySelectorAll('.comparison-tab-menu-item');
         
         if (!tabItems || tabItems.length === 0) {

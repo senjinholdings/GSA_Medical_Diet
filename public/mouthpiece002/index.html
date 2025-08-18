@@ -931,6 +931,29 @@ text-align: center;
 
     <!-- 1位クリニック動的表示機能 -->
     <script>
+        // リダイレクトリンクのクリックハンドラー
+        document.addEventListener('click', function(e) {
+            const link = e.target.closest('a');
+            if (link && link.href && link.href.includes('/redirect.html')) {
+                // URLからパラメータを抽出
+                const url = new URL(link.href);
+                const hashParams = url.hash ? url.hash.substring(1) : '';
+                
+                if (hashParams.startsWith('params=')) {
+                    try {
+                        const paramsJson = decodeURIComponent(hashParams.substring(7));
+                        const params = JSON.parse(paramsJson);
+                        
+                        // localStorageに保存
+                        localStorage.setItem('redirectParams', JSON.stringify(params));
+                        console.log('Saved redirect params to localStorage:', params);
+                    } catch (error) {
+                        console.error('Failed to save redirect params:', error);
+                    }
+                }
+            }
+        });
+        
         // 注意事項アコーディオンのトグル関数
         function toggleMainDisclaimer(section = '') {
             let contentId = 'main-content';

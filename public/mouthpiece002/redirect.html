@@ -231,13 +231,28 @@
                 }
             }
             
-            // 方法2: ハッシュからパラメータを取得
+            // 方法2: ハッシュからパラメータを取得（新形式）
             if (!clinicId && window.location.hash) {
-                const hashParams = new URLSearchParams(window.location.hash.substring(1));
-                clinicId = hashParams.get('clinic_id');
-                rank = hashParams.get('rank');
-                regionId = hashParams.get('region_id');
-                console.log('方法2 ハッシュ:', { clinicId, rank, regionId });
+                const hash = window.location.hash.substring(1);
+                if (hash.startsWith('params=')) {
+                    try {
+                        const paramsJson = decodeURIComponent(hash.substring(7));
+                        const params = JSON.parse(paramsJson);
+                        clinicId = params.clinic_id;
+                        rank = params.rank;
+                        regionId = params.region_id;
+                        console.log('方法2 ハッシュ（新形式）:', { clinicId, rank, regionId });
+                    } catch (e) {
+                        console.error('ハッシュ解析エラー:', e);
+                    }
+                } else {
+                    // 旧形式のフォールバック
+                    const hashParams = new URLSearchParams(hash);
+                    clinicId = hashParams.get('clinic_id');
+                    rank = hashParams.get('rank');
+                    regionId = hashParams.get('region_id');
+                    console.log('方法2 ハッシュ（旧形式）:', { clinicId, rank, regionId });
+                }
             }
             
             // 方法3: 標準的なURLSearchParams

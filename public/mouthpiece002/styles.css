@@ -2103,6 +2103,45 @@ section.clinic-rankings .ranking-header-banner {
     margin-bottom: 30px;
 }
 
+/* タブボタンのスタイル */
+.comparison-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #e5e5e5;
+    padding-bottom: 0;
+    justify-content: center;
+}
+
+.comparison-tab-menu-item,
+.tab-btn {
+    padding: 12px 30px;
+    background: #fff;
+    border: 2px solid #e5e5e5;
+    border-bottom: none;
+    border-radius: 8px 8px 0 0;
+    color: #666;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    bottom: -2px;
+}
+
+.comparison-tab-menu-item:hover,
+.tab-btn:hover {
+    background: #f8f8f8;
+}
+
+.comparison-tab-menu-item.tab-active,
+.tab-btn.tab-active {
+    background: #fff;
+    color: #4bc0c0;
+    border-color: #4bc0c0;
+    border-bottom: 2px solid #fff;
+}
+
 .comparison-title {
     font-size: 1.8rem;
     color: #4C4C4C;
