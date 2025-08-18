@@ -59,7 +59,8 @@ function convertClinicTextsToJson() {
     
     // ヘッダー行（クリニック名）を取得
     const headers = records[0];
-    const clinicNames = headers.slice(2); // 最初の2列（list_name、項目名）を除く
+    // 最初の2列（list_name、項目名）と3列目（目的・注意事項）を除く
+    const clinicNames = headers.slice(3); 
     
     // クリニックデータを初期化
     clinicNames.forEach(clinic => {
@@ -84,11 +85,11 @@ function convertClinicTextsToJson() {
             const headerNum = listName.replace('comparison', '');
             comparisonHeaders[`比較表ヘッダー${headerNum}`] = fieldName;
             
-            // 各クリニックのデータを格納
+            // 各クリニックのデータを格納（3列目から開始）
             for (let j = 0; j < clinicNames.length; j++) {
                 const clinicName = clinicNames[j];
                 if (clinicName && clinicName.trim() && clinicsData[clinicName]) {
-                    const value = row[j + 2] || '';
+                    const value = row[j + 3] || ''; // j+3に変更（list_name、項目名、目的・注意事項をスキップ）
                     clinicsData[clinicName][fieldName] = value;
                 }
             }

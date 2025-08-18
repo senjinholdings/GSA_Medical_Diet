@@ -2320,24 +2320,30 @@ class RankingApp {
         const headerConfig = this.dataManager.clinicTexts['比較表ヘッダー設定'] || {};
         
         // ヘッダーを動的に生成
+        // 最初の「クリニック」は固定、それ以降はheaderConfigから取得
         const headers = [
-            { key: '比較表ヘッダー1', default: 'クリニック', class: '' },
-            { key: '比較表ヘッダー2', default: '総合評価', class: '' },
-            { key: '比較表ヘッダー3', default: '費用', class: '' },
-            { key: '比較表ヘッダー4', default: '特徴', class: '' },
-            { key: '比較表ヘッダー5', default: '矯正範囲', class: 'th-none', style: 'display: none;' },
-            { key: '比較表ヘッダー6', default: '目安期間', class: 'th-none', style: 'display: none;' },
-            { key: '比較表ヘッダー7', default: '通院頻度', class: 'th-none', style: 'display: none;' },
-            { key: '比較表ヘッダー8', default: '実績/症例数', class: 'th-none', style: 'display: none;' },
-            { key: '比較表ヘッダー9', default: 'ワイヤー矯正の紹介', class: 'th-none', style: 'display: none;' },
-            { key: '比較表ヘッダー10', default: 'サポート', class: 'th-none', style: 'display: none;' },
-            { key: '比較表ヘッダー11', default: '公式サイト', class: '' }
+            { key: null, default: 'クリニック', class: '', fixed: true },  // 固定項目
+            { key: '比較表ヘッダー1', default: '総合評価', class: '' },
+            { key: '比較表ヘッダー2', default: '費用', class: '' },
+            { key: '比較表ヘッダー3', default: '特徴', class: '' },
+            { key: '比較表ヘッダー10', default: '公式サイト', class: '' },
+            { key: '比較表ヘッダー4', default: '矯正範囲', class: 'th-none', style: 'display: none;' },
+            { key: '比較表ヘッダー5', default: '目安期間', class: 'th-none', style: 'display: none;' },
+            { key: '比較表ヘッダー6', default: '通院頻度', class: 'th-none', style: 'display: none;' },
+            { key: '比較表ヘッダー7', default: '実績/症例数', class: 'th-none', style: 'display: none;' },
+            { key: '比較表ヘッダー8', default: 'ワイヤー矯正の紹介', class: 'th-none', style: 'display: none;' },
+            { key: '比較表ヘッダー9', default: 'サポート', class: 'th-none', style: 'display: none;' },
+            { key: null, default: '詳細', class: 'th-none', style: 'display: none;', fixed: true }
         ];
         
         headers.forEach(header => {
             const th = document.createElement('th');
-            // 比較表ヘッダー設定から取得、なければデフォルト値を使用
-            th.textContent = headerConfig[header.key] || header.default;
+            // 固定項目の場合はdefaultを使用、それ以外はheaderConfigから取得
+            if (header.fixed) {
+                th.textContent = header.default;
+            } else {
+                th.textContent = headerConfig[header.key] || header.default;
+            }
             if (header.class) th.className = header.class;
             if (header.style) th.setAttribute('style', header.style);
             headerRow.appendChild(th);
@@ -2440,14 +2446,16 @@ class RankingApp {
                 </td>
                 <td class="" style="">${this.dataManager.processDecoTags(getClinicData('費用', ''))}</td>
                 <td class="" style="">${this.dataManager.processDecoTags(getClinicData('特徴', ''))}</td>
+                <td>
+                    <a class="link_btn" href="${this.urlHandler.getClinicUrlWithRegionId(clinic.id, clinic.rank || rankNum)}" target="_blank">公式サイト &gt;</a>
+                </td>
                 <td class="th-none" style="display: none;">${this.dataManager.processDecoTags(getClinicData('矯正範囲', ''))}</td>
                 <td class="th-none" style="display: none;">${this.dataManager.processDecoTags(getClinicData('目安期間', ''))}</td>
                 <td class="th-none" style="display: none;">${this.dataManager.processDecoTags(getClinicData('通院頻度', ''))}</td>
                 <td class="th-none" style="display: none;">${this.dataManager.processDecoTags(getClinicData('実績/症例数', ''))}</td>
                 <td class="th-none" style="display: none;">${this.dataManager.processDecoTags(getClinicData('ワイヤー矯正の紹介', ''))}</td>
                 <td class="th-none" style="display: none;">${this.dataManager.processDecoTags(getClinicData('サポート', ''))}</td>
-                <td>
-                    <a class="link_btn" href="${this.urlHandler.getClinicUrlWithRegionId(clinic.id, clinic.rank || rankNum)}" target="_blank">公式サイト &gt;</a>
+                <td class="th-none" style="display: none;">
                     <a class="detail_btn" href="#clinic${rankNum}">詳細をみる</a>
                 </td>
             `;
