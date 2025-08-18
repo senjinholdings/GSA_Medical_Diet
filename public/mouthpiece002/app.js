@@ -2414,8 +2414,11 @@ class RankingApp {
 
     // 比較表タブ機能のセットアップ
     setupComparisonTabs() {
-        // タブボタンのHTMLを動的に生成
-        this.createTabButtons();
+        // タブボタンのHTMLを動的に生成（重複チェック付き）
+        const existingTabs = document.querySelector('.comparison-tabs');
+        if (!existingTabs) {
+            this.createTabButtons();
+        }
         
         const tabItems = document.querySelectorAll('.comparison-tab-menu-item');
         
@@ -2435,17 +2438,23 @@ class RankingApp {
         
         // タブクリックイベントリスナーを設定
         tabItems.forEach(tabItem => {
-            tabItem.addEventListener('click', (e) => {
+            // 既存のイベントリスナーを削除
+            const newTabItem = tabItem.cloneNode(true);
+            tabItem.parentNode.replaceChild(newTabItem, tabItem);
+            
+            newTabItem.addEventListener('click', (e) => {
                 e.preventDefault();
                 
                 // 全てのタブからアクティブクラスを削除
-                tabItems.forEach(item => item.classList.remove('tab-active'));
+                document.querySelectorAll('.comparison-tab-menu-item').forEach(item => {
+                    item.classList.remove('tab-active');
+                });
                 
                 // クリックされたタブにアクティブクラスを追加
-                tabItem.classList.add('tab-active');
+                newTabItem.classList.add('tab-active');
                 
                 // データ属性からタブIDを取得
-                const targetTab = tabItem.getAttribute('data-tab');
+                const targetTab = newTabItem.getAttribute('data-tab');
                 console.log(`${targetTab}タブがクリックされました`);
                 
                 // タブに応じてテーブルを再生成

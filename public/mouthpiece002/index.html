@@ -956,6 +956,8 @@ text-align: center;
         
         // 注意事項アコーディオンのトグル関数
         function toggleMainDisclaimer(section = '') {
+            console.log('>>> toggleMainDisclaimer called with section:', section);
+            
             let contentId = 'main-content';
             let arrowId = 'main-arrow';
             
@@ -965,34 +967,59 @@ text-align: center;
                 arrowId = 'ranking-main-arrow';
             }
             
+            console.log('>>> Looking for contentId:', contentId);
+            console.log('>>> Looking for arrowId:', arrowId);
+            
             const content = document.getElementById(contentId);
             const arrow = document.getElementById(arrowId);
             
+            console.log('>>> Found content:', !!content);
+            console.log('>>> Found arrow:', !!arrow);
+            
             if (content) {
-                if (content.style.display === 'none') {
+                const currentDisplay = window.getComputedStyle(content).display;
+                console.log('>>> Current display:', currentDisplay);
+                
+                if (content.style.display === 'none' || currentDisplay === 'none') {
                     content.style.display = 'block';
                     if (arrow) arrow.style.transform = 'rotate(180deg)';
+                    console.log('>>> Opened main disclaimer');
                 } else {
                     content.style.display = 'none';
                     if (arrow) arrow.style.transform = 'rotate(0deg)';
+                    console.log('>>> Closed main disclaimer');
                 }
+            } else {
+                console.error('>>> Main content not found!');
             }
         }
         
         function toggleDisclaimer(clinicSlug) {
+            console.log('>>> toggleDisclaimer called with clinicSlug:', clinicSlug);
+            
             const content = document.getElementById(`${clinicSlug}-content`);
             const arrow = document.getElementById(`${clinicSlug}-arrow`);
+            
+            console.log('>>> Found content element:', !!content);
+            console.log('>>> Found arrow element:', !!arrow);
             
             if (content) {
                 // 計算されたスタイルも確認
                 const currentDisplay = window.getComputedStyle(content).display;
+                console.log('>>> Current display style:', currentDisplay);
+                console.log('>>> Content style.display:', content.style.display);
+                
                 if (currentDisplay === 'none' || content.style.display === 'none') {
                     content.style.display = 'block';
                     if (arrow) arrow.style.transform = 'rotate(180deg)';
+                    console.log('>>> Opened accordion for:', clinicSlug);
                 } else {
                     content.style.display = 'none';
                     if (arrow) arrow.style.transform = 'rotate(0deg)';
+                    console.log('>>> Closed accordion for:', clinicSlug);
                 }
+            } else {
+                console.error('>>> Content element not found for:', clinicSlug);
             }
         }
         
