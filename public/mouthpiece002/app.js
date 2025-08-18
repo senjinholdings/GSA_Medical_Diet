@@ -340,7 +340,7 @@ class DisplayManager {
                         <img src="${clinicLogoPath}" alt="${clinic.name}バナー" onerror="this.style.display='none'">
                     </div>
                     <div class="push-message" style="padding: 0px; text-align: center; font-size: clamp(10px, 2.3vw, 15px); line-height: 1.4; color: #333; font-weight: bold; margin: 4px 0; height: 15%;">
-                        ${pushMessage}
+                        ${window.dataManager?.processDecoTags ? window.dataManager.processDecoTags(pushMessage) : pushMessage}
                     </div>
                     <p class="btn btn_second_primary">
                         <a href="${this.urlHandler.getClinicUrlWithRegionId(clinic.id, clinic.rank || 1)}" target="_blank" rel="noopener">
@@ -2422,14 +2422,14 @@ class RankingApp {
                     <span class="ranking_evaluation">${getClinicData('総合評価', '4.5')}</span><br>
                     <span class="star5_rating" data-rate="${getClinicData('総合評価', '4.5')}"></span>
                 </td>
-                <td class="" style="">${getClinicData('費用', '')}</td>
-                <td class="" style="">${getClinicData('特徴', '')}</td>
-                <td class="th-none" style="display: none;">${getClinicData('矯正範囲', '')}</td>
-                <td class="th-none" style="display: none;">${getClinicData('目安期間', '')}</td>
-                <td class="th-none" style="display: none;">${getClinicData('通院頻度', '')}</td>
-                <td class="th-none" style="display: none;">${getClinicData('実績/症例数', '')}</td>
-                <td class="th-none" style="display: none;">${getClinicData('ワイヤー矯正の紹介', '')}</td>
-                <td class="th-none" style="display: none;">${getClinicData('サポート', '')}</td>
+                <td class="" style="">${this.dataManager.processDecoTags(getClinicData('費用', ''))}</td>
+                <td class="" style="">${this.dataManager.processDecoTags(getClinicData('特徴', ''))}</td>
+                <td class="th-none" style="display: none;">${this.dataManager.processDecoTags(getClinicData('矯正範囲', ''))}</td>
+                <td class="th-none" style="display: none;">${this.dataManager.processDecoTags(getClinicData('目安期間', ''))}</td>
+                <td class="th-none" style="display: none;">${this.dataManager.processDecoTags(getClinicData('通院頻度', ''))}</td>
+                <td class="th-none" style="display: none;">${this.dataManager.processDecoTags(getClinicData('実績/症例数', ''))}</td>
+                <td class="th-none" style="display: none;">${this.dataManager.processDecoTags(getClinicData('ワイヤー矯正の紹介', ''))}</td>
+                <td class="th-none" style="display: none;">${this.dataManager.processDecoTags(getClinicData('サポート', ''))}</td>
                 <td>
                     <a class="link_btn" href="${this.urlHandler.getClinicUrlWithRegionId(clinic.id, clinic.rank || rankNum)}" target="_blank">公式サイト &gt;</a>
                     <a class="detail_btn" href="#clinic${rankNum}">詳細をみる</a>
@@ -2950,8 +2950,8 @@ class RankingApp {
                         <div class="detail-rank-header">
                             <div class="detail-rank-badge ${badgeClass}">${rank}</div>
                             <div class="detail-title">
-                                <h3>${data.title}</h3>
-                                <p>${data.subtitle}</p>
+                                <h3>${this.dataManager.processDecoTags(data.title)}</h3>
+                                <p>${this.dataManager.processDecoTags(data.subtitle)}</p>
                             </div>
                         </div>
                         <div class="ranking__name">
@@ -2969,7 +2969,7 @@ class RankingApp {
                     ` : '';
                 })()}
                 <div class="detail-features">
-                    ${data.features.map(feature => `<span class="feature-tag">${feature.startsWith('#') ? feature : '# ' + feature}</span>`).join('')}
+                    ${data.features.map(feature => `<span class="feature-tag">${this.dataManager.processDecoTags(feature.startsWith('#') ? feature : '# ' + feature)}</span>`).join('')}
                 </div>
                 
                 <!-- 拡張版価格表 -->
