@@ -1209,7 +1209,8 @@ class DataManager {
             'periods': '目安期間',
             'ranges': '矯正範囲',
             'hours': '営業時間',
-            'stores': '店舗'
+            'stores': '店舗',
+            'officialSite': '公式サイト'
         };
         
         // マッピングに基づいて動的にフィールドを設定
@@ -1217,13 +1218,16 @@ class DataManager {
             // 日本語の表示名を取得
             const japaneseKey = displayNameMap[displayKey] || displayKey;
             
-            // 公式サイトの場合は特別な処理
+            // 公式サイトURLは詳細_プレフィックスなし、それ以外は詳細_プレフィックス付き
+            let detailValue;
             if (csvKey === '公式サイトURL') {
-                priceDetail['公式サイト'] = this.getClinicText(clinicCode, csvKey, '');
+                detailValue = this.getClinicText(clinicCode, csvKey, '');
             } else {
-                // その他のフィールドは日本語キーでマッピング
-                priceDetail[japaneseKey] = this.getClinicText(clinicCode, csvKey, '');
+                detailValue = this.getClinicText(clinicCode, `詳細_${csvKey}`, '');
             }
+            
+            // 値を設定
+            priceDetail[japaneseKey] = detailValue;
         });
         
         // clinic-texts.jsonから詳細データを動的に構築
@@ -1233,7 +1237,7 @@ class DataManager {
             link: `${clinicName} ＞`,
             banner: this.getClinicText(clinicCode, '詳細バナー画像パス', `/images/clinics/${clinicCode}/${clinicCode}_detail_bnr.webp`),
             features: (() => {
-                const tagsText = this.getClinicText(clinicCode, '特徴タグ', '# 医療ダイエット<br># 医療痩身<br># リバウンド防止');
+                const tagsText = this.getClinicText(clinicCode, '詳細_特徴タグ', '# 医療ダイエット<br># 医療痩身<br># リバウンド防止');
                 // <br>で分割し、#と空白を削除
                 return tagsText.split('<br>').map(tag => tag.replace(/^#\s*/, '').trim()).filter(tag => tag);
             })(),

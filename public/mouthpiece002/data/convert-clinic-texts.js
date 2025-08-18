@@ -48,156 +48,135 @@ function convertClinicTextsToJson() {
     // CSVをパース
     const records = parseCSV(csvContent);
     
-    // 最初の行が比較表ヘッダー設定かチェック
-    let startRow = 0;
+    // 結果オブジェクトを初期化
     const result = {};
     
-    // 比較表のヘッダー項目を収集するための配列
-    const comparisonTableItems = [
-        'クリニック名',
-        '総合評価',
-        '実績'
-    ];
-    
-    if (records[0] && records[0][0] === '比較表ヘッダー設定') {
-        // 比較表ヘッダー設定行はスキップ
-        startRow = 1; // 次の行から処理開始
-    }
+    // データ構造を準備
+    const clinicsData = {};
+    const comparisonHeaders = {};
+    const detailFields = {};
+    const metaFields = {};
     
     // ヘッダー行（クリニック名）を取得
-    if (!records[startRow]) {
-        console.error('❌ ヘッダー行が見つかりません');
-        return;
-    }
-    
-    const headers = records[startRow];
-    const clinicNames = headers.slice(2); // 最初の2列（項目、目的・注意事項）を除く
+    const headers = records[0];
+    const clinicNames = headers.slice(2); // 最初の2列（list_name、項目名）を除く
     
     // クリニックデータを初期化
     clinicNames.forEach(clinic => {
-        if (clinic && clinic.trim()) { // 空のクリニック名を除外
-            result[clinic] = {};
+        if (clinic && clinic.trim()) {
+            clinicsData[clinic] = {};
         }
     });
     
-    // 比較表で使用する項目のマッピング（順番を保持）
-    const headerConfig = {};
-    // 詳細セクションの項目マッピング
-    const detailFieldMapping = {};
-    
-    // 重複フィールドのカウンター
-    let feeCount = 0;
-    let periodCount = 0;
-    let rangeCount = 0;
-    
     // 各行を処理
-    for (let i = startRow + 1; i < records.length; i++) {
+    for (let i = 1; i < records.length; i++) {
         const row = records[i];
-        if (!row || row.length === 0) continue; // 空行をスキップ
+        if (!row || row.length === 0) continue;
         
-        let itemKey = row[0]; // 項目名（キーとして使用）
-        const description = row[1]; // 説明文
-        if (!itemKey || !itemKey.trim()) continue; // 空の項目名をスキップ
+        const listName = row[0]; // list_name（comparison1, detail1, meta1など）
+        const fieldName = row[1]; // 項目名（費用、目安期間など）
         
-        // 費用フィールドの処理（2つある場合の区別）
-        if (itemKey === '費用') {
-            feeCount++;
-            if (feeCount === 1) {
-                // 1つ目の費用 = 比較表用（既存のキー名を維持）
-                itemKey = '費用';
-            } else if (feeCount === 2) {
-                // 2つ目の費用 = 詳細セクション用
-                itemKey = '詳細費用';
+        if (!listName || !fieldName) continue;
+        
+        // list_nameに基づいて処理を分岐
+        if (listName.startsWith('comparison')) {
+            // 比較表項目
+            const headerNum = listName.replace('comparison', '');
+            comparisonHeaders[`比較表ヘッダー${headerNum}`] = fieldName;
+            
+            // 各クリニックのデータを格納
+            for (let j = 0; j < clinicNames.length; j++) {
+                const clinicName = clinicNames[j];
+                if (clinicName && clinicName.trim() && clinicsData[clinicName]) {
+                    const value = row[j + 2] || '';
+                    clinicsData[clinicName][fieldName] = value;
+                }
             }
-        }
-        
-        // 目安期間フィールドの処理（2つある場合の区別）
-        if (itemKey === '目安期間') {
-            periodCount++;
-            if (periodCount === 1) {
-                // 1つ目の目安期間 = 比較表用
-                itemKey = '目安期間';
-            } else if (periodCount === 2) {
-                // 2つ目の目安期間 = 詳細セクション用
-                itemKey = '詳細目安期間';
+        } else if (listName.startsWith('detail')) {
+            // 詳細セクション項目
+            const detailNum = listName.replace('detail', '');
+            
+            // 詳細フィールドのマッピングを作成
+            let mappingKey = '';
+            switch(fieldName) {
+                case '費用':
+                    mappingKey = 'priceDetail';
+                    break;
+                case '目安期間':
+                    mappingKey = 'periods';
+                    break;
+                case '矯正範囲':
+                    mappingKey = 'ranges';
+                    break;
+                case '営業時間':
+                    mappingKey = 'hours';
+                    break;
+                case '店舗':
+                    mappingKey = 'stores';
+                    break;
+                case '特徴タグ':
+                    mappingKey = 'featureTags';
+                    break;
+                default:
+                    mappingKey = fieldName;
             }
-        }
-        
-        // 矯正範囲フィールドの処理（2つある場合の区別）
-        if (itemKey === '矯正範囲') {
-            rangeCount++;
-            if (rangeCount === 1) {
-                // 1つ目の矯正範囲 = 比較表用
-                itemKey = '矯正範囲';
-            } else if (rangeCount === 2) {
-                // 2つ目の矯正範囲 = 詳細セクション用
-                itemKey = '詳細矯正範囲';
+            
+            if (mappingKey && mappingKey !== '特徴タグ') {
+                // 特徴タグは価格表には含めない
+                detailFields[mappingKey] = fieldName;
             }
-        }
-        
-        // 25-30行目（0ベースで24-29）の項目を詳細フィールドマッピングに追加
-        // CSVの行番号は1ベース、配列インデックスは0ベース
-        // startRow + 1で項目行の開始位置なので、25行目は startRow + 25
-        const csvLineNumber = i - startRow + 1; // 現在のCSV行番号（項目名行を1とする）
-        if (csvLineNumber >= 25 && csvLineNumber <= 30) {
-            // 25-30行目の項目を詳細フィールドマッピングに追加
-            detailFieldMapping[itemKey] = itemKey;
-        }
-        
-        // 比較表で使用される特定の項目を説明文で検出して連番マッピング
-        if (itemKey === 'クリニック名' && description && description.includes('正式名称')) {
-            headerConfig['比較表ヘッダー1'] = 'クリニック';
-        } else if (description && description.includes('比較表の総合評価')) {
-            headerConfig['比較表ヘッダー2'] = itemKey;
-        } else if (description && description.includes('比較表の金額') || description && description.includes('比較表の費用')) {
-            headerConfig['比較表ヘッダー3'] = itemKey;
-        } else if (description && description.includes('比較表の特徴')) {
-            headerConfig['比較表ヘッダー4'] = itemKey;
-        } else if (itemKey === '矯正範囲') {
-            headerConfig['比較表ヘッダー5'] = itemKey;
-        } else if (itemKey === '目安期間') {
-            headerConfig['比較表ヘッダー6'] = itemKey;
-        } else if (itemKey === '通院頻度') {
-            headerConfig['比較表ヘッダー7'] = itemKey;
-        } else if (itemKey === '実績/症例数') {
-            headerConfig['比較表ヘッダー8'] = itemKey;
-        } else if (itemKey === 'ワイヤー矯正の紹介') {
-            headerConfig['比較表ヘッダー9'] = itemKey;
-        } else if (itemKey === 'サポート') {
-            headerConfig['比較表ヘッダー10'] = itemKey;
-        } else if (itemKey === '公式サイトURL' || description && description.includes('公式サイト')) {
-            headerConfig['比較表ヘッダー11'] = '公式サイト';
-        }
-        
-        // 詳細セクションの項目は25-30行目で自動設定されるため、ここでは何もしない
-        
-        // 各クリニックのデータを格納
-        for (let j = 0; j < clinicNames.length; j++) {
-            const clinicName = clinicNames[j];
-            if (clinicName && clinicName.trim() && result[clinicName]) { // 空のクリニック名を除外
-                const value = row[j + 2] || ''; // 値が無い場合は空文字
-                result[clinicName][itemKey] = value;
+            
+            // 各クリニックのデータを格納（詳細用のフィールド名で保存）
+            for (let j = 0; j < clinicNames.length; j++) {
+                const clinicName = clinicNames[j];
+                if (clinicName && clinicName.trim() && clinicsData[clinicName]) {
+                    const value = row[j + 2] || '';
+                    // 詳細項目は「詳細_」プレフィックスを付けて保存
+                    clinicsData[clinicName][`詳細_${fieldName}`] = value;
+                }
+            }
+        } else if (listName.startsWith('tags')) {
+            // タグ項目（詳細セクション用）
+            for (let j = 0; j < clinicNames.length; j++) {
+                const clinicName = clinicNames[j];
+                if (clinicName && clinicName.trim() && clinicsData[clinicName]) {
+                    const value = row[j + 2] || '';
+                    // タグは詳細_プレフィックス付きで保存
+                    clinicsData[clinicName][`詳細_${fieldName}`] = value;
+                }
+            }
+        } else if (listName.startsWith('meta')) {
+            // メタ情報項目
+            for (let j = 0; j < clinicNames.length; j++) {
+                const clinicName = clinicNames[j];
+                if (clinicName && clinicName.trim() && clinicsData[clinicName]) {
+                    const value = row[j + 2] || '';
+                    clinicsData[clinicName][fieldName] = value;
+                }
+            }
+        } else {
+            // その他の項目（デフォルト処理）
+            for (let j = 0; j < clinicNames.length; j++) {
+                const clinicName = clinicNames[j];
+                if (clinicName && clinicName.trim() && clinicsData[clinicName]) {
+                    const value = row[j + 2] || '';
+                    clinicsData[clinicName][fieldName] = value;
+                }
             }
         }
     }
     
-    // 公式サイトは固定で追加
-    headerConfig['比較表ヘッダー14'] = '公式サイト';
+    // 結果を組み立て
+    result['比較表ヘッダー設定'] = comparisonHeaders;
+    result['詳細フィールドマッピング'] = detailFields;
     
-    // 比較表ヘッダー設定を追加
-    if (Object.keys(headerConfig).length > 0) {
-        result['比較表ヘッダー設定'] = headerConfig;
-    }
+    // 公式サイトURLを詳細フィールドマッピングに追加
+    detailFields['officialSite'] = '公式サイトURL';
     
-    // 詳細フィールドマッピングを追加（価格表に表示する項目のみ）
-    result['詳細フィールドマッピング'] = {
-        'priceDetail': '詳細費用',  // 詳細セクション用の費用フィールド
-        'periods': '詳細目安期間',  // 詳細セクション用の目安期間
-        'ranges': '詳細矯正範囲',  // 詳細セクション用の矯正範囲
-        'hours': '営業時間',
-        'stores': '店舗'
-        // 注：特徴タグは価格表ではなく別セクションで表示
-    };
+    // クリニックデータを結果に追加
+    Object.keys(clinicsData).forEach(clinic => {
+        result[clinic] = clinicsData[clinic];
+    });
     
     // JSONファイルとして保存
     const jsonPath = path.join(__dirname, 'clinic-texts.json');
@@ -208,10 +187,15 @@ function convertClinicTextsToJson() {
     
     // 比較表ヘッダー設定が含まれているか確認
     if (result['比較表ヘッダー設定']) {
-        console.log('📋 比較表ヘッダー設定: 検出されました');
+        console.log('📋 比較表ヘッダー設定:', Object.keys(result['比較表ヘッダー設定']).length + '項目');
     }
     
-    // クリニック数を計算（比較表ヘッダー設定を除く）
+    // 詳細フィールドマッピングが含まれているか確認
+    if (result['詳細フィールドマッピング']) {
+        console.log('📋 詳細フィールドマッピング:', Object.keys(result['詳細フィールドマッピング']).length + '項目');
+    }
+    
+    // クリニック数を計算
     const clinicCount = clinicNames.filter(name => name && name.trim()).length;
     console.log(`📊 クリニック数: ${clinicCount}`);
     
