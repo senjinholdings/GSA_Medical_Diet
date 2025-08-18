@@ -861,18 +861,34 @@ class DataManager {
             console.log(`🔍 Getting INFORMATIONサブテキスト for clinicCode: ${clinicCode}`);
         }
         
+        // 比較表ヘッダー設定から動的にフィールド名を取得
+        let actualItemKey = itemKey;
+        
+        // comparison1-9の場合は、比較表ヘッダー設定から実際のフィールド名を取得
+        if (itemKey.startsWith('comparison')) {
+            const headerConfig = this.clinicTexts && this.clinicTexts['比較表ヘッダー設定'];
+            if (headerConfig) {
+                const comparisonNum = itemKey.replace('comparison', '');
+                const headerKey = `比較表ヘッダー${comparisonNum}`;
+                if (headerConfig[headerKey]) {
+                    actualItemKey = headerConfig[headerKey];
+                    console.log(`DataManager.getClinicText - Dynamic mapping: ${itemKey} → ${actualItemKey}`);
+                }
+            }
+        }
+        
         // クリニックコードからクリニック名を取得
-        // コードマッピング（clinic-texts.jsonのキーに合わせる）
+        // コードマッピング（clinic-texts.jsonの実際のクリニックコードに合わせて修正）
         const codeToNameMap = {
             'omt': 'Oh my teeth',
             'Oh my teeth': 'Oh my teeth',  // 直接名前が来た場合もサポート
             'zenyum': 'ゼニュム',
             'ゼニュム': 'ゼニュム',
-            'kireil': 'キレイライン矯正',
+            'kireiline': 'キレイライン矯正',  // 正しいコードに修正
             'キレイライン矯正': 'キレイライン矯正',
             'ws': 'ウィスマイル',
             'ウィスマイル': 'ウィスマイル',
-            'inv': 'インビザライン',
+            'invsalign': 'インビザライン',  // 正しいコードに修正
             'インビザライン': 'インビザライン'
         };
         
@@ -885,12 +901,15 @@ class DataManager {
             clinicName = clinic ? clinic.name : null;
         }
         
-        console.log(`DataManager.getClinicText - Mapped ${clinicCode} to ${clinicName}`);
+        // デバッグログ（comparison系のみ）
+        if (itemKey.startsWith('comparison')) {
+            console.log(`DataManager.getClinicText - ${clinicCode} → ${clinicName}, ${itemKey} → ${actualItemKey}`);
+        }
         
-        if (clinicName && this.clinicTexts && this.clinicTexts[clinicName] && this.clinicTexts[clinicName][itemKey]) {
-            const value = this.clinicTexts[clinicName][itemKey];
-            if (itemKey === 'INFORMATIONサブテキスト' || itemKey.includes('POINT')) {
-                console.log(`✅ Found ${itemKey} for ${clinicName}: "${value}"`);
+        if (clinicName && this.clinicTexts && this.clinicTexts[clinicName] && this.clinicTexts[clinicName][actualItemKey]) {
+            const value = this.clinicTexts[clinicName][actualItemKey];
+            if (actualItemKey === 'INFORMATIONサブテキスト' || actualItemKey.includes('POINT') || actualItemKey === '費用' || actualItemKey === 'コスト') {
+                console.log(`✅ Found ${actualItemKey} for ${clinicName}: "${value}"`);
             }
             return value;
         }
@@ -899,8 +918,8 @@ class DataManager {
         if (clinicName && (!this.clinicTexts[clinicName])) {
             console.warn(`No clinic texts found for: ${clinicName}`);
             console.log('Available clinic names:', Object.keys(this.clinicTexts || {}));
-        } else if (itemKey.includes('POINT') || itemKey === 'INFORMATIONサブテキスト') {
-            console.warn(`⚠️ ${itemKey} not found for ${clinicName}, using default: "${defaultText}"`);
+        } else if (actualItemKey.includes('POINT') || actualItemKey === 'INFORMATIONサブテキスト' || actualItemKey === '費用' || actualItemKey === 'コスト') {
+            console.warn(`⚠️ ${actualItemKey} not found for ${clinicName}, using default: "${defaultText}"`);
             console.log('Available keys for this clinic:', this.clinicTexts[clinicName] ? Object.keys(this.clinicTexts[clinicName]) : 'Clinic not found');
         }
         
@@ -2356,35 +2375,46 @@ class RankingApp {
     // 比較表タブ機能のセットアップ
     setupComparisonTabs() {
         const tabItems = document.querySelectorAll('.comparison-tab-menu-item');
-        const comparisonTable = document.getElementById('comparison-table');
         
-        if (!tabItems.length || !comparisonTable) return;
+        if (!tabItems || tabItems.length === 0) {
+            console.log('タブメニュー要素が見つかりません');
+            return;
+        }
+
+        console.log('比較表タブ機能を初期化中...');
         
-        // 各タブの列データ設定（フィールド名ベース）
+        // 各タブの列データ設定（CSVフィールド名で統一）
         const tabFieldMappings = {
-            'tab1': ['クリニック名', '総合評価', '費用', '特徴', '公式サイト'], // 総合
-            'tab2': ['クリニック名', '矯正範囲', '目安期間', '通院頻度', '公式サイト'], // 施術内容
-            'tab3': ['クリニック名', '実績/症例数', 'ワイヤー矯正の紹介', 'サポート', '公式サイト'] // サービス
+            'tab1': ['クリニック名', 'comparison1', 'comparison2', 'comparison3', '公式サイト'], // 総合（総合評価、コスト、人気）
+            'tab2': ['クリニック名', 'comparison4', 'comparison5', 'comparison6', '公式サイト'], // 施術内容（矯正範囲、目安期間、通院頻度）
+            'tab3': ['クリニック名', 'comparison7', 'comparison8', 'comparison9', '公式サイト'] // サービス（実績/症例数、ワイヤー矯正の紹介、サポート）
         };
         
         // タブクリックイベントリスナーを設定
         tabItems.forEach(tabItem => {
-            tabItem.addEventListener('click', () => {
-                const targetTab = tabItem.getAttribute('data-tab');
+            tabItem.addEventListener('click', (e) => {
+                e.preventDefault();
                 
-                // アクティブなタブを更新
+                // 全てのタブからアクティブクラスを削除
                 tabItems.forEach(item => item.classList.remove('tab-active'));
+                
+                // クリックされたタブにアクティブクラスを追加
                 tabItem.classList.add('tab-active');
                 
-                // テーブルをタブ用のデータで再生成
+                // データ属性からタブIDを取得
+                const targetTab = tabItem.getAttribute('data-tab');
+                console.log(`${targetTab}タブがクリックされました`);
+                
+                // タブに応じてテーブルを再生成
                 this.regenerateTableForTab(targetTab, tabFieldMappings[targetTab] || tabFieldMappings['tab1']);
             });
         });
-        
+
         // 初期状態で総合タブのテーブルを生成
         this.regenerateTableForTab('tab1', tabFieldMappings['tab1']);
     }
     
+    // タブ用のテーブルを動的に再生成
     // タブ用のテーブルを動的に再生成
     regenerateTableForTab(tabId, fieldNames) {
         const tbody = document.getElementById('comparison-tbody');
@@ -2392,28 +2422,37 @@ class RankingApp {
         
         if (!tbody || !fieldNames) return;
         
+        // CSVフィールド名から比較表ヘッダー設定のキーへのマッピング
+        const fieldToHeaderMapping = {
+            'comparison1': '比較表ヘッダー1', // 総合評価
+            'comparison2': '比較表ヘッダー2', // コスト
+            'comparison3': '比較表ヘッダー3', // 人気
+            'comparison4': '比較表ヘッダー4', // 矯正範囲
+            'comparison5': '比較表ヘッダー5', // 目安期間
+            'comparison6': '比較表ヘッダー6', // 通院頻度
+            'comparison7': '比較表ヘッダー7', // 実績/症例数
+            'comparison8': '比較表ヘッダー8', // ワイヤー矯正の紹介
+            'comparison9': '比較表ヘッダー9'  // サポート
+        };
+        
         // ヘッダーを再生成
         if (headerRow) {
             headerRow.innerHTML = '';
-            
-            // フィールド名に対応するヘッダーテキストを取得
             const headerConfig = this.dataManager.clinicTexts['比較表ヘッダー設定'] || {};
             
             fieldNames.forEach(fieldName => {
                 const th = document.createElement('th');
                 
-                // フィールド名からヘッダーテキストを決定
                 if (fieldName === 'クリニック名') {
                     th.textContent = 'クリニック';
                 } else if (fieldName === '公式サイト') {
                     th.textContent = '公式サイト';
-                } else if (fieldName === '費用') {
-                    // 動的に変更されたヘッダー名を取得
-                    th.textContent = headerConfig['比較表ヘッダー2'] || 'コスト';
-                } else {
-                    // 他のフィールドは設定から取得またはそのまま使用
-                    const headerKey = this.getHeaderKeyForField(fieldName);
+                } else if (fieldToHeaderMapping[fieldName]) {
+                    // CSVフィールド名からヘッダー設定のキーを取得して表示名を決定
+                    const headerKey = fieldToHeaderMapping[fieldName];
                     th.textContent = headerConfig[headerKey] || fieldName;
+                } else {
+                    th.textContent = fieldName;
                 }
                 
                 headerRow.appendChild(th);
@@ -2460,9 +2499,9 @@ class RankingApp {
                         <img src="${logoPath}" alt="${clinic.name}" width="80">
                         <a href="#" ${clinicNameOnclick} class="clinic-link" style="cursor: pointer;">${clinic.name}</a>
                     `;
-                } else if (fieldName === '総合評価') {
+                } else if (fieldName === 'comparison1') {
                     // 総合評価と星表示
-                    const rating = this.dataManager.getClinicText(clinicCode, '総合評価', '4.5');
+                    const rating = this.dataManager.getClinicText(clinicCode, 'comparison1', '4.5');
                     td.innerHTML = `
                         <span class="ranking_evaluation">${rating}</span><br>
                         <span class="star5_rating" data-rate="${rating}"></span>
@@ -2471,12 +2510,22 @@ class RankingApp {
                     // 公式サイトボタンと詳細を見るボタン
                     td.innerHTML = `
                         <a class="link_btn" href="${this.urlHandler.getClinicUrlWithRegionId(clinic.id, clinic.rank || rankNum)}" target="_blank">公式サイト &gt;</a><br>
-                        <a href="#clinic${rankNum}" class="cta-link detail-scroll-link" data-rank="${rankNum}">詳細を見る</a>
+                        <a class="detail_btn" href="#clinic${rankNum}">詳細をみる</a>
                     `;
-                } else {
-                    // その他のフィールドはデータから取得
+                } else if (fieldName.startsWith('comparison')) {
+                    // comparison2-9のフィールドはCSVフィールド名を使ってデータから取得
                     const cellData = this.dataManager.getClinicText(clinicCode, fieldName, '');
-                    td.innerHTML = this.dataManager.processDecoTags(cellData);
+                    // processDecoTagsで処理してHTMLとして設定
+                    if (cellData) {
+                        td.innerHTML = this.dataManager.processDecoTags(cellData);
+                    } else {
+                        td.innerHTML = '';
+                        console.log(`警告: ${clinicCode}の${fieldName}フィールドが空です`);
+                    }
+                } else {
+                    // その他のフィールド
+                    const cellData = this.dataManager.getClinicText(clinicCode, fieldName, '');
+                    td.innerHTML = this.dataManager.processDecoTags(cellData || '');
                 }
                 
                 tr.appendChild(td);
@@ -2524,12 +2573,11 @@ class RankingApp {
     
     // 最新のランキングデータを取得
     getLatestRankingData() {
-        // これは既存のデータ構造に依存するため、実装に合わせて調整
-        // 暫定的にクリニックデータを直接参照
+        // clinic-texts.jsonの実際のクリニックコードに合わせて修正
         return [
             { id: '1', name: 'Oh my teeth', code: 'omt', rank: 1 },
-            { id: '3', name: 'キレイライン矯正', code: 'kireiline', rank: 2 },
-            { id: '4', name: 'ウィスマイル', code: 'ws', rank: 3 },
+            { id: '4', name: 'キレイライン矯正', code: 'kireiline', rank: 2 },
+            { id: '3', name: 'ウィスマイル', code: 'ws', rank: 3 },
             { id: '5', name: 'ゼニュム', code: 'zenyum', rank: 4 }
         ];
     }
@@ -2606,8 +2654,11 @@ class RankingApp {
         });
 
 
-        // 比較表の内容を生成
-        this.generateComparisonTable(rankedClinics);
+        // 比較表の内容を生成（タブ機能で再生成されるためコメントアウト）
+        // this.generateComparisonTable(rankedClinics);
+        
+        // 比較表タブ機能のセットアップ（これが初期テーブルも生成する）
+        this.setupComparisonTabs();
         
         // 1位クリニックおすすめセクションを更新
         this.updateFirstChoiceRecommendation(rankedClinics[0]);
@@ -2625,6 +2676,11 @@ class RankingApp {
         if (!tbody) return;
         
         tbody.innerHTML = '';
+
+        // 比較表ヘッダー設定を取得して動的にフィールド名を決定
+        const headerConfig = this.dataManager.clinicTexts['比較表ヘッダー設定'] || {};
+        const field2 = headerConfig['比較表ヘッダー2'] || 'コスト';  // デフォルトは'コスト'
+        const field3 = headerConfig['比較表ヘッダー3'] || '人気';    // デフォルトは'人気'
 
         clinics.forEach((clinic, index) => {
             const tr = document.createElement('tr');
@@ -2661,9 +2717,6 @@ class RankingApp {
             // クリニック名リンクにもlocalStorageとリダイレクトを適用
             const clinicNameOnclick = `onclick="localStorage.setItem('redirectParams', JSON.stringify({clinic_id: '${clinicId}', rank: '${rankNum}', region_id: '${regionId}'})); setTimeout(() => { window.open('${redirectUrl}', '_blank'); }, 10); return false;"`;
             
-            // 比較表ヘッダー設定を取得
-            const headerConfig = this.dataManager.clinicTexts['比較表ヘッダー設定'] || {};
-            
             tr.innerHTML = `
                 <td class="ranking-table_td1">
                     <img src="${logoPath}" alt="${clinic.name}" width="80">
@@ -2673,10 +2726,11 @@ class RankingApp {
                     <span class="ranking_evaluation">${getClinicData('総合評価', '4.5')}</span><br>
                     <span class="star5_rating" data-rate="${getClinicData('総合評価', '4.5')}"></span>
                 </td>
-                <td class="" style="">${this.dataManager.processDecoTags(getClinicData('費用', ''))}</td>
-                <td class="" style="">${this.dataManager.processDecoTags(getClinicData('特徴', ''))}</td>
+                <td class="" style="">${this.dataManager.processDecoTags(getClinicData(field2, ''))}</td>
+                <td class="" style="">${this.dataManager.processDecoTags(getClinicData(field3, ''))}</td>
                 <td>
-                    <a class="link_btn" href="${this.urlHandler.getClinicUrlWithRegionId(clinic.id, clinic.rank || rankNum)}" target="_blank">公式サイト &gt;</a>
+                    <a class="link_btn" href="${this.urlHandler.getClinicUrlWithRegionId(clinic.id, clinic.rank || rankNum)}" target="_blank">公式サイト &gt;</a><br>
+                    <a class="detail_btn" href="#clinic${rankNum}">詳細をみる</a>
                 </td>
                 <td class="th-none" style="display: none;">${this.dataManager.processDecoTags(getClinicData('矯正範囲', ''))}</td>
                 <td class="th-none" style="display: none;">${this.dataManager.processDecoTags(getClinicData('目安期間', ''))}</td>
@@ -2684,9 +2738,6 @@ class RankingApp {
                 <td class="th-none" style="display: none;">${this.dataManager.processDecoTags(getClinicData('実績/症例数', ''))}</td>
                 <td class="th-none" style="display: none;">${this.dataManager.processDecoTags(getClinicData('ワイヤー矯正の紹介', ''))}</td>
                 <td class="th-none" style="display: none;">${this.dataManager.processDecoTags(getClinicData('サポート', ''))}</td>
-                <td class="th-none" style="display: none;">
-                    <a class="detail_btn" href="#clinic${rankNum}">詳細をみる</a>
-                </td>
             `;
             
             tbody.appendChild(tr);

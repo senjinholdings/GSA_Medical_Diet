@@ -2291,9 +2291,7 @@ section.clinic-rankings .ranking-header-banner {
 
 /* 王冠マークを削除 */
 
-.comparison-table table tbody tr:first-child td:nth-of-type(2) {
-    color: #f50000;
-}
+
 
 .comparison-table table tbody td:nth-of-type(1) {
     font-size: 11px;
@@ -2386,7 +2384,8 @@ section.clinic-rankings .ranking-header-banner {
 
 
 
-.comparison-table .detail_btn {
+.comparison-table .detail_btn,
+#comparison-table .detail_btn {
     display: inline-block;
     background: white;
     color: #4C4C4C;
@@ -2398,7 +2397,8 @@ section.clinic-rankings .ranking-header-banner {
     transition: all 0.3s;
 }
 
-.comparison-table .detail_btn:hover {
+.comparison-table .detail_btn:hover,
+#comparison-table .detail_btn:hover {
     background: #F1F1F1;
 }
 
@@ -2513,10 +2513,12 @@ section.clinic-rankings .ranking-header-banner {
     }
     
     /* ボタンの調整 */
-.comparison-table .link_btn, .comparison-table .detail_btn {
-    padding: 4px 4px;
-    font-size: 9px;
-}
+    .comparison-table .link_btn,
+    .comparison-table .detail_btn,
+    #comparison-table .detail_btn {
+        padding: 4px 4px !important;
+        font-size: 9px !important;
+    }
     
     /* 総合タブ以外で特定の列を非表示 */
     .comparison-tab-menu-item[data-tab="tab1"].tab-active ~ table .td-width2,
@@ -2526,6 +2528,13 @@ section.clinic-rankings .ranking-header-banner {
 }
 
 /* さらに小さい画面用 */
+@media (max-width: 480px) {
+    .comparison-table, .comparison-table * {
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+    }
+}
+
 @media (max-width: 400px) {
     .comparison-table table {
         font-size: 9px;
@@ -2683,6 +2692,25 @@ section.clinic-rankings .ranking-header-banner {
 .cta-link:hover {
     border-color: #ec4899;
     color: #ec4899;
+}
+
+/* 比較表内の詳細を見るボタンの特別なスタイル */
+.comparison-table .cta-link.detail-scroll-link {
+    display: inline-block;
+    background: white;
+    color: #4C4C4C;
+    text-decoration: none;
+    padding: 6px 12px;
+    border: 1px solid #E0E0E0;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    transition: all 0.3s;
+}
+
+.comparison-table .cta-link.detail-scroll-link:hover {
+    background: #F1F1F1;
+    border-color: #E0E0E0;
+    color: #4C4C4C;
 }
 
 /* ===== 案件詳細セクション ===== */
