@@ -1,0 +1,176 @@
+[
+  {
+    "clinicCode": "dio",
+    "clinicName": "ディオクリニック",
+    "menuSlug": "threadlift",
+    "available": "unknown",
+    "evidenceUrl": "",
+    "lastVerifiedAt": "",
+    "storeIds": [],
+    "pricing": {
+      "minTaxIncluded": "",
+      "maxTaxIncluded": "",
+      "unit": "",
+      "anesthesiaFeeIncluded": "",
+      "additionalFeesNote": ""
+    },
+    "threads": {
+      "threadTypes": [],
+      "materialTypes": [],
+      "brandNames": [],
+      "countMin": "",
+      "countMax": ""
+    },
+    "notes": {
+      "downtime": "",
+      "risks": "",
+      "guaranteePolicy": ""
+    },
+    "reservationUrl": ""
+  },
+  {
+    "clinicCode": "eminal",
+    "clinicName": "エミナルクリニック",
+    "menuSlug": "threadlift",
+    "available": "unknown",
+    "evidenceUrl": "",
+    "lastVerifiedAt": "",
+    "storeIds": [],
+    "pricing": {
+      "minTaxIncluded": "",
+      "maxTaxIncluded": "",
+      "unit": "",
+      "anesthesiaFeeIncluded": "",
+      "additionalFeesNote": ""
+    },
+    "threads": {
+      "threadTypes": [],
+      "materialTypes": [],
+      "brandNames": [],
+      "countMin": "",
+      "countMax": ""
+    },
+    "notes": {
+      "downtime": "",
+      "risks": "",
+      "guaranteePolicy": ""
+    },
+    "reservationUrl": ""
+  },
+  {
+    "clinicCode": "urara",
+    "clinicName": "ウララクリニック",
+    "menuSlug": "threadlift",
+    "available": "unknown",
+    "evidenceUrl": "",
+    "lastVerifiedAt": "",
+    "storeIds": [],
+    "pricing": {
+      "minTaxIncluded": "",
+      "maxTaxIncluded": "",
+      "unit": "",
+      "anesthesiaFeeIncluded": "",
+      "additionalFeesNote": ""
+    },
+    "threads": {
+      "threadTypes": [],
+      "materialTypes": [],
+      "brandNames": [],
+      "countMin": "",
+      "countMax": ""
+    },
+    "notes": {
+      "downtime": "",
+      "risks": "",
+      "guaranteePolicy": ""
+    },
+    "reservationUrl": ""
+  },
+  {
+    "clinicCode": "lieto",
+    "clinicName": "リエートクリニック",
+    "menuSlug": "threadlift",
+    "available": "unknown",
+    "evidenceUrl": "",
+    "lastVerifiedAt": "",
+    "storeIds": [],
+    "pricing": {
+      "minTaxIncluded": "",
+      "maxTaxIncluded": "",
+      "unit": "",
+      "anesthesiaFeeIncluded": "",
+      "additionalFeesNote": ""
+    },
+    "threads": {
+      "threadTypes": [],
+      "materialTypes": [],
+      "brandNames": [],
+      "countMin": "",
+      "countMax": ""
+    },
+    "notes": {
+      "downtime": "",
+      "risks": "",
+      "guaranteePolicy": ""
+    },
+    "reservationUrl": ""
+  },
+  {
+    "clinicCode": "sbc",
+    "clinicName": "湘南美容クリニック",
+    "menuSlug": "threadlift",
+    "available": "unknown",
+    "evidenceUrl": "",
+    "lastVerifiedAt": "",
+    "storeIds": [],
+    "pricing": {
+      "minTaxIncluded": "",
+      "maxTaxIncluded": "",
+      "unit": "",
+      "anesthesiaFeeIncluded": "",
+      "additionalFeesNote": ""
+    },
+    "threads": {
+      "threadTypes": [],
+      "materialTypes": [],
+      "brandNames": [],
+      "countMin": "",
+      "countMax": ""
+    },
+    "notes": {
+      "downtime": "",
+      "risks": "",
+      "guaranteePolicy": ""
+    },
+    "reservationUrl": ""
+  },
+  {
+    "clinicCode": "dsc",
+    "clinicName": "DSクリニック",
+    "menuSlug": "threadlift",
+    "available": "unknown",
+    "evidenceUrl": "",
+    "lastVerifiedAt": "",
+    "storeIds": [],
+    "pricing": {
+      "minTaxIncluded": "",
+      "maxTaxIncluded": "",
+      "unit": "",
+      "anesthesiaFeeIncluded": "",
+      "additionalFeesNote": ""
+    },
+    "threads": {
+      "threadTypes": [],
+      "materialTypes": [],
+      "brandNames": [],
+      "countMin": "",
+      "countMax": ""
+    },
+    "notes": {
+      "downtime": "",
+      "risks": "",
+      "guaranteePolicy": ""
+    },
+    "reservationUrl": ""
+  }
+]

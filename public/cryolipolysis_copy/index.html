@@ -20,15 +20,14 @@
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
     <!-- 重要なリソースのpreload -->
     <link rel="preload" as="image" href="./images/injection-MV.webp" fetchpriority="high" type="image/webp">
-    <link rel="preload" as="style" href="styles.css?v=2025080101">
+    <link rel="preload" as="style" href="styles-consolidated.css?v=2025081201">
     <link rel="preload" as="script" href="app.js?v=2025080101">
     <!-- Google Fontsはプリロードせず、通常のロードのみにする -->
     <!-- スタイルシート -->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" media="print" onload="this.media='all'">
-    <link rel="stylesheet" href="styles.css?v=2025080104" media="all">
-    <link rel="stylesheet" href="responsive-fix-480-768.css?v=2025080104" media="all">
-    <link rel="stylesheet" href="simple-case-carousel-override.css?v=2025080114" media="all">
+    <!-- 統合CSSファイル -->
+    <link rel="stylesheet" href="styles-consolidated.css?v=2025081201" media="all">
     <link rel="icon" type="image/png" href="../images/favicon.png">
     <!-- Critical CSS -->
     <style>
@@ -100,6 +99,28 @@
             overflow: hidden;
             margin: 0;
             padding: 0;
+        }
+
+        /* 比較表のスタイル */
+        .comparison-table-wrapper {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch; /* for smooth scrolling on iOS */
+        }
+        .comparison-table table {
+            width: 100%;
+            min-width: 800px; /* Prevent columns from becoming too narrow */
+            border-collapse: collapse;
+        }
+        .comparison-table th, .comparison-table td {
+            padding: 10px;
+            border: 1px solid #e0e0e0;
+            text-align: center;
+            font-size: 12px;
+            white-space: nowrap;
+        }
+        .comparison-table th {
+            background-color: #f7f7f7;
+            font-weight: 600;
         }
 
         /* 迷ったら1位クリニックセクションのスタイル */
@@ -353,6 +374,7 @@
                         <div class="comparison-tab-menu-item" data-tab="tab2">施術内容</div>
                         <div class="comparison-tab-menu-item" data-tab="tab3">サービス</div>
                     </div>
+                    <div class="comparison-table-wrapper">
                     <table>
                         <thead>
                             <tr>
@@ -438,6 +460,7 @@
                             </tr>
                         </tbody>
                     </table>
+                </div>
                     <!-- 注意事項アコーディオン -->
                     <div class="disclaimer-accordion" style="margin-top: 15px;">
                         <!-- 第1段階: 各クリニックの注意事項 -->
@@ -457,8 +480,9 @@
             <!-- 案件詳細セクション -->
             <section class="clinic-details-section">
                 <div class="details-header-banner">
-                    <img src="/images/details_header_bannar3.webp" alt="コスパ×効果×通いやすさで選ぶ医療痩身クリニックBEST3" class="details-banner-image">
-                    <div id="detail-region-name" style="position:absolute;top: 54%;left: 3%;text-align: center;color: #ffffff;font-size: clamp(16px, 4vw, 31px);font-weight: 600;z-index:10;pointer-events:none;padding: clamp(2px, 0.5vw, 4px) clamp(4px, 1vw, 8px);border-radius: 8px;">東京</div>
+                    <img src="/images/details_header_bannar3.webp" alt="コスパ×効果×通いやすさで選ぶ脂肪冷却BEST3" class="details-banner-image">
+                    <div id="detail-region-name-2" style="position:absolute;top: 54%;left: 3%;text-align: center;color: #ffffff;font-size: clamp(16px, 4vw, 31px);font-weight: 600;z-index:10;pointer-events:none;padding: clamp(2px, 0.5vw, 4px) clamp(4px, 1vw, 8px);border-radius: 8px;">東京で人気のクリニック</div>
+                    <div id="detail-rank-count-2" style="position:absolute;top: 37%;left: 56%;text-align: center;color: #fbf050;font-size: clamp(32px, 10vw, 80px);font-weight: 700;z-index:10;pointer-events:none;padding: clamp(2px, 0.5vw, 4px) clamp(4px, 1vw, 8px);border-radius: 8px;-webkit-text-stroke: 1px #ff94ae;text-stroke: 1px #ff94ae;text-shadow: 1px 1px 0 #fff, -1px 1px 0 #fff, 1px -1px 0 #fff, -1px -1px 0 #fff, 1px 0 0 #fff, -1px 0 0 #fff, 0 1px 0 #fff, 0 -1px 0 #fff;">5</div><div id="detail-rank-best-2" style="position:absolute;top: 51%;left: 63%;text-align: center;color: #fbf050;font-size: clamp(20px, 7vw, 56px);font-weight: 700;z-index:10;pointer-events:none;padding: clamp(2px, 0.5vw, 4px) clamp(4px, 1vw, 8px);border-radius: 8px;text-shadow: 1px 1px 0 #ff94ae, -1px -1px 0 #ff94ae, 1px -1px 0 #ff94ae, -1px 1px 0 #ff94ae, 1px 0 0 #ff94ae, -1px 0 0 #ff94ae, 0 1px 0 #ff94ae, 0 -1px 0 #ff94ae, 2px 2px 0 #fff, -2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 0 0 #fff, -2px 0 0 #fff, 0 2px 0 #fff, 0 -2px 0 #fff;">選！</div>
                 </div>
                 
                 <div id="clinic-details-list" class="clinic-details-container">

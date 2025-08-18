@@ -1,0 +1,25 @@
+項目名,説明,値
+サイトロゴ,ヘッダーロゴテキスト,ポテンツァ比較.com
+MV画像パス,メインビジュアルの背景画像,./images/potenza-MV.webp
+MVアピールテキスト1,メインビジュアルの左側テキスト,美肌治療
+MVアピールテキスト2,メインビジュアルの右側テキスト,ニキビ跡改善
+MVSVGテキスト1,メインビジュアルの大きなSVGテキスト,ポテンツァおすすめ
+MVSVGテキスト2,メインビジュアルの小さなSVGテキスト,人気クリニック{{RANK_COUNT}}選
+ランキングバナー画像パス,ランキングセクションのバナー画像,/images/ranking_header_banner_potenza.webp
+ランキング地域名テキスト,ランキングセクション上部の地域名に続くテキスト,で人気のポテンツァはココ！
+Tipsタブ1タイトル,Tipsセクションの1つ目のタブ,ポテンツァの効果
+Tips1内容,Tips1の説明文,ポテンツァは<deco>ニキビ跡、毛穴、たるみ</deco>など、多様な肌悩みに対応。マイクロニードルとRF（高周波）を組み合わせ、<deco>肌の再生能力を最大限に引き出します。</deco>ダウンタイムが短く、効果を実感しやすいのが魅力です。
+Tips1画像パス,Tips1セクションの画像,/images/potenza/Tips1.webp
+Tipsタブ2タイトル,Tipsセクションの2つ目のタブ,リスクと副作用
+Tips2内容,Tips2の説明文,ポテンツァの施術後には、<deco>赤み、腫れ、内出血</deco>などが一時的に生じることがあります。これらは通常数日で治まりますが、<deco>施術後の丁寧な保湿と紫外線対策</deco>が重要です。
+Tips2画像パス,Tips2セクションの画像,/images/potenza/Tips2.webp
+Tipsタブ3タイトル,Tipsセクションの3つ目のタブ,クリニックの選び方
+Tips3内容,Tips3の説明文,ポテンツァは<deco>使用するチップや設定</deco>によって効果が変わります。カウンセリングで<deco>自分の肌悩みに合った施術を提案してくれるか</deco>を確認しましょう。また、施術後のアフターケアや料金体系も重要なポイントです。
+Tips3画像パス,Tips3セクションの画像,/images/potenza/Tips3.webp
+比較表タイトル,比較表セクションの見出し,で人気のポテンツァ
+比較表サブタイトル,比較表のサブタイトル,クリニックを<span class="accent-text">徹底比較</span>
+詳細バナー画像パス,詳細セクションのバナー画像,/images/details_header_bannar_potenza.webp
+ファビコン画像パス,サイトのファビコン,/images/favicon_potenza.png
+フッターサイト名,フッターのサイト名,ポテンツァ比較.com
+フッターコピーライト,フッターのコピーライト,© 2025 ポテンツァ比較.com
+注意事項HTML,詳細セクションの注意事項HTML,"<div class=""main-disclaimer""><span id=""main-arrow"" style=""font-size: 8px; color: rgb(153, 153, 153); transition: transform 0.2s; transform: rotate(180deg);"">▼</span><div id=""main-content"" class=""main-disclaimer-content"" style=""display: block; padding: 5px; background-color: rgb(252, 252, 252); border-right: 1px solid rgb(240, 240, 240); border-bottom: 1px solid rgb(240, 240, 240); border-left: 1px solid rgb(240, 240, 240);""><p>※施術の効果には個人差があります。※自由診療のため、保険は適用されません。※料金は全て税込表記です。</p></div></div>"

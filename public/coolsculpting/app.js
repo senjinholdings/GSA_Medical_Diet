@@ -706,24 +706,6 @@ class DataManager {
         
     }
 
-    // キャンペーンデータの読み込み
-    async loadCampaigns() {
-        const data = await this.loadCsvFile('出しわけSS - campaigns.csv');
-        this.campaigns = data.map(row => ({
-            id: row.campaign_id,
-            regionId: row.region_id,
-            clinicId: row.clinic_id,
-            title: row.title,
-            headerText: row.header_text,
-            logoSrc: row.logo_src,
-            logoAlt: row.logo_alt,
-            description: row.description,
-            ctaText: row.cta_text,
-            ctaUrl: row.cta_url,
-            footerText: row.footer_text
-        }));
-    }
-
     // 店舗と地域の関連付け
     associateStoresWithRegions() {
         this.stores.forEach(store => {

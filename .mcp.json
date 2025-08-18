@@ -1,0 +1,12 @@
+{
+    "mcpServers": {
+            "cipher": {
+                    "type": "stdio",
+                    "command": "cipher",
+                    "args": ["--mode", "mcp"],
+                    "env": {
+                            "OPENAI_API_KEY": "sk-proj-xxxxxxxxxxx"
+                    }
+            }
+    }
+}

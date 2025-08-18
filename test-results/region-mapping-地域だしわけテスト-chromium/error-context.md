@@ -1,0 +1,714 @@
+# Page snapshot
+
+```yaml
+- banner:
+  - link "医療ダイエット比較.com 医療ダイエット比較.com":
+    - /url: http://localhost:8090/?region_id=040
+    - img "医療ダイエット比較.com"
+    - heading "医療ダイエット比較.com" [level=1]
+  - navigation:
+    - button "メニュー"
+- img "クールスカルプティングランキング - コスパ×通いやすさで選ぶ"
+- text: 福岡 コスパ
+- img: 東京で人気のマウスピース矯正
+- img: クリニックを徹底比較
+- text: PR
+- main:
+  - img "福岡で人気の脂肪溶解注射はココ！"
+  - text: 福岡で人気のマウスピース矯正はココ！
+  - img "No.1"
+  - text: 満足度      4.9/5.0
+  - heading "Oh my teeth" [level=3]
+  - img "Oh my teethバナー"
+  - text: 2025年のイチ押し！ 通院不要！最短2ヶ月 国内製造数No.1
+  - paragraph:
+    - link "公式サイト ▶":
+      - /url: http://localhost:8090/mouthpiece002/redirect.html?clinic_id=1&rank=1&region_id=040
+  - img "No.2"
+  - text: 満足度      4.3/5.0
+  - heading "キレイライン矯正" [level=3]
+  - img "キレイライン矯正バナー"
+  - text: 12万人が選んだ！ 満足度90%
+  - paragraph:
+    - link "公式サイト ▶":
+      - /url: http://localhost:8090/mouthpiece002/redirect.html?clinic_id=4&rank=1&region_id=040
+  - img "No.3"
+  - text: 満足度      4.5/5.0
+  - heading "インビザライン" [level=3]
+  - img "インビザラインバナー"
+  - text: 世界1500万人が グローバルスタンダード矯正システム
+  - paragraph:
+    - link "公式サイト ▶":
+      - /url: http://localhost:8090/mouthpiece002/redirect.html?clinic_id=2&rank=1&region_id=040
+  - img "No.4"
+  - text: 満足度      4.1/5.0
+  - heading "ウィスマイル" [level=3]
+  - img "ウィスマイルバナー"
+  - text: 優しい価格！ 月額1,760円から！
+  - paragraph:
+    - link "公式サイト ▶":
+      - /url: http://localhost:8090/mouthpiece002/redirect.html?clinic_id=3&rank=1&region_id=040
+  - img "No.5"
+  - text: 満足度      3.8/5.0
+  - heading "ゼニュム" [level=3]
+  - img "ゼニュムバナー"
+  - text: シンガポール発 50万人が利用！
+  - paragraph:
+    - link "公式サイト ▶":
+      - /url: http://localhost:8090/mouthpiece002/redirect.html?clinic_id=5&rank=1&region_id=040
+  - text: 医療痩身の効果 クリニック選び 今がおすすめ
+  - img "脂肪冷却の効果"
+  - paragraph: 本気で痩せたいなら医療痩身が最短！科学的根拠に基づき、脂肪細胞そのものを破壊・減少させるので痩せる仕組みで、リバウンドしにくい！と今人気急上昇中のダイエット法！
+  - heading "福岡で人気のマウスピース矯正" [level=2]
+  - heading "クリニックを徹底比較" [level=3]
+  - text: 総合 施術内容 サービス
+  - table:
+    - rowgroup:
+      - row "クリニック 総合評価 費用 特徴 公式サイト":
+        - cell "クリニック"
+        - cell "総合評価"
+        - cell "費用"
+        - cell "特徴"
+        - cell "公式サイト"
+    - rowgroup:
+      - row "Oh my teeth Oh my teeth 4.9 ★★★★★ ★★★★★ Basicプラン33万円 Proプラン66万円 通院不要のオンライン矯正 24時間LINEサポート 国内製造数No.1 公式サイト > 詳細をみる":
+        - cell "Oh my teeth Oh my teeth":
+          - img "Oh my teeth"
+          - link "Oh my teeth":
+            - /url: "#"
+        - cell "4.9 ★★★★★ ★★★★★"
+        - cell "Basicプラン33万円 Proプラン66万円"
+        - cell "通院不要のオンライン矯正 24時間LINEサポート 国内製造数No.1"
+        - cell "公式サイト > 詳細をみる":
+          - link "公式サイト >":
+            - /url: http://localhost:8090/mouthpiece002/redirect.html?clinic_id=1&rank=1&region_id=040
+          - link "詳細をみる":
+            - /url: "#clinic1"
+      - row "キレイライン矯正 キレイライン矯正 4.3 ★★★★★ ★★★★★ 初回2.2万円～ 総額23.1万円～46.2万円 都度払い対応 12万人が選択 公式サイト > 詳細をみる":
+        - cell "キレイライン矯正 キレイライン矯正":
+          - img "キレイライン矯正"
+          - link "キレイライン矯正":
+            - /url: "#"
+        - cell "4.3 ★★★★★ ★★★★★"
+        - cell "初回2.2万円～ 総額23.1万円～46.2万円"
+        - cell "都度払い対応 12万人が選択"
+        - cell "公式サイト > 詳細をみる":
+          - link "公式サイト >":
+            - /url: http://localhost:8090/mouthpiece002/redirect.html?clinic_id=4&rank=2&region_id=040
+          - link "詳細をみる":
+            - /url: "#clinic2"
+      - row "インビザライン インビザライン 4.5 ★★★★★ ★★★★★ 80万円～120万円 （症例により異なる） 世界1500万人の実績 グローバルスタンダード 高精度な治療計画 公式サイト > 詳細をみる":
+        - cell "インビザライン インビザライン":
+          - img "インビザライン"
+          - link "インビザライン":
+            - /url: "#"
+        - cell "4.5 ★★★★★ ★★★★★"
+        - cell "80万円～120万円 （症例により異なる）"
+        - cell "世界1500万人の実績 グローバルスタンダード 高精度な治療計画"
+        - cell "公式サイト > 詳細をみる":
+          - link "公式サイト >":
+            - /url: http://localhost:8090/mouthpiece002/redirect.html?clinic_id=2&rank=3&region_id=040
+          - link "詳細をみる":
+            - /url: "#clinic3"
+      - row "ウィスマイル ウィスマイル 4.1 ★★★★★ ★★★★★ 月額1,760円～ 総額30.8万円～42.9万円 初診料無料 明確な料金体系 公式サイト > 詳細をみる":
+        - cell "ウィスマイル ウィスマイル":
+          - img "ウィスマイル"
+          - link "ウィスマイル":
+            - /url: "#"
+        - cell "4.1 ★★★★★ ★★★★★"
+        - cell "月額1,760円～ 総額30.8万円～42.9万円"
+        - cell "初診料無料 明確な料金体系"
+        - cell "公式サイト > 詳細をみる":
+          - link "公式サイト >":
+            - /url: http://localhost:8090/mouthpiece002/redirect.html?clinic_id=3&rank=4&region_id=040
+          - link "詳細をみる":
+            - /url: "#clinic4"
+      - row "ゼニュム ゼニュム 3.8 ★★★★★ ★★★★★ 一律32.45万円 （追加費用なし） シンガポール発 50万人が利用 一律料金で安心 公式サイト > 詳細をみる":
+        - cell "ゼニュム ゼニュム":
+          - img "ゼニュム"
+          - link "ゼニュム":
+            - /url: "#"
+        - cell "3.8 ★★★★★ ★★★★★"
+        - cell "一律32.45万円 （追加費用なし）"
+        - cell "シンガポール発 50万人が利用 一律料金で安心"
+        - cell "公式サイト > 詳細をみる":
+          - link "公式サイト >":
+            - /url: http://localhost:8090/mouthpiece002/redirect.html?clinic_id=5&rank=5&region_id=040
+          - link "詳細をみる":
+            - /url: "#clinic5"
+  - button "各クリニックの注意事項 ▼"
+  - img "コスパ×効果×通いやすさで選ぶ医療痩身クリニックBEST3"
+  - text: 福岡で人気のクリニック 3 選！ 1
+  - heading "自宅で簡単に3ヶ月で矯正！" [level=3]
+  - paragraph: 通院不要！24時間サポートで安心
+  - link "Oh my teeth ＞":
+    - /url: http://localhost:8090/mouthpiece002/redirect.html?clinic_id=1&rank=1&region_id=040
+  - img "Oh my teethキャンペーン"
+  - text: "# マウスピース矯正 # オンライン矯正 # 通院不要 # 24時間サポート # 国内製造 # 部分矯正 # 全体矯正 # LINEサポート # 3D歯型スキャン"
+  - table:
+    - rowgroup:
+      - row "費用 Basicプラン33万円 Proプラン66万円":
+        - cell "費用"
+        - cell "Basicプラン33万円 Proプラン66万円"
+      - row "目安期間 Basic：平均3ヶ月 Pro：平均6ヶ月":
+        - cell "目安期間"
+        - cell "Basic：平均3ヶ月 Pro：平均6ヶ月"
+      - row "矯正範囲 Basic：上下前歯12本 Pro：上下全体24本":
+        - cell "矯正範囲"
+        - cell "Basic：上下前歯12本 Pro：上下全体24本"
+      - row "営業時間 平日11:00～21:00 土日祝10:00～19:00 年末年始休診":
+        - cell "営業時間"
+        - cell "平日11:00～21:00 土日祝10:00～19:00 年末年始休診"
+      - row "店舗 新宿／池袋／表参道／有楽町／心斎橋／梅田／名古屋／博多":
+        - cell "店舗"
+        - cell "新宿／池袋／表参道／有楽町／心斎橋／梅田／名古屋／博多"
+      - row "公式サイト https://www.oh-my-teeth.com/":
+        - cell "公式サイト"
+        - cell "https://www.oh-my-teeth.com/"
+  - paragraph:
+    - link "無料カウンセリングはコチラ ▶":
+      - /url: http://localhost:8090/mouthpiece002/redirect.html?clinic_id=1&rank=1&region_id=040
+  - heading "POINT" [level=4]
+  - text: 
+  - strong: 通院不要のオンライン矯正システム
+  - paragraph: Oh my teethの最大の特徴は、矯正開始後の定期的な通院が原則不要という革新的なシステムです。初回の3D歯型スキャン後は、自宅にマウスピース矯正キットが届き、24時間LINEサポートで専属医療チームに相談できます。
+  - text: 
+  - strong: 24時間LINEサポートと3D技術
+  - paragraph: Oh my teethでは最新の3D技術を活用し、口腔内スキャナーで歯型を3Dスキャンして現在の歯並びをリアルタイムで可視化します。24時間LINEサポートにより、いつでも専属医療チームに相談可能です。
+  - text: 
+  - strong: 累計5万人の体験実績と安心保証
+  - paragraph: Oh my teethは累計5万人が歯型スキャンを体験している豊富な実績があります。国内ブランド製造数No.1の実績により、安心して治療を受けられます。
+  - text: 【公式】
+  - link "https://www.oh-my-teeth.com/":
+    - /url: http://localhost:8090/mouthpiece002/redirect.html?clinic_id=1&rank=1&region_id=040
+    - strong: https://www.oh-my-teeth.com/
+  - heading "REVIEW" [level=4]
+  - navigation:
+    - list:
+      - listitem:  コスパ
+      - listitem:  スタッフ
+      - listitem:  サービス
+  - img "レビューアイコン"
+  - text: ★★★★★
+  - strong: 表参道の美しい立地で3D体験！
+  - text: LINEで簡単に予約ができ、表参道の美しい場所で無料で歯のスキャンをしてもらいました！とてもスムーズで、待ち時間も長くなく、スキャンも簡単で実際に3Dで見ることができました！表参道という立地も素敵で、美容意識の高い女性にぴったりです。
+  - img "レビューアイコン"
+  - text: ★★★★★
+  - strong: 理想の歯並びが3Dで見える感動！
+  - text: 歯の治療を受けて、ここで再度スキャンを受けました（前回は新宿でした）。スタッフの温かいホスピタリティは相変わらず素晴らしかったです。矯正シミュレーションを見た後、将来の歯並びにワクワクしました。未来の美しい自分を想像できて感動しました。
+  - img "レビューアイコン"
+  - text: ★★★★★
+  - strong: 質問で不安が安心に変わった！
+  - text: 自分の歯の形を3Dで見るのは楽しかったです。自分の目でしっかりと見ることで、矯正治療の目標について考える機会を得ました。スタッフの方もとても丁寧でした。質問にも一つ一つ答えてくださり、不安が安心に変わりました。心の変化が人生を変える第一歩でした。
+  - paragraph: ※効果には個人差があります ※個人の感想です
+  - heading "Oh my teethの【福岡】の店舗" [level=4]
+  - paragraph: この地域には店舗がありません
+  - text: INFORMATION!
+  - img "Oh my teeth"
+  - text: ホワイトニング14回分無料 24時間LINEサポート対応 ＼月額・総額がリーズナブルなクリニック／
+  - paragraph:
+    - link "Oh my teethの公式サイト ▶":
+      - /url: http://localhost:8090/mouthpiece002/redirect.html?clinic_id=1&rank=1&region_id=040
+  - button "Oh my teethの確認事項 ▼"
+  - text: "2"
+  - heading "初回2.2万円から始める矯正" [level=3]
+  - paragraph: 手軽に始められる部分矯正
+  - link "キレイライン矯正 ＞":
+    - /url: http://localhost:8090/mouthpiece002/redirect.html?clinic_id=4&rank=1&region_id=040
+  - img "キレイライン矯正キャンペーン"
+  - text: "# マウスピース矯正 # 部分矯正 # 都度払い # 初回2.2万円 # 短期間 # 前歯矯正 # 提携医院 # リーズナブル # 満足度90%"
+  - table:
+    - rowgroup:
+      - row "費用 初回2.2万円～ 総額23.1万円～46.2万円":
+        - cell "費用"
+        - cell "初回2.2万円～ 総額23.1万円～46.2万円"
+      - row "目安期間 2.5ヶ月～1年 （平均6ヶ月）":
+        - cell "目安期間"
+        - cell "2.5ヶ月～1年 （平均6ヶ月）"
+      - row "矯正範囲 軽度～中等度 前歯部中心":
+        - cell "矯正範囲"
+        - cell "軽度～中等度 前歯部中心"
+      - row "営業時間 提携医院により異なる 平日10:00～20:00 土日祝対応院あり":
+        - cell "営業時間"
+        - cell "提携医院により異なる 平日10:00～20:00 土日祝対応院あり"
+      - row "店舗 全国125提携クリニック 主要都市を中心に展開 2024年時点での展開数":
+        - cell "店舗"
+        - cell "全国125提携クリニック 主要都市を中心に展開 2024年時点での展開数"
+      - row "公式サイト https://kireilign.com/":
+        - cell "公式サイト"
+        - cell "https://kireilign.com/"
+  - paragraph:
+    - link "無料カウンセリングはコチラ ▶":
+      - /url: http://localhost:8090/mouthpiece002/redirect.html?clinic_id=4&rank=1&region_id=040
+  - heading "POINT" [level=4]
+  - text: 
+  - strong: 初回2.2万円から始められる手軽さ
+  - paragraph: キレイライン矯正の最大の魅力は、初回2.2万円という手軽な価格から矯正治療を始められることです。「まずはどんな感じか試してみたい」という方に最適な都度払いシステムを採用しています。
+  - text: 
+  - strong: デジタル技術による効率的な治療
+  - paragraph: キレイライン矯正では、デジタル技術を用いて歯の健康に支障がない範囲で最大の移動量となるよう治療計画を立てています。最短2.5ヶ月という短期間での治療完了も可能です。
+  - text: 
+  - strong: 満足度90%の高い実績
+  - paragraph: キレイライン矯正は12万人の利用実績と満足度90%という高い評価を誇ります。実際に短期間で効果を実感できた症例も多数報告されています。
+  - text: 【公式】
+  - link "https://kireilign.com/":
+    - /url: http://localhost:8090/mouthpiece002/redirect.html?clinic_id=4&rank=1&region_id=040
+    - strong: https://kireilign.com/
+  - heading "REVIEW" [level=4]
+  - navigation:
+    - list:
+      - listitem:  コスパ
+      - listitem:  スタッフ
+      - listitem:  サービス
+  - img "レビューアイコン"
+  - text: ★★★★★
+  - strong: 初回2.2万円でリスク軽減！
+  - text: 初回2.2万円という手軽さで矯正を始められました。効果を実感してから続けるか決められるので、リスクが少なくて安心です。
+  - img "レビューアイコン"
+  - text: ★★★★★
+  - strong: 学生も安心の都度払いシステム！
+  - text: 一括で大きな金額を払う必要がなく、都度払いで自分のペースで治療を進められます。経済的な負担が少なく、学生の私でも続けられています。
+  - img "レビューアイコン"
+  - text: ★★★★★
+  - strong: 10万円で完了！コスパ最高！
+  - text: 前歯の軽度な歪みだけだったので、10万円程度で治療が完了しました。他院では50万円以上と言われていたので、コスパは最高です。
+  - paragraph: ※効果には個人差があります ※個人の感想です
+  - heading "キレイライン矯正の【福岡】の店舗" [level=4]
+  - paragraph: この地域には店舗がありません
+  - text: INFORMATION!
+  - img "キレイライン矯正"
+  - text: 初回2.2万円から始められる 都度払いで安心スタート ＼月額・総額がリーズナブルなクリニック／
+  - paragraph:
+    - link "キレイライン矯正の公式サイト ▶":
+      - /url: http://localhost:8090/mouthpiece002/redirect.html?clinic_id=4&rank=1&region_id=040
+  - button "キレイライン矯正の確認事項 ▼"
+  - text: "3"
+  - heading "世界基準の高精度矯正治療" [level=3]
+  - paragraph: 1500万人が選んだ信頼の治療
+  - link "インビザライン ＞":
+    - /url: http://localhost:8090/mouthpiece002/redirect.html?clinic_id=2&rank=1&region_id=040
+  - img "インビザラインキャンペーン"
+  - text: "# マウスピース矯正 # 世界基準 # 高精度治療 # 認定医 # 全症例対応 # 透明矯正 # 取り外し可能 # グローバル実績 # 包括的治療"
+  - table:
+    - rowgroup:
+      - row "費用 80万円～120万円 （症例により異なる）":
+        - cell "費用"
+        - cell "80万円～120万円 （症例により異なる）"
+      - row "目安期間 1年～3年 （症例により異なる）":
+        - cell "目安期間"
+        - cell "1年～3年 （症例により異なる）"
+      - row "矯正範囲 軽度から重度まで 全症例対応可能":
+        - cell "矯正範囲"
+        - cell "軽度から重度まで 全症例対応可能"
+      - row "営業時間 提携医院により異なる 多くは平日9:00～18:00 土曜診療対応院あり":
+        - cell "営業時間"
+        - cell "提携医院により異なる 多くは平日9:00～18:00 土曜診療対応院あり"
+      - row "店舗 全国の認定医院 1000院以上で対応 都市部から地方まで幅広く展開":
+        - cell "店舗"
+        - cell "全国の認定医院 1000院以上で対応 都市部から地方まで幅広く展開"
+      - row "公式サイト https://www.invisalign.co.jp/":
+        - cell "公式サイト"
+        - cell "https://www.invisalign.co.jp/"
+  - paragraph:
+    - link "無料カウンセリングはコチラ ▶":
+      - /url: http://localhost:8090/mouthpiece002/redirect.html?clinic_id=2&rank=1&region_id=040
+  - heading "POINT" [level=4]
+  - text: 
+  - strong: 世界1500万人が選んだ実績と信頼
+  - paragraph: インビザラインは世界100ヶ国以上で提供され、治療ユーザー1500万人を超える圧倒的な実績を誇ります。透明なマウスピースを使用するため目立たず、取り外し可能で日常生活への負担が最小限です。
+  - text: 
+  - strong: 認定医による高精度な治療計画
+  - paragraph: インビザライン認定医による豊富な経験と知識に基づいた治療計画が特徴です。複雑な症例でも的確な治療計画を立て、月1回の定期チェックで専門医がしっかり確認します。
+  - text: 
+  - strong: 包括的な治療と長期サポート
+  - paragraph: インビザラインは最も包括的な治療を提供し、軽度から重度まで幅広い症例に対応可能です。矯正完了後も定期的にメンテナンスをしてくれて、歯並びの維持をサポートします。
+  - text: 【公式】
+  - link "https://www.invisalign.co.jp/":
+    - /url: http://localhost:8090/mouthpiece002/redirect.html?clinic_id=2&rank=1&region_id=040
+    - strong: https://www.invisalign.co.jp/
+  - heading "REVIEW" [level=4]
+  - navigation:
+    - list:
+      - listitem:  コスパ
+      - listitem:  スタッフ
+      - listitem:  サービス
+  - img "レビューアイコン"
+  - text: ★★★★★
+  - strong: 世界実績で一生安心の投資！
+  - text: 世界中で実績のあるインビザラインなら、多少費用が高くても安心です。一生ものの歯並びを考えれば、品質の高い治療を受ける価値は十分にあります。
+  - img "レビューアイコン"
+  - text: ★★★★★
+  - strong: 世界基準の精密治療で安心！
+  - text: 他の安い矯正で失敗した友人を見ていたので、最初からインビザラインを選びました。精密な治療計画で確実に結果が出るので、結果的にコスパは良いと思います。
+  - img "レビューアイコン"
+  - text: ★★★★★
+  - strong: 美容代感覚で分割可能！
+  - text: 月々の分割払いができるので、一括で大きな金額を用意する必要がありません。毎月の美容代と考えれば、決して高くない投資だと感じています。
+  - paragraph: ※効果には個人差があります ※個人の感想です
+  - heading "インビザラインの【福岡】の店舗" [level=4]
+  - paragraph: この地域には店舗がありません
+  - text: INFORMATION!
+  - img "インビザライン"
+  - text: 認定医による精密診断 世界基準の治療を体験 ＼月額・総額がリーズナブルなクリニック／
+  - paragraph:
+    - link "インビザラインの公式サイト ▶":
+      - /url: http://localhost:8090/mouthpiece002/redirect.html?clinic_id=2&rank=1&region_id=040
+  - button "インビザラインの確認事項 ▼"
+  - text: "4"
+  - heading "月額1,760円からの優しい矯正" [level=3]
+  - paragraph: 優しい価格で理想の歯並びへ
+  - link "ウィスマイル ＞":
+    - /url: http://localhost:8090/mouthpiece002/redirect.html?clinic_id=3&rank=1&region_id=040
+  - img "ウィスマイルキャンペーン"
+  - text: "# マウスピース矯正 # 月額1,760円 # 初診料無料 # 明確料金 # 提携医院 # 分割払い # 優しい価格 # 部分矯正 # 丁寧サポート"
+  - table:
+    - rowgroup:
+      - row "費用 月額1,760円～ 総額30.8万円～42.9万円":
+        - cell "費用"
+        - cell "月額1,760円～ 総額30.8万円～42.9万円"
+      - row "目安期間 2ヶ月～6ヶ月 （プランにより異なる）":
+        - cell "目安期間"
+        - cell "2ヶ月～6ヶ月 （プランにより異なる）"
+      - row "矯正範囲 軽度～中等度 部分矯正中心":
+        - cell "矯正範囲"
+        - cell "軽度～中等度 部分矯正中心"
+      - row "営業時間 提携医院により異なる 平日10:00～19:00 土曜診療対応院あり":
+        - cell "営業時間"
+        - cell "提携医院により異なる 平日10:00～19:00 土曜診療対応院あり"
+      - row "店舗 全国提携医院ネットワーク 主要都市を中心に展開 地域密着型の医院と提携":
+        - cell "店舗"
+        - cell "全国提携医院ネットワーク 主要都市を中心に展開 地域密着型の医院と提携"
+      - row "公式サイト https://we-smile.jp/":
+        - cell "公式サイト"
+        - cell "https://we-smile.jp/"
+  - paragraph:
+    - link "無料カウンセリングはコチラ ▶":
+      - /url: http://localhost:8090/mouthpiece002/redirect.html?clinic_id=3&rank=1&region_id=040
+  - heading "POINT" [level=4]
+  - text: 
+  - strong: 月額1,760円からの優しい価格設定
+  - paragraph: ウィスマイルは月額1,760円からという驚きの低価格で矯正治療を始められます。お小遣いの範囲で歯並びを改善できるため、学生や若い社会人にも非常にありがたいサービスです。
+  - text: 
+  - strong: 提携医院ネットワークで安心治療
+  - paragraph: ウィスマイルは全国の提携医院ネットワークにより、統一された高品質なサービスを提供しています。どこでも同じレベルの治療を受けられる安心感があります。
+  - text: 
+  - strong: 柔軟な対応と永続サポート
+  - paragraph: ウィスマイルは患者の事情を理解して柔軟に対応してくれる姿勢が特徴です。治療が予定通り進まない場合でも、完了まで責任を持ってサポートしてくれます。
+  - text: 【公式】
+  - link "https://we-smile.jp/":
+    - /url: http://localhost:8090/mouthpiece002/redirect.html?clinic_id=3&rank=1&region_id=040
+    - strong: https://we-smile.jp/
+  - heading "REVIEW" [level=4]
+  - navigation:
+    - list:
+      - listitem:  コスパ
+      - listitem:  スタッフ
+      - listitem:  サービス
+  - img "レビューアイコン"
+  - text: ★★★★★
+  - strong: 月額1,760円で夢が叶う！
+  - text: 月額1,760円という手軽さで矯正を始められるのは驚きです。お小遣いの範囲で歯並びを改善できるなんて、学生や若い社会人には本当にありがたいです。
+  - img "レビューアイコン"
+  - text: ★★★★★
+  - strong: あなたに最適な治療プラン！
+  - text: 1回から24回まで治療回数を選べるので、自分の症状と予算に合わせて調整できます。無駄な治療をせずに済むので、コスパが良いです。
+  - img "レビューアイコン"
+  - text: ★★★★★
+  - strong: 初診料無料で気軽にスタート！
+  - text: 初診料が無料なので、気軽にカウンセリングを受けられました。他院では数千円かかるところが多いので、この点は非常にありがたいです。
+  - paragraph: ※効果には個人差があります ※個人の感想です
+  - heading "ウィスマイルの【福岡】の店舗" [level=4]
+  - paragraph: この地域には店舗がありません
+  - text: INFORMATION!
+  - img "ウィスマイル"
+  - text: 月額1,760円から 初診料無料キャンペーン ＼月額・総額がリーズナブルなクリニック／
+  - paragraph:
+    - link "ウィスマイルの公式サイト ▶":
+      - /url: http://localhost:8090/mouthpiece002/redirect.html?clinic_id=3&rank=1&region_id=040
+  - button "ウィスマイルの確認事項 ▼"
+  - text: "5"
+  - heading "シンガポール発の革新的矯正" [level=3]
+  - paragraph: 一律料金で安心の矯正治療
+  - link "ゼニュム ＞":
+    - /url: http://localhost:8090/mouthpiece002/redirect.html?clinic_id=5&rank=1&region_id=040
+  - img "ゼニュムキャンペーン"
+  - text: "# マウスピース矯正 # シンガポール発 # 一律料金 # オンライン診療 # 50万人実績 # 追加費用なし # アジア圏実績 # 革新的技術 # 透明矯正"
+  - table:
+    - rowgroup:
+      - row "費用 一律32.45万円 （追加費用なし）":
+        - cell "費用"
+        - cell "一律32.45万円 （追加費用なし）"
+      - row "目安期間 部分矯正：6ヶ月 全体矯正：10ヶ月":
+        - cell "目安期間"
+        - cell "部分矯正：6ヶ月 全体矯正：10ヶ月"
+      - row "矯正範囲 上下最大20本 軽度～中等度":
+        - cell "矯正範囲"
+        - cell "上下最大20本 軽度～中等度"
+      - row "営業時間 オンライン診療24時間 提携医院は各院による 平日中心の診療":
+        - cell "営業時間"
+        - cell "オンライン診療24時間 提携医院は各院による 平日中心の診療"
+      - row "店舗 提携医院ネットワーク 主要都市を中心 オンライン診療で全国対応":
+        - cell "店舗"
+        - cell "提携医院ネットワーク 主要都市を中心 オンライン診療で全国対応"
+      - row "公式サイト https://zenyum.jp/":
+        - cell "公式サイト"
+        - cell "https://zenyum.jp/"
+  - paragraph:
+    - link "無料カウンセリングはコチラ ▶":
+      - /url: http://localhost:8090/mouthpiece002/redirect.html?clinic_id=5&rank=1&region_id=040
+  - heading "POINT" [level=4]
+  - text: 
+  - strong: 一律料金で安心の治療プラン
+  - paragraph: ゼニュムは一律32.45万円という明確で分かりやすい料金設定が特徴です。他院のように症例によって値段が変わることがなく、追加費用の心配もありません。
+  - text: 
+  - strong: オンライン診療で通院負担軽減
+  - paragraph: ゼニュムはオンライン診療を活用することで、遠方の人でも治療が受けやすいシステムを構築しています。専用アプリで治療の進捗を管理でき、24時間いつでも相談可能です。
+  - text: 
+  - strong: 世界25万人の実績と信頼
+  - paragraph: ゼニュムは世界中で25万人以上が利用している実績があり、アジア圏を中心に50万人が利用している信頼できるブランドです。
+  - text: 【公式】
+  - link "https://zenyum.jp/":
+    - /url: http://localhost:8090/mouthpiece002/redirect.html?clinic_id=5&rank=1&region_id=040
+    - strong: https://zenyum.jp/
+  - heading "REVIEW" [level=4]
+  - navigation:
+    - list:
+      - listitem:  コスパ
+      - listitem:  スタッフ
+      - listitem:  サービス
+  - img "レビューアイコン"
+  - text: ★★★★★
+  - strong: 追加費用なし32.45万円！
+  - text: 料金が一律32.45万円で分かりやすく、追加費用の心配がありません。他院のように症例によって値段が変わることがないので、安心して始められました。
+  - img "レビューアイコン"
+  - text: ★★★★★
+  - strong: グローバル実績25万人の信頼！
+  - text: 世界中で25万人以上が利用している実績があり、この価格でこの品質なら十分コスパが良いと思います。海外の技術を日本で受けられるのは魅力的です。
+  - img "レビューアイコン"
+  - text: ★★★★★
+  - strong: 一括不要で負担軽減！
+  - text: 分割払いで月々の負担を抑えられるので、無理なく治療を続けられます。一括で大きな金額を用意する必要がないのは助かります。
+  - paragraph: ※効果には個人差があります ※個人の感想です
+  - heading "ゼニュムの【福岡】の店舗" [level=4]
+  - paragraph: この地域には店舗がありません
+  - text: INFORMATION!
+  - img "ゼニュム"
+  - text: 一律料金32.45万円 追加費用なしで安心 ＼月額・総額がリーズナブルなクリニック／
+  - paragraph:
+    - link "ゼニュムの公式サイト ▶":
+      - /url: http://localhost:8090/mouthpiece002/redirect.html?clinic_id=5&rank=1&region_id=040
+  - button "ゼニュムの確認事項 ▼"
+  - text: マウスピース矯正を始める前に知っておくべきこと
+  - img "マウスピース矯正の基礎知識"
+  - text: 目次
+  - list:
+    - listitem:
+      - link "マウスピース矯正とワイヤー矯正の違い":
+        - /url: "#comparison"
+      - link "仕組みの違い":
+        - /url: "#mechanism"
+      - link "メリット・デメリット":
+        - /url: "#merits"
+    - listitem:
+      - link "マウスピース矯正のリスクや副作用":
+        - /url: "#risks"
+      - link "起こりうる副作用":
+        - /url: "#side-effects"
+      - link "痛みや違和感について":
+        - /url: "#pain"
+      - link "治療前・治療中の注意点":
+        - /url: "#precautions"
+    - listitem:
+      - link "契約時の確認ポイント":
+        - /url: "#contract"
+      - link "保険適用について":
+        - /url: "#insurance"
+      - link "治療内容・計画を細かく確認":
+        - /url: "#details"
+      - link "追加費用がかからないか確認":
+        - /url: "#additional-fees"
+      - link "トラブル時の相談先":
+        - /url: "#troubles"
+  - text: マウスピース矯正とワイヤー矯正の違い 歯列矯正には大きく分けて「マウスピース矯正」と「ワイヤー矯正」の2種類があります。それぞれの仕組みやメリット・デメリットを理解し、自分に合った治療法を選びましょう。
+  - table:
+    - rowgroup:
+      - row "マウスピース矯正 ワイヤー矯正":
+        - cell
+        - cell "マウスピース矯正"
+        - cell "ワイヤー矯正"
+    - rowgroup:
+      - row "治療方法 アライナー（取り外し式） ブラケット＋ワイヤー（固定式）":
+        - cell "治療方法"
+        - cell "アライナー（取り外し式）"
+        - cell "ブラケット＋ワイヤー（固定式）"
+      - row "見た目 目立ちにくい 目立ちやすい":
+        - cell "見た目"
+        - cell "目立ちにくい"
+        - cell "目立ちやすい"
+      - row "通院頻度 1〜3ヶ月に1回 月1回程度":
+        - cell "通院頻度"
+        - cell "1〜3ヶ月に1回"
+        - cell "月1回程度"
+      - row "治療期間(※) 最短2ヶ月〜平均9ヶ月（症例による） 1〜3年（症例による）":
+        - cell "治療期間(※)"
+        - cell "最短2ヶ月〜平均9ヶ月（症例による）"
+        - cell "1〜3年（症例による）"
+      - row "費用相場 20万〜60万円（軽度・部分中心） 60万〜120万円（全体矯正中心）":
+        - cell "費用相場"
+        - cell "20万〜60万円（軽度・部分中心）"
+        - cell "60万〜120万円（全体矯正中心）"
+      - row "適応 軽度〜中等度の叢生・空隙・前歯中心 重度症例／抜歯計画など幅広く対応":
+        - cell "適応"
+        - cell "軽度〜中等度の叢生・空隙・前歯中心"
+        - cell "重度症例／抜歯計画など幅広く対応"
+  - text: （※）回数・期間は目安です。個人差や症例による違いがあります。上記は効果を保証するものではありません。 マウスピース矯正は日常生活の制限が少なく自己管理がしやすい一方、装着時間の確保が必要です。ワイヤー矯正は適応範囲が広く、歯の大きな移動や複雑な症例にも対応できますが、見た目や清掃性の配慮が必要です。 仕組みの違い マウスピース矯正は取り外し式のアライナーを使い、段階的に歯を動かします。ワイヤー矯正は固定式のブラケットとワイヤーで連続的に力をかけて歯を動かします。 マウスピース矯正は、1〜2週間ごとに新しいアライナーへ交換し、段階的に目標位置へ移動させます。取り外せるため、食事や歯磨きがしやすいのが特徴です。 一方ワイヤー矯正は、固定式のため自己管理の負担は少ない反面、見た目や食事制限、清掃性の面で配慮が必要です。 マウスピース矯正とワイヤー矯正のメリット・デメリット それぞれのメリット・デメリットをまとめました。自分に適した矯正方法選びの参考にしてください。
+  - table:
+    - rowgroup:
+      - row "マウスピース矯正 ワイヤー矯正":
+        - cell
+        - cell "マウスピース矯正"
+        - cell "ワイヤー矯正"
+    - rowgroup:
+      - row "メリット 目立ちにくく、取り外し可能 食事や歯磨きがしやすい 金属アレルギーの心配が少ない 幅広い症例に対応しやすい 歯の大きな移動や回転に強い":
+        - cell "メリット"
+        - cell "目立ちにくく、取り外し可能 食事や歯磨きがしやすい 金属アレルギーの心配が少ない":
+          - list:
+            - listitem: 目立ちにくく、取り外し可能
+            - listitem: 食事や歯磨きがしやすい
+            - listitem: 金属アレルギーの心配が少ない
+        - cell "幅広い症例に対応しやすい 歯の大きな移動や回転に強い":
+          - list:
+            - listitem: 幅広い症例に対応しやすい
+            - listitem: 歯の大きな移動や回転に強い
+      - row "デメリット 装着時間の自己管理が必要（1日20〜22時間） 適応外の症例もある アライナーの紛失・破損リスク 見た目に目立つ 食事制限や清掃性の負担 口内炎や痛みが出やすい":
+        - cell "デメリット"
+        - cell "装着時間の自己管理が必要（1日20〜22時間） 適応外の症例もある アライナーの紛失・破損リスク":
+          - list:
+            - listitem: 装着時間の自己管理が必要（1日20〜22時間）
+            - listitem: 適応外の症例もある
+            - listitem: アライナーの紛失・破損リスク
+        - cell "見た目に目立つ 食事制限や清掃性の負担 口内炎や痛みが出やすい":
+          - list:
+            - listitem: 見た目に目立つ
+            - listitem: 食事制限や清掃性の負担
+            - listitem: 口内炎や痛みが出やすい
+  - text: マウスピース矯正のリスクや副作用
+  - img "マウスピース矯正の副作用について"
+  - text: マウスピース矯正は高い効果が期待できる一方で、治療過程での違和感や痛み、歯肉の炎症、アライナーの破損などの副作用が生じることがあります。 どの矯正治療にもリスクは伴います。気になる症状があれば、必ず担当医に相談しましょう。 起こりうる副作用 マウスピース矯正で起こりうる主な副作用は以下の通りです。 痛み・違和感 装着初期やアライナー交換直後に痛みや圧迫感、違和感が生じることがあります。通常は数日〜1週間程度で治まります。 歯肉の炎症・口内炎 アライナーの縁が歯肉や粘膜に当たり、炎症や口内炎ができる場合があります。気になる場合は担当医に調整を依頼してください。 アライナーの破損・変形 アライナーが割れたり変形した場合は、速やかに担当医へ連絡し、再作製や調整を受けましょう。 歯根吸収・歯の動揺 稀に歯根吸収や歯の動揺が起こることがあります。定期的な診察で経過を確認しましょう。 痛みや違和感について マウスピース矯正の痛みや違和感は、アライナー交換直後や歯の移動量が大きい場合に生じやすく、感じ方には個人差があります。 一般的に違和感が出やすいシーンや部位は以下の通りです。 新しいアライナーへ交換直後 歯の移動量が大きいケース アライナーの縁が当たる部位 痛みが強い場合や長引く場合は、担当医に相談しましょう。アライナーの調整やワックスの使用、鎮痛剤の服用などで緩和できる場合があります。 治療前・治療中の注意点 マウスピース矯正の効果を最大限に引き出すため、以下の点に注意しましょう。 装着時間の厳守 1日20〜22時間以上の装着が必要です。装着時間が短いと計画通りに歯が動かない場合があります。 アライナーの清掃 アライナーは毎日清潔に保ちましょう。歯磨き後に装着し、飲食時は必ず外してください。 定期的な通院 指示された通院スケジュールを守り、経過観察や調整を受けましょう。 体調管理 体調不良時や服薬中の場合は、必ず担当医に相談してください。 契約時の確認ポイント
+  - img "矯正契約の注意点"
+  - text: 保険適用について 矯正治療は原則として自由診療（自費診療）となり、保険適用外の場合が多いです（先天的な疾患や顎変形症など一部例外を除く）。 主な目的が審美改善であるため、自由診療に分類されるのが一般的です。詳細は各院のルールを確認してください。 原則自費負担のため、契約前に総額や追加費用を確認しましょう。 治療内容について細かく確認する 矯正を契約する際は、治療計画・範囲・保定計画などを具体的に確認しましょう。自分の目標や希望に合っているかが重要です。 例えば「前歯のみの部分矯正」と言っても、アライナー単独の計画もあれば、IPR（歯の側面を削る処置）やゴムかけ、部分ワイヤーを併用する場合もあります。 契約後に治療内容が変更となる場合、追加料金が発生することもあるため、契約前に治療内容をしっかり確認しておきましょう。 追加費用がかからないか確認する 契約時には、追加の費用についても必ず確認しましょう。提示料金とは別に、調整料・保定装置・再作製費用などが発生する場合があります。 追加費用が掛かる項目の例は以下の通りです。
+  - list:
+    - listitem: 再診料・調整料
+    - listitem: 保定装置（リテーナー）代
+    - listitem: アライナー再作製費用
+    - listitem: 追加治療費
+    - listitem: 検査・レントゲン代
+  - text: 追加費用については、契約前に必ず確認するようにしてください。 トラブル時の相談先 万が一、矯正契約についてトラブルになった場合は、以下の窓口に相談できます。
+  - list:
+    - listitem:
+      - text: 
+      - link "医療安全支援センター（医療に関する苦情・心配事の相談）":
+        - /url: https://www.anzen-shien.jp/center/
+    - listitem:
+      - text: 
+      - link "消費者ホットライン（契約内容や契約条件など、契約に関する相談）":
+        - /url: https://www.caa.go.jp/policies/policy/local_cooperation/local_consumer_administration/hotline/
+    - listitem:
+      - text: 
+      - link "医療相談窓口（医療に関する広告についての相談）":
+        - /url: https://www.caa.go.jp/policies/policy/local_cooperation/local_consumer_administration/hotline/
+  - img "福岡で人気の脂肪溶解注射はココ！"
+  - text: 迷ったらOh my teethがおすすめ
+  - img "Oh my teeth"
+  - heading "Oh my teethがおすすめの3つの理由" [level=3]
+  - text: 
+  - strong: 通院不要のオンライン矯正システム
+  - paragraph: Oh my teethの最大の特徴は、矯正開始後の定期的な通院が原則不要という革新的なシステムです。初回の3D歯型スキャン後は、自宅にマウスピース矯正キットが届き、24時間LINEサポートで専属医療チームに相談できます。
+  - text: 
+  - strong: 24時間LINEサポートと3D技術
+  - paragraph: Oh my teethでは最新の3D技術を活用し、口腔内スキャナーで歯型を3Dスキャンして現在の歯並びをリアルタイムで可視化します。24時間LINEサポートにより、いつでも専属医療チームに相談可能です。
+  - text: 
+  - strong: 累計5万人の体験実績と安心保証
+  - paragraph: Oh my teethは累計5万人が歯型スキャンを体験している豊富な実績があります。国内ブランド製造数No.1の実績により、安心して治療を受けられます。
+  - text: 【公式】
+  - link "https://www.oh-my-teeth.com/":
+    - /url: https://www.xn--ecki4eoz3204ct89aepry34c.com/go/dio/?max_scroll=100&region_id=013
+    - strong: https://www.oh-my-teeth.com/
+  - text: INFORMATION!
+  - img "Oh my teeth"
+  - text: ホワイトニング14回分無料 24時間LINEサポート対応 ＼月額・総額がリーズナブルなクリニック／
+  - paragraph:
+    - link "Oh my teethの公式サイト ▶":
+      - /url: http://localhost:8090/mouthpiece002/redirect.html?clinic_id=1&rank=1&region_id=040
+  - button "Oh my teethの確認事項 ▼"
+- heading "医療ダイエット比較.com" [level=4]:
+  - link "医療ダイエット比較.com":
+    - /url: http://localhost:8090/?region_id=040
+- list:
+  - heading "人気クリニック" [level=5]
+  - listitem:
+    - link "Oh my teeth":
+      - /url: http://localhost:8090/mouthpiece002/redirect.html?clinic_id=1&rank=1&region_id=040
+  - listitem:
+    - link "キレイライン矯正":
+      - /url: http://localhost:8090/mouthpiece002/redirect.html?clinic_id=4&rank=1&region_id=040
+  - listitem:
+    - link "インビザライン":
+      - /url: http://localhost:8090/mouthpiece002/redirect.html?clinic_id=2&rank=1&region_id=040
+  - listitem:
+    - link "ウィスマイル":
+      - /url: http://localhost:8090/mouthpiece002/redirect.html?clinic_id=3&rank=1&region_id=040
+  - listitem:
+    - link "ゼニュム":
+      - /url: http://localhost:8090/mouthpiece002/redirect.html?clinic_id=5&rank=1&region_id=040
+- list:
+  - heading "運営" [level=5]
+  - listitem:
+    - link "運営者情報":
+      - /url: http://localhost:8090/company/?region_id=040
+  - listitem:
+    - link "プライバシーポリシー":
+      - /url: http://localhost:8090/privacy/?region_id=040
+  - listitem:
+    - link "免責事項":
+      - /url: http://localhost:8090/disclaimer/?region_id=040
+  - listitem:
+    - link "お問い合わせ":
+      - /url: mailto:clinic.hikaku.review@gmail.com?region_id=040
+- paragraph: © 2025 医療ダイエット比較.com
+- paragraph
+- paragraph: ※本サイトの情報は参考程度に留め、必ず医療機関にご相談ください。
+- heading "絞り込み検索" [level=3]
+- button "閉じる": ×
+- text: 地域選択
+- combobox "地域選択":
+  - option "全地域" [selected]
+  - option "埼玉"
+  - option "千葉"
+  - option "東京"
+  - option "神奈川"
+  - option "愛知"
+  - option "大阪"
+  - option "兵庫"
+  - option "福岡"
+- text: クリニック名検索
+- textbox "クリニック名検索"
+- text: 対応部位
+- combobox "対応部位":
+  - option "すべての部位" [selected]
+  - option "顔"
+  - option "二の腕"
+  - option "お腹"
+  - option "お尻"
+  - option "太もも"
+  - option "その他"
+- text: 店舗数
+- combobox "店舗数":
+  - option "店舗数指定なし" [selected]
+  - option "0〜5店舗"
+  - option "6〜10店舗"
+  - option "10〜20店舗"
+  - option "それ以上"
+- link "詳細検索ページへ":
+  - /url: http://localhost:8090/mouthpiece002/search-results/?region_id=040
+```

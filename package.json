@@ -1,5 +1,20 @@
 {
+  "name": "kiro2-site-analysis",
+  "version": "1.0.0",
+  "description": "E2E testing for mouthpiece correction site",
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:debug": "playwright test --debug",
+    "test:report": "playwright show-report",
+    "test:mouthpiece": "playwright test tests/mouthpiece-e2e.spec.js",
+    "start": "node server.js"
+  },
   "dependencies": {
+    "@byterover/cipher": "^0.2.2",
     "playwright": "^1.54.2"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.54.2"
   }
 }

@@ -810,10 +810,12 @@ class DataManager {
         return text;
     }
 
-    // 比較表ヘッダー設定を取得
+    // 比較表ヘッダー設定を取得（clinic-texts.jsonの「比較表ヘッダー設定」を動的参照）
     getClinicHeaderConfig() {
-        // site-common-texts.jsonから比較表ヘッダー設定を取得
-        return this.siteCommonTexts || {};
+        if (this.clinicTexts && this.clinicTexts['比較表ヘッダー設定']) {
+            return this.clinicTexts['比較表ヘッダー設定'];
+        }
+        return {};
     }
     
     // クリニックコードと項目名でクリニック別テキストを取得
@@ -822,9 +824,20 @@ class DataManager {
         const clinic = this.clinics.find(c => c.code === clinicCode);
         const clinicName = clinic ? clinic.name : null;  // clinic_nameではなくname
         
+        // デバッグ用（本番環境では削除）
+        if (!clinic) {
+            console.warn(`Clinic not found for code: ${clinicCode}`);
+        }
+        
         if (clinicName && this.clinicTexts && this.clinicTexts[clinicName] && this.clinicTexts[clinicName][itemKey]) {
             return this.clinicTexts[clinicName][itemKey];
         }
+        
+        // デバッグ用（本番環境では削除）
+        if (clinicName && (!this.clinicTexts[clinicName])) {
+            console.warn(`No clinic texts found for: ${clinicName}`);
+        }
+        
         return defaultText;
     }
 
@@ -1211,9 +1224,18 @@ class DataManager {
 
     // 地域IDでランキングを取得
     getRankingByRegionId(regionId) {
-        // region_idを正規化（"014" → "14"のように、先頭の0を削除）
-        const normalizedRegionId = String(parseInt(regionId, 10));
-        return this.rankings.find(r => r.regionId === normalizedRegionId);
+        // rankings配列内のregionIdフォーマットに合わせて検索
+        // データは"013"形式で保存されているため、パディングを追加
+        const paddedRegionId = String(regionId).padStart(3, '0');
+        
+        // 両方の形式で検索（パディングありとなし）
+        let ranking = this.rankings.find(r => r.regionId === paddedRegionId);
+        if (!ranking) {
+            // フォールバック: パディングなしでも検索
+            ranking = this.rankings.find(r => r.regionId === String(regionId));
+        }
+        
+        return ranking;
     }
 
     // 地域IDで店舗を取得（store_viewデータを使用してランキングに対応した店舗を取得）
@@ -1977,24 +1999,28 @@ class RankingApp {
         // ヘッダーをクリア
         headerRow.innerHTML = '';
         
+        // clinic-texts.jsonの比較表ヘッダー設定から取得
+        const headerConfig = this.dataManager.clinicTexts['比較表ヘッダー設定'] || {};
+        
         // ヘッダーを動的に生成
         const headers = [
             { key: '比較表ヘッダー1', default: 'クリニック', class: '' },
             { key: '比較表ヘッダー2', default: '総合評価', class: '' },
-            { key: '比較表ヘッダー3', default: '実績', class: '' },
-            { key: '比較表ヘッダー4', default: '特典', class: '' },
-            { key: '比較表ヘッダー5', default: '人気プラン', class: 'th-none', style: 'display: none;' },
-            { key: '比較表ヘッダー6', default: '医療機器', class: 'th-none', style: 'display: none;' },
-            { key: '比較表ヘッダー7', default: '注射治療', class: 'th-none', style: 'display: none;' },
-            { key: '比較表ヘッダー8', default: '対応部位', class: 'th-none', style: 'display: none;' },
-            { key: '比較表ヘッダー9', default: 'モニター割', class: 'th-none', style: 'display: none;' },
-            { key: '比較表ヘッダー10', default: '返金保証', class: 'th-none', style: 'display: none;' },
+            { key: '比較表ヘッダー3', default: '費用', class: '' },
+            { key: '比較表ヘッダー4', default: '特徴', class: '' },
+            { key: '比較表ヘッダー5', default: '矯正範囲', class: 'th-none', style: 'display: none;' },
+            { key: '比較表ヘッダー6', default: '目安期間', class: 'th-none', style: 'display: none;' },
+            { key: '比較表ヘッダー7', default: '通院頻度', class: 'th-none', style: 'display: none;' },
+            { key: '比較表ヘッダー8', default: '実績/症例数', class: 'th-none', style: 'display: none;' },
+            { key: '比較表ヘッダー9', default: 'ワイヤー矯正の紹介', class: 'th-none', style: 'display: none;' },
+            { key: '比較表ヘッダー10', default: 'サポート', class: 'th-none', style: 'display: none;' },
             { key: '比較表ヘッダー11', default: '公式サイト', class: '' }
         ];
         
         headers.forEach(header => {
             const th = document.createElement('th');
-            th.textContent = this.dataManager.getCommonText(header.key, header.default);
+            // 比較表ヘッダー設定から取得、なければデフォルト値を使用
+            th.textContent = headerConfig[header.key] || header.default;
             if (header.class) th.className = header.class;
             if (header.style) th.setAttribute('style', header.style);
             headerRow.appendChild(th);
@@ -2056,73 +2082,25 @@ class RankingApp {
                 tr.style.backgroundColor = '#fffbdc';
             }
             
-            // 実際のデータ設定 - JSONから取得
-            const getRatingFromJson = (rank) => {
-                const clinic = clinics[rank - 1];
-                if (!clinic) return '';
-                
-                const clinicCode = window.dataManager.getClinicCodeById(clinic.id);
-                // 新しい方式と旧方式の両方をサポート
-                const genericValue = clinicCode ? this.dataManager.getClinicText(clinicCode, '比較表項目2', '') : '';
-                if (genericValue) {
-                    return parseFloat(genericValue) || 4.5;
-                }
-                return clinicCode ? this.dataManager.getClinicRating(clinicCode, 4.5) : '';
-            };
-            const getAchievementFromJson = (rank) => {
-                const clinic = clinics[rank - 1];
-                if (!clinic) return '';
-                
-                const clinicCode = window.dataManager.getClinicCodeById(clinic.id);
-                // 新しい方式と旧方式の両方をサポート
-                const genericValue = clinicCode ? this.dataManager.getClinicText(clinicCode, '比較表項目3', '') : '';
-                return genericValue || (clinicCode ? this.dataManager.getClinicText(clinicCode, '実績', '') : '');
-            };
-            const getBenefitFromJson = (rank) => {
-                const clinic = clinics[rank - 1];
-                if (!clinic) return '';
-                
-                const clinicCode = window.dataManager.getClinicCodeById(clinic.id);
-                // 新しい方式と旧方式の両方をサポート
-                const genericValue = clinicCode ? this.dataManager.getClinicText(clinicCode, '比較表項目4', '') : '';
-                return genericValue || (clinicCode ? this.dataManager.getClinicText(clinicCode, '特典', '') : '');
-            };
-            const getPopularPlanFromJson = (rank) => {
-                const clinic = clinics[rank - 1];
-                if (!clinic) return '';
-                
-                const clinicCode = window.dataManager.getClinicCodeById(clinic.id);
-                return clinicCode ? this.dataManager.getClinicText(clinicCode, '人気プラン', '') : '';
-            };
-            // clinic-texts.jsonからデータを取得する関数
-            const getClinicDataByRank = (rankNum, itemKey, defaultValue = '') => {
-                const clinic = clinics[rankNum - 1];
-                if (!clinic) return defaultValue;
-                
-                const clinicCode = window.dataManager.getClinicCodeById(clinic.id);
-                if (!clinicCode) return defaultValue;
-                
-                return window.dataManager.getClinicText(clinicCode, itemKey, defaultValue);
-            };
-            
             const rankNum = clinic.rank || index + 1;
             const clinicId = clinic.id;
             const regionId = this.currentRegionId || '013';
             
+            // クリニックコードを取得
+            const clinicCode = clinic.code;
+            
+            // クリニックの詳細データを取得する関数
+            const getClinicData = (fieldName, defaultValue = '') => {
+                return this.dataManager.getClinicText(clinicCode, fieldName, defaultValue);
+            };
+            
             // クリニックのロゴ画像パスをclinic-texts.jsonから取得
             const imagesPath = window.SITE_CONFIG ? window.SITE_CONFIG.imagesPath + '/images' : '/images';
-            const clinicCode = window.dataManager.getClinicCodeById(clinic.id);
-            let logoPath = `${imagesPath}/clinics/dio/dio-logo.webp`; // デフォルト
+            let logoPath = getClinicData('クリニックロゴ画像パス', '');
             
-            if (clinicCode) {
-                // clinic-texts.jsonからパスを取得
-                const imagePath = window.dataManager.getClinicText(clinicCode, 'クリニックロゴ画像パス', '');
-                if (imagePath) {
-                    logoPath = imagePath;
-                } else {
-                    // フォールバック：コードベースのパス
-                    logoPath = `${imagesPath}/clinics/${clinicCode}/${clinicCode}-logo.webp`;
-                }
+            if (!logoPath) {
+                // フォールバック：コードベースのパス
+                logoPath = `${imagesPath}/clinics/${clinicCode}/${clinicCode}-logo.webp`;
             }
             
             // リダイレクトURL（ハッシュフラグメント使用）
@@ -2131,23 +2109,26 @@ class RankingApp {
             // クリニック名リンクにもlocalStorageとリダイレクトを適用
             const clinicNameOnclick = `onclick="localStorage.setItem('redirectParams', JSON.stringify({clinic_id: '${clinicId}', rank: '${rankNum}', region_id: '${regionId}'})); setTimeout(() => { window.open('${redirectUrl}', '_blank'); }, 10); return false;"`;
             
+            // 比較表ヘッダー設定を取得
+            const headerConfig = this.dataManager.clinicTexts['比較表ヘッダー設定'] || {};
+            
             tr.innerHTML = `
                 <td class="ranking-table_td1">
                     <img src="${logoPath}" alt="${clinic.name}" width="80">
                     <a href="#" ${clinicNameOnclick} class="clinic-link" style="cursor: pointer;">${clinic.name}</a>
                 </td>
                 <td class="" style="">
-                    <span class="ranking_evaluation">${getRatingFromJson(rankNum)}</span><br>
-                    <span class="star5_rating" data-rate="${getRatingFromJson(rankNum)}"></span>
+                    <span class="ranking_evaluation">${getClinicData('総合評価', '4.5')}</span><br>
+                    <span class="star5_rating" data-rate="${getClinicData('総合評価', '4.5')}"></span>
                 </td>
-                <td class="" style="">${getAchievementFromJson(rankNum)}</td>
-                <td class="" style="">${getBenefitFromJson(rankNum)}</td>
-                <td class="th-none" style="display: none;">${getClinicDataByRank(rankNum, '比較表項目5', '') || getClinicDataByRank(rankNum, '人気プラン', '')}</td>
-                <td class="th-none" style="display: none;">${getClinicDataByRank(rankNum, '比較表項目6', '') || getClinicDataByRank(rankNum, '医療機器', '')}</td>
-                <td class="th-none" style="display: none;">${getClinicDataByRank(rankNum, '比較表項目7', '') || getClinicDataByRank(rankNum, '注射治療', '')}</td>
-                <td class="th-none" style="display: none;">${getClinicDataByRank(rankNum, '比較表項目8', '') || getClinicDataByRank(rankNum, '対応部位', '')}</td>
-                <td class="th-none" style="display: none;">${getClinicDataByRank(rankNum, '比較表項目9', '') || getClinicDataByRank(rankNum, 'モニター割', '')}</td>
-                <td class="th-none" style="display: none;">${getClinicDataByRank(rankNum, '比較表項目10', '') || getClinicDataByRank(rankNum, '返金保証', '')}</td>
+                <td class="" style="">${getClinicData('費用', '')}</td>
+                <td class="" style="">${getClinicData('特徴', '')}</td>
+                <td class="th-none" style="display: none;">${getClinicData('矯正範囲', '')}</td>
+                <td class="th-none" style="display: none;">${getClinicData('目安期間', '')}</td>
+                <td class="th-none" style="display: none;">${getClinicData('通院頻度', '')}</td>
+                <td class="th-none" style="display: none;">${getClinicData('実績/症例数', '')}</td>
+                <td class="th-none" style="display: none;">${getClinicData('ワイヤー矯正の紹介', '')}</td>
+                <td class="th-none" style="display: none;">${getClinicData('サポート', '')}</td>
                 <td>
                     <a class="link_btn" href="${this.urlHandler.getClinicUrlWithRegionId(clinic.id, clinic.rank || rankNum)}" target="_blank">公式サイト &gt;</a>
                     <a class="detail_btn" href="#clinic${rankNum}">詳細をみる</a>

@@ -1497,9 +1497,9 @@
         {
           "id": "dio_013",
           "name": "横浜院",
-          "address": "\"神奈川県横浜市西区南幸2-18-3 LUCID SQUARE Yokohama West2F",
+          "address": "神奈川県横浜市西区南幸2-18-3 LUCID SQUARE Yokohama West2F 3F",
           "zipcode": "〒220-0005",
-          "access": "3F\""
+          "access": "JR横浜駅西口より徒歩7分"
         },
         {
           "id": "dio_014",
@@ -2221,7 +2221,7 @@
           "id": "eminal_058",
           "name": "秋田院",
           "address": "秋田県秋田市中通2-4-22Flat秋田1階・2階",
-          "zipcode": "〒010-0001",
+          "zipcode": "郵便番号が見つかりません",
           "access": "JR秋田駅から徒歩5分"
         },
         {
@@ -9250,7 +9250,7 @@
   },
   "campaigns": [],
   "metadata": {
-    "lastUpdated": "2025-08-11T01:19:38.215Z",
+    "lastUpdated": "2025-08-14T08:04:48.272Z",
     "totalClinics": 6,
     "totalStores": 215,
     "totalRegions": 301

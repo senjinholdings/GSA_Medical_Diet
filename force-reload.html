@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>強制リロードテスト</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .success {
+            background: #4CAF50;
+            color: white;
+        }
+        .warning {
+            background: #ff9800;
+            color: white;
+        }
+        .info {
+            background: #2196F3;
+            color: white;
+        }
+        .log {
+            background: #f5f5f5;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            font-family: monospace;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔧 強制リロード＆キャッシュクリア</h1>
+    
+    <div>
+        <button class="warning" onclick="clearServiceWorker()">1. ServiceWorkerを削除</button>
+        <button class="warning" onclick="clearCache()">2. キャッシュをクリア</button>
+        <button class="info" onclick="openWithTimestamp()">3. タイムスタンプ付きで開く</button>
+        <button class="success" onclick="openDirectTest()">4. 直接テストページを開く</button>
+    </div>
+    
+    <div id="log" class="log"></div>
+    
+    <script>
+        function log(message) {
+            const logEl = document.getElementById('log');
+            logEl.textContent += message + '\n';
+        }
+        
+        async function clearServiceWorker() {
+            log('ServiceWorkerを削除中...');
+            
+            if ('serviceWorker' in navigator) {
+                const registrations = await navigator.serviceWorker.getRegistrations();
+                for (const registration of registrations) {
+                    await registration.unregister();
+                    log(`✅ ServiceWorker削除: ${registration.scope}`);
+                }
+                
+                if (registrations.length === 0) {
+                    log('ServiceWorkerは登録されていません');
+                }
+            } else {
+                log('このブラウザはServiceWorkerに対応していません');
+            }
+        }
+        
+        async function clearCache() {
+            log('キャッシュをクリア中...');
+            
+            if ('caches' in window) {
+                const cacheNames = await caches.keys();
+                for (const name of cacheNames) {
+                    await caches.delete(name);
+                    log(`✅ キャッシュ削除: ${name}`);
+                }
+                
+                if (cacheNames.length === 0) {
+                    log('キャッシュは存在しません');
+                }
+            } else {
+                log('このブラウザはCache APIに対応していません');
+            }
+        }
+        
+        function openWithTimestamp() {
+            const timestamp = Date.now();
+            const url = `http://localhost:3000/mouthpiece/?region_id=013&_t=${timestamp}&nocache=true`;
+            log(`タイムスタンプ付きURLで開きます:\n${url}`);
+            window.open(url, '_blank');
+        }
+        
+        function openDirectTest() {
+            // 直接修正済みのHTMLを表示
+            const html = `
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>店舗リンクテスト（修正版）</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; }
+        .shop { border: 1px solid #ddd; padding: 15px; margin: 10px 0; }
+        .shop-name { font-size: 18px; font-weight: bold; margin-bottom: 10px; }
+        .shop-name a { color: #007bff; text-decoration: none; }
+        .shop-name a:hover { text-decoration: underline; }
+        .shop-address { color: #666; }
+        .test-note { background: #fffbcc; padding: 10px; margin: 20px 0; border-left: 4px solid #ffc107; }
+    </style>
+</head>
+<body>
+    <h1>🏥 Oh my teeth店舗一覧（修正版）</h1>
+    
+    <div class="test-note">
+        ⚠️ これは修正版のテストページです。店舗名をクリックすると直接公式サイトが開きます。
+    </div>
+    
+    <div class="shop">
+        <div class="shop-name">
+            <a href="#" onclick="window.open('https://sss.ac01.l-ad.net/cl/p1a64143O61e70f7/?bid=p1a64143O61e70f7', '_blank'); return false;">
+                東京表参道矯正歯科
+            </a>
+        </div>
+        <div class="shop-address">東京都港区北青山3-15-5 ポルトフィーノ1F</div>
+    </div>
+    
+    <div class="shop">
+        <div class="shop-name">
+            <a href="#" onclick="window.open('https://sss.ac01.l-ad.net/cl/p1a64143O61e70f7/?bid=p1a64143O61e70f7', '_blank'); return false;">
+                東京銀座有楽町矯正歯科
+            </a>
+        </div>
+        <div class="shop-address">東京都千代田区有楽町2-10-1 東京交通会館2F</div>
+    </div>
+    
+    <div class="shop">
+        <div class="shop-name">
+            <a href="#" onclick="window.open('https://sss.ac01.l-ad.net/cl/p1a64143O61e70f7/?bid=p1a64143O61e70f7', '_blank'); return false;">
+                東京池袋矯正歯科
+            </a>
+        </div>
+        <div class="shop-address">東京都豊島区西池袋1-1-30 東武ホープセンター北地区B1F</div>
+    </div>
+    
+    <div class="shop">
+        <div class="shop-name">
+            <a href="#" onclick="window.open('https://sss.ac01.l-ad.net/cl/p1a64143O61e70f7/?bid=p1a64143O61e70f7', '_blank'); return false;">
+                東京新宿矯正歯科
+            </a>
+        </div>
+        <div class="shop-address">東京都新宿区歌舞町1 新宿サブナードB1F</div>
+    </div>
+    
+    <div style="margin-top: 40px; padding: 20px; background: #f0f8ff; border-radius: 5px;">
+        <h3>🎯 動作確認</h3>
+        <p>上記の店舗名をクリックしてください：</p>
+        <ul>
+            <li>✅ 新しいタブで公式サイトが開く → 成功</li>
+            <li>❌ リダイレクトページが開く → 修正が反映されていない</li>
+            <li>❌ 何も起きない → JavaScriptエラー</li>
+        </ul>
+    </div>
+    
+    <script>
+        console.log('修正版テストページがロードされました');
+    </script>
+</body>
+</html>
+            `;
+            
+            const blob = new Blob([html], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            window.open(url, '_blank');
+            log('✅ 修正版テストページを開きました');
+        }
+        
+        // ページロード時に状態をチェック
+        window.addEventListener('load', async () => {
+            log('=== 現在の状態 ===');
+            
+            if ('serviceWorker' in navigator) {
+                const registrations = await navigator.serviceWorker.getRegistrations();
+                log(`ServiceWorker: ${registrations.length}個登録済み`);
+            }
+            
+            if ('caches' in window) {
+                const cacheNames = await caches.keys();
+                log(`キャッシュ: ${cacheNames.length}個存在`);
+                cacheNames.forEach(name => log(`  - ${name}`));
+            }
+        });
+    </script>
+</body>
+</html>

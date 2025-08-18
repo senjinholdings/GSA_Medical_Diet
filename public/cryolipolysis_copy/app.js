@@ -47,32 +47,29 @@ class UrlParamHandler {
         this.setParam('region_id', regionId);
     }
 
-    // クリニックURLを取得（CSVから直接URLを取得し、パラメータを適切に処理）
+    // クリニックURLを取得（必ずリダイレクトページ経由）
     getClinicUrlWithRegionId(clinicId, rank = 1) {
-        // DataManagerが初期化されているか確認
-        if (!window.dataManager) {
-            return '#';
-        }
-        
-        // 中間ページ経由でリダイレクトするURLを生成
-        const redirectUrl = new URL('./redirect.html', window.location.origin + window.location.pathname);
         const currentParams = new URLSearchParams(window.location.search);
-        
-        // 中間ページに渡すパラメータを設定
-        redirectUrl.searchParams.set('clinic_id', clinicId);
-        redirectUrl.searchParams.set('rank', rank);
-        
-        // region_idを追加
         const regionId = this.getRegionId();
-        if (regionId) {
-            redirectUrl.searchParams.set('region_id', regionId);
-        }
-        
-        // 現在のURLのパラメータをすべて転送
-        for (const [key, value] of currentParams) {
-            redirectUrl.searchParams.set(key, value);
-        }
-        
+        let resolvedRank = parseInt(rank, 10);
+        // 常に現在地域のランキングから正順位を再解決（提供されたrankが1でも上書き）
+        try {
+            if (window.dataManager && typeof window.dataManager.getRanking === 'function') {
+                const r = window.dataManager.getRanking(regionId);
+                if (r && r.ranks) {
+                    const found = Object.entries(r.ranks).find(([rk, id]) => String(id) === String(clinicId));
+                    if (found) resolvedRank = parseInt(found[0], 10);
+                }
+            }
+        } catch (_) {}
+        if (!resolvedRank || resolvedRank < 1) resolvedRank = 1;
+        const basePath = (window.SITE_CONFIG && window.SITE_CONFIG.basePath) ? window.SITE_CONFIG.basePath : window.location.pathname.replace(/\/index\.html$/, '');
+        const normalizedBase = basePath.endsWith('/') ? basePath : basePath + '/';
+        const redirectUrl = new URL('redirect.html', window.location.origin + normalizedBase);
+        redirectUrl.searchParams.set('clinic_id', clinicId);
+        redirectUrl.searchParams.set('rank', resolvedRank);
+        if (regionId) redirectUrl.searchParams.set('region_id', regionId);
+        for (const [key, value] of currentParams) redirectUrl.searchParams.set(key, value);
         return redirectUrl.toString();
     }
 
@@ -788,8 +785,29 @@ class DataManager {
         const clinic = this.clinics.find(c => c.code === clinicCode);
         const clinicName = clinic ? clinic.name : null;  // clinic_nameではなくname
         
-        if (clinicName && this.clinicTexts && this.clinicTexts[clinicName] && this.clinicTexts[clinicName][itemKey]) {
-            return this.clinicTexts[clinicName][itemKey];
+        // 比較表項目の汎用キーを実際のキーにマッピング
+        let actualKey = itemKey;
+        if (itemKey.startsWith('比較表項目')) {
+            const headerConfig = this.getClinicHeaderConfig();
+            if (headerConfig) {
+                // 比較表項目4 → 比較表ヘッダー4 → 実際のキー名（例：キャンペーン）
+                const headerKey = itemKey.replace('比較表項目', '比較表ヘッダー');
+                if (headerConfig[headerKey]) {
+                    actualKey = headerConfig[headerKey];
+                }
+            }
+        }
+        
+        // 詳細フィールドのマッピングをチェック
+        if (this.clinicTexts && this.clinicTexts['詳細フィールドマッピング']) {
+            const fieldMapping = this.clinicTexts['詳細フィールドマッピング'];
+            if (fieldMapping[itemKey]) {
+                actualKey = fieldMapping[itemKey];
+            }
+        }
+        
+        if (clinicName && this.clinicTexts && this.clinicTexts[clinicName] && this.clinicTexts[clinicName][actualKey]) {
+            return this.clinicTexts[clinicName][actualKey];
         }
         return defaultText;
     }
@@ -805,12 +823,26 @@ class DataManager {
         return this.getClinicText(clinicCode, 'クリニック名', defaultName);
     }
 
+    // 比較表ヘッダー設定を取得
+    getClinicHeaderConfig() {
+        // clinic-texts.jsonの比較表ヘッダー設定を返す
+        if (this.clinicTexts && this.clinicTexts['比較表ヘッダー設定']) {
+            return this.clinicTexts['比較表ヘッダー設定'];
+        }
+        return null;
+    }
+
     // decoタグを処理してHTMLに変換する関数
     processDecoTags(text) {
         if (!text || typeof text !== 'string') return text;
         
         // <deco>タグを<span class="deco-text">に変換
-        return text.replace(/<deco>(.*?)<\/deco>/g, '<span class="deco-text">$1</span>');
+        text = text.replace(/<deco>(.*?)<\/deco>/g, '<span class="deco-text">$1</span>');
+        
+        // <anno>タグを<span class="anno-text">に変換
+        text = text.replace(/<anno>(.*?)<\/anno>/g, '<span class="anno-text">$1</span>');
+        
+        return text;
     }
 
     // クリニックの口コミデータを動的に取得
@@ -924,7 +956,7 @@ class DataManager {
                             <a href="./go/${clinicCode}/?region_id=${regionId}" target="_blank" rel="nofollow">${store.name}</a>
                         </div>
                         <div class='shop-address line-clamp'>
-                            ${store.address}
+                            ${store.address ? store.address.replace(/^["']|["']$/g, '').trim() : ''}
                         </div>
                     </div>
                     <a class="shop-btn map-toggle-btn" href="javascript:void(0);" data-store-id="${storeId}-${index}">
@@ -947,7 +979,7 @@ class DataManager {
                             <a href="./go/${clinicCode}/?region_id=${regionId}" target="_blank" rel="nofollow">${store.name}</a>
                         </div>
                         <div class='shop-address line-clamp'>
-                            ${store.address}
+                            ${store.address ? store.address.replace(/^["']|["']$/g, '').trim() : ''}
                         </div>
                     </div>
                     <a class="shop-btn map-toggle-btn" href="javascript:void(0);" data-store-id="${storeId}-${index + 3}">
@@ -1540,7 +1572,7 @@ class RankingApp {
 
     }
 
-    updatePageContent(regionId) {
+    async updatePageContent(regionId) {
         try {
             // 地域情報の取得
             const region = this.dataManager.getRegionById(regionId);
@@ -1564,6 +1596,12 @@ class RankingApp {
             const mvRegionElement = document.getElementById('mv-region-name');
             if (mvRegionElement) {
                 mvRegionElement.textContent = region.name;
+            }
+
+            // 2つ目のバナーの地域名も更新
+            const detailRegionName2Element = document.getElementById('detail-region-name-2');
+            if (detailRegionName2Element) {
+                detailRegionName2Element.textContent = region.name + 'で人気のクリニック';
             }
 
             // サイト全体のテキストを動的に更新
@@ -1645,6 +1683,9 @@ class RankingApp {
             
             // 詳細コンテンツの更新
             this.updateClinicDetails(allClinics, ranking, regionId);
+            
+            // 静的比較表に残る href="#" のCTAリンクを補正（data-rank からURLを生成）
+            this.fixStaticComparisonLinks();
             
             // 比較表の注釈を更新（1位〜5位）
             setTimeout(() => {
@@ -1734,6 +1775,49 @@ class RankingApp {
                     RANK_COUNT: rankCount
                 });
                 svgText2Element.textContent = svgText2;
+            }
+
+            // detail-rank-count要素の更新（RANK_COUNTと同じ値を使用）
+            const detailRankCountElement = document.getElementById('detail-rank-count');
+            if (detailRankCountElement) {
+                // 既に計算済みのrankCountを使用（上のSVGテキスト2で計算済み）
+                let displayRankCount = 3; // デフォルト値
+                const ranking = this.dataManager.getRankingByRegionId(regionId);
+                if (ranking && ranking.ranks) {
+                    let validRanks = 0;
+                    for (let i = 1; i <= 5; i++) {
+                        const clinicId = ranking.ranks[`no${i}`];
+                        if (clinicId && clinicId !== '-' && clinicId !== '') {
+                            validRanks++;
+                        }
+                    }
+                    if (validRanks > 0) {
+                        displayRankCount = Math.min(validRanks, 5);
+                    }
+                }
+                detailRankCountElement.textContent = displayRankCount;
+            }
+
+            // 2つ目のdetail-rank-count要素の更新
+            const detailRankCount2Element = document.getElementById('detail-rank-count-2');
+            if (detailRankCount2Element) {
+                // 既に計算済みのrankCountを使用（上のSVGテキスト2で計算済み）
+                let displayRankCount = 6; // デフォルト値
+                const ranking = this.dataManager.getRankingByRegionId(regionId);
+                if (ranking && ranking.ranks) {
+                    let validRanks = 0;
+                    // 6位以上のランキング数を計算
+                    for (let i = 1; i <= 10; i++) {
+                        const clinicId = ranking.ranks[`no${i}`];
+                        if (clinicId && clinicId !== '-' && clinicId !== '') {
+                            validRanks++;
+                        }
+                    }
+                    if (validRanks > 0) {
+                        displayRankCount = validRanks;
+                    }
+                }
+                detailRankCount2Element.textContent = displayRankCount;
             }
 
             // ランキングバナーのalt属性更新（共通テキスト）
@@ -1876,37 +1960,36 @@ class RankingApp {
     }
 
     // 比較表の更新
-    updateComparisonTable(clinics, ranking) {
+    async updateComparisonTable(clinics, ranking) {
         if (!ranking || Object.keys(ranking.ranks).length === 0) {
-            return;
+            // ランキングがない場合でも比較表は表示試行
         }
 
-
+        // 比較表の内容を生成
+        await this.generateComparisonTable();
+        
         // ランキング順のクリニックデータを取得
         const rankedClinics = [];
-        
-        // no1からno5まで順番に処理（1位→2位→3位→4位→5位の順）
-        ['no1', 'no2', 'no3', 'no4', 'no5'].forEach((position, index) => {
-            const clinicId = ranking.ranks[position];
-            if (clinicId && clinicId !== '-') {
-                // クリニックIDが文字列の場合と数値の場合の両方に対応
-                const numericClinicId = parseInt(clinicId);
-                const clinic = clinics.find(c => c.id == clinicId || c.id === numericClinicId);
-                if (clinic) {
-                    rankedClinics.push({
-                        ...clinic,
-                        rank: index + 1  // 1位、2位、3位...
-                    });
+        if (ranking && ranking.ranks) {
+            ['no1', 'no2', 'no3', 'no4', 'no5'].forEach((position, index) => {
+                const clinicId = ranking.ranks[position];
+                if (clinicId && clinicId !== '-') {
+                    const numericClinicId = parseInt(clinicId);
+                    const clinic = clinics.find(c => c.id == clinicId || c.id === numericClinicId);
+                    if (clinic) {
+                        rankedClinics.push({
+                            ...clinic,
+                            rank: index + 1
+                        });
+                    }
                 }
-            }
-        });
+            });
+        }
 
-
-        // 比較表の内容を生成
-        this.generateComparisonTable(rankedClinics);
-        
-        // 1位クリニックおすすめセクションを更新
-        this.updateFirstChoiceRecommendation(rankedClinics[0]);
+        // 1位クリニックおすすめセクションを更新 (これはランキングベースなので残す)
+        if(rankedClinics.length > 0) {
+            this.updateFirstChoiceRecommendation(rankedClinics[0]);
+        }
         
         // レビュータブ切り替え機能の設定
         this.setupReviewTabs();
@@ -1916,103 +1999,103 @@ class RankingApp {
     }
 
     // 比較表の生成
-    generateComparisonTable(clinics) {
+    async generateComparisonTable() {
         const tbody = document.getElementById('comparison-tbody');
-        if (!tbody) return;
-        
-        tbody.innerHTML = '';
+        const theadTr = document.querySelector('.comparison-table thead tr');
+        if (!tbody || !theadTr) return;
 
-        clinics.forEach((clinic, index) => {
-            const tr = document.createElement('tr');
-            
-            // 1位のクリニックには特別な背景色
-            if (index === 0) {
-                tr.style.backgroundColor = '#fffbdc';
+        try {
+            // DataManagerから読み込み済みのclinic-texts.jsonデータを取得
+            let clinicData = this.dataManager.clinicTexts;
+            if (!clinicData || Object.keys(clinicData).length === 0) {
+                await new Promise(resolve => setTimeout(resolve, 500)); // データロード待ち
+                clinicData = this.dataManager.clinicTexts;
             }
+
+            const clinics = Object.values(clinicData).filter(c => c.クリニック名); // 空のエントリを除外
+
+            if (clinics.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="10">データがありません。</td></tr>';
+                return;
+            }
+
+            // ヘッダーを動的に生成 (13番目から20番目の項目)
+            const allKeys = Object.keys(clinics[0]);
+            const headerKeys = allKeys.slice(12, 20); 
+
+            theadTr.innerHTML = ''; // 既存のヘッダーをクリア
             
-            // 実際のデータ設定 - JSONから取得
-            const getRatingFromJson = (rank) => {
-                const clinic = clinics[rank - 1];
-                if (!clinic) return '';
-                
-                const clinicCode = window.dataManager.getClinicCodeById(clinic.id);
-                return clinicCode ? this.dataManager.getClinicRating(clinicCode, 4.5) : '';
-            };
-            const getAchievementFromJson = (rank) => {
-                const clinic = clinics[rank - 1];
-                if (!clinic) return '';
-                
-                const clinicCode = window.dataManager.getClinicCodeById(clinic.id);
-                return clinicCode ? this.dataManager.getClinicText(clinicCode, '実績', '') : '';
-            };
-            const getBenefitFromJson = (rank) => {
-                const clinic = clinics[rank - 1];
-                if (!clinic) return '';
-                
-                const clinicCode = window.dataManager.getClinicCodeById(clinic.id);
-                return clinicCode ? this.dataManager.getClinicText(clinicCode, '特典', '') : '';
-            };
-            const getPopularPlanFromJson = (rank) => {
-                const clinic = clinics[rank - 1];
-                if (!clinic) return '';
-                
-                const clinicCode = window.dataManager.getClinicCodeById(clinic.id);
-                return clinicCode ? this.dataManager.getClinicText(clinicCode, '人気プラン', '') : '';
-            };
-            // clinic-texts.jsonからデータを取得する関数
-            const getClinicDataByRank = (rankNum, itemKey, defaultValue = '') => {
-                const clinic = clinics[rankNum - 1];
-                if (!clinic) return defaultValue;
-                
-                const clinicCode = window.dataManager.getClinicCodeById(clinic.id);
-                if (!clinicCode) return defaultValue;
-                
-                return window.dataManager.getClinicText(clinicCode, itemKey, defaultValue);
-            };
-            
-            const rankNum = clinic.rank || index + 1;
-            
-            // クリニックのロゴ画像パスをclinic-texts.jsonから取得
-            const imagesPath = window.SITE_CONFIG ? window.SITE_CONFIG.imagesPath + '/images' : '/images';
-            const clinicCode = window.dataManager.getClinicCodeById(clinic.id);
-            let logoPath = `${imagesPath}/clinics/dio/dio-logo.webp`; // デフォルト
-            
-            if (clinicCode) {
-                // clinic-texts.jsonからパスを取得
-                const imagePath = window.dataManager.getClinicText(clinicCode, 'クリニックロゴ画像パス', '');
-                if (imagePath) {
-                    logoPath = imagePath;
-                } else {
-                    // フォールバック：コードベースのパス
-                    logoPath = `${imagesPath}/clinics/${clinicCode}/${clinicCode}-logo.webp`;
+            const thClinic = document.createElement('th');
+            thClinic.textContent = 'クリニック';
+            theadTr.appendChild(thClinic);
+
+            headerKeys.forEach(header => {
+                const th = document.createElement('th');
+                th.textContent = header;
+                theadTr.appendChild(th);
+            });
+
+            const thLink = document.createElement('th');
+            thLink.textContent = '公式サイト';
+            theadTr.appendChild(thLink);
+
+            // テーブルボディを生成
+            tbody.innerHTML = '';
+            clinics.forEach(clinic => {
+                const row = document.createElement('tr');
+
+                const clinicCell = document.createElement('td');
+                const clinicName = clinic['クリニック名'] || '';
+                const logoPath = clinic['クリニックロゴ画像パス'] || '';
+                clinicCell.innerHTML = `<img src="${logoPath}" alt="${clinicName}" width="80" style="margin-bottom: 5px;"><br>${clinicName}`;
+                row.appendChild(clinicCell);
+
+                headerKeys.forEach(key => {
+                    const cell = document.createElement('td');
+                    cell.innerHTML = this.dataManager.processDecoTags(clinic[key] || '');
+                    row.appendChild(cell);
+                });
+
+                const linkCell = document.createElement('td');
+                const clinicCode = clinic['クリニックコード'] || '';
+                const clinicInfo = this.dataManager.getAllClinics().find(c => c.code === clinicCode);
+                let url = '#';
+                if(clinicInfo) {
+                    url = this.urlHandler.getClinicUrlWithRegionId(clinicInfo.id, 1);
                 }
-            }
-            
-            tr.innerHTML = `
-                <td class="ranking-table_td1">
-                    <img src="${logoPath}" alt="${clinic.name}" width="80">
-                    <a href="#clinic${rankNum}" class="clinic-link">${clinic.name}</a>
-                </td>
-                <td class="" style="">
-                    <span class="ranking_evaluation">${getRatingFromJson(rankNum)}</span><br>
-                    <span class="star5_rating" data-rate="${getRatingFromJson(rankNum)}"></span>
-                </td>
-                <td class="" style="">${getAchievementFromJson(rankNum)}</td>
-                <td class="" style="">${getBenefitFromJson(rankNum)}</td>
-                <td class="th-none" style="display: none;">${getPopularPlanFromJson(rankNum)}</td>
-                <td class="th-none" style="display: none;">${getClinicDataByRank(rankNum, '医療機器', '')}</td>
-                <td class="th-none" style="display: none;">${getClinicDataByRank(rankNum, '注射治療', '')}</td>
-                <td class="th-none" style="display: none;">${getClinicDataByRank(rankNum, '対応部位', '')}</td>
-                <td class="th-none" style="display: none;">${getClinicDataByRank(rankNum, 'モニター割', '')}</td>
-                <td class="th-none" style="display: none;">${getClinicDataByRank(rankNum, '返金保証', '')}</td>
-                <td>
-                    <a class="link_btn" href="${this.urlHandler.getClinicUrlWithRegionId(clinic.id, clinic.rank || rankNum)}" target="_blank">公式サイト &gt;</a>
-                    <a class="detail_btn" href="#clinic${rankNum}">詳細をみる</a>
-                </td>
-            `;
-            
-            tbody.appendChild(tr);
-        });
+
+                linkCell.innerHTML = `<a class="link_btn" href="${url}" target="_blank">公式サイト</a>`;
+                row.appendChild(linkCell);
+
+                tbody.appendChild(row);
+            });
+
+        } catch (error) {
+            console.error('比較表の生成に失敗しました:', error);
+            tbody.innerHTML = '<tr><td colspan="10">データの読み込みに失敗しました。</td></tr>';
+        }
+    }
+
+    // 静的比較表の href="#" CTA を補正
+    fixStaticComparisonLinks() {
+        try {
+            const rows = document.querySelectorAll('#comparison-tbody tr');
+            rows.forEach(row => {
+                const link = row.querySelector('a.link_btn[href="#"]');
+                const detailLink = row.querySelector('.detail-static-link');
+                if (!link || !detailLink) return;
+                const rank = parseInt(detailLink.getAttribute('data-rank'), 10);
+                if (!rank || !this.dataManager) return;
+                const regionId = this.urlHandler.getRegionId();
+                const ranking = this.dataManager.getRanking(regionId);
+                if (!ranking || !ranking.ranks) return;
+                const clinicId = ranking.ranks[String(rank)];
+                if (!clinicId) return;
+                link.href = this.urlHandler.getClinicUrlWithRegionId(clinicId, rank);
+                link.setAttribute('target', '_blank');
+                link.setAttribute('rel', 'noopener');
+            });
+        } catch (e) {}
     }
 
     // 1位クリニックおすすめセクションの更新
@@ -2593,6 +2676,7 @@ class RankingApp {
                                         ${caseImages.map((_, index) => `<button class="case-dot${index === 0 ? ' active' : ''}" data-index="${index}" style="width: 7px !important; height: 7px !important; border-radius: 50% !important; cursor: pointer !important; transition: all 0.3s ease !important; border: none !important; padding: 0 !important;"></button>`).join('')}
                                     </div>
                                 </div>
+                                <p style="font-size:8px;text-align:right;margin-top:10px;">※3ヶ月医療痩身ボディメイクを契約されたモニター対象の会員の代表的な事例を提示しています。</p>
                             </div>
                         `;
                     }
@@ -3332,7 +3416,8 @@ function initializeDisclaimers() {
     let disclaimerCount = 0;
     
     topClinics.forEach(clinic => {
-        const disclaimerText = window.dataManager.getClinicText(clinic.code, 'INFORMATION確認事項', '');
+        // 比較表の注意事項フィールドから取得
+        const disclaimerText = window.dataManager.getClinicText(clinic.code, '比較表の注意事項', '');
         
         // 注意事項がある場合のみ表示
         if (disclaimerText && disclaimerText.trim() !== '') {

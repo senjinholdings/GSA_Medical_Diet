@@ -85,8 +85,10 @@ function convertClinicTextsToJson() {
     // 詳細セクションの項目マッピング
     const detailFieldMapping = {};
     
-    // 費用フィールドのカウンター
+    // 重複フィールドのカウンター
     let feeCount = 0;
+    let periodCount = 0;
+    let rangeCount = 0;
     
     // 各行を処理
     for (let i = startRow + 1; i < records.length; i++) {
@@ -106,6 +108,30 @@ function convertClinicTextsToJson() {
             } else if (feeCount === 2) {
                 // 2つ目の費用 = 詳細セクション用
                 itemKey = '詳細費用';
+            }
+        }
+        
+        // 目安期間フィールドの処理（2つある場合の区別）
+        if (itemKey === '目安期間') {
+            periodCount++;
+            if (periodCount === 1) {
+                // 1つ目の目安期間 = 比較表用
+                itemKey = '目安期間';
+            } else if (periodCount === 2) {
+                // 2つ目の目安期間 = 詳細セクション用
+                itemKey = '詳細目安期間';
+            }
+        }
+        
+        // 矯正範囲フィールドの処理（2つある場合の区別）
+        if (itemKey === '矯正範囲') {
+            rangeCount++;
+            if (rangeCount === 1) {
+                // 1つ目の矯正範囲 = 比較表用
+                itemKey = '矯正範囲';
+            } else if (rangeCount === 2) {
+                // 2つ目の矯正範囲 = 詳細セクション用
+                itemKey = '詳細矯正範囲';
             }
         }
         
@@ -167,8 +193,10 @@ function convertClinicTextsToJson() {
     result['詳細フィールドマッピング'] = {
         'priceDetail': '詳細費用',  // 詳細セクション用の費用フィールド
         'planCount': '特徴タグ',
-        'periods': '営業時間',
-        'stores': '店舗'
+        'periods': '詳細目安期間',  // 詳細セクション用の目安期間
+        'stores': '店舗',
+        'ranges': '詳細矯正範囲',  // 詳細セクション用の矯正範囲
+        'hours': '営業時間'
     };
     
     // JSONファイルとして保存

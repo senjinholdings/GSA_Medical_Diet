@@ -1,0 +1,5 @@
+clinic_code,menu_slug,price_min_tax_included,price_max_tax_included,price_unit,anesthesia_fee_included,additional_fees_note,notes
+sbc,threadlift,30000,300000,本/回,exclude,麻酔代/再診料/処置費など別途の場合あり（要確認）,参考レンジ（要確認）
+dio,glp1,10000,50000,月,include,初診/再診/処方代は別途の場合あり（要確認）,参考レンジ（要確認）
+
+

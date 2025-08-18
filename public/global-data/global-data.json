@@ -1,0 +1,330 @@
+{
+  "menus": [
+    {
+      "menu_slug": "coolsculpting",
+      "menu_name": "クールスカルプティング",
+      "category": "医療痩身"
+    },
+    {
+      "menu_slug": "glp1",
+      "menu_name": "GLP-1",
+      "category": "医療痩身"
+    },
+    {
+      "menu_slug": "threadlift",
+      "menu_name": "糸リフト",
+      "category": "美容医療"
+    },
+    {
+      "menu_slug": "injection-lipolysis",
+      "menu_name": "脂肪溶解注射",
+      "category": "医療痩身"
+    },
+    {
+      "menu_slug": "mouthpiece",
+      "menu_name": "マウスピース矯正",
+      "category": "歯科"
+    }
+  ],
+  "clinics": [
+    {
+      "clinic_code": "dio",
+      "clinic_name": "ディオクリニック",
+      "brand_name": "ディオクリニック",
+      "homepage_url": "https://dioclinic.jp/"
+    },
+    {
+      "clinic_code": "eminal",
+      "clinic_name": "エミナルクリニック",
+      "brand_name": "エミナルクリニック",
+      "homepage_url": "https://eminal-clinic.jp/"
+    },
+    {
+      "clinic_code": "urara",
+      "clinic_name": "ウララクリニック",
+      "brand_name": "URARAクリニック",
+      "homepage_url": "https://urara-clinic.jp/"
+    },
+    {
+      "clinic_code": "lieto",
+      "clinic_name": "リエートクリニック",
+      "brand_name": "リエートクリニック",
+      "homepage_url": "https://lieto-clinic.jp/"
+    },
+    {
+      "clinic_code": "sbc",
+      "clinic_name": "湘南美容クリニック",
+      "brand_name": "湘南美容クリニック",
+      "homepage_url": "https://www.s-b-c.net/"
+    },
+    {
+      "clinic_code": "dsc",
+      "clinic_name": "DSクリニック",
+      "brand_name": "DSクリニック",
+      "homepage_url": "https://dsclinic.jp/"
+    }
+  ],
+  "stores": [
+    {
+      "store_id": "sbc_tokyo01",
+      "clinic_code": "sbc",
+      "store_name": "湘南美容クリニック 新宿本院",
+      "zipcode": "160-0022",
+      "address": "東京都新宿区新宿4-2-23 新四curumuビル 6F",
+      "access": "新宿駅徒歩3分",
+      "phone": "",
+      "opening_hours": ""
+    },
+    {
+      "store_id": "eminal_tokyo01",
+      "clinic_code": "eminal",
+      "store_name": "エミナルクリニック 新宿院",
+      "zipcode": "",
+      "address": "東京都新宿区（要確認）",
+      "access": "新宿駅（要確認)",
+      "phone": "",
+      "opening_hours": ""
+    },
+    {
+      "store_id": "dio_tokyo01",
+      "clinic_code": "dio",
+      "store_name": "ディオクリニック 渋谷院",
+      "zipcode": "",
+      "address": "東京都渋谷区（要確認）",
+      "access": "渋谷駅（要確認)",
+      "phone": "",
+      "opening_hours": ""
+    }
+  ],
+  "clinicMenuMap": [
+    {
+      "clinic_code": "dio",
+      "menu_slug": "glp1",
+      "available": "true",
+      "evidence_url": "https://dioclinic.jp/",
+      "last_verified_at": "2025-08-01"
+    },
+    {
+      "clinic_code": "dio",
+      "menu_slug": "threadlift",
+      "available": "false",
+      "evidence_url": "",
+      "last_verified_at": ""
+    },
+    {
+      "clinic_code": "eminal",
+      "menu_slug": "glp1",
+      "available": "unknown",
+      "evidence_url": "",
+      "last_verified_at": ""
+    },
+    {
+      "clinic_code": "eminal",
+      "menu_slug": "threadlift",
+      "available": "unknown",
+      "evidence_url": "",
+      "last_verified_at": ""
+    },
+    {
+      "clinic_code": "urara",
+      "menu_slug": "threadlift",
+      "available": "unknown",
+      "evidence_url": "",
+      "last_verified_at": ""
+    },
+    {
+      "clinic_code": "lieto",
+      "menu_slug": "threadlift",
+      "available": "unknown",
+      "evidence_url": "",
+      "last_verified_at": ""
+    },
+    {
+      "clinic_code": "sbc",
+      "menu_slug": "threadlift",
+      "available": "true",
+      "evidence_url": "https://www.s-b-c.net/",
+      "last_verified_at": "2025-08-01"
+    },
+    {
+      "clinic_code": "dsc",
+      "menu_slug": "threadlift",
+      "available": "unknown",
+      "evidence_url": "",
+      "last_verified_at": ""
+    }
+  ],
+  "clinicMenuPricing": [
+    {
+      "clinic_code": "sbc",
+      "menu_slug": "threadlift",
+      "price_min_tax_included": "30000",
+      "price_max_tax_included": "300000",
+      "price_unit": "本/回",
+      "anesthesia_fee_included": "exclude",
+      "additional_fees_note": "麻酔代/再診料/処置費など別途の場合あり（要確認）",
+      "notes": "参考レンジ（要確認）"
+    },
+    {
+      "clinic_code": "dio",
+      "menu_slug": "glp1",
+      "price_min_tax_included": "10000",
+      "price_max_tax_included": "50000",
+      "price_unit": "月",
+      "anesthesia_fee_included": "include",
+      "additional_fees_note": "初診/再診/処方代は別途の場合あり（要確認）",
+      "notes": "参考レンジ（要確認）"
+    }
+  ],
+  "menuToClinics": {
+    "glp1": [
+      {
+        "clinicCode": "dio",
+        "clinicName": "ディオクリニック",
+        "available": "true",
+        "evidenceUrl": "https://dioclinic.jp/",
+        "lastVerifiedAt": "2025-08-01",
+        "pricing": {
+          "clinic_code": "dio",
+          "menu_slug": "glp1",
+          "price_min_tax_included": "10000",
+          "price_max_tax_included": "50000",
+          "price_unit": "月",
+          "anesthesia_fee_included": "include",
+          "additional_fees_note": "初診/再診/処方代は別途の場合あり（要確認）",
+          "notes": "参考レンジ（要確認）"
+        },
+        "stores": [
+          {
+            "store_id": "dio_tokyo01",
+            "clinic_code": "dio",
+            "store_name": "ディオクリニック 渋谷院",
+            "zipcode": "",
+            "address": "東京都渋谷区（要確認）",
+            "access": "渋谷駅（要確認)",
+            "phone": "",
+            "opening_hours": ""
+          }
+        ]
+      },
+      {
+        "clinicCode": "eminal",
+        "clinicName": "エミナルクリニック",
+        "available": "unknown",
+        "evidenceUrl": "",
+        "lastVerifiedAt": "",
+        "pricing": null,
+        "stores": [
+          {
+            "store_id": "eminal_tokyo01",
+            "clinic_code": "eminal",
+            "store_name": "エミナルクリニック 新宿院",
+            "zipcode": "",
+            "address": "東京都新宿区（要確認）",
+            "access": "新宿駅（要確認)",
+            "phone": "",
+            "opening_hours": ""
+          }
+        ]
+      }
+    ],
+    "threadlift": [
+      {
+        "clinicCode": "dio",
+        "clinicName": "ディオクリニック",
+        "available": "false",
+        "evidenceUrl": "",
+        "lastVerifiedAt": "",
+        "pricing": null,
+        "stores": [
+          {
+            "store_id": "dio_tokyo01",
+            "clinic_code": "dio",
+            "store_name": "ディオクリニック 渋谷院",
+            "zipcode": "",
+            "address": "東京都渋谷区（要確認）",
+            "access": "渋谷駅（要確認)",
+            "phone": "",
+            "opening_hours": ""
+          }
+        ]
+      },
+      {
+        "clinicCode": "eminal",
+        "clinicName": "エミナルクリニック",
+        "available": "unknown",
+        "evidenceUrl": "",
+        "lastVerifiedAt": "",
+        "pricing": null,
+        "stores": [
+          {
+            "store_id": "eminal_tokyo01",
+            "clinic_code": "eminal",
+            "store_name": "エミナルクリニック 新宿院",
+            "zipcode": "",
+            "address": "東京都新宿区（要確認）",
+            "access": "新宿駅（要確認)",
+            "phone": "",
+            "opening_hours": ""
+          }
+        ]
+      },
+      {
+        "clinicCode": "urara",
+        "clinicName": "ウララクリニック",
+        "available": "unknown",
+        "evidenceUrl": "",
+        "lastVerifiedAt": "",
+        "pricing": null,
+        "stores": []
+      },
+      {
+        "clinicCode": "lieto",
+        "clinicName": "リエートクリニック",
+        "available": "unknown",
+        "evidenceUrl": "",
+        "lastVerifiedAt": "",
+        "pricing": null,
+        "stores": []
+      },
+      {
+        "clinicCode": "sbc",
+        "clinicName": "湘南美容クリニック",
+        "available": "true",
+        "evidenceUrl": "https://www.s-b-c.net/",
+        "lastVerifiedAt": "2025-08-01",
+        "pricing": {
+          "clinic_code": "sbc",
+          "menu_slug": "threadlift",
+          "price_min_tax_included": "30000",
+          "price_max_tax_included": "300000",
+          "price_unit": "本/回",
+          "anesthesia_fee_included": "exclude",
+          "additional_fees_note": "麻酔代/再診料/処置費など別途の場合あり（要確認）",
+          "notes": "参考レンジ（要確認）"
+        },
+        "stores": [
+          {
+            "store_id": "sbc_tokyo01",
+            "clinic_code": "sbc",
+            "store_name": "湘南美容クリニック 新宿本院",
+            "zipcode": "160-0022",
+            "address": "東京都新宿区新宿4-2-23 新四curumuビル 6F",
+            "access": "新宿駅徒歩3分",
+            "phone": "",
+            "opening_hours": ""
+          }
+        ]
+      },
+      {
+        "clinicCode": "dsc",
+        "clinicName": "DSクリニック",
+        "available": "unknown",
+        "evidenceUrl": "",
+        "lastVerifiedAt": "",
+        "pricing": null,
+        "stores": []
+      }
+    ]
+  }
+}

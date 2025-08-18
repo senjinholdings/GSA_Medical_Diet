@@ -2211,7 +2211,7 @@ class RankingApp {
                         '営業時間': '11:00〜20:00<br>休診日：年末年始',
                         '対応部位': '顔／二の腕／腹部／上半身／下半身／その他',
                         '店舗': '東京（渋谷、新宿）',
-                        '公式サイト': 'https://ds-clinic.jp/'
+                        '公式サイト': 'https://dsclinic.jp/'
                     },
                     vioPlans: {
                         vioOnly: {
@@ -2259,10 +2259,10 @@ class RankingApp {
                     campaignInfo: {
                         header: 'INFORMATION!',
                         title: 'DSクリニックの今月のお得な情報',
-                        logoSrc: '/images/clinics/dsc/dsc-logo.jpg',
+                        logoSrc: '/images/clinics/dsc/dsc-logo.webp',
                         logoAlt: 'DSクリニック',
                         description: '脂肪買取キャンペーン<br>1kg痩せるごとに1万円キャッシュバック',
-                        ctaUrl: 'https://ds-clinic.jp/campaign/',
+                        ctaUrl: 'https://dsclinic.jp/campaign/',
                         ctaText: 'DSクリニックの公式サイト',
                         microcopy: '＼20年以上の実績とチーム医療で安心／'
                     }
@@ -2313,7 +2313,7 @@ class RankingApp {
                 <div class="ranking_box_in">
                     <div class="detail-rank">
                         <div class="detail-rank-header">
-                            <div class="detail-rank-badge ${badgeClass}">No.${rank}</div>
+                            <div class="detail-rank-badge ${badgeClass}">${rank}</div>
                             <div class="detail-title">
                                 <h3>${data.title}</h3>
                                 <p>${data.subtitle}</p>

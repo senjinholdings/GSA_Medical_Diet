@@ -1,0 +1,6 @@
+store_id,clinic_code,store_name,zipcode,address,access,phone,opening_hours
+sbc_tokyo01,sbc,湘南美容クリニック 新宿本院,160-0022,東京都新宿区新宿4-2-23 新四curumuビル 6F,新宿駅徒歩3分,,, 
+eminal_tokyo01,eminal,エミナルクリニック 新宿院,,東京都新宿区（要確認）,新宿駅（要確認),,,
+dio_tokyo01,dio,ディオクリニック 渋谷院,,東京都渋谷区（要確認）,渋谷駅（要確認),,,
+
+
