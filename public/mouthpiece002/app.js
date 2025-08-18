@@ -1203,14 +1203,13 @@ class DataManager {
         // priceDetailを動的に生成
         const priceDetail = {};
         
-        // 日本語の表示名マッピング
+        // 日本語の表示名マッピング（詳細セクションの価格表用）
         const displayNameMap = {
             'priceDetail': '費用',
-            'planCount': '特徴',
             'periods': '目安期間',
-            'stores': '店舗',
             'ranges': '矯正範囲',
-            'hours': '営業時間'
+            'hours': '営業時間',
+            'stores': '店舗'
         };
         
         // マッピングに基づいて動的にフィールドを設定
