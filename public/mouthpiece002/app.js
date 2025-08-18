@@ -3998,9 +3998,17 @@ document.addEventListener('DOMContentLoaded', () => {
 // アプリケーションの初期化
 // 比較表の注釈を動的に生成する関数
 function initializeDisclaimers() {
+    // 両方の場所に注意事項を表示
     const mainContent = document.getElementById('main-content');
-    if (!mainContent || !window.dataManager) {
-        console.log('initializeDisclaimers: mainContent or dataManager not found');
+    const rankingDisclaimers = document.getElementById('ranking-disclaimers-content');
+    
+    if (!window.dataManager) {
+        console.log('initializeDisclaimers: dataManager not found');
+        return;
+    }
+    
+    if (!mainContent && !rankingDisclaimers) {
+        console.log('initializeDisclaimers: No disclaimer containers found');
         return;
     }
 
@@ -4103,13 +4111,24 @@ function initializeDisclaimers() {
         }
     });
 
-    // 生成したHTMLを挿入
+    // 生成したHTMLを両方の場所に挿入
     if (disclaimerCount > 0) {
         console.log('initializeDisclaimers: Setting', disclaimerCount, 'disclaimers');
-        mainContent.innerHTML = disclaimerHTML;
+        if (mainContent) {
+            mainContent.innerHTML = disclaimerHTML;
+        }
+        if (rankingDisclaimers) {
+            rankingDisclaimers.innerHTML = disclaimerHTML;
+        }
     } else {
         console.log('initializeDisclaimers: No disclaimers to display');
-        mainContent.innerHTML = '<p style="font-size: 11px; color: #666; padding: 10px;">注意事項はありません。</p>';
+        const noDisclaimerMessage = '<p style="font-size: 11px; color: #666; padding: 10px;">注意事項はありません。</p>';
+        if (mainContent) {
+            mainContent.innerHTML = noDisclaimerMessage;
+        }
+        if (rankingDisclaimers) {
+            rankingDisclaimers.innerHTML = noDisclaimerMessage;
+        }
     }
 }
 
