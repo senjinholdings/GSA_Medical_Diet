@@ -85,14 +85,29 @@ function convertClinicTextsToJson() {
     // 詳細セクションの項目マッピング
     const detailFieldMapping = {};
     
+    // 費用フィールドのカウンター
+    let feeCount = 0;
+    
     // 各行を処理
     for (let i = startRow + 1; i < records.length; i++) {
         const row = records[i];
         if (!row || row.length === 0) continue; // 空行をスキップ
         
-        const itemKey = row[0]; // 項目名（キーとして使用）
+        let itemKey = row[0]; // 項目名（キーとして使用）
         const description = row[1]; // 説明文
         if (!itemKey || !itemKey.trim()) continue; // 空の項目名をスキップ
+        
+        // 費用フィールドの処理（2つある場合の区別）
+        if (itemKey === '費用') {
+            feeCount++;
+            if (feeCount === 1) {
+                // 1つ目の費用 = 比較表用（既存のキー名を維持）
+                itemKey = '費用';
+            } else if (feeCount === 2) {
+                // 2つ目の費用 = 詳細セクション用
+                itemKey = '詳細費用';
+            }
+        }
         
         // 25-30行目（0ベースで24-29）の項目を詳細フィールドマッピングに追加
         // CSVの行番号は1ベース、配列インデックスは0ベース
@@ -148,10 +163,13 @@ function convertClinicTextsToJson() {
         result['比較表ヘッダー設定'] = headerConfig;
     }
     
-    // 詳細フィールドマッピングを追加
-    if (Object.keys(detailFieldMapping).length > 0) {
-        result['詳細フィールドマッピング'] = detailFieldMapping;
-    }
+    // 詳細フィールドマッピングを追加（固定マッピング）
+    result['詳細フィールドマッピング'] = {
+        'priceDetail': '詳細費用',  // 詳細セクション用の費用フィールド
+        'planCount': '特徴タグ',
+        'periods': '営業時間',
+        'stores': '店舗'
+    };
     
     // JSONファイルとして保存
     const jsonPath = path.join(__dirname, 'clinic-texts.json');
