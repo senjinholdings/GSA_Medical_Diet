@@ -343,7 +343,7 @@ class DisplayManager {
                         ${window.dataManager?.processDecoTags ? window.dataManager.processDecoTags(pushMessage) : pushMessage}
                     </div>
                     <p class="btn btn_second_primary">
-                        <a href="${this.urlHandler.getClinicUrlWithRegionId(clinic.id, clinic.rank || 1)}" target="_blank" rel="noopener">
+                        <a href="${this.urlHandler.getClinicUrlWithRegionId(clinic.id, rankNum)}" target="_blank" rel="noopener">
                             <span class="bt_s">公式サイト</span>
                             <span class="btn-arrow">▶</span>
                         </a>
@@ -480,9 +480,10 @@ class DisplayManager {
             const clinic = clinics.find(c => c.id === clinicId);
             if (!clinic) return;
 
+            const rankNum = parseInt(position.replace('no', ''));
             const li = document.createElement('li');
             const link = document.createElement('a');
-            link.href = this.urlHandler.getClinicUrlWithRegionId(clinic.id, clinic.rank || 1);
+            link.href = this.urlHandler.getClinicUrlWithRegionId(clinic.id, rankNum);
             link.target = '_blank';
             link.rel = 'noopener noreferrer';
             link.textContent = clinic.name;
