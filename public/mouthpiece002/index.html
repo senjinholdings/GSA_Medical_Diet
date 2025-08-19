@@ -1675,18 +1675,8 @@ text-align: center;
         */
 
         // アコーディオン機能（2段階）
-        window.toggleMainDisclaimer = function() {
-            const content = document.getElementById('main-content');
-            const arrow = document.getElementById('main-arrow');
-            
-            if (content.style.display === 'none' || content.style.display === '') {
-                content.style.display = 'block';
-                arrow.style.transform = 'rotate(180deg)';
-            } else {
-                content.style.display = 'none';
-                arrow.style.transform = 'rotate(0deg)';
-            }
-        }
+        // この関数は958行目で既に定義されているため、ここでの再定義は削除
+        // window.toggleMainDisclaimer関数は958行目の実装を使用
         
         window.toggleDisclaimer = function(clinicId) {
             console.log('>>> toggleDisclaimer called:', clinicId);

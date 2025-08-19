@@ -2375,50 +2375,17 @@ class RankingApp {
         });
     }
 
-    // タブボタンのHTMLを動的に生成
+    // タブボタンのHTMLを動的に生成（不要なのでコメントアウト）
+    // HTMLに既存のタブがあるため、この関数は使用しない
     createTabButtons() {
-        const comparisonSection = document.querySelector('.comparison-section');
-        if (!comparisonSection) return;
-        
-        // 既存のタブコンテナがあれば削除
-        const existingTabs = comparisonSection.querySelector('.comparison-tabs');
-        if (existingTabs) {
-            existingTabs.remove();
-        }
-        
-        // タブコンテナを作成
-        const tabContainer = document.createElement('div');
-        tabContainer.className = 'comparison-tabs';
-        
-        // タブボタンを作成
-        const tabs = [
-            { id: 'tab1', label: '総合', active: true },
-            { id: 'tab2', label: '施術内容', active: false },
-            { id: 'tab3', label: 'サービス', active: false }
-        ];
-        
-        tabs.forEach(tab => {
-            const button = document.createElement('button');
-            button.className = `comparison-tab-menu-item tab-btn${tab.active ? ' tab-active' : ''}`;
-            button.setAttribute('data-tab', tab.id);
-            button.textContent = tab.label;
-            tabContainer.appendChild(button);
-        });
-        
-        // 比較表の前に挿入
-        const comparisonTable = comparisonSection.querySelector('.comparison-table');
-        if (comparisonTable && comparisonTable.parentNode) {
-            comparisonTable.parentNode.insertBefore(tabContainer, comparisonTable);
-        }
+        // この関数は使用しない
+        return;
     }
 
     // 比較表タブ機能のセットアップ
     setupComparisonTabs() {
-        // タブボタンのHTMLを動的に生成（重複チェック付き）
-        const existingTabs = document.querySelector('.comparison-tabs');
-        if (!existingTabs) {
-            this.createTabButtons();
-        }
+        // タブボタンのHTMLを動的に生成する処理を削除
+        // 既存のHTMLに定義されているタブを使用する
         
         const tabItems = document.querySelectorAll('.comparison-tab-menu-item');
         
