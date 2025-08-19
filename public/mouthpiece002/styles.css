@@ -2390,7 +2390,7 @@ section.clinic-rankings .ranking-header-banner {
     left: 0;
     /* overflow: hidden; */
     white-space: nowrap;
-    color: #f69ca8;
+    color: #fa7894;
 }
 
 .star5_rating[data-rate="5"]:after { width: 100%; }
@@ -2410,7 +2410,7 @@ section.clinic-rankings .ranking-header-banner {
 /* ボタンスタイル */
 .comparison-table .link_btn {
     display: inline-block;
-    background: #f69ca8;
+    background: #ff95ae;
     color: white;
     text-decoration: none;
     padding: 8px 15px;
@@ -2470,7 +2470,7 @@ section.clinic-rankings .ranking-header-banner {
     display: block;
     font-size: 16px;
     font-weight: 600;
-    color: #f69ca8;
+    color: #fa7894;
     margin-bottom: -15px;
 }
 
