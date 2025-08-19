@@ -66,10 +66,20 @@ class UrlParamHandler {
         const basePath = (window.SITE_CONFIG && window.SITE_CONFIG.basePath) ? window.SITE_CONFIG.basePath : window.location.pathname.replace(/\/index\.html$/, '');
         const normalizedBase = basePath.endsWith('/') ? basePath : basePath + '/';
         const redirectUrl = new URL('redirect.html', window.location.origin + normalizedBase);
+        // クエリも残す（サーバー転送を期待）
         redirectUrl.searchParams.set('clinic_id', clinicId);
         redirectUrl.searchParams.set('rank', resolvedRank);
         if (regionId) redirectUrl.searchParams.set('region_id', regionId);
         for (const [key, value] of currentParams) redirectUrl.searchParams.set(key, value);
+        // mouthpiece002方式: JSONをハッシュに埋め込む（ローカルでも確実に復元）
+        // ここでutm系・gclidも含めておく（環境によってはクエリが落ちるため）
+        const paramsPayload = { clinic_id: String(clinicId), rank: resolvedRank, region_id: regionId || '013' };
+        const utmCreative = currentParams.get('utm_creative');
+        const gclidParam = currentParams.get('gclid');
+        if (utmCreative) paramsPayload.utm_creative = utmCreative;
+        if (gclidParam) paramsPayload.gclid = gclidParam;
+        const paramsJson = JSON.stringify(paramsPayload);
+        redirectUrl.hash = `params=${encodeURIComponent(paramsJson)}`;
         return redirectUrl.toString();
     }
 
@@ -2834,7 +2844,7 @@ class RankingApp {
                             <div class="campaign-content">
                                 <div class="camp_header3">
                                     <div class="info_logo">
-                                        <img src="${logoSrc}" alt="${logoAlt}" onerror="this.onerror=null; this.src='/images/clinics/${clinicCode}/${clinicCode}-logo.jpg';">
+                                        <img src="${logoSrc}" alt="${logoAlt}" onerror="this.onerror=null; this.src='/images/clinics/${clinicCode}/${clinicCode}-logo.webp';">
                                     </div>
                                     <div class="camp_txt">
                                         ${campaignDescription}
@@ -2908,8 +2918,6 @@ class RankingApp {
         let currentExtIndex = -1;
         
         if (currentSrc.includes('.webp')) currentExtIndex = -1; // webpから開始
-        else if (currentSrc.includes('.jpg')) currentExtIndex = 0;
-        else if (currentSrc.includes('.png')) currentExtIndex = 1;
         
         // 次の拡張子を試す
         const nextExtIndex = currentExtIndex + 1;
@@ -2919,7 +2927,7 @@ class RankingApp {
             // 全て失敗した場合、ロゴ画像にフォールバック
             imgElement.src = `${imagesPath}/clinics/${clinicName}/${clinicName}-logo.webp`;
             imgElement.onerror = () => {
-                imgElement.src = `${imagesPath}/clinics/${clinicName}/${clinicName}-logo.jpg`;
+                imgElement.src = `${imagesPath}/clinics/${clinicName}/${clinicName}-logo.webp`;
             };
         }
     }
