@@ -505,7 +505,7 @@ class DataManager {
     async init() {
         try {
             // JSONファイルの読み込み（共通のcompiled-data.jsonを使用）
-            const response = await fetch('./data/compiled-data.json');
+            const response = await fetch('/data/compiled-data.json');
             if (!response.ok) {
                 throw new Error('Failed to load compiled-data.json');
             }
