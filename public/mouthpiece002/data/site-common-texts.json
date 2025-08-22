@@ -1,5 +1,5 @@
 {
-  "サイトロゴ": "マウスピース矯正おすすめ比較.com",
+  "サイトロゴ": "矯正歯科おすすめ比較.com",
   "MV画像パス": "./images/injection-MV.webp",
   "MVアピールテキスト1": "【コスパ】×【続けやすさ】で選ぶ",
   "MVアピールテキスト2": "",
@@ -17,10 +17,10 @@
   "Tips3内容": "<deco>日本での症例数・製造数が多いブランド</deco>であるか？マウスピース矯正だけではなく、<deco>ワイヤー矯正も提案</deco>してくれるか？通院回数や24時間サポートがあるか、費用面では基本料金だけでなく<deco>追加料金が発生しないか？</deco>などをきちんと抑えているクリニックだと負担も少なく理想的な歯並びを目指せるでしょう！",
   "Tips3画像パス": "./images/Tips3.webp",
   "比較表タイトル": "で人気のマウスピース矯正",
-  "比較表サブタイトル": "\"クリニックを<span class=\"\"accent-text\"\">徹底比較</span>\"",
+  "比較表サブタイトル": "クリニックを<span class=\"\"accent-text\"\">徹底比較</span>",
   "詳細バナー画像パス": "./images/details_header_bannar3.webp",
-  "ファビコン画像パス": "/images/favicon.png",
-  "フッターサイト名": "マウスピース矯正おすすめ比較.com",
-  "フッターコピーライト": "© 2025 マウスピース矯正おすすめ比較.com",
-  "注意事項HTML": "<div class='main-disclaimer'><span id='main-arrow' style='font-size: 8px; color: rgb(153, 153, 153);'>※</span></div>"
+  "ファビコン画像パス": "./images/favicon.png",
+  "フッターサイト名": "矯正歯科おすすめ比較",
+  "フッターコピーライト": "© 2025 矯正歯科おすすめ比較.com",
+  "注意事項HTML": "\"<div class=\"\"main-disclaimer\"\"><span id=\"\"main-arrow\"\" style=\"\"font-size: 8px; color: rgb(153"
 }

@@ -8,7 +8,7 @@ meta6,遷移先URL（4位）,4位表示時の遷移先URL,https://www.oh-my-teet
 meta7,遷移先URL（5位）,5位表示時の遷移先URL,https://www.oh-my-teeth.com/,https://invisa-doctor.jp/,https://kireilign.com/,https://zenyum.jp/,https://we-smile.jp/
 comparison1,総合評価,比較表の総合評価スコア,4.9,4.5,4.3,3.8,4.1
 meta8,クリニックロゴ画像パス,各クリニックのロゴ画像パス,/images/clinics/omt/omt-logo.webp,/images/clinics/inv/inv-logo.webp,/images/clinics/kireiline/kireiline-logo.webp,/images/clinics/zenyum/zenyum-logo.webp,/images/clinics/ws/ws-logo.webp
-ranking1,ランキングプッシュメッセージ,ランキングカード内の短い訴求文,2025年のイチ押し！<br>通院不要！最短2ヶ月<br>国内製造数No.1,世界1500万人が<br>グローバルスタンダード矯正システム,12万人が選んだ！<br>満足度90%,シンガポール発<br>50万人が利用！,AWARD受賞10回
+ranking1,ランキングプッシュメッセージ,ランキングカード内の短い訴求文,2025年のイチ押し！<br>通院不要！最短2ヶ月<br>国内製造数No.1,世界1500万人が<br>グローバルスタンダード矯正システム,12万人が選んだ！<br>満足度90%,シンガポール発<br>50万人が利用！,AWARD受賞10回<br>複数プランあり
 comparison2,費用,比較表の金額欄,"<deco>33万円プラン</deco><br>(月額3,500円~)<br>※追加費用なし",80万円～120万円<br>（症例により異なる）,46.2万円<br>(15回プラン)<br>通院毎に再診療あり,32.45万円<br>治療計画費:<br>＋2.2~3.3万円,51.7万円<br>(18回プラン)<br>提携院から別プランの案内あり
 comparison3,特徴,比較表の特徴欄,コスパ抜群！<br>日本ブランド<br>国内製造数No.1,世界1500万人の実績<br>グローバルスタンダード<br>高精度な治療計画,日本全国の提携院を紹介,シンガポールの<br>ブランド<br>世界9カ国展開,提携院を紹介してくれるサービス
 comparison4,適用範囲,比較表の対応範囲欄,上下最大24本<br>軽度~重度まで,軽度から重度まで<br>全症例対応可能,軽度～中等度<br>前歯部中心,上下最大20本<br>軽度～中等度,軽度～中等度<br>部分矯正中心

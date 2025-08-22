@@ -234,7 +234,7 @@ class DisplayManager {
                 3: `${imagesPath}/clinics/urara/urara-logo.webp`,
                 4: `${imagesPath}/clinics/lieto/lieto-logo.webp`,
                 5: `${imagesPath}/clinics/sbc/sbc-logo.webp`,
-                6: `${imagesPath}/clinics/dsc/dsc-logo.jpg`
+                6: `${imagesPath}/clinics/dsc/dsc-logo.webp`
             };
             const bannerImage = bannerImages[clinic.id] || `${imagesPath}/clinics/dio/dio-logo.webp`;
 
@@ -1324,7 +1324,7 @@ class RankingApp {
             const imagesPath = window.SITE_CONFIG ? window.SITE_CONFIG.imagesPath + '/images' : '/images';
             const clinicLogos = {
                 'ディオクリニック': `${imagesPath}/clinics/dio/dio-logo.webp`,
-                'DSクリニック': `${imagesPath}/clinics/dsc/dsc-logo.jpg`,
+                'DSクリニック': `${imagesPath}/clinics/dsc/dsc-logo.webp`,
                 'ウララクリニック': `${imagesPath}/clinics/urara/urara-logo.webp`,
                 'URARAクリニック': `${imagesPath}/clinics/urara/urara-logo.webp`,
                 'リエートクリニック': `${imagesPath}/clinics/lieto/lieto-logo.webp`,
@@ -2196,7 +2196,7 @@ class RankingApp {
                     title: '20年以上の実績を誇るオーダーメイド医療痩身<span class="info-icon" onclick="showDisclaimerInfo(\'ds-success-rate\')" title="詳細情報">ⓘ</span>',
                     subtitle: '医師・管理栄養士のチーム医療であなたを徹底サポート',
                     link: 'DSクリニック ＞',
-                    banner: '/images/clinics/dsc/dsc_detail_bnr.jpg',
+                    banner: '/images/clinics/dsc/dsc_detail_bnr.webp',
                     features: [
                         '医療ダイエット', '医療痩身', '部分痩せ',
                         '医師監修', '管理栄養士指導', '漢方処方',
@@ -2331,7 +2331,7 @@ class RankingApp {
                         'リエートクリニック': '/images/clinics/lieto/lieto_detail_bnr.webp',
                         'エミナルクリニック': '/images/clinics/eminal/eminal_detail_bnr.webp',
                         '湘南美容クリニック': '/images/clinics/sbc/sbc_detail_bnr.webp',
-                        'DSクリニック': '/images/clinics/dsc/dsc_detail_bnr.jpg'
+                        'DSクリニック': '/images/clinics/dsc/dsc_detail_bnr.webp'
                     };
                     const correctBanner = clinicNameToBannerMap[clinic.name] || data.banner;
                     return correctBanner ? `
@@ -2756,7 +2756,7 @@ class RankingApp {
             html += `
                 <div class='shop'>
                     <div class='shop-image'>
-                        <img src="${this.getStoreImage(clinicName, index + 1)}" alt="${store.name}" onerror="this.src='${window.SITE_CONFIG ? window.SITE_CONFIG.imagesPath + '/images' : '/images'}/clinics/${clinicName}/${clinicName}-logo.jpg'" />
+                        <img src="${this.getStoreImage(clinicName, index + 1)}" alt="${store.name}" onerror="this.src='${window.SITE_CONFIG ? window.SITE_CONFIG.imagesPath + '/images' : '/images'}/clinics/${clinicName}/${clinicName}-logo.webp'" />
                     </div>
                     <div class='shop-info'>
                         <div class='shop-name'>
@@ -2808,7 +2808,7 @@ class RankingApp {
             html += `
                 <div class='shop hidden-content hidden'>
                     <div class='shop-image'>
-                        <img src="${this.getStoreImage(clinicName, index + 4)}" alt="${store.name}" onerror="this.src='${window.SITE_CONFIG ? window.SITE_CONFIG.imagesPath + '/images' : '/images'}/clinics/${clinicName}/${clinicName}-logo.jpg'" />
+                        <img src="${this.getStoreImage(clinicName, index + 4)}" alt="${store.name}" onerror="this.src='${window.SITE_CONFIG ? window.SITE_CONFIG.imagesPath + '/images' : '/images'}/clinics/${clinicName}/${clinicName}-logo.webp'" />
                     </div>
                     <div class='shop-info'>
                         <div class='shop-name'>

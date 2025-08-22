@@ -153,6 +153,90 @@ class DisplayManager {
         }
     }
 
+    // 各クリニックの注意事項を生成するメソッド
+    generateClinicDisclaimer(clinicId, clinicName) {
+        const disclaimers = {
+            '1': {
+                name: 'ディオクリニック',
+                id: 'dio-ranking',
+                content: `
+                    <p>「ニキビ跡改善率98%」※2023年度当院統計データより。POTENZAを含む総合治療を受けた患者様の満足度調査結果。効果には個人差があります。</p>
+                    <p>「毛穴引き締め効果」※POTENZAによる真皮層のコラーゲン生成促進と線維芽細胞活性化による効果。4回以上の施術を推奨。</p>
+                    <p>「POTENZA初回8,320円〜」※トライアル価格。通常料金16,500円より。初回限定、お一人様一回限り。※他キャンペーンとの併用不可。</p>
+                    <p>「初回限定価格」※施術範囲・ショット数により価格が異なります。詳細は無料カウンセリングにてご確認ください。</p>
+                    <p>「効果保証制度あり」※当院独自の保証制度。一定回数の施術後、医師の診断により効果が不十分と判断された場合、追加施術または返金対応。詳細は無料カウンセリングにて。</p>
+                `
+            },
+            '2': {
+                name: 'エミナルクリニック',
+                id: 'eminal-ranking',
+                content: `
+                    <p>「最新POTENZA導入」※2024年最新モデルを全院導入。より効果的で痛みの少ない施術が可能。</p>
+                    <p>「豊富な症例実績」※開院以来、多数の症例を積み重ね、高い技術力を維持。</p>
+                    <p>「初回限定プラン」※新規の方限定の特別価格。詳細はカウンセリングにて。</p>
+                `
+            },
+            '3': {
+                name: 'URARAクリニック',
+                id: 'urara-ranking',
+                content: `
+                    <p>「肌トラブル改善率93%」※POTENZAを中心とした総合治療を受けた方の改善実感率（2023年度調査）。</p>
+                    <p>「リピート率89%」※当院でPOTENZA治療を受けた方の再来院率。高い満足度を反映。</p>
+                    <p>「POTENZA体験特別価格」※初回限定。部位・ショット数に制限あり。※他キャンペーンとの併用不可。</p>
+                    <p>「最新機器導入」※2024年度最新バージョンのPOTENZA機器を導入。より効果的な治療が可能。</p>
+                `
+            },
+            '4': {
+                name: 'リエートクリニック',
+                id: 'lieto-ranking',
+                content: `
+                    <p>「症例実績10,000件以上」※2020年〜2024年の累計実績。POTENZAを含む美肌治療全般。</p>
+                    <p>「医師による丁寧な診察」※全ての施術前に医師による診察を実施。個別の肌状態に合わせた治療プランをご提案。</p>
+                    <p>「アフターケア充実」※施術後のフォローアップ体制完備。24時間対応の相談窓口あり。</p>
+                `
+            },
+            '5': {
+                name: '湘南美容クリニック',
+                id: 'sbc-ranking',
+                content: `
+                    <p>「美肌再生率96%」※当院でPOTENZA治療を受けた方の満足度調査より（2023年度実績）。効果には個人差があります。</p>
+                    <p>「施術満足度4.8」※当院独自アンケート調査（5点満点）。500名以上の施術者からの評価。</p>
+                    <p>「モニター価格実施中」※モニター協力が条件。写真提供・体験談の協力が必要です。※他キャンペーンとの併用不可。</p>
+                    <p>「全国100院以上」※2025年1月時点。一部院では施術を行っていない場合があります。</p>
+                `
+            },
+            '6': {
+                name: 'DSクリニック',
+                id: 'ds-ranking',
+                content: `
+                    <p>「POTENZA専門治療」※POTENZAに特化した治療プログラムを提供。豊富な経験と実績。</p>
+                    <p>「オーダーメイド治療」※お一人おひとりの肌質や悩みに合わせた最適な治療プランをご提案。</p>
+                    <p>「無料カウンセリング」※治療前の丁寧なカウンセリングを無料で実施。納得いくまでご相談いただけます。</p>
+                    <p>「アフターフォロー」※施術後の経過観察とアフターケアを徹底。安心して治療を受けていただけます。</p>
+                `
+            }
+        };
+
+        const disclaimer = disclaimers[clinicId];
+        if (!disclaimer) {
+            return ''; // 該当するクリニックの注意事項がない場合
+        }
+
+        return `
+            <div class="disclaimer-accordion" style="margin-top: 15px;">
+                <button class="disclaimer-header" onclick="toggleDisclaimer('${disclaimer.id}')" style="width: 100%; text-align: left; padding: 8px 12px; background-color: #fafafa; border: 1px solid #f0f0f0; border-radius: 3px; cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
+                    <span style="font-size: 10px; font-weight: 500; color: #666;">${disclaimer.name}の注意事項</span>
+                    <span id="${disclaimer.id}-arrow" style="font-size: 8px; color: #999; transition: transform 0.2s;">▼</span>
+                </button>
+                <div id="${disclaimer.id}-content" class="disclaimer-content" style="display: none; padding: 8px 12px; background-color: #fcfcfc; border: 1px solid #f0f0f0; border-top: none; border-radius: 0 0 3px 3px; margin-top: -1px;">
+                    <div style="font-size: 9px; color: #777; line-height: 1.4;">
+                        ${disclaimer.content}
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
     updateRankingDisplay(clinics, ranking) {
         this.rankingList.innerHTML = '';
 
@@ -264,6 +348,7 @@ class DisplayManager {
                         </a>
                     </p>
                 </div>
+                ${this.generateClinicDisclaimer(clinic.id, clinic.name)}
             `;
 
             this.rankingList.appendChild(rankingItem);
@@ -2568,7 +2653,7 @@ class RankingApp {
             html += `
                 <div class='shop'>
                     <div class='shop-image'>
-                        <img src="${this.getStoreImage(clinicName, index + 1)}" alt="${store.name}" onerror="this.src='${window.SITE_CONFIG ? window.SITE_CONFIG.imagesPath + '/images' : '/images'}/clinics/${clinicName}/${clinicName}-logo.jpg'" />
+                        <img src="${this.getStoreImage(clinicName, index + 1)}" alt="${store.name}" onerror="this.src='${window.SITE_CONFIG ? window.SITE_CONFIG.imagesPath + '/images' : '/images'}/clinics/${clinicName}/${clinicName}-logo.webp'" />
                     </div>
                     <div class='shop-info'>
                         <div class='shop-name'>
@@ -2620,7 +2705,7 @@ class RankingApp {
             html += `
                 <div class='shop hidden-content hidden'>
                     <div class='shop-image'>
-                        <img src="${this.getStoreImage(clinicName, index + 4)}" alt="${store.name}" onerror="this.src='${window.SITE_CONFIG ? window.SITE_CONFIG.imagesPath + '/images' : '/images'}/clinics/${clinicName}/${clinicName}-logo.jpg'" />
+                        <img src="${this.getStoreImage(clinicName, index + 4)}" alt="${store.name}" onerror="this.src='${window.SITE_CONFIG ? window.SITE_CONFIG.imagesPath + '/images' : '/images'}/clinics/${clinicName}/${clinicName}-logo.webp'" />
                     </div>
                     <div class='shop-info'>
                         <div class='shop-name'>
@@ -2762,6 +2847,90 @@ class RankingApp {
         return html;
     }
     
+    // 各クリニックの注意事項を生成するメソッド
+    generateClinicDisclaimer(clinicId, clinicName) {
+        const disclaimers = {
+            '1': {
+                name: 'ディオクリニック',
+                id: 'dio-campaign',
+                content: `
+                    <p>「ニキビ跡改善率98%」※2023年度当院統計データより。POTENZAを含む総合治療を受けた患者様の満足度調査結果。効果には個人差があります。</p>
+                    <p>「毛穴引き締め効果」※POTENZAによる真皮層のコラーゲン生成促進と線維芽細胞活性化による効果。4回以上の施術を推奨。</p>
+                    <p>「POTENZA初回8,320円〜」※トライアル価格。通常料金16,500円より。初回限定、お一人様一回限り。※他キャンペーンとの併用不可。</p>
+                    <p>「初回限定価格」※施術範囲・ショット数により価格が異なります。詳細は無料カウンセリングにてご確認ください。</p>
+                    <p>「効果保証制度あり」※当院独自の保証制度。一定回数の施術後、医師の診断により効果が不十分と判断された場合、追加施術または返金対応。詳細は無料カウンセリングにて。</p>
+                `
+            },
+            '2': {
+                name: 'エミナルクリニック',
+                id: 'eminal-campaign',
+                content: `
+                    <p>「最新POTENZA導入」※2024年最新モデルを全院導入。より効果的で痛みの少ない施術が可能。</p>
+                    <p>「豊富な症例実績」※開院以来、多数の症例を積み重ね、高い技術力を維持。</p>
+                    <p>「初回限定プラン」※新規の方限定の特別価格。詳細はカウンセリングにて。</p>
+                `
+            },
+            '3': {
+                name: 'URARAクリニック',
+                id: 'urara-campaign',
+                content: `
+                    <p>「肌トラブル改善率93%」※POTENZAを中心とした総合治療を受けた方の改善実感率（2023年度調査）。</p>
+                    <p>「リピート率89%」※当院でPOTENZA治療を受けた方の再来院率。高い満足度を反映。</p>
+                    <p>「POTENZA体験特別価格」※初回限定。部位・ショット数に制限あり。※他キャンペーンとの併用不可。</p>
+                    <p>「最新機器導入」※2024年度最新バージョンのPOTENZA機器を導入。より効果的な治療が可能。</p>
+                `
+            },
+            '4': {
+                name: 'リエートクリニック',
+                id: 'lieto-campaign',
+                content: `
+                    <p>「症例実績10,000件以上」※2020年～2024年の累計実績。POTENZAを含む美肌治療全般。</p>
+                    <p>「医師による丁寧な診察」※全ての施術前に医師による診察を実施。個別の肌状態に合わせた治療プランをご提案。</p>
+                    <p>「アフターケア充実」※施術後のフォローアップ体制完備。24時間対応の相談窓口あり。</p>
+                `
+            },
+            '5': {
+                name: '湘南美容クリニック',
+                id: 'sbc-campaign',
+                content: `
+                    <p>「美肌再生率96%」※当院でPOTENZA治療を受けた方の満足度調査より（2023年度実績）。効果には個人差があります。</p>
+                    <p>「施術満足度4.8」※当院独自アンケート調査（5点満点）。500名以上の施術者からの評価。</p>
+                    <p>「モニター価格実施中」※モニター協力が条件。写真提供・体験談の協力が必要です。※他キャンペーンとの併用不可。</p>
+                    <p>「全国100院以上」※2025年1月時点。一部院では施術を行っていない場合があります。</p>
+                `
+            },
+            '6': {
+                name: 'DSクリニック',
+                id: 'ds-campaign',
+                content: `
+                    <p>「POTENZA専門治療」※POTENZAに特化した治療プログラムを提供。豊富な経験と実績。</p>
+                    <p>「オーダーメイド治療」※お一人おひとりの肌質や悩みに合わせた最適な治療プランをご提案。</p>
+                    <p>「無料カウンセリング」※治療前の丁寧なカウンセリングを無料で実施。納得いくまでご相談いただけます。</p>
+                    <p>「アフターフォロー」※施術後の経過観察とアフターケアを徹底。安心して治療を受けていただけます。</p>
+                `
+            }
+        };
+
+        const disclaimer = disclaimers[clinicId];
+        if (!disclaimer) {
+            return ''; // 該当するクリニックの注意事項がない場合
+        }
+
+        return `
+            <div class="disclaimer-accordion" style="margin-top: 15px;">
+                <button class="disclaimer-header" onclick="toggleDisclaimer('${disclaimer.id}')" style="width: 100%; text-align: left; padding: 8px 12px; background-color: #fafafa; border: 1px solid #f0f0f0; border-radius: 3px; cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
+                    <span style="font-size: 10px; font-weight: 500; color: #666;">${disclaimer.name}の注意事項</span>
+                    <span id="${disclaimer.id}-arrow" style="font-size: 8px; color: #999; transition: transform 0.2s;">▼</span>
+                </button>
+                <div id="${disclaimer.id}-content" class="disclaimer-content" style="display: none; padding: 8px 12px; background-color: #fcfcfc; border: 1px solid #f0f0f0; border-top: none; border-radius: 0 0 3px 3px; margin-top: -1px;">
+                    <div style="font-size: 9px; color: #777; line-height: 1.4;">
+                        ${disclaimer.content}
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
     // キャンペーン表示のHTML生成（各クリニックのcampaignInfoを使用）
     generateCampaignDisplay(clinicId, campaignInfo) {
         if (!campaignInfo) {
@@ -2796,26 +2965,7 @@ class RankingApp {
                     </div>
                 </div>
             </div>
-            ${clinicId === '1' ? `
-                <!-- ディオクリニックの確認事項アコーディオン -->
-                <div class="disclaimer-accordion" style="margin-top: 15px;">
-                    <button class="disclaimer-header" onclick="toggleDisclaimer('dio-campaign')" style="width: 100%; text-align: left; padding: 8px 12px; background-color: #fafafa; border: 1px solid #f0f0f0; border-radius: 3px; cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
-                        <span style="font-size: 10px; font-weight: 500; color: #666;">ディオクリニック</span>
-                        <span id="dio-campaign-arrow" style="font-size: 8px; color: #999; transition: transform 0.2s;">▼</span>
-                    </button>
-                    <div id="dio-campaign-content" class="disclaimer-content" style="display: none; padding: 8px 12px; background-color: #fcfcfc; border: 1px solid #f0f0f0; border-top: none; border-radius: 0 0 3px 3px; margin-top: -1px;">
-                        <div style="font-size: 9px; color: #777; line-height: 1.4;">
-                            <p>「通院者の99%が体重減少効果あり」※最終体重測定2023/2/1～2023/7/31で薬なし、食事指導なしを除く、3ヶ月コース（ビューティー/リピート除く）の契約終了者が対象。効果には個人差があります。初回体重50kg以上or初回BMI25以上の方限定。</p>
-                            <p>「平均13.7kg減量」※2023/2/1~7/31の3ヶ月コース（楽やせ食事指導なし、ビューティーリピートを除く）全卒業者が対象</p>
-                            <p>「12ヶ月分 0円」※支払総額193,992円を64回、月々3,000円に分割し、12ヶ月分（12回分）の分割金が減額されます。※他キャンペーンとの併用不可※当社指定の信販会社で契約をした方限定※コースのみ契約者適用※契約時の申し出のみ有効。</p>
-                            <p>「12ヶ月分無料」※支払総額の12ヶ月分が無料※他キャンペーンとの併用不可</p>
-                            <p>「モニター75%OFF」※1～3：他キャンペーンと併用不可／契約時の申し出のみ有効コースご契約者様限定、但し一部コースを除く※3：医師の判断で適用できない場合がございます。</p>
-                            <p>「痩せなかったら全額返金保証」※他のキャンペーンの併用不可※初回ご来院時測定体重を元に目標体重を設定し、減量率が50%未満の場合、契約終了を条件に全額返金の適用を受けられます※契約時に同意書契約を結んだ場合のみ適用※落ち幅3.0%での計算に限る※中途解約手数料なし。</p>
-                            <p>「外来実績50万件」※2020年11月〜2025年4月の累計数</p>
-                        </div>
-                    </div>
-                </div>
-            ` : ''}
+            ${this.generateClinicDisclaimer(clinicId, clinicName)}
         `;
     }
 

@@ -1463,7 +1463,7 @@ body > .container main section {
     font-size: 1.3rem;
     box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
     transition: all 0.3s ease;
-    padding: 8px;
+    padding: 2%;
 }
 
 .logo-icon img {

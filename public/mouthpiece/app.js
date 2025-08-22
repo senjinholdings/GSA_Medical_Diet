@@ -2803,7 +2803,7 @@ class RankingApp {
                             <div class="campaign-content">
                                 <div class="camp_header3">
                                     <div class="info_logo">
-                                        <img src="${logoSrc}" alt="${logoAlt}" onerror="this.onerror=null; this.src='/images/clinics/${clinicCode}/${clinicCode}-logo.jpg';">
+                                        <img src="${logoSrc}" alt="${logoAlt}" onerror="this.onerror=null; this.src='/images/clinics/${clinicCode}/${clinicCode}-logo.webp';">
                                     </div>
                                     <div class="camp_txt">
                                         ${campaignDescription}
@@ -2877,8 +2877,6 @@ class RankingApp {
         let currentExtIndex = -1;
         
         if (currentSrc.includes('.webp')) currentExtIndex = -1; // webpから開始
-        else if (currentSrc.includes('.jpg')) currentExtIndex = 0;
-        else if (currentSrc.includes('.png')) currentExtIndex = 1;
         
         // 次の拡張子を試す
         const nextExtIndex = currentExtIndex + 1;
@@ -2888,7 +2886,7 @@ class RankingApp {
             // 全て失敗した場合、ロゴ画像にフォールバック
             imgElement.src = `${imagesPath}/clinics/${clinicName}/${clinicName}-logo.webp`;
             imgElement.onerror = () => {
-                imgElement.src = `${imagesPath}/clinics/${clinicName}/${clinicName}-logo.jpg`;
+                imgElement.src = `${imagesPath}/clinics/${clinicName}/${clinicName}-logo.webp`;
             };
         }
     }

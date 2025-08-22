@@ -447,7 +447,7 @@
             
             // ロゴのエラー処理
             clinicLogo.onerror = function() {
-                const jpgPath = `/images/clinics/${clinicCode}/${clinicCode}-logo.jpg`;
+                const jpgPath = `/images/clinics/${clinicCode}/${clinicCode}-logo.webp`;
                 this.src = jpgPath;
                 this.onerror = function() {
                     this.style.display = 'none';

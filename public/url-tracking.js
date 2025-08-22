@@ -238,7 +238,6 @@
 
     // 初期化
     function init() {
-        console.log('URL tracking initialized');
         
         // 各種トラッキングの設定
         setupOutboundLinkTracking();
@@ -250,7 +249,6 @@
         
         // 現在のURLパラメータをログ
         const params = new URLSearchParams(window.location.search);
-        console.log('Current tracking params:', Object.fromEntries(params));
     }
 
     // DOMContentLoadedで初期化

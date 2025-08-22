@@ -29,7 +29,7 @@
     <link rel="stylesheet" href="styles.css?v=2025081417" media="all">
     <link rel="stylesheet" href="comparison-table-fix.css?v=1" media="all">
     <link rel="stylesheet" href="responsive-fix-480-768.css?v=2025080104" media="all">
-    <link rel="icon" type="image/png" href="../images/favicon.png">
+    <link rel="icon" type="image/png" href="../images/favicon.png" id="favicon">
     <!-- Critical CSS -->
     <!-- Font loading detection -->
     <script>'fonts' in document&&document.fonts.ready.then(function(){document.documentElement.classList.add('fonts-loaded')})</script>
@@ -48,8 +48,8 @@
                 <div class="logo-section">
                     <a href="/" class="logo-link">
                         <div class="logo-main">
-                            <span class="logo-icon"><img src="/images/favicon.png" alt="医療ダイエット比較.com" style="width: 20px; height: 20px; vertical-align: middle;"></span>
-                            <h1 class="site-logo">医療ダイエット比較.com</h1>
+                            <span class="logo-icon"><img src="/images/favicon.png" alt="矯正歯科おすすめ比較.com" id="header-logo-icon"></span>
+                            <h1 class="site-logo">矯正歯科おすすめ比較.com</h1>
                         </div>
                     </a>
                 </div>
@@ -93,7 +93,7 @@
                 <div class="ranking-header-banner">
                     <img src="/images/ranking_header_banner.webp" alt="" class="ranking-banner-image">                    
                 </div>
-                <div id="rank-region-name" style="position:absolute;top: 6%;left: 52%;white-space: nowrap;transform: translateX(-50%);text-align: center;color: rgb(255, 255, 255);font-size: clamp(14px, 4.2vw, 33px);font-weight: 600;z-index:10;pointer-events:none;">東京</div>
+                <div id="rank-region-name" style="position:absolute;top: 6%;left: 52%;white-space: nowrap;transform: translateX(-50%);text-align: center;color: rgb(255, 255, 255);font-size: clamp(14px, 4.8vw, 33px);font-weight: 600;z-index:10;pointer-events:none;">東京</div>
                 <div id="ranking-list" class="ranking-container">
                     <!-- ランキングはJavaScriptで動的に生成 -->
                 </div>
@@ -946,7 +946,6 @@ text-align: center;
                         
                         // localStorageに保存
                         localStorage.setItem('redirectParams', JSON.stringify(params));
-                        console.log('Saved redirect params to localStorage:', params);
                     } catch (error) {
                         console.error('Failed to save redirect params:', error);
                     }
@@ -1060,11 +1059,6 @@ text-align: center;
             
             const clinicSlug = clinicData.code || clinicIdToSlugMap[clinicData.id] || clinicNameToSlugMap[clinicName] || clinicNameToSlugMap[clinicData.name] || 'omt';
             
-            console.log('Setting first choice clinic:', {
-                id: clinicData.id,
-                name: clinicName,
-                slug: clinicSlug
-            });
             
             // テキスト要素を更新
             const regionText = document.getElementById('first-choice-region-text');
@@ -1239,7 +1233,6 @@ text-align: center;
                 return;
             }
             
-            console.log('setThreeReasons - clinicSlug:', clinicSlug);
             
             // clinic-texts.jsonのキー名にマッピング
             const slugToNameMap = {
@@ -1250,7 +1243,6 @@ text-align: center;
                 'inv': 'インビザライン'
             };
             const clinicKeyForTexts = slugToNameMap[clinicSlug] || clinicSlug;
-            console.log('Using clinic key for texts:', clinicKeyForTexts);
             
             // DataManagerを使ってPOINT情報を取得（正しいキーを使用）
             const point1Title = dm.getClinicText(clinicKeyForTexts, 'POINT1タイトル', '前歯から奥歯まで全体矯正');
@@ -1260,9 +1252,6 @@ text-align: center;
             const point3Title = dm.getClinicText(clinicKeyForTexts, 'POINT3タイトル', '取り外し可能で衛生的');
             const point3Content = dm.getClinicText(clinicKeyForTexts, 'POINT3内容', '食事や歯磨きの際は取り外し可能。お口の中を清潔に保ちながら矯正治療ができます。');
             
-            console.log('POINT1:', { title: point1Title, content: point1Content });
-            console.log('POINT2:', { title: point2Title, content: point2Content });
-            console.log('POINT3:', { title: point3Title, content: point3Content });
             
             const reasons = [
                 {
@@ -1307,7 +1296,6 @@ text-align: center;
         // CASEセクションを設定 - 無効化
         function setCaseSection(clinicSlug, points) {
             // CASEセクションの表示を無効化
-            console.log('CASEセクションの表示は無効化されています');
             
             // 既存のCASEセクションがあれば削除
             const existingCase = document.querySelector('.case-section-container');
@@ -1399,17 +1387,14 @@ text-align: center;
         // 1位クリニック情報の更新を実行
         function updateFirstChoiceClinic() {
             if (!window.app || !window.app.dataManager) {
-                console.log('app or dataManager not ready yet');
                 return;
             }
             
             // 現在の地域IDを取得
             const regionId = window.app.urlHandler ? window.app.urlHandler.getRegionId() : '013';
-            console.log('Current region ID:', regionId);
             
             // ランキングデータを取得
             const ranking = window.app.dataManager.getRankingByRegionId(regionId);
-            console.log('Ranking data:', ranking);
             
             if (!ranking || !ranking.ranks) {
                 console.log('No ranking data found for region:', regionId);
@@ -1418,7 +1403,6 @@ text-align: center;
             
             // 1位のクリニックIDを取得
             const firstPlaceClinicId = ranking.ranks.no1;
-            console.log('First place clinic ID:', firstPlaceClinicId);
             
             if (!firstPlaceClinicId) {
                 console.log('No first place clinic found');
@@ -1428,7 +1412,6 @@ text-align: center;
             // クリニック情報を取得
             const allClinics = window.app.dataManager.getAllClinics();
             const firstClinic = allClinics.find(clinic => clinic.id === firstPlaceClinicId);
-            console.log('First clinic data:', firstClinic);
             
             if (firstClinic) {
                 setFirstChoiceClinic(firstClinic);
@@ -1437,7 +1420,6 @@ text-align: center;
 
         // 初期化時に実行
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('DOM loaded, attempting to update first choice clinic');
             updateFirstChoiceClinic();
         });
 
@@ -1447,7 +1429,6 @@ text-align: center;
         
         function tryUpdateFirstChoice() {
             if (window.app && window.app.dataManager && window.app.dataManager.getAllClinics().length > 0) {
-                console.log('App ready, updating first choice clinic');
                 updateFirstChoiceClinic();
                 return;
             }
@@ -1472,7 +1453,6 @@ text-align: center;
             }
             
             let currentRegionId = window.app.urlHandler.getRegionId();
-            console.log('Initial region ID:', currentRegionId);
             
             // URLパラメータ変更の監視
             setInterval(() => {
@@ -1490,7 +1470,6 @@ text-align: center;
         
         // ページ読み込み完了時にもう一度実行
         window.addEventListener('load', function() {
-            console.log('Page fully loaded, updating first choice clinic');
             setTimeout(() => updateFirstChoiceClinic(), 1000);
         });
     </script>
@@ -2041,8 +2020,8 @@ text-align: center;
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('/sw.js')
-                    .then(registration => console.log('ServiceWorker registered'))
-                    .catch(err => console.log('ServiceWorker registration failed'));
+                    .then(registration => {})
+                    .catch(err => {});
             });
         }
     </script>

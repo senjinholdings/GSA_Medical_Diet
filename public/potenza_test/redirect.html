@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>公式サイトへ移動中...</title>
+    <meta name="description" content="公式サイトへリダイレクトしています。">
+    <meta name="referrer" content="unsafe-url">
+    <link rel="icon" type="image/png" href="/images/favicon.png">
+    <meta http-equiv="Content-Security-Policy" content="referrer unsafe-url">
+    <style>
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e9f2f9 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            color: #333;
+        }
+        .redirect-container {
+            text-align: center;
+            padding: 40px;
+            max-width: 500px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+        .clinic-logo {
+            width: 200px;
+            height: auto;
+            margin-bottom: 20px;
+        }
+        .redirect-message {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #4bc0c0;
+        }
+        .redirect-description {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        .loading-animation {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #4bc0c0;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .manual-link {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 24px;
+            background: #4bc0c0;
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: background 0.3s ease;
+        }
+        .manual-link:hover {
+            background: #3da9a9;
+        }
+        .countdown {
+            font-size: 16px;
+            color: #666;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="redirect-container">
+        <img id="clinic-logo" class="clinic-logo" src="" alt="" style="display:none;">
+        <div class="loading-animation"></div>
+        <h1 id="redirect-message" class="redirect-message">公式サイトへ移動中...</h1>
+        <p id="redirect-description" class="redirect-description">
+            まもなく自動的に公式サイトへリダイレクトします。<br>
+            移動しない場合は下のボタンをクリックしてください。
+        </p>
+        <div class="countdown" id="countdown">2秒後に移動します...</div>
+        <a href="#" id="manual-link" class="manual-link" style="display:none;">公式サイトへ</a>
+    </div>
+
+    <script>
+        // DataManager のロード
+        function loadScript(src) {
+            return new Promise((resolve, reject) => {
+                const script = document.createElement('script');
+                script.src = src;
+                script.onload = resolve;
+                script.onerror = reject;
+                document.head.appendChild(script);
+            });
+        }
+
+        // データマネージャーとconfig読み込み
+        async function initializeDataManager() {
+            try {
+                // config.jsを読み込み
+                await loadScript('./config.js');
+                
+                // DataManagerクラスを作成（app.jsの一部を抽出）
+                class SimpleDataManager {
+                    constructor() {
+                        this.clinicTexts = {};
+                        this.clinics = [];
+                    }
+                    
+                    async loadClinicTexts() {
+                        try {
+                            const response = await fetch('./data/clinic-texts.json');
+                            if (!response.ok) {
+                                console.error('❌ clinic-texts.jsonの読み込みに失敗:', response.status);
+                                // フォールバック：data copy ディレクトリから読み込み
+                                const fallbackResponse = await fetch('./data copy/clinic-texts.json');
+                                this.clinicTexts = await fallbackResponse.json();
+                            } else {
+                                this.clinicTexts = await response.json();
+                            }
+                            console.log('✅ clinic-texts.json読み込み完了');
+                        } catch (error) {
+                            console.error('❌ clinic-texts.jsonの読み込みエラー:', error);
+                            this.clinicTexts = {};
+                        }
+                    }
+                    
+                    async loadCompiledData() {
+                        console.log('📊 compiled-data.json読み込み中...');
+                        try {
+                            // mouthpiece では data copy が正規のランキング/クリニックセット
+                            let response = await fetch('./data copy/compiled-data.json');
+                            if (!response.ok) {
+                                console.warn('⚠️ data copy/compiled-data.json が見つからないため data/ にフォールバックします');
+                                response = await fetch('./data/compiled-data.json');
+                            }
+                            const data = await response.json();
+                            this.clinics = data.clinics || [];
+                            console.log('📊 クリニック数:', this.clinics.length);
+                            console.log('📊 読み込まれたクリニック:', this.clinics.map(c => `${c.id}:${c.name}`));
+                        } catch (error) {
+                            console.error('❌ compiled-data.jsonの読み込みエラー:', error);
+                            this.clinics = [];
+                        }
+                    }
+                    
+                    getClinicText(clinicCode, fieldName, defaultValue = '') {
+                        // clinic-texts.jsonの構造: { "クリニック名": { "フィールド名": "値" } }
+                        const clinicName = this.getClinicNameByCode(clinicCode);
+                        if (!clinicName || !this.clinicTexts[clinicName]) {
+                            console.log(`⚠️  クリニックデータが見つかりません: code=${clinicCode}, name=${clinicName}`);
+                            return defaultValue;
+                        }
+                        
+                        const value = this.clinicTexts[clinicName][fieldName];
+                        if (!value) {
+                            console.log(`⚠️  フィールドが見つかりません: ${clinicName}.${fieldName}`);
+                            return defaultValue;
+                        }
+                        
+                        return value;
+                    }
+                    
+                    getClinicNameByCode(clinicCode) {
+                        // クリニックコードからクリニック名を取得
+                        for (const clinicName in this.clinicTexts) {
+                            const record = this.clinicTexts[clinicName] || {};
+                            const brandCode = record['ブランドコード'];
+                            const clinicTextCode = record['クリニックコード'];
+                            if (brandCode === clinicCode || clinicTextCode === clinicCode) {
+                                return clinicName;
+                            }
+                        }
+                        return null;
+                    }
+                    
+                    getClinicById(clinicId) {
+                        return this.clinics.find(clinic => clinic.id == clinicId);
+                    }
+                    
+                    getClinicCodeById(clinicId) {
+                        const clinic = this.getClinicById(clinicId);
+                        return clinic ? clinic.code : null;
+                    }
+                }
+                
+                // データマネージャーの初期化
+                window.dataManager = new SimpleDataManager();
+                await window.dataManager.loadClinicTexts();
+                await window.dataManager.loadCompiledData();
+                
+                return true;
+            } catch (error) {
+                console.error('DataManager initialization failed:', error);
+                return false;
+            }
+        }
+
+        // リダイレクト処理
+        async function handleRedirect() {
+            console.log('🚀 リダイレクト処理開始');
+            
+            // パラメータ取得の複数の方法を試す
+            let clinicId = null;
+            let rank = null;
+            let regionId = null;
+            
+            // 方法1: localStorageを最優先で確認（サーバーがパラメータを削除する場合の対策）
+            const storedParams = localStorage.getItem('redirectParams');
+            if (storedParams) {
+                try {
+                    const params = JSON.parse(storedParams);
+                    clinicId = params.clinic_id;
+                    rank = params.rank;
+                    regionId = params.region_id;
+                    console.log('方法1 localStorage（優先）:', { clinicId, rank, regionId });
+                    // 使用後は削除
+                    localStorage.removeItem('redirectParams');
+                } catch (e) {
+                    console.error('localStorage解析エラー:', e);
+                }
+            }
+            
+            // 方法2: ハッシュからパラメータを取得（新形式）
+            if (!clinicId && window.location.hash) {
+                const hash = window.location.hash.substring(1);
+                if (hash.startsWith('params=')) {
+                    try {
+                        const paramsJson = decodeURIComponent(hash.substring(7));
+                        const params = JSON.parse(paramsJson);
+                        clinicId = params.clinic_id;
+                        rank = params.rank;
+                        regionId = params.region_id;
+                        console.log('方法2 ハッシュ（新形式）:', { clinicId, rank, regionId });
+                    } catch (e) {
+                        console.error('ハッシュ解析エラー:', e);
+                    }
+                } else {
+                    // 旧形式のフォールバック
+                    const hashParams = new URLSearchParams(hash);
+                    clinicId = hashParams.get('clinic_id');
+                    rank = hashParams.get('rank');
+                    regionId = hashParams.get('region_id');
+                    console.log('方法2 ハッシュ（旧形式）:', { clinicId, rank, regionId });
+                }
+            }
+            
+            // 方法3: 標準的なURLSearchParams
+            if (!clinicId) {
+                const searchParams = new URLSearchParams(window.location.search);
+                clinicId = searchParams.get('clinic_id');
+                rank = searchParams.get('rank');
+                regionId = searchParams.get('region_id');
+                console.log('方法3 URLSearchParams:', { clinicId, rank, regionId });
+            }
+            
+            // 方法3: パスから手動解析（/redirect?clinic_id=... の場合）
+            if (!clinicId) {
+                const fullUrl = window.location.href;
+                const match = fullUrl.match(/[?&#]clinic_id=([^&#]+)/);
+                if (match) {
+                    clinicId = match[1];
+                    const rankMatch = fullUrl.match(/[?&#]rank=([^&#]+)/);
+                    const regionMatch = fullUrl.match(/[?&#]region_id=([^&#]+)/);
+                    rank = rankMatch ? rankMatch[1] : null;
+                    regionId = regionMatch ? regionMatch[1] : null;
+                    console.log('方法3 正規表現:', { clinicId, rank, regionId });
+                }
+            }
+            
+            // 方法4: localStorageから取得（新しいタブ対応）
+            if (!clinicId) {
+                const storedParams = localStorage.getItem('redirectParams');
+                if (storedParams) {
+                    try {
+                        const params = JSON.parse(storedParams);
+                        clinicId = params.clinic_id;
+                        rank = params.rank;
+                        regionId = params.region_id;
+                        console.log('方法4 localStorage:', { clinicId, rank, regionId });
+                        localStorage.removeItem('redirectParams');
+                    } catch (e) {
+                        console.error('localStorage解析エラー:', e);
+                    }
+                }
+            }
+            
+            // 方法5: sessionStorageから取得（同一タブ内）
+            if (!clinicId) {
+                const storedParams = sessionStorage.getItem('redirectParams');
+                if (storedParams) {
+                    try {
+                        const params = JSON.parse(storedParams);
+                        clinicId = params.clinic_id;
+                        rank = params.rank;
+                        regionId = params.region_id;
+                        console.log('方法5 sessionStorage:', { clinicId, rank, regionId });
+                        sessionStorage.removeItem('redirectParams');
+                    } catch (e) {
+                        console.error('sessionStorage解析エラー:', e);
+                    }
+                }
+            }
+            
+            const currentUrl = new URL(window.location.href);
+            console.log('📍 現在の完全URL:', currentUrl.toString());
+            console.log('📍 location.search:', window.location.search);
+            console.log('📍 location.hash:', window.location.hash);
+            
+            rank = parseInt(rank) || 1;
+            
+            console.log('📋 受け取ったパラメータ:');
+            console.log(`  clinic_id: ${clinicId}`);
+            console.log(`  rank: ${rank}`);
+            console.log(`  region_id: ${regionId}`);
+            console.log(`  現在のURL: ${window.location.href}`);
+            
+            if (!clinicId) {
+                console.error('❌ clinic_idが見つかりません');
+                console.error('  URL:', window.location.href);
+                console.error('  Search:', window.location.search);
+                
+                // フォールバック：デフォルト値を設定
+                clinicId = '1';
+                rank = 1;
+                console.log('⚠️ フォールバック: clinic_id=1を使用');
+            }
+            
+            console.log('🔄 データマネージャー初期化中...');
+            // データマネージャーを初期化
+            const initialized = await initializeDataManager();
+            if (!initialized) {
+                console.error('❌ データマネージャーの初期化に失敗');
+                // フォールバック：メインページに戻る
+                window.location.href = './index.html';
+                return;
+            }
+            console.log('✅ データマネージャー初期化完了');
+            
+            // クリニック情報を取得
+            const clinic = window.dataManager.getClinicById(clinicId);
+            const clinicCode = window.dataManager.getClinicCodeById(clinicId);
+            
+            console.log('🏥 クリニック情報:');
+            console.log(`  clinic: ${clinic ? clinic.name : 'not found'}`);
+            console.log(`  clinicCode: ${clinicCode || 'not found'}`);
+            
+            if (!clinic || !clinicCode) {
+                console.error('❌ クリニック情報が見つかりません');
+                window.location.href = './index.html';
+                return;
+            }
+            
+            // 遷移先URLを取得
+            const urlFieldName = `遷移先URL（${rank}位）`;
+            let targetUrl = window.dataManager.getClinicText(clinicCode, urlFieldName, '');
+            
+            console.log('🔍 URL取得情報:');
+            console.log(`  クリニックコード: ${clinicCode}`);
+            console.log(`  ランキング順位: ${rank}`);
+            console.log(`  URLフィールド名: ${urlFieldName}`);
+            console.log(`  取得したURL: ${targetUrl}`);
+            
+            if (!targetUrl) {
+                // フォールバック：1位のURLを使用
+                console.log('⚠️ フォールバック: 1位のURLを使用');
+                targetUrl = window.dataManager.getClinicText(clinicCode, '遷移先URL（1位）', '');
+                console.log(`  フォールバックURL: ${targetUrl}`);
+            }
+            
+            if (!targetUrl) {
+                console.error('❌ URLが見つかりません');
+                console.error('❌ 利用可能なURLフィールド:', Object.keys(window.dataManager.clinicTexts));
+                // 最後の手段：直接URLを確認
+                const availableUrls = {};
+                for (let i = 1; i <= 5; i++) {
+                    const field = `遷移先URL（${i}位）`;
+                    const url = window.dataManager.getClinicText(clinicCode, field, '');
+                    if (url) availableUrls[field] = url;
+                }
+                console.log('❌ 利用可能なURL:', availableUrls);
+                
+                window.location.href = './index.html';
+                return;
+            }
+            
+            // URLパラメータを処理
+            const url = new URL(targetUrl);
+            
+            // region_idは既に上で取得済み
+            
+            // 追跡用パラメータをparam4に統合（medical-diet001と同じ形式）
+            const currentPageWithParams = window.location.href;
+            const baseReferrerUrl = currentPageWithParams.split('?')[0];
+            const trackingParams = {
+                click_section: currentUrl.searchParams.get('click_section') || '',
+                click_clinic: currentUrl.searchParams.get('click_clinic') || clinicCode,
+                source_page: currentUrl.searchParams.get('source_page') || 'mouthpiece',
+                region_id: regionId || '013',
+                referrer_url: baseReferrerUrl,  // パラメータを除いたベースURLのみ
+                timestamp: new Date().toISOString()
+            };
+            
+            // 全クリニック・全ランキング位に対して動的にパラメータを追加
+            // param2にutm_creativeを設定
+            const utmCreative = currentUrl.searchParams.get('utm_creative') || '';
+            if (utmCreative) {
+                url.searchParams.set('param2', utmCreative);
+            }
+            
+            // param3にgclidを設定
+            const gclid = currentUrl.searchParams.get('gclid') || '';
+            if (gclid) {
+                url.searchParams.set('param3', gclid);
+            }
+            
+            // param4として追跡データをエンコード
+            url.searchParams.set('param4', encodeURIComponent(JSON.stringify(trackingParams)));
+            
+            // region_idを追加
+            if (regionId) {
+                url.searchParams.set('region_id', regionId);
+            }
+            
+            // その他のUTMパラメータも転送
+            ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'].forEach(param => {
+                const value = currentUrl.searchParams.get(param);
+                if (value) {
+                    url.searchParams.set(param, value);
+                }
+            });
+            
+            const finalUrl = url.toString();
+            
+            // UI要素を更新
+            const clinicLogo = document.getElementById('clinic-logo');
+            const redirectMessage = document.getElementById('redirect-message');
+            const redirectDescription = document.getElementById('redirect-description');
+            const manualLink = document.getElementById('manual-link');
+            
+            redirectMessage.textContent = `${clinic.name}公式サイトへ移動中...`;
+            redirectDescription.innerHTML = `まもなく自動的に${clinic.name}の公式サイトへリダイレクトします。<br>移動しない場合は下のボタンをクリックしてください。`;
+            manualLink.textContent = `${clinic.name}公式サイトへ`;
+            manualLink.href = finalUrl;
+            manualLink.style.display = 'inline-block';
+            
+            // ロゴの設定
+            const logoPath = `/images/clinics/${clinicCode}/${clinicCode}-logo.webp`;
+            clinicLogo.src = logoPath;
+            clinicLogo.alt = clinic.name;
+            clinicLogo.style.display = 'block';
+            
+            // ロゴのエラー処理
+            clinicLogo.onerror = function() {
+                const jpgPath = `/images/clinics/${clinicCode}/${clinicCode}-logo.webp`;
+                this.src = jpgPath;
+                this.onerror = function() {
+                    this.style.display = 'none';
+                };
+            };
+            
+            // タイトルも更新
+            document.title = `${clinic.name}公式サイトへ移動中...`;
+            
+            // カウントダウン開始（2秒）
+            let countdown = 2;
+            const countdownElement = document.getElementById('countdown');
+            
+            const timer = setInterval(() => {
+                countdown--;
+                if (countdown > 0) {
+                    countdownElement.textContent = `${countdown}秒後に移動します...`;
+                } else {
+                    countdownElement.textContent = '移動中...';
+                    clearInterval(timer);
+                    
+                    // リダイレクト実行
+                    setTimeout(() => {
+                        console.log('📤 リダイレクト実行準備完了');
+                        console.log(`  遷移元: ${window.location.href}`);
+                        console.log(`  遷移先: ${finalUrl}`);
+                        console.log(`  最終URL検証: ${finalUrl.startsWith('http')}`);
+                        
+                        // param4の確認
+                        if (finalUrl.includes('param4=')) {
+                            const param4Match = finalUrl.match(/param4=([^&]*)/);
+                            if (param4Match && param4Match[1]) {
+                                try {
+                                    const decodedParam4 = JSON.parse(decodeURIComponent(param4Match[1]));
+                                    console.log('✅ param4設定済み:', decodedParam4);
+                                } catch (e) {
+                                    console.log('✅ param4設定済み (デコード不可):', param4Match[1]);
+                                }
+                            } else {
+                                console.log('⚠️ param4は存在するが値が空');
+                            }
+                        } else {
+                            console.log('❌ param4がURLに含まれていません');
+                        }
+                        
+                        if (!finalUrl || finalUrl === '#' || !finalUrl.startsWith('http')) {
+                            console.error('❌ 無効なURL:', finalUrl);
+                            return;
+                        }
+                        
+                        try {
+                            console.log('🚀 window.location.href実行中...');
+                            window.location.href = finalUrl;
+                            console.log('✅ リダイレクト命令完了');
+                        } catch (e) {
+                            console.error('❌ リダイレクトエラー:', e);
+                        }
+                        
+                        // フォールバック
+                        setTimeout(() => {
+                            if (window.location.href.includes('/redirect.html')) {
+                                console.log('⚠️ フォールバックリダイレクト実行');
+                                window.location.replace(finalUrl);
+                            }
+                        }, 3000);
+                    }, 500);
+                }
+            }, 1000);
+            
+            // 5秒後にまだ同じページにいる場合の警告
+            setTimeout(() => {
+                if (window.location.href.includes('/redirect.html')) {
+                    countdownElement.textContent = '自動移動に時間がかかっています。下のボタンをクリックしてください。';
+                    countdownElement.style.color = '#ff6b6b';
+                }
+            }, 5000);
+            
+            // 手動リンクのクリックイベント
+            manualLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                clearInterval(timer);
+                window.location.href = finalUrl;
+            });
+        }
+
+        // ページ読み込み完了時にリダイレクト処理を開始
+        document.addEventListener('DOMContentLoaded', handleRedirect);
+    </script>
+</body>
+</html>

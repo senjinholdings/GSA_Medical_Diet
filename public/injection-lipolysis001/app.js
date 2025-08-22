@@ -498,7 +498,7 @@ class DataManager {
     async init() {
         try {
             // JSONファイルの読み込み（共通のcompiled-data.jsonを使用）
-            const response = await fetch('./data/compiled-data.json');
+            const response = await fetch('/data/compiled-data.json');
             if (!response.ok) {
                 throw new Error('Failed to load compiled-data.json');
             }
@@ -981,6 +981,22 @@ class DataManager {
     
     // クリニックの店舗データを取得（地域別）
     getStoreDataForClinic(clinicCode, regionId) {
+        // regionIdが200（全国）の場合の特別処理
+        if (regionId === '200') {
+            const clinic = this.clinics.find(c => c.code === clinicCode);
+            if (!clinic) return [];
+            
+            // this.storesから該当クリニックの全店舗を取得
+            const result = this.stores.filter(store => store.clinicName === clinic.name);
+
+            return result.map(store => ({
+                name: store.storeName || store.name,
+                address: store.address,
+                access: store.access || '主要駅より徒歩圏内',
+                hours: this.getClinicText(clinicCode, '営業時間', '10:00〜19:00')
+            }));
+        }
+
         // store_viewから該当地域のデータを取得
         const storeView = this.storeViews.find(sv => sv.regionId === regionId);
         if (!storeView) return [];
