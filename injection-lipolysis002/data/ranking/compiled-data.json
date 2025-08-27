@@ -3785,7 +3785,7 @@
     },
     {
       "id": "7",
-      "code": "TCB",
+      "code": "tcb",
       "name": "TCB",
       "regions": [
         "1",
@@ -51055,7 +51055,7 @@
     }
   },
   "metadata": {
-    "lastUpdated": "2025-08-27T08:42:41.324Z",
+    "lastUpdated": "2025-08-27T09:19:24.560Z",
     "totalClinics": 20,
     "totalStores": 359,
     "totalRegions": 301
