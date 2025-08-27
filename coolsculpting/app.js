@@ -64,8 +64,8 @@ class UrlParamHandler {
         
         // クリックイベントでlocalStorageに保存するため、データ属性として埋め込む
         // 実際の保存はクリック時に行う
-        // 開発/本番の両対応: /redirect or /redirect.html
-        const redirectUrl = new URL('./redirect', window.location.origin + window.location.pathname);
+        // 開発/本番の両対応: 静的ホスティングでは拡張子必須のためredirect.htmlを使用
+        const redirectUrl = new URL('./redirect.html', window.location.origin + window.location.pathname);
         
         // URLパラメータも念のため設定（サーバーが保持する場合に備えて）
         redirectUrl.searchParams.set('clinic_id', clinicId);
@@ -1180,7 +1180,7 @@ class DataManager {
             const storeAddress = store.address || '住所情報なし';
             
             // ハッシュフラグメントを使用（サーバーのURL書き換えに影響されない）
-            const redirectUrl = `./redirect#clinic_id=${clinicId}&rank=${rank}&region_id=${regionId}`;
+            const redirectUrl = `./redirect.html#clinic_id=${clinicId}&rank=${rank}&region_id=${regionId}`;
             
             // localStorageを先に設定してから開く（サーバーがパラメータを削除する場合の対策）
             const onclickHandler = targetUrl ? 
