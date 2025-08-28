@@ -80,7 +80,7 @@
                     </text>
                 </svg>
             </div>
-            <div style="text-align: right; padding: 5px 20px; color: #808080; font-size: 10px; font-weight: normal; max-width: 768px; margin: 0 auto;">PR</div>
+            <div style="text-align: right; padding: 5px 20px; color: #808080; font-size: 10px; font-weight: normal; max-width: 768px; margin: 0 auto;">PR 医療法人社団　正恵会</div>
         </section>
 
         <main>
@@ -354,7 +354,7 @@
                                         <a href="#details" class="toc-link">施術内容・計画を細かく確認</a>
                                     </div>
                                     <div class="toc-sub-item">
-                                        <a href="#additional-fees" class="toc-link">追加費用がかからないか確認</a>
+                                        <a href="#additional-fees" class="toc-link">後出しでの追加費用がかからないか確認</a>
                                     </div>
                                     <div class="toc-sub-item">
                                         <a href="#troubles" class="toc-link">トラブル時の相談先</a>
@@ -624,7 +624,7 @@
                     <!-- Additional Fees -->
                     <div class="article-card">
                         <div class="highlight-box" id="additional-fees">
-                            <div class="section-title">追加費用がかからないか確認する</div>
+                            <div class="section-title">後出しでの追加費用がかからないか確認する</div>
                             <div class="section-content">
                                 施術時には、追加の費用についても必ず確認しましょう。提示料金とは別に、追加施術・薬剤代・経過観察費用などが発生する場合があります。
                             </div>
@@ -801,7 +801,7 @@ text-align: center;
             
             <div class="footer-bottom">
                 <p class="copyright">© 2025 矯正歯科おすすめ比較.com</div></p>
-                <p class="disclaimer">※本サイトの情報は参考程度に留め、必ず歯科医院にご相談ください。</p>
+                <p class="disclaimer">※本サイトの情報は参考程度に留め、必ず各クリニックにご相談ください。</p>
             </div>
         </div>
 
@@ -1303,7 +1303,7 @@ text-align: center;
                 const container = document.createElement('div');
                 container.className = 'case-section-container';
                 container.innerHTML = `
-                    <div class="clinic-points-section" style="margin-top: 14px;">
+                    <div class="clinic-points-section" style="margin-top: 14px; position: relative;">
                         <h4 class="section-title">症例写真</h4>
                         <div class="case-slider" style="position: relative; overflow: hidden;">
                             <div class="case-track" style="display:flex;">
@@ -1333,10 +1333,12 @@ text-align: center;
                             </div>
                             <button class="case-nav case-nav-prev" style="position:absolute;left:10px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.8);border:none;border-radius:50%;width:40px;height:40px;font-size:20px;cursor:pointer;z-index:10;">‹</button>
                             <button class="case-nav case-nav-next" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.8);border:none;border-radius:50%;width:40px;height:40px;font-size:20px;cursor:pointer;z-index:10;">›</button>
+                            
                         </div>
                         <div class="case-dots" style="text-align:center;margin-top:10px;">
                             ${imagesForClinic.map((_, i) => `<button class="case-dot ${i===0?'active':''}" data-index="${i}" style="width:8px;height:8px;border-radius:50%;border:none;background:${i===0?'#2CC7C5':'#ccc'};margin:0 4px;cursor:pointer;"></button>`).join('')}
                         </div>
+                        <div class="case-annotation" style="position:absolute;right:8px;text-align: right;z-index:20;font-size: 8px;color: #686868;padding:2px 6px;pointer-events:none;line-height:1.4;">※3ヶ月医療痩身ボディメイクを契約された<br>モニター対象の会員の代表的な事例を提示しています。</div>
                     </div>
                 `;
 

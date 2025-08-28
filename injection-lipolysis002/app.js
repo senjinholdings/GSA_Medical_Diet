@@ -3638,7 +3638,7 @@ class RankingApp {
                     const dotsHtml = imagesForClinic.map((_, i) => `<button class=\"case-dot ${i===0?'active':''}\" data-index=\"${i}\" style=\"width:8px;height:8px;border-radius:50%;border:none;background:${i===0?'#2CC7C5':'#ccc'};margin:0 4px;cursor:pointer;\"></button>`).join('');
                     
                     return `
-                    <div class=\"clinic-points-section\">
+                    <div class=\"clinic-points-section\" style=\"position:relative;\">
                         <h4 class=\"section-title\">症例写真</h4>
                         <div class=\"case-slider\" style=\"position: relative; overflow: hidden;\">
                             <div class=\"case-track\" style=\"display:flex;\">
@@ -3647,7 +3647,8 @@ class RankingApp {
                             <button class=\"case-nav case-nav-prev\" style=\"position:absolute;left:10px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.8);border:none;border-radius:50%;width:40px;height:40px;font-size:20px;cursor:pointer;z-index:10;\">‹</button>
                             <button class=\"case-nav case-nav-next\" style=\"position:absolute;right:10px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.8);border:none;border-radius:50%;width:40px;height:40px;font-size:20px;cursor:pointer;z-index:10;\">›</button>
                         </div>
-                        <div class=\"case-dots\" style=\"text-align:center;margin-top:10px;\">
+                        <div class=\"case-annotation\" style=\"position:absolute;right:8px;text-align: right;z-index:20;font-size: 8px;color: #686868;padding:2px 6px;pointer-events:none;line-height:1.4;\">※3ヶ月医療痩身ボディメイクを契約された<br>モニター対象の会員の代表的な事例を提示しています。</div>
+                        <div class=\"case-dots\" style=\"text-align:center;margin-top:20px;\">
                             ${dotsHtml}
                         </div>
                     </div>
