@@ -959,7 +959,7 @@ text-align: center;
                             console.log('Saved redirect params to localStorage:', params);
 
                             // 中継ページへ移動
-                            window.location.href = link.href;
+                            window.open(link.href, '_blank', 'noopener');
                         } catch (error) {
                             console.error('Failed to save redirect params:', error);
                         }
@@ -990,7 +990,7 @@ text-align: center;
                             console.log('Saved fallback params to localStorage:', params);
 
                             // 中継ページへ移動
-                            window.location.href = link.href;
+                            window.open(link.href, '_blank', 'noopener');
                         }
                     }
                 } else {
