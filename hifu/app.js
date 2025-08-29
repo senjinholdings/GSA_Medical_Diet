@@ -3619,9 +3619,10 @@ class RankingApp {
                         const nameVal = dm.getClinicText(clinicCode, `${keyBase}コース名`, '') || fallbackName || '—';
                         const descVal = dm.getClinicText(clinicCode, `${keyBase}施術の説明`, '') || fallbackDesc || '—';
                         const riskVal = dm.getClinicText(clinicCode, `${keyBase}副作用（リスク）`, '') || fallbackRisk || '—';
+                        const loadingAttr = idx === 0 ? 'loading=\\"eager\\" fetchpriority=\\"high\\"' : 'loading=\\"lazy\\"';
                         return `
                             <div class=\"case-slide\" style=\"min-width:100%;box-sizing:border-box;\">
-                                <img src=\"${img.fallbacks[0]}\" alt=\"${img.alt}\" loading=\"lazy\" style=\"width:100%;height:auto;object-fit:contain;\">
+                                <img src=\"${img.fallbacks[0]}\" alt=\"${img.alt}\" ${loadingAttr} style=\"width:100%;height:auto;object-fit:contain;\">
                                 <div class=\"case-info\" style=\"margin-top: 5px; padding: 0 5%; text-align: left; font-size: 12px; line-height: 1.6; width: 100%;\">
                                     <table class=\"case-table\" style=\"width: 100% !important; border-collapse: collapse !important; font-size: 8px !important; line-height: 1.6 !important; display: table !important; table-layout: fixed !important;\">
                                         <tbody>
@@ -3847,7 +3848,7 @@ class RankingApp {
                     const caseSection = root.querySelector('.case-slider')?.closest('.clinic-points-section');
                     const imgs = root.querySelectorAll('.case-slider img');
 
-                    // 画像が1枚も無い、もしくは全て読み込み失敗の場合はセクション非表示
+                    // 画像が1枚も無い場合のみ非表示
                     if (!imgs || imgs.length === 0) {
                         if (caseSection) caseSection.style.display = 'none';
                         return;
@@ -3855,26 +3856,18 @@ class RankingApp {
                     let loaded = 0;
                     let errors = 0;
                     const total = imgs.length;
-                    const maybeHide = () => {
-                        if (errors >= total && caseSection) {
+                    const finalize = () => {
+                        if ((loaded + errors) >= total && errors === total && caseSection) {
                             caseSection.style.display = 'none';
                         }
                     };
                     imgs.forEach(img => {
-                        // 既に読み込み済みか判定
                         if (img.complete && img.naturalWidth > 0) {
                             loaded++;
                         }
-                        img.addEventListener('load', () => { loaded++; });
-                        img.addEventListener('error', () => { errors++; maybeHide(); });
+                        img.addEventListener('load', () => { loaded++; finalize(); });
+                        img.addEventListener('error', () => { errors++; finalize(); });
                     });
-                    // タイムアウトでもう一度判定（キャッシュやイベント取りこぼし対策）
-                    setTimeout(() => {
-                        if (loaded === 0) {
-                            errors = total;
-                            maybeHide();
-                        }
-                    }, 1200);
                     if (track && slides.length) {
                         let current = 0;
                         function show(i){
