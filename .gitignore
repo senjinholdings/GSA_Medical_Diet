@@ -1,4 +1,25 @@
+# macOS
 .DS_Store
 **/.DS_Store
 **/*.DS_Store
 node_modules/.DS_Store
+
+# 各ディレクトリのdataフォルダを除外
+*/data/
+coolsculpting/data/
+cryolipolysis/data/
+hifu/data/
+injection-lipolysis001/data/
+injection-lipolysis002/data/
+medical-diet001/data/
+
+# Node.js
+node_modules/
+npm-debug.log*
+
+# ログファイル
+*.log
+
+# 環境変数ファイル
+.env
+.env.local
