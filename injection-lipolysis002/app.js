@@ -4184,8 +4184,7 @@ class RankingApp {
                     const storeHit = this.dataManager.stores.find(s => s.address === address || s.storeName === clinicName);
                     if (storeHit && storeHit.hours) {
                         modalHours.innerHTML = storeHit.hours;
-                        // 店舗別で設定できたら終了
-                        return;
+                        // 店舗別で営業時間は設定するが、以降のボタン設定処理は続行する
                     }
                 }
 
@@ -4235,48 +4234,79 @@ class RankingApp {
             // 公式サイトボタンのURLとテキストを設定（エラーが発生してもモーダルは表示される）
             if (modalButton) {
                 try {
-                // クリニック名からクリニックコードを取得
-                let clinicKey = '';
+                // クリニックを特定
                 const clinics = this.dataManager.clinics || [];
-                
-                // clinicCodeパラメータはクリニック名なので、クリニック名で検索
                 const clinic = clinics.find(c => 
                     c.name === clinicCode || 
-                    clinicName.includes(c.name) || 
+                    (clinicName && clinicName.includes(c.name)) || 
                     c.name === clinicName
                 );
-                
-                if (clinic) {
-                    clinicKey = clinic.code;
-                }
-                
-                // urlHandlerのインスタンスがある場合は使用、なければ直接URLを生成
-                let generatedUrl = '#';
-                
+                // region_id と rank を決定
+                const regionId = (window.urlHandler?.getRegionId && window.urlHandler.getRegionId()) 
+                    || new URLSearchParams(window.location.search).get('region_id') 
+                    || '000';
+                let rank = 1;
                 try {
-                    if (window.urlHandler) {
-                        generatedUrl = window.urlHandler.getClinicUrlByNameWithRegionId(clinicKey);
+                    if (clinic && this.dataManager?.getRankingsByRegion && typeof this.dataManager.getRankingsByRegion === 'function') {
+                        const rankings = this.dataManager.getRankingsByRegion(regionId);
+                        const rankInfo = Object.entries(rankings?.ranks || {}).find(([pos, cid]) => cid == clinic.id);
+                        if (rankInfo) {
+                            rank = parseInt(rankInfo[0].replace('no', '')) || 1;
+                        }
                     }
-                } catch (e) {
-                }
-                
-                // URLが生成できなかった場合のフォールバック
-                if (!generatedUrl || generatedUrl === '#') {
-                    // 直接redirect.htmlへのリンクを生成
-                    const regionId = new URLSearchParams(window.location.search).get('region_id') || '000';
-                    if (clinic) {
-                        generatedUrl = `./redirect.html?clinic_id=${clinic.id}&rank=1&region_id=${regionId}`;
+                } catch (_) {}
+                // リダイレクトページへのURLを生成（共通のユーティリティを使用）
+                let generatedUrl = '#';
+                if (clinic) {
+                    if (this.urlHandler && typeof this.urlHandler.getClinicUrlWithRegionId === 'function') {
+                        generatedUrl = this.urlHandler.getClinicUrlWithRegionId(clinic.id, rank);
+                    } else {
+                        generatedUrl = `./redirect.html?clinic_id=${clinic.id}&rank=${rank}&region_id=${regionId}`;
                     }
                 }
-                
+
                 // URLが正しく生成されているか確認
                 if (generatedUrl && generatedUrl !== '#' && generatedUrl !== '') {
                     modalButton.href = generatedUrl;
                     modalButton.target = '_blank';
                     modalButton.rel = 'noopener';
-                    
-                    // クリックイベントを削除（通常のリンクとして動作させる）
-                    modalButton.onclick = null;
+
+                    // 公式サイトボタンクリック時に確実にリダイレクトページを開く
+                    // 他のグローバルクリックハンドラに干渉されないよう、ここで伝播を止める
+                    modalButton.onclick = (e) => {
+                        try {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            if (typeof e.stopImmediatePropagation === 'function') {
+                                e.stopImmediatePropagation();
+                            }
+
+                            // 元ページのURLパラメータを保存して追跡に活用
+                            const currentUrl = new URL(window.location.href);
+                            const originalParams = {};
+                            for (const [key, value] of currentUrl.searchParams) {
+                                originalParams[key] = value;
+                            }
+
+                            // URLパラメータ（clinic_id, rank, region_id）を抽出
+                            // 相対パスを現在ページからの相対で解決
+                            const url = new URL(generatedUrl, window.location.href);
+                            const clinicId = url.searchParams.get('clinic_id');
+                            const rank = url.searchParams.get('rank') || '1';
+                            const regionId = url.searchParams.get('region_id') || '013';
+
+                            const params = { clinic_id: clinicId, rank, region_id: regionId, original_params: originalParams };
+                            try { localStorage.setItem('redirectParams', JSON.stringify(params)); } catch (_) {}
+
+                            // 新しいタブで開く（ポップアップブロック回避のためユーザー操作内で実行）
+                            const opened = window.open(url.toString(), '_blank', 'noopener');
+                            // 同一タブ遷移のフォールバックは行わない（誤遷移防止）
+                        } catch (_) {
+                            // 万一失敗時は通常遷移
+                            return true;
+                        }
+                        return false;
+                    };
                 } else {
                     // URLが生成できない場合は、メインページのクリニック詳細へスクロール
                     modalButton.href = '#';
@@ -4294,8 +4324,8 @@ class RankingApp {
                     // ボタンテキストを設定
                     const buttonText = document.getElementById('map-modal-button-text');
                     if (buttonText) {
-                        // クリニック名を取得
-                        let clinicBaseName = clinicName || 'クリニック';
+                        // クリニック名（ブランド名）ベースで表記。支店名（〜院）は付けない
+                        const clinicBaseName = clinic?.name || 'クリニック';
                         buttonText.textContent = clinicBaseName + 'の公式サイト';
                     }
                 } catch (error) {
