@@ -989,6 +989,7 @@ class DataManager {
             zipcode: row.Zipcode,
             address: row.adress,
             access: row.access,
+            hours: row.hours || row.Hours || '',
             regionId: null // 後で関連付け
         }));
     }
@@ -4175,6 +4176,61 @@ class RankingApp {
             
             // Google Maps iframeを生成
             modalMapContainer.innerHTML = this.generateMapIframe(address);
+
+            // 営業時間を stores.csv の hours（店舗別）優先で設定し、なければ clinic-texts.csv の「営業時間」を参照
+            try {
+                // まず店舗CSVのhoursを試す（住所で照合）
+                if (modalHours && this.dataManager?.stores?.length) {
+                    const storeHit = this.dataManager.stores.find(s => s.address === address || s.storeName === clinicName);
+                    if (storeHit && storeHit.hours) {
+                        modalHours.innerHTML = storeHit.hours;
+                        // 店舗別で設定できたら終了
+                        return;
+                    }
+                }
+
+                let resolvedClinicCode = '';
+                let resolvedClinicName = clinicCode || clinicName || '';
+                const clinics = this.dataManager?.clinics || [];
+                // clinicCode引数は名称で渡ってくるケースがあるため、名称からコードへ解決
+                const foundClinic = clinics.find(c =>
+                    c.name === clinicCode ||
+                    (clinicName && clinicName.includes(c.name)) ||
+                    c.name === clinicName
+                );
+                if (foundClinic) {
+                    resolvedClinicCode = foundClinic.code;
+                    resolvedClinicName = foundClinic.name;
+                }
+
+                if (modalHours) {
+                    let hoursText = '';
+                    // 可能なら詳細フィールドマッピングを使ってキーを解決
+                    const mapping = this.dataManager?.clinicTexts?.['詳細フィールドマッピング'];
+                    const mappedKey = mapping && mapping['hours'] ? mapping['hours'] : '営業時間';
+                    // 「詳細_営業時間」を優先参照（コード解決できた場合）
+                    if (resolvedClinicCode) {
+                        hoursText = this.getClinicText(resolvedClinicCode, `詳細_${mappedKey}`, '')
+                                 || this.getClinicText(resolvedClinicCode, '詳細_営業時間', '')
+                                 || this.getClinicText(resolvedClinicCode, '営業時間', '');
+                    }
+                    // コード解決に失敗した場合は、名称ベースで直接参照
+                    if (!hoursText && resolvedClinicName && this.dataManager?.clinicTexts) {
+                        const ct = this.dataManager.clinicTexts[resolvedClinicName];
+                        if (ct) {
+                            hoursText = ct[`詳細_${mappedKey}`] || ct['詳細_営業時間'] || ct['営業時間'] || '';
+                        }
+                    }
+                    // デフォルト（未設定時）
+                    if (!hoursText) {
+                        hoursText = '店舗・院により異なります';
+                    }
+                    // CSV内の改行(<br>)を活かすためにinnerHTMLで反映
+                    modalHours.innerHTML = hoursText;
+                }
+            } catch (_) {
+                // 営業時間の設定に失敗してもモーダル表示は継続
+            }
             
             // 公式サイトボタンのURLとテキストを設定（エラーが発生してもモーダルは表示される）
             if (modalButton) {
