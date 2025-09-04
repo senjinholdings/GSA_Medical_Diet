@@ -3729,6 +3729,7 @@ class RankingApp {
                                             ${buildRow('コース名', dm.processDecoTags(nameVal))}
                                             ${buildRow('施術の説明', dm.processDecoTags(descVal))}
                                             ${buildRow('副作用<br>（リスク）', dm.processDecoTags(riskVal))}
+                                            ${buildRow('', '3ヶ月医療痩身ボディメイクを契約された<br>モニター対象の会員の代表的な事例を提示しています。効果には個人差があります。')}
                                         </tbody>
                                     </table>
                                 </div>
