@@ -81,7 +81,7 @@
                     </text>
                 </svg>
             </div>
-            <div style="text-align: right; padding: 5px 20px; color: #808080; font-size: 10px; font-weight: normal; max-width: 768px; margin: 0 auto;">PR 医療法人社団　正恵会</div>
+            <div id="pr-line" style="text-align: right; padding: 5px 20px; color: #808080; font-size: 10px; font-weight: normal; max-width: 768px; margin: 0 auto;">PR</div>
         </section>
 
         <main>
@@ -1013,18 +1013,16 @@ text-align: center;
             return clinicCode;
         }
 
-        // 動的にクリニック情報を取得（clinic-texts.jsonから）
+        // 動的にクリニック情報を取得（clinic-texts.csvから）
         function getClinicInfo(clinicSlug) {
             // DataManagerが利用可能な場合は動的に取得
             const dm3 = window.app?.dataManager || window.dataManager;
             if (dm3 && typeof dm3.getClinicText === 'function') {
                 const clinicCode = clinicSlug;
-                const clinicName = getClinicNameFromCode(clinicCode);
-                return {
-                    campaign: clinicInfo['INFORMATIONキャンペーンテキスト'] || '期間限定キャンペーン<br>実施中',
-                    achievement: '＼' + (clinicInfo['実績/症例数'] || '実績多数') + '／',
-                    ctaUrl: clinicInfo['公式サイトURL'] || `https://www.example.com/go/${clinicSlug}/`
-                };
+                const campaign = dm3.getClinicText(clinicCode, 'INFORMATIONキャンペーンテキスト', '期間限定キャンペーン<br>実施中');
+                const achievementSrc = dm3.getClinicText(clinicCode, '実績/症例数', '実績多数');
+                const ctaUrl = getClinicUrl(clinicCode, 1) || dm3.getClinicText(clinicCode, '公式サイトURL', `https://www.example.com/go/${clinicSlug}/`);
+                return { campaign, achievement: '＼' + (achievementSrc || '実績多数') + '／', ctaUrl };
             }
             
             // フォールバック（DataManagerが利用できない場合）
@@ -1205,7 +1203,10 @@ text-align: center;
                 if (newRegionId !== currentRegionId) {
                     currentRegionId = newRegionId;
                     console.log('Region changed to:', newRegionId);
-                    setTimeout(() => updateFirstChoiceClinic(), 100); // 少し遅延を入れる
+                    setTimeout(() => {
+                        updateFirstChoiceClinic();
+                        if (typeof window.__renderPrLine === 'function') { try { window.__renderPrLine(); } catch (_) {} }
+                    }, 100); // 少し遅延を入れる
                 }
             }, 1000);
         }
@@ -1217,6 +1218,71 @@ text-align: center;
         window.addEventListener('load', function() {
             setTimeout(() => updateFirstChoiceClinic(), 1000);
         });
+        </script>
+
+        <script>
+        // PR行（clinic-texts.csv の pr 列をランキング順で表示）
+        (function(){
+            window.__renderPrLine = function renderPrLine() {
+                const target = document.getElementById('pr-line');
+                if (!target) return false;
+                const dm = window.app?.dataManager || window.dataManager;
+                if (!dm || !dm.clinicTexts || !Array.isArray(dm.clinics) || dm.clinics.length === 0) return false;
+
+                const regionId = (window.app && window.app.urlHandler && typeof window.app.urlHandler.getRegionId === 'function')
+                    ? window.app.urlHandler.getRegionId() : '013';
+                const ranking = (typeof dm.getRankingByRegionId === 'function') ? dm.getRankingByRegionId(regionId) : null;
+
+                let orderedClinicIds = [];
+                if (ranking && ranking.ranks) {
+                    const rankEntries = Object.entries(ranking.ranks)
+                        .filter(([k, v]) => /^no\d+$/i.test(k) && v && v !== '-')
+                        .sort((a, b) => parseInt(a[0].slice(2), 10) - parseInt(b[0].slice(2), 10));
+                    orderedClinicIds = rankEntries.map(([, v]) => String(v));
+                } else {
+                    orderedClinicIds = (dm.clinics || []).map(c => String(c.id));
+                }
+
+                const getPrByClinicId = (cid) => {
+                    const clinic = (dm.clinics || []).find(c => String(c.id) === String(cid));
+                    if (!clinic) return '';
+                    const codeOrName = clinic.code || clinic.name;
+                    let val = (dm.getClinicText && codeOrName)
+                        ? String(dm.getClinicText(codeOrName, 'pr', '') || '').trim() : '';
+                    if (!val && dm.clinicTexts && clinic.name && dm.clinicTexts[clinic.name]) {
+                        const raw = dm.clinicTexts[clinic.name]['pr'];
+                        if (raw) val = String(raw).trim();
+                    }
+                    return val;
+                };
+
+                let startIdx = -1;
+                for (let i = 0; i < orderedClinicIds.length; i++) {
+                    if (getPrByClinicId(orderedClinicIds[i])) { startIdx = i; break; }
+                }
+                if (startIdx === -1) { target.textContent = 'PR'; return true; }
+
+                let html = 'PR ' + getPrByClinicId(orderedClinicIds[startIdx]);
+                for (let idx = startIdx + 1; idx < orderedClinicIds.length; idx++) {
+                    const pr = getPrByClinicId(orderedClinicIds[idx]);
+                    if (pr) html += '<br>' + pr;
+                }
+                target.innerHTML = html;
+                return true;
+            };
+
+            const tryRender = () => {
+                const dm = window.app?.dataManager || window.dataManager;
+                if (!dm || !dm.clinicTexts || !Array.isArray(dm.clinics) || dm.clinics.length === 0) return false;
+                return window.__renderPrLine();
+            };
+            if (!tryRender()) {
+                let count = 0;
+                const timer = setInterval(() => {
+                    if (tryRender() || ++count > 60) clearInterval(timer);
+                }, 250);
+            }
+        })();
         </script>
 
         <script>
@@ -1238,17 +1304,25 @@ text-align: center;
             }
             function updatePosition() {
                 const cta = document.querySelector('.scroll-bottom-modal');
-                const isVisible = !!(cta && cta.classList && cta.classList.contains('show'));
-                // CTA表示中は干渉しないよう底から離す、閉じたら下げる
-                btn.style.bottom = isVisible ? '96px' : '20px';
+                let bottomPx = 20;
+                if (cta && cta.classList && cta.classList.contains('show')) {
+                    const rect = cta.getBoundingClientRect();
+                    const gap = 16; // CTAとボタンの間隔
+                    if (rect && rect.height) {
+                        bottomPx = Math.max(20, Math.round(rect.height) + gap);
+                    } else {
+                        bottomPx = 96; // フォールバック
+                    }
+                }
+                btn.style.bottom = bottomPx + 'px';
             }
-            window.addEventListener('scroll', updateVisibility, { passive: true });
+            window.addEventListener('scroll', () => { updateVisibility(); updatePosition(); }, { passive: true });
             window.addEventListener('resize', () => { updateVisibility(); updatePosition(); });
             updateVisibility();
             updatePosition();
             // 追従CTAの状態変化を監視
             const observer = new MutationObserver(() => { updatePosition(); });
-            observer.observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['class'] });
+            observer.observe(document.body, { childList: true, subtree: true, attributes: true });
             // 閉じるボタンのクリックでも調整
             document.addEventListener('click', (e) => {
                 if (e.target && (e.target.closest && e.target.closest('.scroll-modal-close'))) {

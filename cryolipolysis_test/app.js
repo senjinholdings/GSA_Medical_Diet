@@ -1738,10 +1738,17 @@ class DataManager {
         }
         
         
-        // マッピングが存在する場合
-        if (regionMapping[paddedRegionId]) {
-            console.log(`Region ${regionId} mapped to ${regionMapping[paddedRegionId]}`);
-            return regionMapping[paddedRegionId];
+        // マッピングが存在する場合（グローバルregionMappingがあれば優先、なければデフォルト）
+        const defaultRegionMapping = {
+            // 例: 北海道(001)→東京(013)にフォールバック
+            '001': '013'
+        };
+        const mapping = (typeof window !== 'undefined' && window.regionMapping && typeof window.regionMapping === 'object')
+            ? window.regionMapping
+            : defaultRegionMapping;
+        if (mapping && mapping[paddedRegionId]) {
+            console.log(`Region ${regionId} mapped to ${mapping[paddedRegionId]}`);
+            return mapping[paddedRegionId];
         }
         
         // それでも見つからない場合は東京にフォールバック
@@ -1909,6 +1916,8 @@ class RankingApp {
 
             // 初期表示の更新
             this.updatePageContent(this.currentRegionId);
+            // PR行の再描画（データ準備完了後に一度実行）
+            try { if (typeof window.__renderPrLine === 'function') window.__renderPrLine(); } catch (_) {}
             
             // 地図モーダルの設定
             setTimeout(() => {

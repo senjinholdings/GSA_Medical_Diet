@@ -248,6 +248,9 @@ class DisplayManager {
             // ランキングアイテムのコンテナ
             const rankingItem = document.createElement('div');
             rankingItem.className = `ranking-item rank-${rankNum}`;
+            // 追従モーダル等で参照できるように属性を付与
+            rankingItem.setAttribute('data-rank', String(rankNum));
+            rankingItem.setAttribute('data-clinic-id', String(clinic.id));
 
             // メダルクラスの設定
             let medalClass = '';
@@ -1268,12 +1271,12 @@ class DataManager {
         
         // デバッグ：比較表の注意事項の場合のみログ
         if (actualItemKey === '比較表の注意事項') {
-            console.log(`DEBUG getClinicText: code=${clinicCode}, mapped name=${clinicName}, key=${actualItemKey}`);
-            console.log(`DEBUG clinicTexts keys:`, this.clinicTexts ? Object.keys(this.clinicTexts) : 'clinicTexts is null');
+            // console.log(`DEBUG getClinicText: code=${clinicCode}, mapped name=${clinicName}, key=${actualItemKey}`);
+            // console.log(`DEBUG clinicTexts keys:`, this.clinicTexts ? Object.keys(this.clinicTexts) : 'clinicTexts is null');
             if (clinicName && this.clinicTexts && this.clinicTexts[clinicName]) {
-                console.log(`DEBUG Found clinic data for ${clinicName}, has key? ${!!this.clinicTexts[clinicName][actualItemKey]}`);
+                // console.log(`DEBUG Found clinic data for ${clinicName}, has key? ${!!this.clinicTexts[clinicName][actualItemKey]}`);
                 if (this.clinicTexts[clinicName][actualItemKey]) {
-                    console.log(`DEBUG Text length: ${this.clinicTexts[clinicName][actualItemKey].length}`);
+                    // console.log(`DEBUG Text length: ${this.clinicTexts[clinicName][actualItemKey].length}`);
                 }
             }
         }
@@ -2784,7 +2787,7 @@ class RankingApp {
 
                         // デバッグ用：画像パスの確認（ローカル環境のみ）
                         if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-                            console.log(`比較表ロゴパス: clinicCode=${clinicCode}, logoFolder=${logoFolder}, logoPath=${logoPath}`);
+                            // console.log(`比較表ロゴパス: clinicCode=${clinicCode}, logoFolder=${logoFolder}, logoPath=${logoPath}`);
                         }
                     }
                     
@@ -3132,12 +3135,12 @@ class RankingApp {
             const bannerPath = csvBannerPath ||
                              `../common_data/images//clinics/${clinicCode}/${clinicCode}_detail_bnr.webp`;
 
-            console.log(`[DEBUG] Clinic: ${clinicCode}, CSV Banner Path: "${csvBannerPath}", Final Path: "${bannerPath}"`);
+            // console.log(`[DEBUG] Clinic: ${clinicCode}, CSV Banner Path: "${csvBannerPath}", Final Path: "${bannerPath}"`);
 
             // 追加のデバッグ：すべてのバナー画像要素をチェック
             const allBannerImages = document.querySelectorAll('img[src*="_detail_bnr"]');
             allBannerImages.forEach((img, index) => {
-                console.log(`[DEBUG] Banner image ${index}: ${img.src}, class: ${img.className}`);
+                // console.log(`[DEBUG] Banner image ${index}: ${img.src}, class: ${img.className}`);
             });
 
             bannerImage.src = bannerPath;
@@ -3726,6 +3729,7 @@ class RankingApp {
                                             ${buildRow('コース名', dm.processDecoTags(nameVal))}
                                             ${buildRow('施術の説明', dm.processDecoTags(descVal))}
                                             ${buildRow('副作用<br>（リスク）', dm.processDecoTags(riskVal))}
+                                            ${buildRow('', '3ヶ月医療痩身ボディメイクを契約された<br>モニター対象の会員の代表的な事例を提示しています。効果には個人差があります。')}
                                         </tbody>
                                     </table>
                                 </div>
@@ -4395,23 +4399,23 @@ function toggleStores(button) {
 // アプリケーションの初期化
 // 比較表の注釈を動的に生成する関数
 function initializeDisclaimers() {
-    console.log('DEBUG: initializeDisclaimers called');
+    // console.log('DEBUG: initializeDisclaimers called');
     
     // 両方の場所に注意事項を表示
     const mainContent = document.getElementById('main-content');
     const rankingDisclaimers = document.getElementById('ranking-disclaimers-content');
     
-    console.log('DEBUG: mainContent found:', !!mainContent);
-    console.log('DEBUG: rankingDisclaimers found:', !!rankingDisclaimers);
-    console.log('DEBUG: dataManager available:', !!window.dataManager);
+    // console.log('DEBUG: mainContent found:', !!mainContent);
+    // console.log('DEBUG: rankingDisclaimers found:', !!rankingDisclaimers);
+    // console.log('DEBUG: dataManager available:', !!window.dataManager);
     
     if (!window.dataManager) {
-        console.warn('DEBUG: dataManager not available');
+        // console.warn('DEBUG: dataManager not available');
         return;
     }
     
     if (!mainContent && !rankingDisclaimers) {
-        console.warn('DEBUG: Neither disclaimer container found');
+        // console.warn('DEBUG: Neither disclaimer container found');
         return;
     }
 
@@ -4476,7 +4480,7 @@ function initializeDisclaimers() {
                                     code: clinicCode,
                                     name: clinicName
                                 });
-                                console.log(`DEBUG: Added displayed clinic ${clinicName} (ID: ${clinicId}, Code: ${clinicCode})`);
+                                // console.log(`DEBUG: Added displayed clinic ${clinicName} (ID: ${clinicId}, Code: ${clinicCode})`);
                             }
                         }
                     }
@@ -4504,7 +4508,7 @@ function initializeDisclaimers() {
                             code: clinicCode,
                             name: clinic.name
                         });
-                        console.log(`DEBUG: Added fallback clinic ${clinic.name} (ID: ${clinicId}, Code: ${clinicCode})`);
+                        // console.log(`DEBUG: Added fallback clinic ${clinic.name} (ID: ${clinicId}, Code: ${clinicCode})`);
                     }
                 }
             }
@@ -4514,9 +4518,9 @@ function initializeDisclaimers() {
     // クリニック名でアルファベット順にソート
     topClinics.sort((a, b) => a.name.localeCompare(b.name));
 
-    console.log(`DEBUG: Total clinics found: ${topClinics.length}`);
+    // console.log(`DEBUG: Total clinics found: ${topClinics.length}`);
     topClinics.forEach((clinic, index) => {
-        console.log(`DEBUG: Clinic ${index + 1}: ${clinic.name} (${clinic.code})`);
+        // console.log(`DEBUG: Clinic ${index + 1}: ${clinic.name} (${clinic.code})`);
     });
 
     // 有効なクリニックがない場合
@@ -4951,6 +4955,181 @@ function closeClinicDetailModal() {
     document.body.classList.remove('no-scroll');
 }
 
+// スクロール追従モーダル
+function initializeScrollModal() {
+    // console.log('Initializing scroll modal...');
+    
+    // 既存のモーダルがあれば削除
+    const existingModal = document.querySelector('.scroll-bottom-modal');
+    if (existingModal) existingModal.remove();
+
+    // 1位のクリニックロゴを取得
+    let clinicLogoUrl = '';
+    let clinicUrl = '#ranking';
+    
+    // まずランキング1位のDOM要素から直接取得
+    const firstRankingItem = document.querySelector('#clinic1, .ranking_box[data-rank="1"], .ranking-item.rank-1, #ranking-list .ranking-item');
+    console.log('First ranking item:', firstRankingItem);
+    
+    // 1位のクリニックを特定
+    let clinicName = '';
+    if (firstRankingItem) {
+        // クリニック名を取得
+        const clinicNameElement = firstRankingItem.querySelector('.ranking__name a, .clinic-name, .clinic-logo-section h3');
+        if (clinicNameElement) {
+            clinicName = clinicNameElement.textContent.replace(/\s*＞\s*$/, '').trim();
+        }
+        
+        // クリニックIDを取得してURLを生成
+        const clinicId = firstRankingItem.getAttribute('data-clinic-id') || firstRankingItem.id?.replace('clinic', '');
+        if (clinicId) {
+            const urlHandler = new UrlParamHandler();
+            clinicUrl = urlHandler.getClinicUrlWithRegionId(clinicId, 1);
+        }
+    }
+    
+    // クリニック名からロゴパスを構築（TCBの例に従って）
+    if (clinicName) {
+        const clinicMap = {
+            'TCB東京中央美容外科': 'tcb/tcb-logo.webp',
+            'リゼクリニック': 'rize/rize-logo.webp',
+            '湘南美容クリニック': 'sbc/sbc-logo.webp',
+            'レジーナクリニック': 'regina/regina-logo.webp',
+            '品川美容外科': 'shinagawa/shinagawa-logo.webp'
+        };
+        
+        const logoPath = clinicMap[clinicName];
+        if (logoPath) {
+            clinicLogoUrl = `../common_data/images/clinics/${logoPath}`;
+            // console.log('Logo URL from clinic map:', clinicLogoUrl);
+        }
+    }
+    
+    // DOM要素から直接ロゴを取得（フォールバック）
+    if (!clinicLogoUrl && firstRankingItem) {
+        const logoImg = firstRankingItem.querySelector('.ranking__logo img, .clinic-logo, .clinic-banner img');
+        if (logoImg && logoImg.src) {
+            clinicLogoUrl = logoImg.src;
+            // console.log('Logo URL from DOM:', clinicLogoUrl);
+        }
+    }
+    
+    // DataManagerからも取得を試みる（フォールバック）
+    if (!clinicLogoUrl && window.dataManager) {
+        const firstClinic = document.querySelector('[data-rank="1"], .ranking-item.rank-1');
+        if (firstClinic) {
+            const clinicId = firstClinic.getAttribute('data-clinic-id');
+            const clinicCode = window.dataManager.getClinicCodeById(clinicId);
+            if (clinicCode) {
+                clinicLogoUrl = window.dataManager.getClinicText(clinicCode, 'ロゴ', '');
+            }
+        }
+    }
+
+    // デフォルトロゴ
+    if (!clinicLogoUrl) {
+        clinicLogoUrl = './images/logo-placeholder.png';
+    }
+
+    // 吹き出しテキスト（footer-modal1）をCSVから取得
+    let bubbleText = '今なら特別キャンペーン実施中！';
+    try {
+        const firstClinicForText = document.querySelector('[data-rank="1"], .ranking-item.rank-1, #clinic1, .ranking_box[data-rank="1"]');
+        let clinicIdForText = null;
+        if (firstClinicForText) {
+            clinicIdForText = firstClinicForText.getAttribute('data-clinic-id') || firstClinicForText.id?.replace('clinic', '');
+        }
+        if (clinicIdForText && window.dataManager) {
+            const code = window.dataManager.getClinicCodeById(clinicIdForText);
+            if (code) {
+                const t = window.dataManager.getClinicText(code, 'footer-modal1', bubbleText);
+                if (t) bubbleText = t;
+            }
+        }
+    } catch (e) {
+        console.warn('footer-modal1 テキスト取得に失敗:', e);
+    }
+
+    // モーダルのHTML作成
+    const modalHtml = `
+        <div class="scroll-bottom-modal">
+            <div class="scroll-modal-bubble">
+                <span>${bubbleText}</span>
+            </div>
+            
+            <div class="scroll-modal-content">
+                <div class="scroll-modal-left">
+                    <button class="scroll-modal-close" aria-label="閉じる">&times;</button>
+                    <img src="${clinicLogoUrl}" alt="1位クリニック" class="scroll-modal-logo">
+                </div>
+                <a href="${clinicUrl}" class="scroll-modal-btn" onclick="if(window.handleClinicClick) handleClinicClick(event, this);">
+                    <span class="scroll-modal-btn-free">無料</span>
+                    <span class="scroll-modal-btn-text">
+                        <span>カウンセリングを</span>
+                        <span>予約する</span>
+                    </span>
+                    <span class="scroll-modal-btn-arrow" aria-hidden="true">▶</span>
+                </a>
+            </div>
+        </div>`;
+
+    document.body.insertAdjacentHTML('beforeend', modalHtml);
+    const modal = document.querySelector('.scroll-bottom-modal');
+    const closeBtn = modal.querySelector('.scroll-modal-close');
+    
+    if (!modal || !closeBtn) {
+        console.error('Modal elements not found');
+        return;
+    }
+    
+    let hasShown = false;
+    let isClosed = false;
+
+    // モーダルを表示する関数
+    function showModal() {
+        if (!hasShown && !isClosed) {
+            // console.log('Showing modal');
+            modal.classList.add('show');
+            hasShown = true;
+        }
+    }
+
+    // モーダルを非表示にする関数
+    function hideModal() {
+        // console.log('Hiding modal');
+        modal.classList.remove('show');
+        isClosed = true;
+    }
+
+    // 閉じるボタンのクリックイベント
+    closeBtn.addEventListener('click', hideModal);
+
+    // スクロールイベント
+    function checkScroll() {
+        if (isClosed) return;
+        
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        const windowHeight = window.innerHeight;
+        const documentHeight = document.documentElement.scrollHeight;
+        const scrollPercentage = (scrollTop / (documentHeight - windowHeight)) * 100;
+        
+        // console.log('Scroll percentage:', scrollPercentage); // debug removed per request
+        
+        // 10%以上スクロールしたら表示
+        if (scrollPercentage >= 6.5) {
+            showModal();
+        }
+    }
+
+    // スクロールイベントリスナー
+    window.addEventListener('scroll', checkScroll);
+    
+    // 初回チェック
+    setTimeout(() => {
+        checkScroll();
+    }, 100);
+}
+
 // 症例スライダー（モーダル内）簡易初期化
 function initializeCaseSliderIn(root) {
     if (!root) return;
@@ -5026,4 +5205,19 @@ function initializeCaseSliderIn(root) {
     }
     updateNavVisibility();
     show(0);
+}
+
+// DOMContentLoaded時にスクロールモーダルを初期化
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() {
+        // 既存の初期化処理の後に追加
+        setTimeout(() => {
+            initializeScrollModal();
+        }, 2000); // 2秒後に初期化（データ読み込みを待つ）
+    });
+} else {
+    // すでにDOMが読み込まれている場合
+    setTimeout(() => {
+        initializeScrollModal();
+    }, 2000);
 }

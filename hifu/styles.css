@@ -3848,6 +3848,12 @@ body.no-scroll { overflow: hidden; }
 #back-to-top svg { display: block; }
 #back-to-top:hover { filter: brightness(0.95); }
 
+@media (min-width: 769px) {
+  #back-to-top {
+    right: max(12px, calc((100vw - 768px) / 2 + 12px));
+  }
+}
+
 /* ===== フッター ===== */
 #footer {
     clear: both;
