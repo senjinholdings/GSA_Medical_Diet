@@ -76,7 +76,7 @@ parameter_no,dio_stores,tcb_stores,urara_stores,dsc_stores,lieto_stores,eminal_s
 74,-,-,-,-,-,-,sbc_035
 75,dio_003,tcb_068/tcb_072,-,-,-,eminal_024,sbc_034/sbc_037
 76,-,tcb_075,-,-,-,-,-
-77,dio_003,tcb_068/tcb_072,-,-,-,eminal_023/eminal_024,sbc_034/sbc_036/sbc_037
+77,dio_003,tcb_068/tcb_069/tcb_072,-,-,-,eminal_023/eminal_024,sbc_034/sbc_036/sbc_037
 78,dio_003,tcb_068/tcb_072,-,-,-,eminal_024,sbc_034/sbc_037
 79,dio_004,tcb_067/tcb_070/tcb_071,-,-,-,eminal_025,sbc_033/sbc_038
 80,-,-,-,-,-,-,-
