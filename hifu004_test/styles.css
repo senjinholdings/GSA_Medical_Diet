@@ -22,7 +22,7 @@ body {
 }
 
 /* メインコンテナ - PC表示でも最大768pxに制限 */
-body > *:not(.sidebar-menu):not(.sidebar-overlay):not(.map-modal):not(.disclaimer-modal):not(.banner-modal):not(.scroll-bottom-modal) {
+body > * {
     width: 100%;
     max-width: 768px;
     margin: 0 auto;
@@ -297,10 +297,8 @@ select {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100vw;   /* ビューポート全体 */
-    height: 100vh;  /* ビューポート全体 */
-    max-width: none; /* 中央寄せレイアウトの影響を受けない */
-    margin: 0;
+    width: 100%;
+    height: 100%;
     background: rgba(0, 0, 0, 0.5);
     display: none;
     z-index: 999;
@@ -1224,8 +1222,8 @@ select {
     }
 
     .info_logo {
-        width: clamp(40px, 20vw, 150px);
-        height: clamp(40px, 20vw, 150px);
+        width: clamp(40px, 25vw, 150px);
+        height: clamp(40px, 25vw, 150px);
         padding: 6px;
     }
 
@@ -1406,7 +1404,7 @@ body > .container main section {
 .container {
     max-width: 768px !important;
     margin: 0 auto;
-    padding: 0 15px;
+    padding: 0 20px;
     box-sizing: border-box;
 }
 
@@ -2062,7 +2060,6 @@ section.clinic-rankings .ranking-header-banner {
     justify-content: center;
     gap: 0px;
     background: linear-gradient(135deg, #ff95ad 0%, #ff95ad 100%);
-    border-bottom:solid 5px #cf657d;
     color: white;
     padding: 15px 25px;
     border-radius: 4px;
@@ -2216,6 +2213,9 @@ section.clinic-rankings .ranking-header-banner {
 .comparison-table {
     position: relative;
     z-index: 1;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x proximity;
 }
 
 .comparison-table table {
@@ -2326,6 +2326,27 @@ section.clinic-rankings .ranking-header-banner {
     border-right: 1px solid white;
 }
 
+/* 1列目固定（sticky） */
+.comparison-table th.sticky-col,
+.comparison-table td.sticky-col {
+    position: sticky;
+    left: 0;
+    background: #fff;
+    z-index: 2;
+    width: 120px;
+    min-width: 120px;
+}
+.comparison-table td.sticky-col { z-index: 1; }
+
+/* スライダーで非表示にする列 */
+.comparison-table .clinic-col.col-hidden {
+    display: none !important;
+    visibility: hidden !important;
+    width: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+}
+
 .comparison-table table tbody tr:first-child {
     background: #F0FAF9;
     height: auto;
@@ -2352,6 +2373,26 @@ section.clinic-rankings .ranking-header-banner {
     height: auto;
     display: block;
     margin: 0 auto 8px;
+}
+
+/* ドラッグUI（列スライド用） */
+.comparison-table { user-select: none; }
+.comparison-table.grabbing { cursor: grabbing; }
+
+/* 列アニメーション（入れ替え時のスムース化） */
+.comparison-table .clinic-col {
+    transition: transform 220ms ease, opacity 220ms ease;
+    will-change: transform, opacity;
+    min-width: 200px;
+    scroll-snap-align: start;
+}
+.comparison-table .clinic-col.anim-enter { transform: translateX(24px); opacity: 0; }
+.comparison-table .clinic-col.anim-enter.anim-active { transform: translateX(0); opacity: 1; }
+.comparison-table .clinic-col.anim-exit { transform: translateX(0); opacity: 1; }
+.comparison-table .clinic-col.anim-exit.anim-active { transform: translateX(-24px); opacity: 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  .comparison-table .clinic-col { transition: none; }
 }
 
 .comparison-table .ranking-table_td1 .clinic-link {
@@ -2414,7 +2455,6 @@ section.clinic-rankings .ranking-header-banner {
 .comparison-table .link_btn {
     display: inline-block;
     background: #ff95ae;
-    border-bottom:solid 2px #cf657d;
     color: white;
     text-decoration: none;
     padding: 8px 15px;
@@ -2775,176 +2815,6 @@ section.clinic-rankings .ranking-header-banner {
     display: block;
     margin: 0 auto;
 }
-
-/* ===== バナースライダー（potenza002より移植） ===== */
-.banner-slider {
-    position: relative;
-    overflow: hidden;
-    background: #f8f8f8;
-    border-radius: 8px;
-}
-
-.banner-slider .slider-container { position: relative; }
-
-.banner-slider .slider-counter {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    background: rgba(0, 0, 0, 0.6);
-    color: white;
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-size: 12px;
-    z-index: 10;
-}
-
-.banner-slider .slider-wrapper { overflow: hidden; position: relative; }
-.banner-slider .slider-track { position: relative; width: 100%; height: 100%; }
-
-.banner-slider .slider-slide {
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-.banner-slider .slider-slide.active { position: relative; opacity: 1; }
-.banner-slider .slider-slide img { width: 100%; height: auto; display: block; cursor: zoom-in; }
-
-.banner-slider .slider-nav {
-    position: absolute;
-    top: 50%; transform: translateY(-50%);
-    background: rgba(255, 255, 255, 0.8);
-    border: none; border-radius: 50%;
-    width: 30px; height: 30px; font-size: 20px;
-    cursor: pointer; z-index: 10;
-    display: flex; align-items: center; justify-content: center;
-    transition: background 0.3s;
-}
-.banner-slider .slider-nav:hover { background: rgba(255, 255, 255, 0.95); }
-.banner-slider .slider-prev { left: 10px; }
-.banner-slider .slider-next { right: 10px; }
-
-.banner-slider .slider-expand {
-    position: absolute;
-    bottom: 10px; right: 10px;
-    background: rgba(0, 0, 0, 0.6);
-    color: white; border: none; padding: 6px 12px;
-    border-radius: 4px; font-size: 12px; cursor: pointer;
-    z-index: 10; transition: background 0.3s;
-    display: inline-flex; align-items: center; gap: 6px;
-}
-.banner-slider .slider-expand:hover { background: rgba(0,0,0,0.8); }
-.banner-slider .slider-expand i { font-size: 14px; line-height: 1; color: #fff; }
-
-.banner-slider .slider-dots {
-    display: flex; justify-content: center; gap: 6px;
-    padding: 10px; background: white;
-}
-.banner-slider .slider-dot {
-    width: 8px; height: 8px; border-radius: 50%; border: none;
-    background: #ccc; cursor: pointer; transition: background 0.3s;
-}
-.banner-slider .slider-dot.active { background: #2CC7C5; }
-.banner-slider .slider-dot:hover { background: #999; }
-
-/* ===== バナー拡大モーダル ===== */
-.banner-modal {
-    display: none; position: fixed; z-index: 10000;
-    z-index: 12000;
-    left: 0; top: 0; width: 100%; height: 100%;
-    overflow: auto; background-color: rgba(0,0,0,0.9);
-}
-.banner-modal.active { display: flex; justify-content: center; align-items: center; }
-.banner-modal-content { position: relative; max-width: 90%; max-height: 90%; }
-.banner-modal-image { width: 100%; height: auto; display: block; }
-
-.banner-modal-close {
-    position: absolute; top: 15px; right: 35px;
-    color: #f1f1f1; font-size: 40px; font-weight: bold;
-    cursor: pointer; background: none; border: none; z-index: 10001;
-}
-.banner-modal-close:hover, .banner-modal-close:focus { color: #fff; text-decoration: none; }
-
-.banner-modal-nav {
-    position: absolute; top: 50%; transform: translateY(-50%);
-    background: none; color: #000; border: none; border-radius: 0;
-    width: 40px; height: 40px; font-size: 55px; cursor: pointer;
-    display: flex; align-items: center; justify-content: center; transition: opacity 0.2s;
-    z-index: 10002; text-shadow:
-        -1px -1px 0 #fff, 0 -1px 0 #fff, 1px -1px 0 #fff,
-        -1px 0 0 #fff, 1px 0 0 #fff, -1px 1px 0 #fff,
-        0 1px 0 #fff, 1px 1px 0 #fff;
-}
-.banner-modal-nav:hover { opacity: 0.9; }
-.banner-modal-prev { left: 20px; }
-.banner-modal-next { right: 20px; }
-.banner-modal-counter {
-    position: absolute; top: 15px; left: 15px; color: #fff;
-    background: rgba(0,0,0,0.5); padding: 4px 8px; border-radius: 4px;
-    font-size: 12px; z-index: 10002;
-}
-.banner-modal-dots {
-    position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
-    display: flex; gap: 8px; align-items: center; justify-content: center; z-index: 10002;
-}
-.banner-modal-dot {
-    width: 10px; height: 10px; border-radius: 50%; border: none;
-    background: #bbb; cursor: pointer; transition: background 0.2s;
-}
-.banner-modal-dot.active { background: #2CC7C5; }
-.banner-modal-dot:hover { background: #888; }
-
-/* ===== クリニック詳細モーダル（ボトムシート） ===== */
-.clinic-detail-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.5);
-    z-index: 10000;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity .25s ease;
-}
-.clinic-detail-overlay.active {
-    opacity: 1;
-    pointer-events: auto;
-}
-.clinic-detail-modal {
-    position: fixed;
-    left: 0; right: 0; bottom: 0;
-    max-height: 85vh;
-    background: #fff;
-    border-radius: 12px 12px 0 0;
-    box-shadow: 0 -8px 24px rgba(0,0,0,0.15);
-    z-index: 10001;
-    transform: translateY(100%);
-    transition: transform .28s ease;
-    display: flex;
-    flex-direction: column;
-}
-.clinic-detail-modal.active { transform: translateY(0); }
-.clinic-detail-modal header {
-    position: sticky; top: 0; background: #fff; z-index: 1;
-    display: flex; align-items: center; justify-content: center;
-    padding: 10px 12px; border-bottom: 1px solid #eee;
-    position: relative;
-}
-.clinic-detail-close {
-    background: none;
-    border: none;
-    font-size: 29px;
-    line-height: 1;
-    cursor: pointer;
-    position: absolute;
-    top: 8px;
-    right: 18px;
-    z-index: 2; /* ヘッダーより前面に */
-}
-.clinic-detail-body {
-    padding: 10px 12px 16px;
-    overflow: auto;
-}
-body.no-scroll { overflow: hidden; }
 
 /* detail-rank-best要素のレスポンシブスタイル */
 #detail-rank-best {
@@ -5541,7 +5411,7 @@ body.no-scroll { overflow: hidden; }
     
     /* 375px専用: 詳細セクション */
     .clinic-details-section {
-        padding: 20px 0px;
+        padding: 20px 10px;
         width: 100%;
         /* max-width: 480px; */
         margin: 0 auto;
@@ -5751,14 +5621,14 @@ body.no-scroll { overflow: hidden; }
 }
 
 .brand-section .shop-name {
-    color: #6a6a6a;
+    color: #6bd1d0;
     font-size: 14px;
     font-weight: 600;
     line-height: 1.2;
 }
 
 .brand-section .shop-name a {
-    color: #6a6a6a;
+    color: #6bd1d0;
     text-decoration: none;
 }
 
@@ -5773,8 +5643,7 @@ body.no-scroll { overflow: hidden; }
     margin-left: auto;
     padding: 6px 8px;
     border-radius: 4px;
-    background-color: #f39ea7;
-    border-bottom:solid 2px #cf657d;
+    background-color: #6bd1d0;
     color: #fff;
     font-size: 13px;
     font-weight: 600;
@@ -5863,7 +5732,7 @@ body.no-scroll { overflow: hidden; }
 }
 
 .detail-item .brand-section .shop-name {
-    color: #6a6a6a;
+    color: #6bd1d0;
     font-weight: 600;
 }
 
@@ -5884,7 +5753,6 @@ body.no-scroll { overflow: hidden; }
     border-radius: 4px;
     font-size: 13px;
     background-color: #f39ea7;
-    border-bottom:solid 2px #cf657d;
     color: #fff;
     font-weight: 600;
     white-space: nowrap;
@@ -6370,35 +6238,33 @@ body.no-scroll { overflow: hidden; }
 /* ===== 地図モーダル ===== */
 .map-modal {
     position: fixed;
-    z-index: 13000;
+    z-index: 10000;
     left: 0;
     top: 0;
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
 .map-modal-overlay {
-    position: fixed;           /* 画面全体を確実に覆う */
-    inset: 0;                  /* top/right/bottom/left を 0 に */
-    width: 100vw;
-    height: 100vh;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
 }
 
 .map-modal-content {
     background-color: #fefefe;
-    position: fixed; /* ビューポート基準で中央配置 */
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 1; /* オーバーレイより前面 */
+    position: relative;
     padding: 0;
     border: 1px solid #ddd;
     border-radius: 12px;
-    width: min(90vw, 500px);
+    width: 90%;
+    max-width: 500px;
     max-height: 90vh;
     overflow: hidden;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
@@ -7119,35 +6985,33 @@ body.no-scroll { overflow: hidden; }
 /* 地図モーダルのスタイル */
 .map-modal {
     position: fixed;
-    z-index: 13000;
+    z-index: 10000;
     left: 0;
     top: 0;
-    width: 100vw;  /* ビューポート幅に固定 */
-    height: 100vh; /* ビューポート高に固定 */
+    width: 100%;
+    height: 100%;
     display: none; /* デフォルトは非表示 */
     align-items: center;
     justify-content: center;
 }
 
 .map-modal-overlay {
-    position: fixed;           /* 画面全体を確実に覆う（重複定義側も統一） */
-    inset: 0;
-    width: 100vw;
-    height: 100vh;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
 }
 
 .map-modal-content {
     background-color: #fefefe;
-    position: fixed;           /* 画面中央に固定配置 */
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 1;                /* オーバーレイより前面 */
+    position: relative;
     padding: 0;
     border: 1px solid #ddd;
     border-radius: 12px;
-    width: min(90vw, 500px);   /* 画面幅に追従しつつ上限設定 */
+    width: 90%;
+    max-width: 500px;
     max-height: 90vh;
     overflow: hidden;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
@@ -8096,309 +7960,28 @@ body .case-slider .slick-slide img {
     }
     
 }
-/* スクロール追従モーダル（下から10%高） */
-.scroll-bottom-modal {
-    position: fixed;
-    bottom: 0;
-    left: 50%;
-    right: auto;
-    height: 10vh; /* ビューポートの10% */
-    min-height: 80px;
-    max-height: 120px;
-    background: #fff; /* 背景は白 */
-    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.15);
-    transform: translate(-50%, 100%);
-    transition: transform 0.3s ease-in-out;
-    z-index: 9999;
-    display: flex;
-    align-items: center;
-    padding: 0 20px;
-    width: 100%;
-    max-width: 768px; /* PC時の最大幅 */
-    margin: 0;
+/* クリニックスライダー（モバイル専用） */
+.clinic-slider { display: none; }
+.clinic-slide {
+  flex: 0 0 100%;
+  scroll-snap-align: start;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 12px;
 }
-
-.scroll-bottom-modal.show {
-    transform: translate(-50%, 0);
+.clinic-slide .slide-header { display:flex; align-items:center; gap:10px; margin-bottom:8px; }
+.clinic-slide .slide-header img { width:72px; height:auto; }
+.clinic-slide .slide-title { font-weight:600; color:#0f172a; font-size:16px; }
+.clinic-slide .slide-body { font-size:14px; color:#4b5563; line-height:1.6; }
+.clinic-slide .slide-actions { display:flex; gap:10px; margin-top:10px; }
+.clinic-slide .link_btn, .clinic-slide .detail_btn {
+  display:inline-block; padding:8px 12px; border-radius:6px; text-decoration:none; font-size:14px;
 }
-
-/* 表示時に吹き出しを上方向へ＆フェードイン */
-.scroll-bottom-modal.show .scroll-modal-bubble {
-    transform: translate(-50%, -8px);
-    opacity: 1;
-    pointer-events: auto;
-}
-
-.scroll-modal-close {
-    position: static;
-    background: #f6f6f6; /* 円のグレー背景 */
-    border: none;
-    color: #555;
-    font-size: 18px;
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
-    margin: 0;
-    line-height: 1;
-}
-
-.scroll-modal-close:hover {
-    background: #d5d5d5;
-}
-
-.scroll-modal-content {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    max-width: 768px;
-    margin: 0 auto;
-    gap: 10px;
-    padding: 10px 0;
-    margin-top: 11px;
-}
-
-.scroll-modal-left {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-}
-
-.scroll-modal-logo {
-    /* 画像サイズをモーダル内に確実に収める（他の img ルールより優先させる） */
-    height: clamp(32px, 8vh, 48px) !important;
-    max-width: min(40vw, 120px) !important;
-    width: auto !important;
-    object-fit: contain;
-    background: white;
-    padding: 5px;
-    border-radius: 8px;
-    display: block;
-    flex: 0 0 auto;
-}
-
-.scroll-modal-text {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    color: white;
-}
-
-/* 吹き出し（CHECK）をモーダルの上に表示 */
-.scroll-modal-bubble {
-    position: absolute;
-    bottom: 59%;
-    left: 77%;
-    transform: translate(-50%, 24px);
-    color: #ff4f4f;
-    padding: 6px 20px;
-    border-radius: 16px;
-    font-size: 10px;
-    font-weight: 700;
-    white-space: nowrap;
-    opacity: 0;
-    pointer-events: none;
-    transition: transform .28s ease, opacity .2s ease;
-}
-
-.scroll-modal-text p {
-    margin: 0;
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 1.4;
-}
-
-/* ご要望に合わせてリセット */
-.scroll-modal-btn {
-    padding: 0px 0px;
-    font-size: 13px;
-    margin-right:10px;
-}
-
-/* ご要望のスタイルに更新 */
-.scroll-modal-btn {
-    display: flex;
-    align-items: center;
-    background: #ff95ad;
-    /* border-bottom: solid 5px #cf657d; */
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 14px;
-    transition: all 0.3s;
-    box-shadow: inset 0 -2px 0 #a36472;
-    border: none;
-    cursor: pointer;
-    border-radius: 3px;
-    overflow: hidden;
-    height: 50px;
-}
-
-.scroll-modal-btn-free {
-    background: #f07d99;
-    padding: 8px 12px;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 14px;
-    font-weight: bold;
-    /* border-right: 1px solid #cf657d; */
-    border-bottom: solid 2px #bf367b;
-}
-
-.scroll-modal-btn-text {
-    padding: 0 13px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    line-height: 1.2;
-    height: 100%;
-    flex: 1 1 auto;
-    text-align: center;
-}
-
-.scroll-modal-btn-text span {
-    display: block;
-    font-size: 13px;
-}
-
-/* 右側の矢印アイコン */
-.scroll-modal-btn-arrow {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0 10px 0 8px;
-    font-size: 14px;
-    color: #fff;
-}
-
-.scroll-modal-btn:hover {
-    background: #ff7a96;
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(255, 149, 173, 0.4);
-}
-
-.scroll-modal-btn:hover .scroll-modal-btn-free {
-    background: #ff3057;
-}
+.clinic-slide .link_btn { background:#2cc7c5; color:#fff; }
+.clinic-slide .detail_btn { background:#f3f4f6; color:#111827; }
 
 @media (max-width: 768px) {
-    .scroll-bottom-modal { padding: 0 7px; }
-    .scroll-modal-bubble { left: 68%; }
-    .scroll-modal-content { gap: 10px; padding: 10px 0; }
-    .scroll-modal-left { flex: 1; gap: 10px; }
-    .scroll-modal-logo {
-        height: clamp(32px, 8vh, 48px) !important;
-        max-width: min(40vw, 120px) !important;
-        width: auto !important;
-    }
-    .scroll-modal-text { gap: 5px; }
-    .scroll-modal-text p { font-size: 14px; }
-    .scroll-modal-btn { padding: 0px 0px; font-size: 13px; }
-}
-
-/* 768px以上での比率調整（CTAとテキストの視覚的バランスを維持） */
-@media (min-width: 768px) {
-    .scroll-modal-content { max-width: 768px; }
-    .scroll-modal-btn { height: 54px; font-size: 15px; }
-    .scroll-modal-btn-free { padding: 8px 18px; font-size: 18px; }
-    .scroll-modal-btn-text { padding: 0 40px; }
-    .scroll-modal-btn-text span { font-size: 14px; }
-    .scroll-modal-btn-arrow { font-size: 16px; padding: 0 12px 0 10px; }
-    /* ロゴの見え方の調整（CTA高さとバランス） */
-    .scroll-modal-left { gap: 12px; }
-    .scroll-modal-logo {
-        height: 48px !important;
-        max-width: 140px !important;
-        padding: 6px;
-    }
-    /* 吹き出し（footer-modal1）の見え方調整 */
-    .scroll-modal-bubble {
-        font-size: 13px;
-        padding: 8px 36px;
-    }
-}
-
-/* =============================
-   追従モーダルCTA（無料タグ付き）
-   ============================= */
-.fixed-mail-hankyo-button {
-    display: -webkit-box;
-    display: flex;
-    -webkit-box-align: center;
-    align-items: center;
-    -webkit-box-pack: start;
-    justify-content: flex-start;
-    width: 100%;
-    height: 46px;
-    border-radius: 3px;
-    box-sizing: border-box;
-    text-decoration: none;
-    font-weight: 700;
-    font-size: 13px;
-    color: #fff;
-    background: linear-gradient(135deg, #ff95ad 0%, #ff95ad 100%);
-    box-shadow: inset 0 -2px 0 #cf657d; /* 濃いピンクの陰影（参照に寄せる） */
-    overflow: hidden; /* 左タグの角丸を活かす */
-    position: relative;
-    word-break: break-all;
-}
-
-.fixed-mail-hankyo-button__tag {
-    display: -webkit-box;
-    display: flex;
-    -webkit-box-align: center;
-    align-items: center;
-    -webkit-box-pack: center;
-    justify-content: center;
-    height: 100%;
-    width: 38px; /* 参照デザインに合わせる */
-    background: #fff;
-    color: #cf657d; /* 既存の濃いピンク */
-    border-right: 2px solid #cf657d; /* 濃いピンクの仕切り */
-    border-radius: 3px 0 0 3px;
-    box-sizing: border-box;
-    font-size: 12px;
-}
-
-.fixed-mail-hankyo-button__inner {
-    display: -webkit-box;
-    display: flex;
-    -webkit-box-align: center;
-    align-items: center;
-    -webkit-box-pack: center;
-    justify-content: center;
-    padding: 0 16px;
-    flex: 1 1 auto;
-    box-sizing: border-box;
-    margin: auto;
-}
-
-.fixed-mail-hankyo-button__inner__text {
-    display: flex;
-    flex-direction: column;
-    line-height: 1.1;
-    text-align: center;
-}
-
-.fixed-mail-hankyo-button__inner__text__sub {
-    font-size: 11px;
-    opacity: 0.95;
-}
-
-.fixed-mail-hankyo-button__inner__text__main {
-    font-size: 15px;
-}
-
-@media (max-width: 768px) {
-    .fixed-mail-hankyo-button { height: 44px; }
-    .fixed-mail-hankyo-button__tag { width: 38px; font-size: 11px; }
-    .fixed-mail-hankyo-button__inner__text__main { font-size: 14px; }
+  .comparison-table { display: none !important; }
+  .clinic-slider { display: block !important; }
 }

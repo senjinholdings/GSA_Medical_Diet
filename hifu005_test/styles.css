@@ -22,7 +22,7 @@ body {
 }
 
 /* メインコンテナ - PC表示でも最大768pxに制限 */
-body > *:not(.sidebar-menu):not(.sidebar-overlay):not(.map-modal):not(.disclaimer-modal):not(.banner-modal):not(.scroll-bottom-modal) {
+body > *:not(.sidebar-menu):not(.sidebar-overlay):not(.map-modal):not(.disclaimer-modal):not(.banner-modal) {
     width: 100%;
     max-width: 768px;
     margin: 0 auto;
@@ -299,8 +299,8 @@ select {
     left: 0;
     width: 100vw;   /* ビューポート全体 */
     height: 100vh;  /* ビューポート全体 */
-    max-width: none; /* 中央寄せレイアウトの影響を受けない */
-    margin: 0;
+    max-width: none; /* グローバル幅制限の影響を無効化 */
+    margin: 0;       /* 中央寄せの影響を無効化 */
     background: rgba(0, 0, 0, 0.5);
     display: none;
     z-index: 999;
@@ -1406,7 +1406,7 @@ body > .container main section {
 .container {
     max-width: 768px !important;
     margin: 0 auto;
-    padding: 0 15px;
+    padding: 0 20px;
     box-sizing: border-box;
 }
 
@@ -2850,10 +2850,16 @@ section.clinic-rankings .ranking-header-banner {
 
 /* ===== バナー拡大モーダル ===== */
 .banner-modal {
-    display: none; position: fixed; z-index: 10000;
+    display: none;
+    position: fixed;
     z-index: 12000;
-    left: 0; top: 0; width: 100%; height: 100%;
-    overflow: auto; background-color: rgba(0,0,0,0.9);
+    left: 0;
+    top: 0;
+    width: 100vw;   /* 画面幅いっぱい */
+    height: 100vh;  /* 画面高さいっぱい */
+    max-width: none; /* グローバルのmax-width制約を無効化 */
+    margin: 0;       /* 自動マージンの影響を無効化 */
+    background-color: rgba(0,0,0,0.9);
 }
 .banner-modal.active { display: flex; justify-content: center; align-items: center; }
 .banner-modal-content { position: relative; max-width: 90%; max-height: 90%; }
@@ -6263,7 +6269,7 @@ body.no-scroll { overflow: hidden; }
     }
     
     .tips-container .tab {
-        padding: 10px 8px !important;
+        padding: 10px 3px !important;
         font-size: 12px !important;
     }
     
@@ -7839,7 +7845,7 @@ body .case-slider .slick-slide img {
     }
     
     /* body直下の要素から特定の要素を除外 */
-    body > *:not(.sidebar-menu):not(.sidebar-overlay):not(.map-modal):not(.disclaimer-modal) {
+    body > *:not(.sidebar-menu):not(.sidebar-overlay):not(.map-modal):not(.disclaimer-modal):not(.banner-modal) {
         width: 100% !important;
         max-width: 768px !important;
         margin: 0 auto !important;
@@ -8095,310 +8101,4 @@ body .case-slider .slick-slide img {
         min-width: 190px !important;
     }
     
-}
-/* スクロール追従モーダル（下から10%高） */
-.scroll-bottom-modal {
-    position: fixed;
-    bottom: 0;
-    left: 50%;
-    right: auto;
-    height: 10vh; /* ビューポートの10% */
-    min-height: 80px;
-    max-height: 120px;
-    background: #fff; /* 背景は白 */
-    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.15);
-    transform: translate(-50%, 100%);
-    transition: transform 0.3s ease-in-out;
-    z-index: 9999;
-    display: flex;
-    align-items: center;
-    padding: 0 20px;
-    width: 100%;
-    max-width: 768px; /* PC時の最大幅 */
-    margin: 0;
-}
-
-.scroll-bottom-modal.show {
-    transform: translate(-50%, 0);
-}
-
-/* 表示時に吹き出しを上方向へ＆フェードイン */
-.scroll-bottom-modal.show .scroll-modal-bubble {
-    transform: translate(-50%, -8px);
-    opacity: 1;
-    pointer-events: auto;
-}
-
-.scroll-modal-close {
-    position: static;
-    background: #f6f6f6; /* 円のグレー背景 */
-    border: none;
-    color: #555;
-    font-size: 18px;
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
-    margin: 0;
-    line-height: 1;
-}
-
-.scroll-modal-close:hover {
-    background: #d5d5d5;
-}
-
-.scroll-modal-content {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    max-width: 768px;
-    margin: 0 auto;
-    gap: 10px;
-    padding: 10px 0;
-    margin-top: 11px;
-}
-
-.scroll-modal-left {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-}
-
-.scroll-modal-logo {
-    /* 画像サイズをモーダル内に確実に収める（他の img ルールより優先させる） */
-    height: clamp(32px, 8vh, 48px) !important;
-    max-width: min(40vw, 120px) !important;
-    width: auto !important;
-    object-fit: contain;
-    background: white;
-    padding: 5px;
-    border-radius: 8px;
-    display: block;
-    flex: 0 0 auto;
-}
-
-.scroll-modal-text {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    color: white;
-}
-
-/* 吹き出し（CHECK）をモーダルの上に表示 */
-.scroll-modal-bubble {
-    position: absolute;
-    bottom: 59%;
-    left: 77%;
-    transform: translate(-50%, 24px);
-    color: #ff4f4f;
-    padding: 6px 20px;
-    border-radius: 16px;
-    font-size: 10px;
-    font-weight: 700;
-    white-space: nowrap;
-    opacity: 0;
-    pointer-events: none;
-    transition: transform .28s ease, opacity .2s ease;
-}
-
-.scroll-modal-text p {
-    margin: 0;
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 1.4;
-}
-
-/* ご要望に合わせてリセット */
-.scroll-modal-btn {
-    padding: 0px 0px;
-    font-size: 13px;
-    margin-right:10px;
-}
-
-/* ご要望のスタイルに更新 */
-.scroll-modal-btn {
-    display: flex;
-    align-items: center;
-    background: #ff95ad;
-    /* border-bottom: solid 5px #cf657d; */
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 14px;
-    transition: all 0.3s;
-    box-shadow: inset 0 -2px 0 #a36472;
-    border: none;
-    cursor: pointer;
-    border-radius: 3px;
-    overflow: hidden;
-    height: 50px;
-}
-
-.scroll-modal-btn-free {
-    background: #f07d99;
-    padding: 8px 12px;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 14px;
-    font-weight: bold;
-    /* border-right: 1px solid #cf657d; */
-    border-bottom: solid 2px #bf367b;
-}
-
-.scroll-modal-btn-text {
-    padding: 0 13px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    line-height: 1.2;
-    height: 100%;
-    flex: 1 1 auto;
-    text-align: center;
-}
-
-.scroll-modal-btn-text span {
-    display: block;
-    font-size: 13px;
-}
-
-/* 右側の矢印アイコン */
-.scroll-modal-btn-arrow {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0 10px 0 8px;
-    font-size: 14px;
-    color: #fff;
-}
-
-.scroll-modal-btn:hover {
-    background: #ff7a96;
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(255, 149, 173, 0.4);
-}
-
-.scroll-modal-btn:hover .scroll-modal-btn-free {
-    background: #ff3057;
-}
-
-@media (max-width: 768px) {
-    .scroll-bottom-modal { padding: 0 7px; }
-    .scroll-modal-bubble { left: 68%; }
-    .scroll-modal-content { gap: 10px; padding: 10px 0; }
-    .scroll-modal-left { flex: 1; gap: 10px; }
-    .scroll-modal-logo {
-        height: clamp(32px, 8vh, 48px) !important;
-        max-width: min(40vw, 120px) !important;
-        width: auto !important;
-    }
-    .scroll-modal-text { gap: 5px; }
-    .scroll-modal-text p { font-size: 14px; }
-    .scroll-modal-btn { padding: 0px 0px; font-size: 13px; }
-}
-
-/* 768px以上での比率調整（CTAとテキストの視覚的バランスを維持） */
-@media (min-width: 768px) {
-    .scroll-modal-content { max-width: 768px; }
-    .scroll-modal-btn { height: 54px; font-size: 15px; }
-    .scroll-modal-btn-free { padding: 8px 18px; font-size: 18px; }
-    .scroll-modal-btn-text { padding: 0 40px; }
-    .scroll-modal-btn-text span { font-size: 14px; }
-    .scroll-modal-btn-arrow { font-size: 16px; padding: 0 12px 0 10px; }
-    /* ロゴの見え方の調整（CTA高さとバランス） */
-    .scroll-modal-left { gap: 12px; }
-    .scroll-modal-logo {
-        height: 48px !important;
-        max-width: 140px !important;
-        padding: 6px;
-    }
-    /* 吹き出し（footer-modal1）の見え方調整 */
-    .scroll-modal-bubble {
-        font-size: 13px;
-        padding: 8px 36px;
-    }
-}
-
-/* =============================
-   追従モーダルCTA（無料タグ付き）
-   ============================= */
-.fixed-mail-hankyo-button {
-    display: -webkit-box;
-    display: flex;
-    -webkit-box-align: center;
-    align-items: center;
-    -webkit-box-pack: start;
-    justify-content: flex-start;
-    width: 100%;
-    height: 46px;
-    border-radius: 3px;
-    box-sizing: border-box;
-    text-decoration: none;
-    font-weight: 700;
-    font-size: 13px;
-    color: #fff;
-    background: linear-gradient(135deg, #ff95ad 0%, #ff95ad 100%);
-    box-shadow: inset 0 -2px 0 #cf657d; /* 濃いピンクの陰影（参照に寄せる） */
-    overflow: hidden; /* 左タグの角丸を活かす */
-    position: relative;
-    word-break: break-all;
-}
-
-.fixed-mail-hankyo-button__tag {
-    display: -webkit-box;
-    display: flex;
-    -webkit-box-align: center;
-    align-items: center;
-    -webkit-box-pack: center;
-    justify-content: center;
-    height: 100%;
-    width: 38px; /* 参照デザインに合わせる */
-    background: #fff;
-    color: #cf657d; /* 既存の濃いピンク */
-    border-right: 2px solid #cf657d; /* 濃いピンクの仕切り */
-    border-radius: 3px 0 0 3px;
-    box-sizing: border-box;
-    font-size: 12px;
-}
-
-.fixed-mail-hankyo-button__inner {
-    display: -webkit-box;
-    display: flex;
-    -webkit-box-align: center;
-    align-items: center;
-    -webkit-box-pack: center;
-    justify-content: center;
-    padding: 0 16px;
-    flex: 1 1 auto;
-    box-sizing: border-box;
-    margin: auto;
-}
-
-.fixed-mail-hankyo-button__inner__text {
-    display: flex;
-    flex-direction: column;
-    line-height: 1.1;
-    text-align: center;
-}
-
-.fixed-mail-hankyo-button__inner__text__sub {
-    font-size: 11px;
-    opacity: 0.95;
-}
-
-.fixed-mail-hankyo-button__inner__text__main {
-    font-size: 15px;
-}
-
-@media (max-width: 768px) {
-    .fixed-mail-hankyo-button { height: 44px; }
-    .fixed-mail-hankyo-button__tag { width: 38px; font-size: 11px; }
-    .fixed-mail-hankyo-button__inner__text__main { font-size: 14px; }
 }
