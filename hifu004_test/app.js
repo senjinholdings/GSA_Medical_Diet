@@ -3000,14 +3000,22 @@ class RankingApp {
 
         // 1行目: 左端=項目, 以降=各クリニック（ロゴ+名称リンク）
         const firstTh = document.createElement('th');
-        firstTh.textContent = '項目';
         firstTh.classList.add('sticky-col');
+        // Safari等の互換性対策で内側ラッパを用意
+        firstTh.innerHTML = '<div class="sticky-inner">項目</div>';
         headerRow.appendChild(firstTh);
+
+        const isMobile = window.matchMedia('(max-width: 768px)').matches;
 
         rankedClinics.forEach((clinic, index) => {
             const th = document.createElement('th');
             th.classList.add('clinic-col', `col-${index}`);
-            if (index >= 3) th.classList.add('col-hidden');
+            
+            // 1位のクリニックに特別なクラスを追加
+            if (index === 0) {
+                th.classList.add('rank-1');
+            }
+            // モバイルはネイティブスクロールで全列表示。PCはそもそも全表示。
 
             const clinicCode = clinic.code;
             const logoPathFromCsv = this.dataManager.getClinicText(clinicCode, 'クリニックロゴ画像パス', '');
@@ -3042,14 +3050,20 @@ class RankingApp {
         rows.forEach(rowDef => {
             const tr = document.createElement('tr');
             const leftTd = document.createElement('td');
-            leftTd.textContent = rowDef.label;
             leftTd.classList.add('sticky-col');
+            // 互換性対策: 内側ラッパ要素にsticky適用
+            leftTd.innerHTML = `<div class="sticky-inner">${rowDef.label}</div>`;
             tr.appendChild(leftTd);
 
             rankedClinics.forEach((clinic, index) => {
                 const td = document.createElement('td');
                 td.classList.add('clinic-col', `col-${index}`);
-                if (index >= 3) td.classList.add('col-hidden');
+                
+                // 1位のクリニックに特別なクラスを追加
+                if (index === 0) {
+                    td.classList.add('rank-1');
+                }
+                // モバイルはネイティブスクロールで全列表示。PCはそもそも全表示。
                 const clinicCode = clinic.code;
 
                 if (rowDef.key === 'comparison1') {
@@ -3058,11 +3072,15 @@ class RankingApp {
                         <span class=\"ranking_evaluation\">${rating}</span><br>
                         <span class=\"star5_rating\" data-rate=\"${rating}\"></span>
                     `;
+                } else if (rowDef.key === 'comparison2') {
+                    // 費用項目に特別なクラスを追加
+                    td.classList.add('price-cell');
+                    const val = this.dataManager.getClinicText(clinicCode, rowDef.key, '');
+                    td.innerHTML = this.dataManager.processDecoTags(val || '');
                 } else if (rowDef.key === 'official') {
                     const rankNum = clinic.rank || index + 1;
                     td.innerHTML = `
-                        <a class=\"link_btn\" href=\"${this.urlHandler.getClinicUrlWithRegionId(clinic.id, rankNum)}\" target=\"_blank\">公式サイト &gt;</a><br>
-                        <a class=\"detail_btn\" href=\"#clinic${rankNum}\">詳細をみる</a>
+                        <a class=\"btn-official\" href=\"${this.urlHandler.getClinicUrlWithRegionId(clinic.id, rankNum)}\" target=\"_blank\">公式サイト</a>
                     `;
                 } else {
                     const val = this.dataManager.getClinicText(clinicCode, rowDef.key, '');
@@ -3086,60 +3104,238 @@ class RankingApp {
     // 3列表示＋ドラッグ/ホイールでスライド（1列目=項目は固定）
     initializeComparisonSlider(totalClinics) {
         const container = document.querySelector('.comparison-table');
-        if (!container) return;
+        const table = document.querySelector('#comparison-table');
+        if (!container || !table) return;
 
-        // 表示列数と開始位置
-        this.comparisonVisibleCols = 3;
-        this.comparisonStartCol = 0;
-        this.comparisonTotalClinics = totalClinics;
+        const isMobile = window.matchMedia('(max-width: 768px)').matches;
 
-        // スクロール方式に移行：ここでは隠し列制御は行わない
+        if (!isMobile) {
+            // PC (768px以上): すべてのクリニック列を表示（スワイプ無効）
+            container.style.overflowX = 'auto';
+            container.style.scrollSnapType = 'none';
+            table.style.tableLayout = 'auto';
+            document.querySelectorAll('.comparison-table .clinic-col').forEach(el => {
+                el.classList.remove('col-hidden');
+                el.style.display = '';
+                el.style.minWidth = '';
+            });
+            
+            // 固定列の設定を維持（デスクトップでも項目列は固定）
+            document.querySelectorAll('.comparison-table .sticky-col').forEach(el => {
+                el.style.position = 'sticky';
+                el.style.left = '0';
+                el.style.zIndex = '10';
+            });
+            
+            this._currentStart = 0;
+            this.comparisonVisibleCols = totalClinics;
+            this.comparisonTotalClinics = totalClinics;
+            return;
+        }
 
-        const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
-        const go = (delta) => {
-            const maxStart = Math.max(0, this.comparisonTotalClinics - this.comparisonVisibleCols);
-            this.comparisonStartCol = clamp(this.comparisonStartCol + delta, 0, maxStart);
-            this.updateComparisonColumnVisibility(this.comparisonStartCol, this.comparisonTotalClinics);
+        // モバイル (768px以下): 3クリニック表示 + スワイプ
+        this.setupMobileSwipe(container, table, totalClinics);
+    }
+    
+    // モバイル用スワイプ設定
+    setupMobileSwipe(container, table, totalClinics) {
+        // テーブルが空の場合は処理しない
+        if (!table.querySelector('tbody tr')) {
+            console.warn('Table is empty, skipping mobile swipe setup');
+            return;
+        }
+        
+        // スワイプインジケーターを追加
+        this.addSwipeIndicator(container, totalClinics);
+        
+        // テーブルの幅を計算（項目列 + クリニック列）
+        const itemColWidth = 90; // 項目列の幅を90pxに変更（少し狭く）
+        
+        // コンテナのスタイル設定
+        container.style.overflowX = 'auto';
+        container.style.webkitOverflowScrolling = 'touch';
+        container.style.scrollSnapType = 'x mandatory';
+        container.style.scrollBehavior = 'smooth';
+        container.style.position = 'relative';
+        const viewportWidth = window.innerWidth;
+        const availableWidth = viewportWidth - itemColWidth - 20; // 左右の余白を考慮
+        const clinicColWidth = availableWidth / 3; // 正確に3クリニック分の幅
+        const tableWidth = itemColWidth + (clinicColWidth * totalClinics);
+        
+        table.style.width = `${tableWidth}px`;
+        table.style.tableLayout = 'fixed';
+        
+        // 項目列（最初の列）を固定 - 既存のstickyクラスがあれば保持
+        const headerCells = table.querySelectorAll('thead th:first-child, tbody td:first-child');
+        headerCells.forEach(cell => {
+            if (!cell.classList.contains('sticky-col')) {
+                cell.classList.add('sticky-col');
+            }
+            cell.style.position = 'sticky';
+            cell.style.left = '0';
+            cell.style.zIndex = cell.tagName === 'TH' ? '12' : '10';
+            cell.style.width = `${itemColWidth}px`;
+            cell.style.minWidth = `${itemColWidth}px`;
+            cell.style.maxWidth = `${itemColWidth}px`;
+        });
+        
+        // ヘッダー行全体のz-indexも調整
+        const headerRow = table.querySelector('thead tr');
+        if (headerRow) {
+            headerRow.style.zIndex = '11';
+        }
+        
+        // クリニック列の幅設定
+        const clinicCols = table.querySelectorAll('.clinic-col');
+        clinicCols.forEach((col, index) => {
+            col.style.width = `${clinicColWidth}px`;
+            col.style.minWidth = `${clinicColWidth}px`;
+            col.style.maxWidth = `${clinicColWidth}px`;
+            col.style.display = '';
+            col.classList.remove('col-hidden');
+            
+            // クリニック列ごとの処理
+            if (index === 0) {
+                // 1位：最初のスナップポイント
+                col.style.scrollSnapAlign = 'start';
+            } else if (index === 3) {
+                // 4位：2番目のスナップポイント
+                col.style.scrollSnapAlign = 'start';
+            }
+        });
+        
+        // 初期スクロール位置を強制的に0にリセット（1位から表示）
+        const resetScroll = () => {
+            container.scrollLeft = 0;
+            container.style.scrollBehavior = 'auto';
+            container.scrollTo(0, 0);
+            container.style.scrollBehavior = 'smooth';
         };
-
-        // ドラッグ操作
-        let dragging = false;
-        let startX = 0;
-        const threshold = 10; // スクロール方式では小さめでOK
-
-        const getX = (e) => {
-            if (e.touches && e.touches[0]) return e.touches[0].clientX;
-            if (e.changedTouches && e.changedTouches[0]) return e.changedTouches[0].clientX;
-            return e.clientX || 0;
-        };
-
-        const onPointerDown = (e) => {
-            dragging = true;
-            startX = getX(e);
-            container.classList.add('grabbing');
-        };
-        const onPointerMove = (e) => {
-            if (!dragging) return;
-            const dx = getX(e) - startX;
-            container.scrollLeft -= dx; // ピクセルで追随
-            startX = getX(e);
-        };
-        const onPointerUp = () => {
-            dragging = false;
-            container.classList.remove('grabbing');
-        };
-
-        container.addEventListener('mousedown', onPointerDown);
-        container.addEventListener('mousemove', onPointerMove);
-        container.addEventListener('mouseup', onPointerUp);
-        container.addEventListener('mouseleave', onPointerUp);
-        // タッチ対応
-        container.addEventListener('touchstart', onPointerDown, { passive: true });
-        container.addEventListener('touchmove', onPointerMove, { passive: true });
-        container.addEventListener('touchend', onPointerUp, { passive: true });
-
-        // ホイールはネイティブ慣性スクロールに任せる
-        container.addEventListener('wheel', () => {}, { passive: true });
+        
+        // 複数のタイミングで実行して確実にリセット
+        resetScroll();
+        setTimeout(resetScroll, 100);
+        setTimeout(resetScroll, 300);
+        setTimeout(resetScroll, 500);
+        
+        // スクロールバーを非表示にする
+        const style = document.createElement('style');
+        style.textContent = `
+            .comparison-table::-webkit-scrollbar {
+                display: none;
+            }
+            .comparison-table {
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+            }
+        `;
+        document.head.appendChild(style);
+        
+        // ページインジケーターを追加
+        this.addSwipeIndicator(container, totalClinics);
+        
+        // ウィンドウリサイズ時の再設定
+        this.setupResizeHandler(totalClinics);
+    }
+    
+    // ウィンドウリサイズ時の処理
+    setupResizeHandler(totalClinics) {
+        let resizeTimer;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(() => {
+                this.initializeComparisonSlider(totalClinics);
+            }, 250);
+        });
+    }
+    
+    // スワイプインジケーター（ドット）を追加
+    addSwipeIndicator(container, totalClinics) {
+        // 既存のインジケーターを削除
+        const existingIndicator = document.querySelector('.swipe-indicator');
+        if (existingIndicator) {
+            existingIndicator.remove();
+        }
+        
+        // ページ数を計算（1-3位で1ページ、4-5位で2ページ）
+        const pageCount = totalClinics <= 3 ? 1 : 2;
+        if (pageCount <= 1) return; // 1ページしかない場合は表示しない
+        
+        // インジケーターコンテナを作成
+        const indicatorContainer = document.createElement('div');
+        indicatorContainer.className = 'swipe-indicator';
+        indicatorContainer.style.cssText = `
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            margin-top: 20px;
+            padding: 15px;
+        `;
+        
+        // ドットを作成
+        for (let i = 0; i < pageCount; i++) {
+            const dot = document.createElement('span');
+            dot.className = 'indicator-dot';
+            dot.style.cssText = `
+                width: ${i === 0 ? '24px' : '10px'};
+                height: 10px;
+                border-radius: 5px;
+                background: ${i === 0 ? 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' : '#e0e0e0'};
+                transition: all 0.3s ease;
+                cursor: pointer;
+                box-shadow: ${i === 0 ? '0 2px 8px rgba(102, 126, 234, 0.3)' : 'none'};
+            `;
+            
+            dot.dataset.page = i;
+            
+            // クリックでスクロール
+            dot.addEventListener('click', () => {
+                // 各クリニック列の幅を取得
+                const firstClinicCol = container.querySelector('.clinic-col');
+                if (firstClinicCol) {
+                    const clinicWidth = firstClinicCol.offsetWidth;
+                    // i=0なら位置0（1-3位）、i=1なら3列目の位置（4-5位）
+                    const scrollPosition = i === 0 ? 0 : clinicWidth * 3;
+                    container.scrollTo({ left: scrollPosition, behavior: 'smooth' });
+                }
+            });
+            
+            indicatorContainer.appendChild(dot);
+        }
+        
+        container.parentNode.insertBefore(indicatorContainer, container.nextSibling);
+        
+        // スクロールイベントでドットを更新
+        let isScrolling = false;
+        container.addEventListener('scroll', () => {
+            if (!isScrolling) {
+                window.requestAnimationFrame(() => {
+                    const firstClinicCol = container.querySelector('.clinic-col');
+                    if (firstClinicCol) {
+                        const clinicWidth = firstClinicCol.offsetWidth;
+                        const scrollLeft = container.scrollLeft;
+                        // スクロール位置が1.5列分を超えたら2ページ目と判定
+                        const currentPage = scrollLeft > (clinicWidth * 1.5) ? 1 : 0;
+                        
+                        indicatorContainer.querySelectorAll('.indicator-dot').forEach((dot, index) => {
+                            if (index === currentPage) {
+                                dot.style.width = '24px';
+                                dot.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+                                dot.style.boxShadow = '0 2px 8px rgba(102, 126, 234, 0.3)';
+                            } else {
+                                dot.style.width = '10px';
+                                dot.style.background = '#e0e0e0';
+                                dot.style.boxShadow = 'none';
+                            }
+                        });
+                    }
+                    
+                    isScrolling = false;
+                });
+                isScrolling = true;
+            }
+        });
     }
 
     updateComparisonColumnVisibility(start, totalClinics) {
@@ -3156,6 +3352,30 @@ class RankingApp {
 
         const toShow = [...newSet].filter(i => !oldSet.has(i));
         const toHide = [...oldSet].filter(i => !newSet.has(i));
+
+        // アニメーション無効時は即時切り替えで負荷軽減
+        if (this.disableComparisonAnimations) {
+            toHide.forEach(i => {
+                document.querySelectorAll(`.comparison-table .col-${i}`).forEach(el => {
+                    el.classList.add('col-hidden');
+                    el.style.transform = '';
+                    el.style.opacity = '';
+                });
+            });
+            toShow.forEach(i => {
+                document.querySelectorAll(`.comparison-table .col-${i}`).forEach(el => {
+                    el.classList.remove('col-hidden');
+                    el.style.transform = '';
+                    el.style.opacity = '';
+                });
+            });
+            // 既存かつ引き続き表示の列は可視のまま維持
+            [...newSet].filter(i => oldSet.has(i)).forEach(i => {
+                document.querySelectorAll(`.comparison-table .col-${i}`).forEach(el => el.classList.remove('col-hidden'));
+            });
+            this._currentStart = start;
+            return;
+        }
 
         // 退場アニメーション
         toHide.forEach(i => {
@@ -3933,8 +4153,14 @@ class RankingApp {
                             <div class=\"case-track\" style=\"display:flex;\">
                                 ${slidesHtml}
                             </div>
-                            <button class=\"case-nav case-nav-prev\" style=\"position:absolute;left:10px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.8);border:none;border-radius:50%;width:40px;height:40px;font-size:20px;cursor:pointer;z-index:10;\">‹</button>
-                            <button class=\"case-nav case-nav-next\" style=\"position:absolute;right:10px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.8);border:none;border-radius:50%;width:40px;height:40px;font-size:20px;cursor:pointer;z-index:10;\">›</button>
+                            <button class=\"case-nav case-nav-prev\" style=\"position:absolute;left:10px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.9);border:1px solid #ddd;border-radius:50%;width:30px;height:30px;font-size:18px;cursor:pointer;z-index:10;box-shadow:0 2px 4px rgba(0,0,0,0.1);display:flex;align-items:center;justify-content:center;\">‹</button>
+                            <button class=\"case-nav case-nav-next\" style=\"position:absolute;right:10px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.9);border:1px solid #ddd;border-radius:50%;width:30px;height:30px;font-size:18px;cursor:pointer;z-index:10;box-shadow:0 2px 4px rgba(0,0,0,0.1);display:flex;align-items:center;justify-content:center;\">›</button>
+                            <button class=\"btn-expand\" style=\"position:absolute;right:10px;bottom:10px;z-index:10;background:rgba(0,0,0,0.7);color:white;border:none;border-radius:4px;padding:5px 10px;cursor:pointer;font-size:12px;display:flex;align-items:center;gap:5px;\">
+                                <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\">
+                                    <path d=\"M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7\"></path>
+                                </svg>
+                                拡大
+                            </button>
                         </div>
                         <div class=\"case-annotation\" style=\"position:absolute;right:8px;text-align: right;z-index:20;font-size: 8px;color: #686868;padding:2px 6px;pointer-events:none;line-height:1.4;\">※3ヶ月医療痩身ボディメイクを契約された<br>モニター対象の会員の代表的な事例を提示しています。</div>
                         <div class=\"case-dots\" style=\"text-align:center;margin-top:20px;\">
@@ -4171,6 +4397,18 @@ class RankingApp {
                         prevBtn && prevBtn.addEventListener('click', ()=>show(current-1));
                         nextBtn && nextBtn.addEventListener('click', ()=>show(current+1));
                         dots.forEach((d,idx)=> d.addEventListener('click', ()=>show(idx)));
+                        
+                        // 拡大ボタンの動作を追加
+                        const expandBtn = root.querySelector('.btn-expand');
+                        if (expandBtn) {
+                            expandBtn.addEventListener('click', () => {
+                                const currentImg = slides[current].querySelector('img');
+                                if (currentImg) {
+                                    this.showImageModal(currentImg.src, currentImg.alt || '症例写真');
+                                }
+                            });
+                        }
+                        
                         show(0);
                     }
                 } catch(e) {}
@@ -4543,6 +4781,52 @@ class RankingApp {
             modal.style.display = 'none';
             document.body.style.overflow = ''; // スクロールを再度有効化
         }
+    }
+    
+    // 画像拡大モーダルの表示
+    showImageModal(imageSrc, imageAlt) {
+        // 既存のモーダルを削除
+        const existingModal = document.getElementById('image-modal');
+        if (existingModal) {
+            existingModal.remove();
+        }
+        
+        // モーダルHTMLを作成
+        const modalHtml = `
+            <div id="image-modal" style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);z-index:9999;display:flex;justify-content:center;align-items:center;cursor:pointer;">
+                <div style="position:relative;max-width:90%;max-height:90%;">
+                    <img src="${imageSrc}" alt="${imageAlt}" style="width:100%;height:auto;max-width:100%;max-height:90vh;object-fit:contain;">
+                    <button id="image-modal-close" style="position:absolute;top:-40px;right:0;background:transparent;border:none;color:white;font-size:30px;cursor:pointer;padding:5px 10px;">×</button>
+                </div>
+            </div>
+        `;
+        
+        // モーダルを追加
+        document.body.insertAdjacentHTML('beforeend', modalHtml);
+        document.body.style.overflow = 'hidden';
+        
+        // モーダルのイベントリスナー
+        const modal = document.getElementById('image-modal');
+        const closeBtn = document.getElementById('image-modal-close');
+        
+        const closeModal = () => {
+            if (modal) {
+                modal.remove();
+                document.body.style.overflow = 'auto';
+            }
+        };
+        
+        modal.addEventListener('click', closeModal);
+        closeBtn.addEventListener('click', closeModal);
+        
+        // ESCキーでも閉じる
+        const escListener = (e) => {
+            if (e.key === 'Escape') {
+                closeModal();
+                document.removeEventListener('keydown', escListener);
+            }
+        };
+        document.addEventListener('keydown', escListener);
     }
 }
 

@@ -2215,15 +2215,250 @@ section.clinic-rankings .ranking-header-banner {
     z-index: 1;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
-    scroll-snap-type: x proximity;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    background: #fff;
+    margin: 20px 0;
+}
+
+/* 768px以上ではスワイプ無効、項目列は固定のまま */
+@media (min-width: 769px) {
+    .comparison-table {
+        overflow-x: auto !important;
+        scroll-snap-type: none !important;
+    }
+    
+    .comparison-table table {
+        width: 100% !important;
+        table-layout: auto !important;
+    }
+    
+    /* デスクトップでも項目列は固定 */
+    .comparison-table .sticky-col {
+        position: sticky !important;
+        left: 0 !important;
+        z-index: 10 !important;
+    }
+}
+
+/* スクロールバーカスタマイズ */
+.comparison-table { 
+    scrollbar-width: thin;
+    scrollbar-color: #667eea #f0f0f0;
+}
+.comparison-table::-webkit-scrollbar { 
+    height: 8px;
+}
+.comparison-table::-webkit-scrollbar-track {
+    background: #f0f0f0;
+    border-radius: 10px;
+}
+.comparison-table::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 10px;
+}
+.comparison-table::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
 }
 
 .comparison-table table {
-    border-top: 1px solid #E0E0E0;
+    border-collapse: separate;
+    border-spacing: 0;
     table-layout: fixed;
-    border-collapse: collapse;
     width: 100%;
     background: white;
+    font-family: 'Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+/* 比較表ヘッダー */
+.comparison-table thead tr {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.comparison-table thead th {
+    background: transparent;
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.9rem;
+    padding: 1.8em 1em;
+    text-align: center;
+    vertical-align: middle;
+    border-right: 1px solid rgba(255,255,255,0.2);
+    letter-spacing: 0.5px;
+}
+
+/* 1列目（項目名）のヘッダー */
+.comparison-table thead th:first-child {
+    position: sticky !important;
+    left: 0 !important;
+    z-index: 12 !important;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    font-size: 0.9rem;
+    font-weight: 700;
+    box-shadow: 2px 0 8px rgba(0,0,0,0.1);
+}
+
+/* クリニックロゴのスタイル */
+.comparison-table thead th img {
+    max-width: 100px;
+    height: auto;
+    margin-bottom: 8px;
+    filter: brightness(1.1);
+    transition: transform 0.3s ease;
+}
+
+.comparison-table thead th:hover img {
+    transform: scale(1.05);
+}
+
+/* クリニック名のリンク */
+.comparison-table thead th a.clinic-link {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.85rem;
+    transition: opacity 0.3s ease;
+}
+
+.comparison-table thead th a.clinic-link:hover {
+    opacity: 0.8;
+}
+
+/* 1位のクリニック列を強調 */
+.comparison-table thead .clinic-col.col-0,
+.comparison-table thead .rank-1 {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%) !important;
+    position: relative;
+}
+
+.comparison-table thead .rank-1::before {
+    content: '⭐ 1位';
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    background: #fff;
+    color: #f5576c;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    font-weight: bold;
+}
+
+/* tbody全体 */
+.comparison-table tbody tr {
+    background-color: #fff;
+    border-bottom: 2px solid #eee;
+}
+
+/* tbody th（左側の項目名） */
+.comparison-table tbody th,
+.comparison-table tbody .sticky-col {
+    position: sticky !important;
+    left: 0 !important;
+    z-index: 10 !important;
+    background: linear-gradient(to right, #f8f9fa, #ffffff);
+    color: #495057;
+    font-weight: 600;
+    font-size: 0.85rem;
+    padding: 1.8em 1em;
+    text-align: left;
+    vertical-align: middle;
+    border-right: 2px solid #e9ecef;
+    border-bottom: 1px solid #e9ecef;
+    white-space: nowrap;
+    box-shadow: 2px 0 8px rgba(0,0,0,0.05);
+}
+
+/* tbody td（データセル） */
+.comparison-table tbody td {
+    padding: 1.8em 1em;
+    text-align: center;
+    vertical-align: middle;
+    background: white;
+    border-right: 1px solid #e9ecef;
+    border-bottom: 1px solid #e9ecef;
+    font-size: 0.9rem;
+    color: #495057;
+    line-height: 1.6;
+    transition: background-color 0.2s ease;
+}
+
+.comparison-table tbody tr:hover td {
+    background-color: #f8f9fa;
+}
+
+/* 特別なスタイル - 価格 */
+.comparison-table .price-cell {
+    font-weight: 700;
+    font-size: 1.4em;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.comparison-table .price-cell span {
+    font-size: 0.6em;
+    font-weight: normal;
+}
+
+/* 1位のクリニックの価格 */
+.comparison-table .rank-1 .price-cell {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-size: 1.5em;
+}
+
+/* 1位のクリニック全体の背景 */
+.comparison-table tbody .rank-1 {
+    background: linear-gradient(180deg, #fff5f7 0%, #ffe0e6 100%) !important;
+    position: relative;
+    font-weight: 600;
+}
+
+.comparison-table tbody .rank-1::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #f093fb 0%, #f5576c 100%);
+}
+
+/* 公式サイトボタン */
+.comparison-table .btn-official {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    color: #fff;
+    padding: 12px 28px;
+    border-radius: 25px;
+    display: inline-block;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    letter-spacing: 0.5px;
+}
+
+.comparison-table .btn-official:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}
+
+/* 1位の公式サイトボタン */
+.comparison-table .rank-1 .btn-official {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    box-shadow: 0 4px 15px rgba(245, 87, 108, 0.3);
+}
+
+.comparison-table .rank-1 .btn-official:hover {
+    box-shadow: 0 6px 20px rgba(245, 87, 108, 0.4);
 }
 
 .th-none,
@@ -2335,8 +2570,25 @@ section.clinic-rankings .ranking-header-banner {
     z-index: 2;
     width: 120px;
     min-width: 120px;
+    /* 右側に薄い区切り影で視認性を向上 */
+    box-shadow: 2px 0 0 rgba(0,0,0,0.03);
 }
 .comparison-table td.sticky-col { z-index: 1; }
+
+/* Safari等のテーブル内sticky不具合対策: 内包要素でstickyを適用 */
+.comparison-table .sticky-inner {
+  position: sticky;
+  left: 0;
+  top: auto;
+  background: #fff;
+  z-index: 12;
+  display: block;
+}
+/* ヘッダー内のstickyはグラデ背景を維持 */
+.comparison-table thead th .sticky-inner {
+  background: transparent;
+  z-index: 13;
+}
 
 /* スライダーで非表示にする列 */
 .comparison-table .clinic-col.col-hidden {
@@ -2383,8 +2635,27 @@ section.clinic-rankings .ranking-header-banner {
 .comparison-table .clinic-col {
     transition: transform 220ms ease, opacity 220ms ease;
     will-change: transform, opacity;
-    min-width: 200px;
-    scroll-snap-align: start;
+    border-left: 1px solid #f2f2f2;
+}
+
+/* モバイルでのクリニック列設定 */
+@media (max-width: 768px) {
+    .comparison-table .clinic-col {
+        flex-shrink: 0;
+    }
+    
+    /* スナップポイントはJavaScriptで動的に設定するため、CSSでは設定しない */
+    
+    /* 項目列の調整 */
+    .comparison-table td:first-child,
+    .comparison-table th:first-child {
+        font-size: 11px;
+        padding: 6px 4px;
+    }
+}
+/* 先頭のクリニック列にわずかに余白を付け、"項目"列との重なり感を軽減 */
+.comparison-table .clinic-col.col-0 {
+    padding-left: 8px;
 }
 .comparison-table .clinic-col.anim-enter { transform: translateX(24px); opacity: 0; }
 .comparison-table .clinic-col.anim-enter.anim-active { transform: translateX(0); opacity: 1; }
@@ -2419,7 +2690,9 @@ section.clinic-rankings .ranking-header-banner {
     z-index: 0;
     display: inline-block;
     white-space: nowrap;
-    color: #CCCCCC;
+    color: #e0e0e0;
+    font-size: 18px;
+    letter-spacing: 2px;
 }
 
 .star5_rating:before,
@@ -2432,9 +2705,24 @@ section.clinic-rankings .ranking-header-banner {
     z-index: 1;
     top: 0;
     left: 0;
-    /* overflow: hidden; */
+    overflow: hidden;
     white-space: nowrap;
-    color: #fa7894;
+    background: linear-gradient(90deg, #ffd700 0%, #ffb347 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* 評価数値のスタイル */
+.ranking_evaluation {
+    font-size: 1.3em;
+    font-weight: 700;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 5px;
+    display: inline-block;
 }
 
 .star5_rating[data-rate="5"]:after { width: 100%; }
@@ -2541,16 +2829,33 @@ section.clinic-rankings .ranking-header-banner {
     max-width: 768px;
 }
 
-/* モバイル対応 - 横スクロール排除 */
+/* モバイル対応 - 768px以下でスワイプ有効 */
 @media (max-width: 768px) {
     .comparison-table {
-        overflow-x: hidden;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+        scroll-snap-type: x mandatory !important;
+        position: relative;
     }
     
     .comparison-table table {
         min-width: 0;
-        width: 100%;
+        width: auto;
         font-size: 11px;
+    }
+    
+    /* 固定列のスタイル */
+    .comparison-table .sticky-col {
+        position: sticky !important;
+        left: 0 !important;
+        z-index: 10 !important;
+        background-color: #fff !important;
+        box-shadow: 2px 0 4px rgba(0,0,0,0.1) !important;
+    }
+    
+    /* ヘッダーの固定列をさらに前面に */
+    .comparison-table thead .sticky-col {
+        z-index: 11 !important;
     }
     
     .comparison-table table th,
@@ -7960,28 +8265,4 @@ body .case-slider .slick-slide img {
     }
     
 }
-/* クリニックスライダー（モバイル専用） */
-.clinic-slider { display: none; }
-.clinic-slide {
-  flex: 0 0 100%;
-  scroll-snap-align: start;
-  background: #fff;
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
-  padding: 12px;
-}
-.clinic-slide .slide-header { display:flex; align-items:center; gap:10px; margin-bottom:8px; }
-.clinic-slide .slide-header img { width:72px; height:auto; }
-.clinic-slide .slide-title { font-weight:600; color:#0f172a; font-size:16px; }
-.clinic-slide .slide-body { font-size:14px; color:#4b5563; line-height:1.6; }
-.clinic-slide .slide-actions { display:flex; gap:10px; margin-top:10px; }
-.clinic-slide .link_btn, .clinic-slide .detail_btn {
-  display:inline-block; padding:8px 12px; border-radius:6px; text-decoration:none; font-size:14px;
-}
-.clinic-slide .link_btn { background:#2cc7c5; color:#fff; }
-.clinic-slide .detail_btn { background:#f3f4f6; color:#111827; }
-
-@media (max-width: 768px) {
-  .comparison-table { display: none !important; }
-  .clinic-slider { display: block !important; }
-}
+/* クリニックスライダー撤去（比較表内スワイプへ統合） */
