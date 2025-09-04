@@ -3678,6 +3678,59 @@ body.no-scroll { overflow: hidden; }
     margin-bottom: 4px;
 }
 
+/* Tips: Merits/Demerits cards (統一デザイン) */
+.medical-columns-section .tips-merits-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+    margin-top: 8px;
+}
+.medical-columns-section .tips-merits-card {
+    background-color: #F9F9F9;
+    border: 1px solid #E0E0E0;
+    border-radius: 4px;
+    padding: 12px;
+}
+.medical-columns-section .merits-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #4C4C4C;
+    margin-bottom: 8px;
+}
+.medical-columns-section .merits-list {
+    margin: 0;
+    padding-left: 18px;
+    color: #4C4C4C;
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+/* Tips: Side-effects cards */
+.medical-columns-section .tips-side-effects-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+}
+.medical-columns-section .tips-side-effects-card {
+    background-color: #F9F9F9;
+    border: 1px solid #E0E0E0;
+    border-radius: 4px;
+    padding: 12px;
+}
+
+/* Tips: Precautions list */
+.medical-columns-section .tips-precautions-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+}
+.medical-columns-section .precautions-item {
+    background-color: #F9F9F9;
+    border: 1px solid #E0E0E0;
+    border-radius: 4px;
+    padding: 12px;
+}
+
 /* Subsection titles */
 .medical-columns-section .subsection-title {
     font-size: 16px;
@@ -3773,6 +3826,27 @@ body.no-scroll { overflow: hidden; }
     margin-bottom: 8px;
     padding: 4px 0;
 }
+
+/* Back-to-top button */
+#back-to-top {
+    position: fixed;
+    right: 12px;
+    bottom: 96px; /* 追従ボタンと干渉しないように間隔を確保（表示時にJSで調整） */
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid #ffffff;
+    background: #c5c5c5c2; /* 半透明グレー */
+    color: #ffffff; /* アイコン白 */
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+    cursor: pointer;
+    padding: 0;
+}
+#back-to-top svg { display: block; }
+#back-to-top:hover { filter: brightness(0.95); }
 
 /* ===== フッター ===== */
 #footer {
