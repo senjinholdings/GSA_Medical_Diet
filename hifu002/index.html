@@ -38,6 +38,7 @@
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NR2WZVQX"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
+
     
     <div class="container">
         <!-- ヘッダー -->
@@ -46,7 +47,7 @@
                 <div class="logo-section">
                     <a href="/" class="logo-link">
                         <div class="logo-main">
-                            <span class="logo-icon"><img src="../common_data/images/favicon.png" alt="矯正歯科おすすめ比較.com" id="header-logo-icon"></span>
+                            <span class="logo-icon"><img src="../common_data/images/favicon.png" alt="医療ダイエット比較.com" id="header-logo-icon"></span>
                             <h1 class="site-logo" id="site-logo">おすすめ比較.com</h1>
                         </div>
                     </a>
@@ -81,7 +82,7 @@
                     </text>
                 </svg>
             </div>
-            <div id="pr-line" style="text-align: right; padding: 5px 20px; color: #808080; font-size: 10px; font-weight: normal; max-width: 768px; margin: 0 auto;">PR</div>
+            <div id="pr-line" style="text-align: right; padding: 5px 20px; color: #808080; font-size: 10px; font-weight: normal; max-width: 768px; margin: 0 auto;"></div>
         </section>
 
         <main>
@@ -438,7 +439,7 @@ text-align: center;
     <!-- フッター -->
         <div id="footer">
             <div class="footer_contents">
-                <h4><a href="/">矯正歯科おすすめ比較.com</a></h4>
+                <h4><a href="/">医療ダイエット比較.com</a></h4>
                 
                 <ul>
                     <h5>人気クリニック</h5>
@@ -458,7 +459,7 @@ text-align: center;
             </div>
             
             <div class="footer-bottom">
-                <p class="copyright">© 2025 矯正歯科おすすめ比較.com</div></p>
+                <p class="copyright">© 2025 医療ダイエット比較.com</div></p>
                 <p class="disclaimer">※本サイトの情報は参考程度に留め、必ず各クリニックにご相談ください。</p>
             </div>
         </div>
@@ -1013,16 +1014,18 @@ text-align: center;
             return clinicCode;
         }
 
-        // 動的にクリニック情報を取得（clinic-texts.csvから）
+        // 動的にクリニック情報を取得（clinic-texts.jsonから）
         function getClinicInfo(clinicSlug) {
             // DataManagerが利用可能な場合は動的に取得
             const dm3 = window.app?.dataManager || window.dataManager;
             if (dm3 && typeof dm3.getClinicText === 'function') {
                 const clinicCode = clinicSlug;
-                const campaign = dm3.getClinicText(clinicCode, 'INFORMATIONキャンペーンテキスト', '期間限定キャンペーン<br>実施中');
-                const achievementSrc = dm3.getClinicText(clinicCode, '実績/症例数', '実績多数');
-                const ctaUrl = getClinicUrl(clinicCode, 1) || dm3.getClinicText(clinicCode, '公式サイトURL', `https://www.example.com/go/${clinicSlug}/`);
-                return { campaign, achievement: '＼' + (achievementSrc || '実績多数') + '／', ctaUrl };
+                const clinicName = getClinicNameFromCode(clinicCode);
+                return {
+                    campaign: clinicInfo['INFORMATIONキャンペーンテキスト'] || '期間限定キャンペーン<br>実施中',
+                    achievement: '＼' + (clinicInfo['実績/症例数'] || '実績多数') + '／',
+                    ctaUrl: clinicInfo['公式サイトURL'] || `https://www.example.com/go/${clinicSlug}/`
+                };
             }
             
             // フォールバック（DataManagerが利用できない場合）
@@ -1158,6 +1161,14 @@ text-align: center;
             
             if (firstClinic) {
                 setFirstChoiceClinic(firstClinic);
+                // GTMイベントの発火
+                if (firstClinic.code === 'dio') {
+                    window.dataLayer = window.dataLayer || [];
+                    window.dataLayer.push({
+                        'event': 'first_clinic_is_dio'
+                    });
+                    console.log('GTM Event: first_clinic_is_dio');
+                }
             }
         }
 
@@ -1203,10 +1214,7 @@ text-align: center;
                 if (newRegionId !== currentRegionId) {
                     currentRegionId = newRegionId;
                     console.log('Region changed to:', newRegionId);
-                    setTimeout(() => {
-                        updateFirstChoiceClinic();
-                        if (typeof window.__renderPrLine === 'function') { try { window.__renderPrLine(); } catch (_) {} }
-                    }, 100); // 少し遅延を入れる
+                    setTimeout(() => updateFirstChoiceClinic(), 100); // 少し遅延を入れる
                 }
             }, 1000);
         }
@@ -1221,60 +1229,23 @@ text-align: center;
         </script>
 
         <script>
-        // PR行（clinic-texts.csv の pr 列をランキング順で表示）
-        (function(){
-            window.__renderPrLine = function renderPrLine() {
-                const target = document.getElementById('pr-line');
-                if (!target) return false;
-                const dm = window.app?.dataManager || window.dataManager;
-                if (!dm || !dm.clinicTexts || !Array.isArray(dm.clinics) || dm.clinics.length === 0) return false;
-
-                const regionId = (window.app && window.app.urlHandler && typeof window.app.urlHandler.getRegionId === 'function')
-                    ? window.app.urlHandler.getRegionId() : '013';
-                const ranking = (typeof dm.getRankingByRegionId === 'function') ? dm.getRankingByRegionId(regionId) : null;
-
-                let orderedClinicIds = [];
-                if (ranking && ranking.ranks) {
-                    const rankEntries = Object.entries(ranking.ranks)
-                        .filter(([k, v]) => /^no\d+$/i.test(k) && v && v !== '-')
-                        .sort((a, b) => parseInt(a[0].slice(2), 10) - parseInt(b[0].slice(2), 10));
-                    orderedClinicIds = rankEntries.map(([, v]) => String(v));
-                } else {
-                    orderedClinicIds = (dm.clinics || []).map(c => String(c.id));
-                }
-
-                const getPrByClinicId = (cid) => {
-                    const clinic = (dm.clinics || []).find(c => String(c.id) === String(cid));
-                    if (!clinic) return '';
-                    const codeOrName = clinic.code || clinic.name;
-                    let val = (dm.getClinicText && codeOrName)
-                        ? String(dm.getClinicText(codeOrName, 'pr', '') || '').trim() : '';
-                    if (!val && dm.clinicTexts && clinic.name && dm.clinicTexts[clinic.name]) {
-                        const raw = dm.clinicTexts[clinic.name]['pr'];
-                        if (raw) val = String(raw).trim();
-                    }
-                    return val;
-                };
-
-                let startIdx = -1;
-                for (let i = 0; i < orderedClinicIds.length; i++) {
-                    if (getPrByClinicId(orderedClinicIds[i])) { startIdx = i; break; }
-                }
-                if (startIdx === -1) { target.textContent = 'PR'; return true; }
-
-                let html = 'PR ' + getPrByClinicId(orderedClinicIds[startIdx]);
-                for (let idx = startIdx + 1; idx < orderedClinicIds.length; idx++) {
-                    const pr = getPrByClinicId(orderedClinicIds[idx]);
-                    if (pr) html += '<br>' + pr;
-                }
-                target.innerHTML = html;
-                return true;
-            };
-
+        // PR行（CSVのpr列を各クリニック分並べる）
+        (function renderPrLineWhenReady(){
+            const target = document.getElementById('pr-line');
+            if (!target) return;
             const tryRender = () => {
                 const dm = window.app?.dataManager || window.dataManager;
-                if (!dm || !dm.clinicTexts || !Array.isArray(dm.clinics) || dm.clinics.length === 0) return false;
-                return window.__renderPrLine();
+                if (!dm || !dm.clinicTexts || !dm.clinics || dm.clinics.length === 0) return false;
+                const items = [];
+                dm.clinics.forEach(c => {
+                    const val = dm.getClinicText(c.code || c.name, 'pr', '').trim();
+                    if (val) items.push(val);
+                });
+                if (items.length === 0) return false;
+                let html = 'PR ' + items[0];
+                for (let i = 1; i < items.length; i++) html += '<br>' + items[i];
+                target.innerHTML = html;
+                return true;
             };
             if (!tryRender()) {
                 let count = 0;
@@ -1284,8 +1255,6 @@ text-align: center;
             }
         })();
         </script>
-
-        <script>
         // トップに戻るボタン（6.5%スクロールで表示）
         (function() {
             const THRESHOLD = 6.5; // %
@@ -1307,10 +1276,11 @@ text-align: center;
                 let bottomPx = 20;
                 if (cta && cta.classList && cta.classList.contains('show')) {
                     const rect = cta.getBoundingClientRect();
-                    const gap = 16;
+                    const gap = 16; // CTAとボタンの間隔
                     if (rect && rect.height) {
                         bottomPx = Math.max(20, Math.round(rect.height) + gap);
                     } else {
+                        // フォールバック（CSSのmin-heightに近い値）
                         bottomPx = 96;
                     }
                 }
@@ -1952,5 +1922,35 @@ text-align: center;
             });
     </script>
     <script src="/tracking-params.js"></script>
+    
+    <!-- トップに戻るボタン -->
+    <button id="back-to-top" class="back-to-top" aria-label="トップに戻る">
+        <span>^</span>
+    </button>
+    
+    <script>
+        // トップに戻るボタンの機能
+        (function() {
+            const backToTopBtn = document.getElementById('back-to-top');
+            
+            // スクロール時の表示/非表示制御
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    backToTopBtn.classList.add('show');
+                } else {
+                    backToTopBtn.classList.remove('show');
+                }
+            });
+            
+            // クリック時のスムーズスクロール
+            backToTopBtn.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        })();
+    </script>
+    
 </body>
 </html>

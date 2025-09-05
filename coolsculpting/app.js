@@ -312,6 +312,21 @@ class DisplayManager {
                 ? window.dataManager.getClinicText(clinicCode, 'ランキングプッシュメッセージ', '人気のクリニック')
                 : '人気のクリニック';
 
+            // ランキング1位時のみ、dataLayerに送信（ページ内で一度だけ）
+            if (rankNum === 1 && !window.__topRankEventPushed) {
+                window.__topRankEventPushed = true;
+                window.dataLayer = window.dataLayer || [];
+                window.dataLayer.push({
+                    event: 'ranking_ready',
+                    topClinicName: clinic.name,
+                    topClinicCode: clinicCode || ''
+                });
+                // GTM側でフィルタが設定できない場合のため、コード別のイベント名も送信
+                if ((clinicCode || '').toLowerCase() === 'dio') {
+                    window.dataLayer.push({ event: 'ranking_ready_dio' });
+                }
+            }
+
             // クリニックロゴのパスを取得
             let clinicLogoPath = '';
             if (clinicCode) {
@@ -1739,7 +1754,10 @@ class DataManager {
         
         
         // マッピングが存在する場合（グローバルregionMappingがあれば優先、なければデフォルト）
-        const defaultRegionMapping = { '001': '013' };
+        const defaultRegionMapping = {
+            // 例: 北海道(001)→東京(013)にフォールバック
+            '001': '013'
+        };
         const mapping = (typeof window !== 'undefined' && window.regionMapping && typeof window.regionMapping === 'object')
             ? window.regionMapping
             : defaultRegionMapping;
@@ -2423,7 +2441,7 @@ class RankingApp {
             // サイトロゴの更新（共通テキスト）
             const siteLogo = document.querySelector('.site-logo');
             if (siteLogo) {
-                const logoText = this.dataManager.getCommonText('サイト名', '矯正歯科おすすめ比較.com');
+                const logoText = this.dataManager.getCommonText('サイト名', '医療ダイエット比較.com');
                 siteLogo.textContent = logoText;
             } else {
                 console.warn('⚠️ サイトロゴ要素が見つかりません');
@@ -2517,14 +2535,14 @@ class RankingApp {
             // フッターサイト名の更新（共通テキスト）
             const footerSiteName = document.querySelector('.footer_contents h4 a');
             if (footerSiteName) {
-                const footerText = this.dataManager.getCommonText('サイト名', '矯正歯科おすすめ比較.com');
+                const footerText = this.dataManager.getCommonText('サイト名', '医療ダイエット比較.com');
                 footerSiteName.textContent = footerText;
             }
             
             // フッターコピーライトの更新（共通テキスト）
             const footerCopyright = document.querySelector('.copyright');
             if (footerCopyright) {
-                const siteName = this.dataManager.getCommonText('サイト名', '矯正歯科おすすめ比較.com');
+                const siteName = this.dataManager.getCommonText('サイト名', '医療ダイエット比較.com');
                 const copyrightText = '© 2025 ' + siteName;
                 footerCopyright.textContent = copyrightText;
             }
@@ -3667,8 +3685,13 @@ class RankingApp {
                 <div class="clinic-cta-button-wrapper">
                     <p class="btn btn_second_primary">
                         <a href="${this.urlHandler.getClinicUrlWithRegionId(clinic.id, clinic.rank)}" target="_blank" rel="noopener noreferrer">
-                            <span class="bt_s">無料カウンセリングはコチラ</span>
+                            <span class="bt_s">公式サイトで詳細を見る</span>
                             <span class="btn-arrow">▶</span>
+                        </a>
+                    </p>
+                    <p class="btn btn_outline_pink">
+                        <a class="ctaBtn-direct" href="${this.urlHandler.getClinicUrlWithRegionId(clinic.id, clinic.rank)}" target="_blank" rel="noopener noreferrer">
+                            <span class="bt_s">無料相談の空き状況をチェック</span>
                         </a>
                     </p>
                 </div>
@@ -3854,7 +3877,7 @@ class RankingApp {
                             const campaignHeader = this.dataManager.getClinicText(clinicCode, 'キャンペーンヘッダー', 'INFORMATION!');
                             const campaignDescription = this.dataManager.getClinicText(clinicCode, 'INFORMATIONキャンペーンテキスト', '');
                             const campaignMicrocopy = this.dataManager.getClinicText(clinicCode, 'INFORMATIONサブテキスト', '');
-                            const ctaText = this.dataManager.getClinicText(clinicCode, 'CTAボタンテキスト', `${clinic.name}の公式サイト`);
+                            const ctaText = this.dataManager.getClinicText(clinicCode, 'CTAボタンテキスト', `キャンペーンの詳細を見る`);
                             
                             const logoFolder = clinicCode === 'kireiline' ? 'kireiline' : clinicCode;
                             const logoSrc = `../common_data/images/clinics/${logoFolder}/${logoFolder}-logo.webp`;
@@ -3878,6 +3901,11 @@ class RankingApp {
                                         <a href="${this.urlHandler.getClinicUrlWithRegionId(clinicId, clinic.rank || 1)}" target="_blank" rel="noopener">
                                             <span class="bt_s">${ctaText}</span>
                                             <span class="btn-arrow">▶</span>
+                                        </a>
+                                    </p>
+                                    <p class="btn btn_outline_pink" style="margin-top: 10px;">
+                                        <a class="ctaBtn-direct" href="${this.urlHandler.getClinicUrlWithRegionId(clinicId, clinic.rank || 1)}" target="_blank" rel="noopener">
+                                            <span class="bt_s">無料相談の空き状況をチェック</span>
                                         </a>
                                     </p>
                                 </div>

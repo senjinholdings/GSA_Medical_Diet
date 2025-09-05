@@ -366,13 +366,8 @@ class DisplayManager {
                     </div>
                     <p class="btn btn_second_primary">
                         <a href="${this.urlHandler.getClinicUrlWithRegionId(clinic.id, rankNum)}" target="_blank" rel="noopener">
-                            <span class="bt_s">公式サイトで詳細を見る</span>
+                            <span class="bt_s">公式サイト</span>
                             <span class="btn-arrow">▶</span>
-                        </a>
-                    </p>
-                    <p class="btn btn_availability_check">
-                        <a href="${this.urlHandler.getClinicUrlWithRegionId(clinic.id, rankNum)}" target="_blank" rel="noopener">
-                            <span class="bt_s">無料カウンセリングの空き枠を確認</span>
                         </a>
                     </p>
                 </div>
@@ -3694,9 +3689,9 @@ class RankingApp {
                             <span class="btn-arrow">▶</span>
                         </a>
                     </p>
-                    <p class="btn btn_availability_check">
-                        <a href="${this.urlHandler.getClinicUrlWithRegionId(clinic.id, clinic.rank)}" target="_blank" rel="noopener noreferrer">
-                            <span class="bt_s">無料カウンセリングの空き枠を確認</span>
+                    <p class="btn btn_outline_pink">
+                        <a class="ctaBtn-direct" href="${this.urlHandler.getClinicUrlWithRegionId(clinic.id, clinic.rank)}" target="_blank" rel="noopener noreferrer">
+                            <span class="bt_s">無料相談の空き状況をチェック</span>
                         </a>
                     </p>
                 </div>
@@ -3908,9 +3903,9 @@ class RankingApp {
                                             <span class="btn-arrow">▶</span>
                                         </a>
                                     </p>
-                                    <p class="btn btn_availability_check" style="margin-top: 10px;">
-                                        <a href="${this.urlHandler.getClinicUrlWithRegionId(clinicId, clinic.rank || 1)}" target="_blank" rel="noopener">
-                                            <span class="bt_s">無料カウンセリングの空き枠を確認</span>
+                                    <p class="btn btn_outline_pink" style="margin-top: 10px;">
+                                        <a class="ctaBtn-direct" href="${this.urlHandler.getClinicUrlWithRegionId(clinicId, clinic.rank || 1)}" target="_blank" rel="noopener">
+                                            <span class="bt_s">無料相談の空き状況をチェック</span>
                                         </a>
                                     </p>
                                 </div>

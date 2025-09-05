@@ -1065,8 +1065,8 @@ select {
 
 .cv_box_img a {
     margin: 2px 0px;
-    font-size: 16px !important;
-    padding: 16px 0 !important;
+    font-size: 16px ;
+    padding: 16px 0 ;
     vertical-align: middle;
 }
 
@@ -2062,7 +2062,7 @@ section.clinic-rankings .ranking-header-banner {
     justify-content: center;
     gap: 0px;
     background: linear-gradient(135deg, #ff95ad 0%, #ff95ad 100%);
-    border-bottom:solid 5px #cf657d;
+    border-bottom:solid 2px #cf657d;
     color: white;
     padding: 15px 25px;
     border-radius: 4px;
@@ -2070,7 +2070,7 @@ section.clinic-rankings .ranking-header-banner {
     font-weight: 600;
     font-size: 0.5rem;
     transition: all 0.3s ease;
-    box-shadow: none;
+    box-shadow: 0 3px 5px rgba(0,0,0,.2);
     width: 100%;
     box-sizing: border-box;
     margin: 0 0%;
@@ -2088,6 +2088,106 @@ section.clinic-rankings .ranking-header-banner {
 
 .btn.btn_second_primary a:hover .btn-arrow {
     transform: translateX(3px);
+}
+
+/* 再生ボタン風の記号は表示しない（広告ポリシー配慮） */
+.btn-arrow,
+.scroll-modal-btn-arrow { display: none !important; }
+
+/* 白背景 + ピンク実線（solid）ボタン */
+.btn.btn_outline_pink {
+    display: inline-block;
+    /* CTAを90%幅に縮小して中央寄せ */
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.btn.btn_outline_pink a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0px;
+    background: #fff;
+    color: #ff95ad;
+    border: 2px solid #ff95ad;
+    border-bottom: solid 2.4px #ec839b;
+    border-radius: 4px;
+    padding: 10px 16px;
+    margin-top: 5px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+    box-sizing: border-box;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+    position: relative;
+    box-shadow: 0 3px 3px rgba(0,0,0,.1);
+}
+
+.btn.btn_outline_pink .bt_s {
+    font-size: 1rem;
+    white-space: nowrap;
+}
+
+.btn.btn_outline_pink a:hover {
+    background: #fff5f8;
+    border-color: #ff95ad;
+    color: #ff95ad;
+}
+
+/* CTA右側の＞アイコン（擬似要素） */
+.btn.btn_outline_pink a.ctaBtn-direct::after {
+    content: "";
+    display: inline-block;
+    border-right: 2px solid #ff95ad;
+    border-bottom: 2px solid #ff95ad;
+    width: 0.5rem;
+    height: 0.5rem;
+    position: absolute;
+    top: 50%;
+    right: 4%;
+    transform: translateY(-50%) rotate(-45deg);
+}
+
+/* 空き枠確認ボタン */
+.btn.btn_availability_check {
+    display: inline-block;
+    margin-top: 8px;
+    margin-bottom: 5px;
+    width: 100%;
+}
+
+.btn.btn_availability_check a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0px;
+    background: white;
+    color: #ff95ad;
+    text-decoration: none;
+    padding: 14px 18px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(255, 140, 162, 0.2);
+    border: 2px solid #ff95ad;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.btn.btn_availability_check .bt_s {
+    font-size: 0.9rem;
+    white-space: nowrap;
+}
+
+.btn.btn_availability_check a:hover {
+    background: #fff5f7;
+    box-shadow: 0 4px 12px rgba(255, 140, 162, 0.3);
 }
 
 /* ===== 比較表セクション ===== */
@@ -3848,6 +3948,7 @@ body.no-scroll { overflow: hidden; }
 #back-to-top svg { display: block; }
 #back-to-top:hover { filter: brightness(0.95); }
 
+/* PC表示時（コンテンツ最大幅768pxに追従して右端から12px） */
 @media (min-width: 769px) {
   #back-to-top {
     right: max(12px, calc((100vw - 768px) / 2 + 12px));
@@ -5616,6 +5717,23 @@ body.no-scroll { overflow: hidden; }
         width: 16px;
         height: 16px;
         margin-left: 5px;
+    }
+    
+    /* 空き枠確認ボタンのモバイル調整 */
+    .clinic-card .btn.btn_availability_check {
+        margin-top: 3px;
+        margin-bottom: 3px;
+    }
+    
+    .clinic-card .btn.btn_availability_check a {
+        padding: 4px 0px;
+        font-size: 0.65rem;
+        border-width: 1px;
+        border-radius: 4px;
+    }
+    
+    .clinic-card .btn.btn_availability_check .bt_s {
+        font-size: 0.65rem;
     }
     
     
