@@ -1072,7 +1072,7 @@ select {
 
 .cv_box_img .btn {
     display: block;
-    margin: 10px auto;
+    margin: 0px auto;
 }
 
 .cv_box_img img {
@@ -2112,7 +2112,7 @@ section.clinic-rankings .ranking-header-banner {
     color: #ff95ad;
     border: 2px solid #ff95ad;
     border-bottom: solid 2.4px #ec839b;
-    border-radius: 4px;
+    border-radius: 8px;
     padding: 10px 16px;
     margin-top: 5px;
     text-decoration: none;

@@ -19,7 +19,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
     <!-- 重要なリソースのpreload -->
-    <link rel="preload" as="image" href="images/OMT_MV.webp" fetchpriority="high" type="image/webp">
+    <link rel="preload" as="image" href="" fetchpriority="high" type="image/webp">
     <link rel="preload" as="style" href="styles.css?v=2025080101">
     <link rel="preload" as="script" href="app.js?v=2025081417">
     <!-- Google Fontsはプリロードせず、通常のロードのみにする -->
@@ -38,7 +38,6 @@
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NR2WZVQX"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
-
     
     <div class="container">
         <!-- ヘッダー -->
@@ -66,13 +65,13 @@
         <section class="hero-section">
             <div class="hero-image-wrapper">
                 <picture>
-                    <source srcset="images/OMT_MV.webp" type="image/webp">
+                    <source srcset="" type="image/webp">
                     <img src="images/mv.webp" alt="おすすめ比較ランキング - 2025年最新版" class="hero-image" loading="eager" fetchpriority="high" decoding="async" width="1500" height="928">
                 </picture>
                 <div id="mv-region-name" style="position:absolute;top: 8%;left: 1%;width: clamp(60px, 15vw, 115px);text-align: center;color: #808080;font-size: clamp(14px, 3.5vw, 27px);font-weight: 600;z-index:10;pointer-events:none;padding: clamp(4px, 1vw, 8px);border-radius: 8px;">東京</div>
                 <div id="mv-left-appeal-text" style="position:absolute;top: 25%;left: 14%;text-align: center;color: #808080;font-size: clamp(14px, 3.2vw, 25px);font-weight: 700;z-index:10;pointer-events:none;padding: clamp(6px, 1.5vw, 12px);">通院不要</div>
                 <svg id="mv-main-svg-text" style="position:absolute;top: 35%;left:39%;transform:translateX(-50%);z-index:10;pointer-events:none;overflow: visible;width: 60vw;height: 10vh;">
-                    <text x="50%" y="50%" text-anchor="middle" dominant-baseline="central" fill="#ff94ae" stroke="white" stroke-width="6px" paint-order="stroke" style="font-size: clamp(14px, 8vw, 62px);font-weight: 700;">
+                    <text x="50%" y="50%" text-anchor="middle" dominant-baseline="central" fill="#ff94ae" stroke="white" stroke-width="6px" paint-order="stroke" style="font-size: clamp(12px, 6vw, 46px);font-weight: 700;">
                         <tspan id="mv-region-text">東京</tspan>
                     </text>
                 </svg>
@@ -152,11 +151,7 @@
                                     <img src="images/Tips2.webp" alt="クリニック選びのポイント" style="width: 100%; height: auto; border-radius: 4px;" loading="lazy">
                                 </div>
                                 <p style="font-size: 14px; line-height: 1.8; color: #4C4C4C; margin-bottom: 15px;">
-                                    クリニック選びの失敗が美しい歯並び実現の失敗につながります。<br>
-                                    強引な勧誘は危険信号。次の3条件を満たす医院を選びましょう。<br><br>
-                                    ☑️医師が直接診察する<br>
-                                    ☑️治療後のアフターケア<br>
-                                    ☑️料金を明確に説明する
+                                    
                                 </p>
                             </div>
 
@@ -166,7 +161,7 @@
                                     <img src="images/Tips3.webp" alt="今がおすすめの理由" style="width: 100%; height: auto; border-radius: 4px;" loading="lazy">
                                 </div>
                                 <p style="font-size: 14px; line-height: 1.8; color: #4C4C4C; margin-bottom: 15px;">
-                                    卒業式や成人式、結婚式など大事なイベントが近づくと予約が取りにくくなり、料金も高くなりがち。今なら春先キャンペーンでお得に始められて、予約もスムーズ！美しい歯並びで新しい季節を迎えるなら今がラストチャンスです。
+                                    
                                 </p>
                             </div>
                         </div>
@@ -270,12 +265,12 @@
                                 <th class="" style="">費用</th>
                                 <th class="" style="">特徴</th>
                                 <th>公式サイト</th>
-                                <th class="th-none" style="display: none;">矯正範囲</th>
-                                <th class="th-none" style="display: none;">目安期間</th>
-                                <th class="th-none" style="display: none;">通院頻度</th>
-                                <th class="th-none" style="display: none;">実績/症例数</th>
-                                <th class="th-none" style="display: none;">ワイヤー矯正の紹介</th>
-                                <th class="th-none" style="display: none;">サポート</th>
+                                <th class="th-none" style="display: none;"></th>
+                                <th class="th-none" style="display: none;"></th>
+                                <th class="th-none" style="display: none;"></th>
+                                <th class="th-none" style="display: none;"></th>
+                                <th class="th-none" style="display: none;"></th>
+                                <th class="th-none" style="display: none;"></th>
                                 <th class="th-none" style="display: none;">詳細</th>
                             </tr>
                         </thead>
@@ -773,28 +768,7 @@ text-align: center;
             const clinicName = (dmForText && typeof dmForText.getClinicText === 'function' 
                 ? dmForText.getClinicText(clinicCode, 'ブランド名', clinicData.name)
                 : null) || clinicData.name || 'Oh my teeth';
-            
-            // クリニックIDまたは名前からslugを特定
-            const clinicIdToSlugMap = {
-                '1': 'omt',  // Oh my teeth
-                '2': 'invisalign',  // インビザライン
-                '3': 'ws',  // ウィスマイル
-                '4': 'kireiline',  // キレイライン矯正
-                '5': 'zenyum'  // ゼニュム
-            };
-            
-            const clinicNameToSlugMap = {
-                'Oh my teeth': 'omt',
-                'Ohmyteeth': 'omt',
-                'ゼニュム': 'zenyum',
-                'Zenyum': 'zenyum',
-                'キレイライン矯正': 'kireiline',
-                'ウィスマイル': 'ws',
-                'WE Smile': 'ws',
-                'インビザライン': 'invisalign',
-                'Invisalign': 'invisalign'
-            };
-            
+
             const clinicSlug = clinicData.code || clinicIdToSlugMap[clinicData.id] || clinicNameToSlugMap[clinicName] || clinicNameToSlugMap[clinicData.name] || 'omt';
             if (window.__DEBUG__) console.log('[DEBUG] setFirstChoiceClinic: clinicSlug', clinicSlug, 'clinicName', clinicName, 'clinicData', clinicData);
             
@@ -1063,14 +1037,6 @@ text-align: center;
                 return;
             }
 
-            // clinic-texts.jsonのキー名にマッピング
-            const slugToNameMap = {
-                'omt': 'Oh my teeth',
-                'zenyum': 'ゼニュム',
-                'kireiline': 'キレイライン矯正',
-                'ws': 'ウィスマイル',
-                'invisalign': 'インビザライン'
-            };
             const clinicKeyForTexts = slugToNameMap[clinicSlug] || clinicSlug;
             
             // DataManagerを使ってPOINT情報を取得（正しいキーを使用）
