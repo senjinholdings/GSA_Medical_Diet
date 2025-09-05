@@ -2441,7 +2441,7 @@ class RankingApp {
             // サイトロゴの更新（共通テキスト）
             const siteLogo = document.querySelector('.site-logo');
             if (siteLogo) {
-                const logoText = this.dataManager.getCommonText('サイト名', '矯正歯科おすすめ比較.com');
+                const logoText = this.dataManager.getCommonText('サイト名', '医療ダイエット比較.com');
                 siteLogo.textContent = logoText;
             } else {
                 console.warn('⚠️ サイトロゴ要素が見つかりません');
@@ -2535,14 +2535,14 @@ class RankingApp {
             // フッターサイト名の更新（共通テキスト）
             const footerSiteName = document.querySelector('.footer_contents h4 a');
             if (footerSiteName) {
-                const footerText = this.dataManager.getCommonText('サイト名', '矯正歯科おすすめ比較.com');
+                const footerText = this.dataManager.getCommonText('サイト名', '医療ダイエット比較.com');
                 footerSiteName.textContent = footerText;
             }
             
             // フッターコピーライトの更新（共通テキスト）
             const footerCopyright = document.querySelector('.copyright');
             if (footerCopyright) {
-                const siteName = this.dataManager.getCommonText('サイト名', '矯正歯科おすすめ比較.com');
+                const siteName = this.dataManager.getCommonText('サイト名', '医療ダイエット比較.com');
                 const copyrightText = '© 2025 ' + siteName;
                 footerCopyright.textContent = copyrightText;
             }
