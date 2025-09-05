@@ -312,6 +312,21 @@ class DisplayManager {
                 ? window.dataManager.getClinicText(clinicCode, 'ランキングプッシュメッセージ', '人気のクリニック')
                 : '人気のクリニック';
 
+            // ランキング1位時のみ、dataLayerに送信（ページ内で一度だけ）
+            if (rankNum === 1 && !window.__topRankEventPushed) {
+                window.__topRankEventPushed = true;
+                window.dataLayer = window.dataLayer || [];
+                window.dataLayer.push({
+                    event: 'ranking_ready',
+                    topClinicName: clinic.name,
+                    topClinicCode: clinicCode || ''
+                });
+                // GTM側でフィルタが設定できない場合のため、コード別のイベント名も送信
+                if ((clinicCode || '').toLowerCase() === 'dio') {
+                    window.dataLayer.push({ event: 'ranking_ready_dio' });
+                }
+            }
+
             // クリニックロゴのパスを取得
             let clinicLogoPath = '';
             if (clinicCode) {
