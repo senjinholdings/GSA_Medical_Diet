@@ -2090,6 +2090,45 @@ section.clinic-rankings .ranking-header-banner {
     transform: translateX(3px);
 }
 
+/* 空き枠確認ボタン */
+.btn.btn_availability_check {
+    display: inline-block;
+    margin-top: 8px;
+    margin-bottom: 5px;
+    width: 100%;
+}
+
+.btn.btn_availability_check a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0px;
+    background: white;
+    color: #ff95ad;
+    text-decoration: none;
+    padding: 14px 18px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(255, 140, 162, 0.2);
+    border: 2px solid #ff95ad;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.btn.btn_availability_check .bt_s {
+    font-size: 0.9rem;
+    white-space: nowrap;
+}
+
+.btn.btn_availability_check a:hover {
+    background: #fff5f7;
+    box-shadow: 0 4px 12px rgba(255, 140, 162, 0.3);
+}
+
 /* ===== 比較表セクション ===== */
 .comparison-section {
     padding: 30px 10px;
@@ -5617,6 +5656,23 @@ body.no-scroll { overflow: hidden; }
         width: 16px;
         height: 16px;
         margin-left: 5px;
+    }
+    
+    /* 空き枠確認ボタンのモバイル調整 */
+    .clinic-card .btn.btn_availability_check {
+        margin-top: 3px;
+        margin-bottom: 3px;
+    }
+    
+    .clinic-card .btn.btn_availability_check a {
+        padding: 4px 0px;
+        font-size: 0.65rem;
+        border-width: 1px;
+        border-radius: 4px;
+    }
+    
+    .clinic-card .btn.btn_availability_check .bt_s {
+        font-size: 0.65rem;
     }
     
     

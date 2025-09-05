@@ -366,8 +366,13 @@ class DisplayManager {
                     </div>
                     <p class="btn btn_second_primary">
                         <a href="${this.urlHandler.getClinicUrlWithRegionId(clinic.id, rankNum)}" target="_blank" rel="noopener">
-                            <span class="bt_s">公式サイト</span>
+                            <span class="bt_s">公式サイトで詳細を見る</span>
                             <span class="btn-arrow">▶</span>
+                        </a>
+                    </p>
+                    <p class="btn btn_availability_check">
+                        <a href="${this.urlHandler.getClinicUrlWithRegionId(clinic.id, rankNum)}" target="_blank" rel="noopener">
+                            <span class="bt_s">無料カウンセリングの空き枠を確認</span>
                         </a>
                     </p>
                 </div>
@@ -3685,8 +3690,13 @@ class RankingApp {
                 <div class="clinic-cta-button-wrapper">
                     <p class="btn btn_second_primary">
                         <a href="${this.urlHandler.getClinicUrlWithRegionId(clinic.id, clinic.rank)}" target="_blank" rel="noopener noreferrer">
-                            <span class="bt_s">無料カウンセリングはコチラ</span>
+                            <span class="bt_s">公式サイトで詳細を見る</span>
                             <span class="btn-arrow">▶</span>
+                        </a>
+                    </p>
+                    <p class="btn btn_availability_check">
+                        <a href="${this.urlHandler.getClinicUrlWithRegionId(clinic.id, clinic.rank)}" target="_blank" rel="noopener noreferrer">
+                            <span class="bt_s">無料カウンセリングの空き枠を確認</span>
                         </a>
                     </p>
                 </div>
@@ -3872,7 +3882,7 @@ class RankingApp {
                             const campaignHeader = this.dataManager.getClinicText(clinicCode, 'キャンペーンヘッダー', 'INFORMATION!');
                             const campaignDescription = this.dataManager.getClinicText(clinicCode, 'INFORMATIONキャンペーンテキスト', '');
                             const campaignMicrocopy = this.dataManager.getClinicText(clinicCode, 'INFORMATIONサブテキスト', '');
-                            const ctaText = this.dataManager.getClinicText(clinicCode, 'CTAボタンテキスト', `${clinic.name}の公式サイト`);
+                            const ctaText = this.dataManager.getClinicText(clinicCode, 'CTAボタンテキスト', `キャンペーンの詳細を見る`);
                             
                             const logoFolder = clinicCode === 'kireiline' ? 'kireiline' : clinicCode;
                             const logoSrc = `../common_data/images/clinics/${logoFolder}/${logoFolder}-logo.webp`;
@@ -3896,6 +3906,11 @@ class RankingApp {
                                         <a href="${this.urlHandler.getClinicUrlWithRegionId(clinicId, clinic.rank || 1)}" target="_blank" rel="noopener">
                                             <span class="bt_s">${ctaText}</span>
                                             <span class="btn-arrow">▶</span>
+                                        </a>
+                                    </p>
+                                    <p class="btn btn_availability_check" style="margin-top: 10px;">
+                                        <a href="${this.urlHandler.getClinicUrlWithRegionId(clinicId, clinic.rank || 1)}" target="_blank" rel="noopener">
+                                            <span class="bt_s">無料カウンセリングの空き枠を確認</span>
                                         </a>
                                     </p>
                                 </div>
