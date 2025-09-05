@@ -3903,7 +3903,7 @@ class RankingApp {
                                             <span class="btn-arrow">▶</span>
                                         </a>
                                     </p>
-                                    <p class="btn btn_outline_pink" style="margin-top: 10px;">
+                                    <p class="btn btn_outline_pink">
                                         <a class="ctaBtn-direct" href="${this.urlHandler.getClinicUrlWithRegionId(clinicId, clinic.rank || 1)}" target="_blank" rel="noopener">
                                             <span class="bt_s">無料相談の空き状況をチェック</span>
                                         </a>
