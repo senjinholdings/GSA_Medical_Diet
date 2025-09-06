@@ -3628,11 +3628,12 @@ class RankingApp {
                 return store.clinicName === storeClinicName;
             });
 
+            const rankIconPath = `../common_data/images/rank_icon/rank${rank}.webp`;
             detailItem.innerHTML = `
                 <div class="ranking_box_in">
                     <div class="detail-rank">
                         <div class="detail-rank-header">
-                            <div class="detail-rank-badge ${badgeClass}">${rank}</div>
+                            <div class="detail-rank-badge has-icon ${badgeClass}"><img class="rank-badge-icon" src="${rankIconPath}" alt="${rank}位"></div>
                             <div class="detail-title">
                                 <h3>${this.dataManager.processDecoTags(data.title)}</h3>
                                 <p>${this.dataManager.processDecoTags(data.subtitle)}</p>

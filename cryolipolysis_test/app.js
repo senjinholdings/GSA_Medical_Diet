@@ -3634,11 +3634,12 @@ class RankingApp {
                 return store.clinicName === storeClinicName;
             });
 
+            const rankIconPath = `../common_data/images/rank_icon/rank${rank}.webp`;
             detailItem.innerHTML = `
                 <div class="ranking_box_in">
                     <div class="detail-rank">
                         <div class="detail-rank-header">
-                            <div class="detail-rank-badge ${badgeClass}">${rank}</div>
+                            <div class="detail-rank-badge has-icon ${badgeClass}"><img class="rank-badge-icon" src="${rankIconPath}" alt="${rank}位"></div>
                             <div class="detail-title">
                                 <h3>${this.dataManager.processDecoTags(data.title)}</h3>
                                 <p>${this.dataManager.processDecoTags(data.subtitle)}</p>
@@ -3851,6 +3852,23 @@ class RankingApp {
                                 '../common_data/images/review_icon/review_icon9.webp'
                             ];
                             
+                            // ランク別のレビューアイコン表示順（0始まりのインデックス）
+                            // 1位: 1→9の順で連動
+                            // 2位: 3, 8, 1, 6, 7, 2, 9, 4, 5
+                            // 3位: 1, 6, 9, 2, 3, 4, 5, 8, 7
+                            // 4位: 7, 4, 5, 8, 9, 2, 1, 6, 3
+                            // 5位: 5, 2, 7, 6, 1, 4, 3, 8, 9
+                            const iconOrdersByRank = {
+                                1: [0,1,2,3,4,5,6,7,8],
+                                2: [2,7,0,5,6,1,8,3,4],
+                                3: [0,5,8,1,2,3,4,7,6],
+                                4: [6,3,4,7,8,1,0,5,2],
+                                5: [4,1,6,5,0,3,2,7,8]
+                            };
+                            // 未定義のランクは従来のローテーションから導出（ランク起点でずらす）
+                            const defaultOrder = Array.from({ length: reviewIcons.length }, (_, i) => (i + ((rank||1) - 1)) % reviewIcons.length);
+                            const iconOrder = iconOrdersByRank[rank] || defaultOrder;
+                            
                             let html = '';
                             const dm = this.dataManager;
                             
@@ -3860,7 +3878,10 @@ class RankingApp {
                                 html += `<div class="wrap_long2 ${activeClass}">`;
                                 const reviews = dm.getClinicReviewsByLabel(clinicCode, label);
                                 reviews.forEach((review, index) => {
-                                    const iconIndex = (rank + index + (catIdx*3)) % reviewIcons.length;
+                                    // 全体の表示順序に対する位置（カテゴリ×3件 + 各カテゴリ内のindex）
+                                    const globalIndex = (catIdx * 3) + index;
+                                    const orderIndex = globalIndex % iconOrder.length;
+                                    const iconIndex = iconOrder[orderIndex];
                                     html += `
                                         <div class="review_tab_box_in">
                                             <div class="review_tab_box_img">
