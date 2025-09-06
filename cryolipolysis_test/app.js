@@ -163,6 +163,35 @@ class UrlParamHandler {
         
         return redirectUrl;
     }
+
+    // 直フォームの遷移先URL（存在しない場合は通常のリダイレクトURLにフォールバック）
+    getDirectFormUrl(clinicId, rank = 1) {
+        try {
+            const dm = window.dataManager;
+            if (!dm) return this.getClinicUrlWithRegionId(clinicId, rank);
+            const clinicCode = dm.getClinicCodeById(clinicId);
+            if (!clinicCode) return this.getClinicUrlWithRegionId(clinicId, rank);
+            // ランク別キーを最優先で参照
+            const rankKeys = [
+                `直フォームの遷移先URL（${rank}位）`,
+                `直フォーム遷移先URL（${rank}位）`,
+                `直フォームURL（${rank}位）`
+            ];
+            for (let i=0;i<rankKeys.length;i++){
+                const v = dm.getClinicText(clinicCode, rankKeys[i], '').trim();
+                if (v) return v;
+            }
+            // 共通キー
+            const candidates = ['直フォームURL','直フォーム遷移先URL','無料相談フォームURL','予約フォームURL','フォームURL','問い合わせフォームURL','CTA直リンクURL'];
+            for (let i = 0; i < candidates.length; i++) {
+                const val = dm.getClinicText(clinicCode, candidates[i], '').trim();
+                if (val) return val;
+            }
+            return this.getClinicUrlWithRegionId(clinicId, rank);
+        } catch (_) {
+            return this.getClinicUrlWithRegionId(clinicId, rank);
+        }
+    }
 }
 
 // 表示管理クラス
@@ -3052,7 +3081,7 @@ class RankingApp {
             
             // クリニックのロゴ画像パスをclinic-texts.jsonから取得
             const imagesPath = window.SITE_CONFIG ? window.SITE_CONFIG.imagesPath + '/images' : '/images';
-            let logoPath = getClinicData('クリニックロゴ画像パス', '');
+            let logoPath = getClinicData('meta13', '') || getClinicData('クリニックロゴ画像パス', '');
             
             if (!logoPath) {
                 // フォールバック：コードベースのパス
@@ -3192,7 +3221,7 @@ class RankingApp {
         const infoLogo = document.getElementById('first-choice-info-logo');
         if (infoLogo) {
             const logoFolder = clinicCode;
-            const logoPath = window.dataManager.getClinicText(clinicCode, 'クリニックロゴ画像パス', '') || 
+            const logoPath = window.dataManager.getClinicText(clinicCode, 'meta13', '') || window.dataManager.getClinicText(clinicCode, 'クリニックロゴ画像パス', '') || 
                             `../common_data/images/clinics/${logoFolder}/${logoFolder}-logo.webp`;
             infoLogo.src = logoPath;
             infoLogo.alt = topClinic.name;
@@ -3690,7 +3719,7 @@ class RankingApp {
                         </a>
                     </p>
                     <p class="btn btn_outline_pink">
-                        <a class="ctaBtn-direct" href="${this.urlHandler.getClinicUrlWithRegionId(clinic.id, clinic.rank)}" target="_blank" rel="noopener noreferrer">
+                        <a class="ctaBtn-direct" href="${this.urlHandler.getDirectFormUrl(clinic.id, clinic.rank)}" target="_blank" rel="noopener noreferrer">
                             <span class="bt_s">無料相談の空き状況をチェック</span>
                         </a>
                     </p>
@@ -3904,7 +3933,7 @@ class RankingApp {
                                         </a>
                                     </p>
                                     <p class="btn btn_outline_pink">
-                                        <a class="ctaBtn-direct" href="${this.urlHandler.getClinicUrlWithRegionId(clinicId, clinic.rank || 1)}" target="_blank" rel="noopener">
+                                        <a class="ctaBtn-direct" href="${this.urlHandler.getDirectFormUrl(clinicId, clinic.rank || 1)}" target="_blank" rel="noopener">
                                             <span class="bt_s">無料相談の空き状況をチェック</span>
                                         </a>
                                     </p>

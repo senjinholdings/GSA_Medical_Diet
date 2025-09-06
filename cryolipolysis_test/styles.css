@@ -3316,8 +3316,8 @@ body.no-scroll { overflow: hidden; }
 }
 
 .detail-rank .ranking__name a {
-    color: #5a4fcf;
-    text-decoration: none;
+    color: #0022af;
+    text-decoration: underline;
     font-weight: bold;
     display: block;
     text-shadow: 1px 1px 0 #fff,
@@ -3333,8 +3333,8 @@ body.no-scroll { overflow: hidden; }
 }
 
 .detail-rank .ranking__name a {
-    color: #5a4fcf;
-    text-decoration: none;
+    color: #0022af;
+    text-decoration: underline;
     font-weight: bold;
     display: block;
 }
