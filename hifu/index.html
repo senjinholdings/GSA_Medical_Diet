@@ -1057,11 +1057,13 @@ text-align: center;
             
             const officialUrl = `https://www.xn--ecki4eoz3204ct89aepry34c.com/go/${clinicSlug}/?max_scroll=100&region_id=013`;
             
+            const iconClasses = ['fa-lightbulb', 'fa-mobile-alt', 'fa-yen-sign'];
             let html = '';
-            reasons.forEach(reason => {
+            reasons.forEach((reason, idx) => {
+                const icon = iconClasses[idx] || 'fa-clock';
                 html += `
                     <div class="ribbon_point_title2_s">
-                        <i class="fas fa-clock point-icon-inline"></i>
+                        <i class="fas ${icon} point-icon-inline"></i>
                         <strong>${dm.processDecoTags ? dm.processDecoTags(reason.title) : reason.title}</strong>
                     </div>
                     <div class="ribbon_point_txt">

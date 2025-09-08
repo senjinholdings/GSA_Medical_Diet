@@ -3213,6 +3213,16 @@ class RankingApp {
         if (point3Title) point3Title.textContent = window.dataManager.getClinicText(clinicCode, 'POINT3タイトル', '');
         if (point3Desc) point3Desc.innerHTML = window.dataManager.getClinicText(clinicCode, 'POINT3内容', '');
         
+        // おすすめ3ポイントのアイコンを設定（3種類）
+        try {
+            const iconElems = document.querySelectorAll('#first-choice-points .ribbon_point_title2_s i.point-icon-inline');
+            const iconClasses = ['fa-lightbulb', 'fa-mobile-alt', 'fa-yen-sign'];
+            iconElems.forEach((el, idx) => {
+                el.classList.remove('fa-clock', 'fa-lightbulb', 'fa-mobile-alt', 'fa-yen-sign', 'fa-user-md', 'fa-coins');
+                el.classList.add(iconClasses[idx] || 'fa-clock');
+            });
+        } catch (_) {}
+        
         // ロゴ画像を更新
         const infoLogo = document.getElementById('first-choice-info-logo');
         if (infoLogo) {
