@@ -3847,6 +3847,15 @@ class RankingApp {
                                 '../common_data/images/review_icon/review_icon8.webp',
                                 '../common_data/images/review_icon/review_icon9.webp'
                             ];
+                            const iconOrdersByRank = {
+                                1: [0,1,2,3,4,5,6,7,8],
+                                2: [2,7,0,5,6,1,8,3,4],
+                                3: [0,5,8,1,2,3,4,7,6],
+                                4: [6,3,4,7,8,1,0,5,2],
+                                5: [4,1,6,5,0,3,2,7,8]
+                            };
+                            const defaultOrder = Array.from({ length: reviewIcons.length }, (_, i) => (i + ((rank||1) - 1)) % reviewIcons.length);
+                            const iconOrder = iconOrdersByRank[rank] || defaultOrder;
                             
                             let html = '';
                             const dm = this.dataManager;
@@ -3857,7 +3866,9 @@ class RankingApp {
                                 html += `<div class="wrap_long2 ${activeClass}">`;
                                 const reviews = dm.getClinicReviewsByLabel(clinicCode, label);
                                 reviews.forEach((review, index) => {
-                                    const iconIndex = (rank + index + (catIdx*3)) % reviewIcons.length;
+                                    const globalIndex = (catIdx * 3) + index;
+                                    const orderIndex = globalIndex % iconOrder.length;
+                                    const iconIndex = iconOrder[orderIndex];
                                     html += `
                                         <div class="review_tab_box_in">
                                             <div class="review_tab_box_img">
