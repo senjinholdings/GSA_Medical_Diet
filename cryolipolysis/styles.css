@@ -3255,17 +3255,11 @@ body.no-scroll { overflow: hidden; }
 .detail-rank-badge {
     width: 60px;
     height: 60px;
-    background: linear-gradient(135deg, #f0a0a5 0%, #ffc0cb 100%);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-weight: 800;
-    font-size: 1.5rem;
-    color: white;
-    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
     flex-shrink: 0;
-    border: 3px solid #ffed4e;
 }
 
 .detail-rank-badge.silver {
@@ -3290,6 +3284,19 @@ body.no-scroll { overflow: hidden; }
     background: linear-gradient(135deg, #a8a8a8 0%, #e4e4e4 100%);
     box-shadow: 0 4px 15px rgb(255 250 245 / 40%);
     border: 3px solid #cfcfcf;
+}
+
+/* アイコン化されたバッジの見た目調整 */
+.detail-rank-badge.has-icon {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+}
+.detail-rank-badge.has-icon .rank-badge-icon {
+    width: 60px;
+    height: 60px;
+    display: block;
 }
 
 .detail-title {
@@ -3317,7 +3324,7 @@ body.no-scroll { overflow: hidden; }
 
 .detail-rank .ranking__name a {
     color: #0022af;
-    text-decoration: none;
+    text-decoration: underline;
     font-weight: bold;
     display: block;
     text-shadow: 1px 1px 0 #fff,
@@ -3334,7 +3341,7 @@ body.no-scroll { overflow: hidden; }
 
 .detail-rank .ranking__name a {
     color: #0022af;
-    text-decoration: none;
+    text-decoration: underline;
     font-weight: bold;
     display: block;
 }
@@ -4733,8 +4740,8 @@ body.no-scroll { overflow: hidden; }
     .detail-rank-badge {
         width: 45px;
         height: 45px;
-        font-size: 1rem;
     }
+    .detail-rank-badge.has-icon .rank-badge-icon { width: 45px; height: 45px; }
     
     .detail-rank .ranking__name {
         font-size: 1rem;

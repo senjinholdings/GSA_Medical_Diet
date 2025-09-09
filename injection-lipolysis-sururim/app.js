@@ -163,34 +163,28 @@ class UrlParamHandler {
         
         return redirectUrl;
     }
-
-    // 直フォームの遷移先URL（存在しない場合は通常のリダイレクトURLにフォールバック）
     getDirectFormUrl(clinicId, rank = 1) {
         try {
             const dm = window.dataManager;
             if (!dm) return this.getClinicUrlWithRegionId(clinicId, rank);
             const clinicCode = dm.getClinicCodeById(clinicId);
             if (!clinicCode) return this.getClinicUrlWithRegionId(clinicId, rank);
-            // ランク別キーを最優先で参照
             const rankKeys = [
                 `直フォームの遷移先URL（${rank}位）`,
                 `直フォーム遷移先URL（${rank}位）`,
                 `直フォームURL（${rank}位）`
             ];
             for (let i=0;i<rankKeys.length;i++){
-                const v = dm.getClinicText(clinicCode, rankKeys[i], '').trim();
+                const vv = dm.getClinicText(clinicCode, rankKeys[i], '').trim();
+                if (vv) return vv;
+            }
+            const candidates = ['直フォームURL','直フォーム遷移先URL','無料相談フォームURL','予約フォームURL','フォームURL','問い合わせフォームURL','CTA直リンクURL'];
+            for (let i=0;i<candidates.length;i++){
+                const v = dm.getClinicText(clinicCode, candidates[i], '').trim();
                 if (v) return v;
             }
-            // 共通キー
-            const candidates = ['直フォームURL','直フォーム遷移先URL','無料相談フォームURL','予約フォームURL','フォームURL','問い合わせフォームURL','CTA直リンクURL'];
-            for (let i = 0; i < candidates.length; i++) {
-                const val = dm.getClinicText(clinicCode, candidates[i], '').trim();
-                if (val) return val;
-            }
             return this.getClinicUrlWithRegionId(clinicId, rank);
-        } catch (_) {
-            return this.getClinicUrlWithRegionId(clinicId, rank);
-        }
+        } catch(_) { return this.getClinicUrlWithRegionId(clinicId, rank); }
     }
 }
 
@@ -326,7 +320,7 @@ class DisplayManager {
             
             if (clinicCodeForImage) {
                 // clinic-texts.jsonからパスを取得
-                const imagePath = window.dataManager.getClinicText(clinicCodeForImage, 'クリニックロゴ画像パス', '');
+                const imagePath = window.dataManager.getClinicText(clinicCodeForImage, 'meta13', '') || window.dataManager.getClinicText(clinicCodeForImage, 'クリニックロゴ画像パス', '');
                 if (imagePath) {
                     bannerImage = imagePath;
                 } else {
@@ -359,7 +353,7 @@ class DisplayManager {
             // クリニックロゴのパスを取得
             let clinicLogoPath = '';
             if (clinicCode) {
-                const logoPathFromJson = window.dataManager.getClinicText(clinicCode, 'ロゴ画像パス', '');
+                const logoPathFromJson = window.dataManager.getClinicText(clinicCode, 'meta13', '') || window.dataManager.getClinicText(clinicCode, 'ロゴ画像パス', '');
                 if (logoPathFromJson) {
                     clinicLogoPath = logoPathFromJson;
                 } else {
@@ -1626,7 +1620,7 @@ class DataManager {
     getClinicLogoPath(clinicCode) {
         // キレイラインの特別処理
         const logoFolder = clinicCode === 'kireiline' ? 'kireiline' : clinicCode;
-        return this.getClinicText(clinicCode, 'クリニックロゴ画像パス', `../common_data/images/clinics/${logoFolder}/${logoFolder}-logo.webp`);
+        return this.getClinicText(clinicCode, 'meta13', '') || this.getClinicText(clinicCode, 'クリニックロゴ画像パス', `../common_data/images/clinics/${logoFolder}/${logoFolder}-logo.webp`);
     }
 
     // クリニック詳細データを動的に取得
@@ -2479,7 +2473,7 @@ class RankingApp {
             // MVアピールテキストの更新（共通テキスト）
             const appealText1Element = document.getElementById('mv-left-appeal-text');
             if (appealText1Element) {
-                const text1 = this.dataManager.getCommonText('MVアピールテキスト1', 'コスパ');
+                const text1 = this.dataManager.getCommonText('MVアピールテキスト1', '');
                 appealText1Element.textContent = text1;
             }
 
@@ -2487,7 +2481,7 @@ class RankingApp {
             // SVGテキストの更新（共通テキスト）
             const svgText1Element = document.querySelector('#mv-main-svg-text text');
             if (svgText1Element) {
-                const svgText1 = this.dataManager.getCommonText('MVSVGテキスト1', '脂肪溶解注射');
+                const svgText1 = this.dataManager.getCommonText('MVSVGテキスト1', '');
                 svgText1Element.textContent = svgText1;
             }
 
@@ -2510,7 +2504,7 @@ class RankingApp {
                 }
                 
                 // プレースホルダーを使用してテキストを取得
-                const svgText2 = this.dataManager.getCommonText('MVSVGテキスト2', 'ランキング', {
+                const svgText2 = this.dataManager.getCommonText('MVSVGテキスト2', '', {
                     RANK_COUNT: rankCount
                 });
                 svgText2Element.textContent = svgText2;
@@ -2831,7 +2825,7 @@ class RankingApp {
                 if (fieldName === 'クリニック名') {
                     // クリニック名とロゴ
                     const imagesPath = window.SITE_CONFIG ? window.SITE_CONFIG.imagesPath + '/images' : '/images';
-                    let logoPath = this.dataManager.getClinicText(clinicCode, 'クリニックロゴ画像パス', '');
+                    let logoPath = this.dataManager.getClinicText(clinicCode, 'meta13', '') || this.dataManager.getClinicText(clinicCode, 'クリニックロゴ画像パス', '');
 
                     if (!logoPath) {
                         // clinicCodeをそのままlogoFolderとして使用（invisalignの特別処理を削除）
@@ -3222,12 +3216,11 @@ class RankingApp {
             const iconElems = document.querySelectorAll('#first-choice-points .ribbon_point_title2_s i.point-icon-inline');
             const iconClasses = ['fa-lightbulb', 'fa-mobile-alt', 'fa-yen-sign'];
             iconElems.forEach((el, idx) => {
-                // 既存の代表的なアイコンクラスをリセット
                 el.classList.remove('fa-clock', 'fa-lightbulb', 'fa-mobile-alt', 'fa-yen-sign', 'fa-user-md', 'fa-coins');
                 el.classList.add(iconClasses[idx] || 'fa-clock');
             });
         } catch (_) {}
-
+        
         // ロゴ画像を更新
         const infoLogo = document.getElementById('first-choice-info-logo');
         if (infoLogo) {
@@ -3862,13 +3855,6 @@ class RankingApp {
                                 '../common_data/images/review_icon/review_icon8.webp',
                                 '../common_data/images/review_icon/review_icon9.webp'
                             ];
-                            
-                            // ランク別のレビューアイコン表示順（0始まりのインデックス）
-                            // 1位: 1→9の順で連動
-                            // 2位: 3, 8, 1, 6, 7, 2, 9, 4, 5
-                            // 3位: 1, 6, 9, 2, 3, 4, 5, 8, 7
-                            // 4位: 7, 4, 5, 8, 9, 2, 1, 6, 3
-                            // 5位: 5, 2, 7, 6, 1, 4, 3, 8, 9
                             const iconOrdersByRank = {
                                 1: [0,1,2,3,4,5,6,7,8],
                                 2: [2,7,0,5,6,1,8,3,4],
@@ -3876,7 +3862,6 @@ class RankingApp {
                                 4: [6,3,4,7,8,1,0,5,2],
                                 5: [4,1,6,5,0,3,2,7,8]
                             };
-                            // 未定義のランクは従来のローテーションから導出（ランク起点でずらす）
                             const defaultOrder = Array.from({ length: reviewIcons.length }, (_, i) => (i + ((rank||1) - 1)) % reviewIcons.length);
                             const iconOrder = iconOrdersByRank[rank] || defaultOrder;
                             
@@ -3889,7 +3874,6 @@ class RankingApp {
                                 html += `<div class="wrap_long2 ${activeClass}">`;
                                 const reviews = dm.getClinicReviewsByLabel(clinicCode, label);
                                 reviews.forEach((review, index) => {
-                                    // 全体の表示順序に対する位置（カテゴリ×3件 + 各カテゴリ内のindex）
                                     const globalIndex = (catIdx * 3) + index;
                                     const orderIndex = globalIndex % iconOrder.length;
                                     const iconIndex = iconOrder[orderIndex];

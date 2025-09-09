@@ -1057,7 +1057,9 @@ text-align: center;
             
             const officialUrl = `https://www.xn--ecki4eoz3204ct89aepry34c.com/go/${clinicSlug}/?max_scroll=100&region_id=013`;
             
+            // アイコンを3種類用意（案件詳細ポイントに合わせた雰囲気）
             const iconClasses = ['fa-lightbulb', 'fa-mobile-alt', 'fa-yen-sign'];
+
             let html = '';
             reasons.forEach((reason, idx) => {
                 const icon = iconClasses[idx] || 'fa-clock';

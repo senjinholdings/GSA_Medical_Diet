@@ -1,0 +1,339 @@
+/* Mybest風ヒーローセクションのテキストオーバーレイ */
+.hero-section .hero-image-wrapper {
+    position: relative;
+    overflow: hidden; /* テキストがはみ出さないように */
+}
+
+.hero-text-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    text-align: center;
+    width: 90%;
+    max-width: 800px;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.5); /* 背景を少し暗くしてテキストを読みやすくする */
+    border-radius: 10px;
+    z-index: 10;
+}
+
+.hero-text-overlay .main-title h1 {
+    font-size: clamp(24px, 5vw, 42px);
+    font-weight: 700;
+    margin: 0 0 15px 0;
+    line-height: 1.4;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+}
+
+.hero-text-overlay .sub-copy p {
+    font-size: clamp(14px, 3vw, 18px);
+    margin: 0 0 20px 0;
+    line-height: 1.6;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
+}
+
+.hero-text-overlay .authority-badge {
+    display: flex;
+    flex-direction: column;
+    align-items-center;
+    gap: 10px;
+    font-size: clamp(12px, 2.5vw, 15px);
+}
+
+.hero-text-overlay .authority-badge span {
+    background-color: rgba(44, 199, 197, 0.9);
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.hero-text-overlay .authority-badge .fas {
+    font-size: 1.1em;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+    .hero-text-overlay {
+        width: 95%;
+    }
+}
+
+/* Mybest風 導入文 */
+.mybest-intro {
+    font-size: 14px;
+    line-height: 1.8;
+    color: #333;
+}
+
+.mybest-intro .intro-paragraph {
+    margin-bottom: 2em;
+}
+
+/* ユーザーが手動で追加したdecoタグ用のスタイル */
+deco {
+    font-weight: bold;
+    color: #fa7894;
+}
+nega {
+    font-weight: bold;
+    color: #005aab;
+}
+
+/* 導入文のサブタイトル */
+.intro-subtitle {
+    font-size: 20px;
+    font-weight: 700;
+    text-align: center;
+    margin: 40px 0 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #eee;
+    position: relative;
+}
+.intro-subtitle::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 25%;
+    height: 2px;
+    background-color: #2CC7C5;
+}
+
+
+/* 画像プレースホルダー */
+.image-placeholder-container {
+    text-align: center;
+    margin: 25px auto;
+}
+.image-placeholder-container img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    border: 1px solid #eee;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+.image-caption {
+    font-size: 13px;
+    color: #888;
+    margin-top: 8px;
+}
+
+/* チェックリスト */
+.check-list {
+    list-style: none;
+    padding: 15px 20px;
+    margin: 25px auto;
+    border: 1px solid #f0f0f0;
+    border-radius: 8px;
+    background: #fafafa;
+}
+.check-list li {
+    position: relative;
+    padding-left: 1.8em;
+    margin-bottom: 1em;
+    font-size: 14px;
+    line-height: 1.8;
+}
+.check-list li:last-child {
+    margin-bottom: 0;
+}
+.check-list li::before {
+    content: "\f00c"; /* Font Awesome check icon */
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    position: absolute;
+    left: 0;
+    top: 4px;
+    color: #2CC7C5;
+    font-size: 1em;
+}
+
+/* 注意書きボックス */
+.note-box {
+    background: #fffbe6;
+    border: 1px solid #ffe58f;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 30px 0;
+    font-size: 14px;
+}
+.note-box p {
+    margin: 0;
+    line-height: 1.8;
+}
+
+/* 編集部の見解ボックス */
+.summary-box {
+    background: #f7f7f7;
+    border-radius: 8px;
+    margin: 40px 0 20px;
+    padding: 25px;
+    border-top: 5px solid #2CC7C5;
+}
+.summary-box-header {
+    font-size: 19px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 20px;
+}
+.summary-list {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+.summary-list li {
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+    margin-bottom: 15px;
+}
+.summary-list li:last-child {
+    margin-bottom: 0;
+}
+.summary-list .fas {
+    color: #2CC7C5;
+    font-size: 20px;
+    width: 30px;
+    text-align: center;
+    margin-right: 15px;
+}
+
+/* Introセクションのスタイル（inlineをクラス化） */
+.intro-section {
+    max-width: 768px;
+    margin: 20px auto;
+    padding: 0 10px;
+}
+
+.intro-content {
+    background: #fff;
+    padding: 10px 10px 5px 5px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.intro-title {
+    font-size: 19px;
+    text-align: center;
+    margin-bottom: 25px;
+    line-height: 1.5;
+}
+
+/* =============================
+   Tipsセクション トンマナ統一
+   - サイト全体の配色/余白/角丸/影に合わせる
+   - 既存styles.cssを壊さないよう上書きのみ
+   ============================= */
+
+/* コンテナ幅・余白 */
+.tips-container {
+    max-width: 768px;
+    margin: 30px auto;
+    padding: 0 15px;
+}
+
+/* タブ行 */
+.tips-container .tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+}
+
+/* タブボタン（通常） */
+.tips-container .tab {
+    background: #F1F1F1;
+    color: #4C4C4C;
+    border-radius: 9999px;
+    padding: 10px 16px;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 1;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* タブ（ホバー） */
+.tips-container .tab:hover {
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+}
+
+/* タブ（アクティブ用クラス）
+   JSでinline styleを当てているが、クラスでも統一できるようにしておく */
+.tips-container .tab.is-active {
+    background: #2CC7C5;
+    color: #fff;
+}
+
+/* スライダー/本文ラッパー */
+.tips-container .slider-content {
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    padding: 18px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+}
+
+/* スライド内余白 */
+.tips-container .slide {
+    padding: 0 8px;
+}
+
+/* ナビ矢印（存在する場合） */
+.tips-container .slider-nav {
+    background: #fff;
+    border: 1px solid #eee;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+/* 見出し・テキストの色/サイズを全体トンマナに合わせる */
+.tips-container h2 { font-size: 20px; color: #333; font-weight: 700; }
+.tips-container h3 { font-size: 16px; color: #333; font-weight: 600; }
+.tips-container h4 { font-size: 14px; color: #4C4C4C; font-weight: 600; }
+.tips-container p,
+.tips-container li { font-size: 14px; color: #4C4C4C; line-height: 1.8; }
+
+/* Medical columns 内のTipsカード群も統一 */
+.medical-columns-section .tips-merits-card,
+.medical-columns-section .tips-side-effects-card,
+.medical-columns-section .precautions-item {
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+}
+
+.medical-columns-section .merits-title,
+.medical-columns-section .subsection-title {
+    color: #2CC7C5;
+    font-weight: 700;
+}
+
+.medical-columns-section .merits-list,
+.medical-columns-section .section-content {
+    color: #4C4C4C;
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+/* モバイル最適化（既存を壊さず軽く調整） */
+@media (max-width: 768px) {
+    .tips-container { padding: 0 12px; }
+    .tips-container .tab { font-size: 13px; padding: 9px 14px; }
+    .tips-container .slider-content { padding: 14px; }
+    .tips-container h2 { font-size: 18px; }
+    .tips-container h3 { font-size: 15px; }
+    .tips-container h4 { font-size: 14px; }
+}
+
+@media (max-width: 480px) {
+    .tips-container { padding: 0 10px; }
+    .tips-container .tab { font-size: 12px; padding: 8px 12px; }
+    .tips-container .slider-content { padding: 12px; }
+}
