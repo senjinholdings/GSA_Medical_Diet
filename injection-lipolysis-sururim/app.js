@@ -5195,7 +5195,7 @@ function initializeScrollModal() {
         // console.log('Scroll percentage:', scrollPercentage); // debug removed per request
         
         // 10%以上スクロールしたら表示
-        if (scrollPercentage >= 6.5) {
+        if (scrollPercentage >= 12.5) {
             showModal();
         }
     }
