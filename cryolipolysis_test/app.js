@@ -543,7 +543,6 @@ class DisplayManager {
         });
     }
 }
-
 // データ管理クラス
 class DataManager {
     constructor() {
@@ -587,25 +586,43 @@ class DataManager {
             
             // 画像パスを動的に設定（DOMの構築を待つ）
             setTimeout(() => {
-                // MV画像
-                if (this.commonTexts['MV画像パス']) {
-                    const heroImage = document.querySelector('.hero-image');
-                    const heroSource = document.querySelector('.hero-image-wrapper source');
-                    if (heroImage) {
-                        heroImage.src = this.commonTexts['MV画像パス'];
-                    }
-                    if (heroSource) {
-                        heroSource.srcset = this.commonTexts['MV画像パス'];
-                    }
+                // MV画像: region_id に対応する画像を images/mv/{region_id}.webp から読み込み
+                // 画像が存在しない場合は 013.webp にフォールバック
+                const urlParams = new URLSearchParams(window.location.search);
+                let regionIdRaw = urlParams.get('region_id') || '013';
+                let ridNum = parseInt(regionIdRaw, 10);
+                if (!Number.isFinite(ridNum) || ridNum <= 0) ridNum = 13; // 無効/全国は13にフォールバック
+                const mvPath = `images/mv/${ridNum}.webp`;
+                const mvFallback = 'images/mv/13.webp';
+                const heroImage = document.querySelector('.hero-image');
+                const heroSource = document.querySelector('.hero-image-wrapper source');
+                if (heroSource) {
+                    heroSource.srcset = mvPath;
+                }
+                if (heroImage) {
+                    heroImage.onerror = () => {
+                        if (heroImage.src && !heroImage.src.endsWith('/013.webp')) {
+                            heroImage.src = mvFallback;
+                            if (heroSource) heroSource.srcset = mvFallback;
+                        }
+                    };
+                    heroImage.src = mvPath;
                 }
                 
-                // ランキングバナー画像
-                if (this.commonTexts['ランキングバナー画像パス']) {
+                // ランキングバナー画像: images/ranking_header/{region_id数値}.webp（なければ13.webp）
+                try {
+                    let ridNum2 = parseInt(urlParams.get('region_id') || '13', 10);
+                    if (!Number.isFinite(ridNum2) || ridNum2 <= 0) ridNum2 = 13;
+                    const bannerPath = `images/ranking_header/${ridNum2}.webp`;
+                    const bannerFallback = 'images/ranking_header/13.webp';
                     const rankingBanners = document.querySelectorAll('.ranking-banner-image');
                     rankingBanners.forEach(img => {
-                        img.src = this.commonTexts['ランキングバナー画像パス'];
+                        img.onerror = () => {
+                            if (img.src && !img.src.endsWith('/13.webp')) img.src = bannerFallback;
+                        };
+                        img.src = bannerPath;
                     });
-                }
+                } catch (_) {}
                 
                 // Tips1画像
                 if (this.commonTexts['Tips1画像パス']) {
@@ -1345,7 +1362,6 @@ class DataManager {
         const rating = this.getClinicText(clinicCode, '総合評価', defaultRating.toString());
         return parseFloat(rating) || defaultRating;
     }
-
     // クリニック名を取得する関数
     getClinicName(clinicCode, defaultName = 'クリニック') {
         return this.getClinicText(clinicCode, 'クリニック名', defaultName);
@@ -1926,7 +1942,6 @@ class DataManager {
         );
     }
 }
-
 // アプリケーションクラス
 class RankingApp {
     constructor() {
@@ -2262,6 +2277,41 @@ class RankingApp {
                 comparisonRegionElement.textContent = region.name;
             }
 
+            // MV画像を地域IDに合わせて更新（images/mv/{region_id}.webp、なければ013.webp）
+            try {
+                let ridNum = parseInt(regionId, 10);
+                if (!Number.isFinite(ridNum) || ridNum <= 0) ridNum = 13;
+                const mvPath = `images/mv/${ridNum}.webp`;
+                const mvFallback = 'images/mv/13.webp';
+                const heroImage = document.querySelector('.hero-image');
+                const heroSource = document.querySelector('.hero-image-wrapper source');
+                if (heroSource) heroSource.srcset = mvPath;
+                if (heroImage) {
+                    heroImage.onerror = () => {
+                        if (heroImage.src && !heroImage.src.endsWith('/13.webp')) {
+                            heroImage.src = mvFallback;
+                            if (heroSource) heroSource.srcset = mvFallback;
+                        }
+                    };
+                    heroImage.src = mvPath;
+                }
+            } catch (_) {}
+
+            // ランキングヘッダーバナーも地域に合わせて更新
+            try {
+                let ridNum3 = parseInt(regionId, 10);
+                if (!Number.isFinite(ridNum3) || ridNum3 <= 0) ridNum3 = 13;
+                const bannerPath = `images/ranking_header/${ridNum3}.webp`;
+                const bannerFallback = 'images/ranking_header/13.webp';
+                const rankingBanners = document.querySelectorAll('.ranking-banner-image');
+                rankingBanners.forEach(img => {
+                    img.onerror = () => {
+                        if (img.src && !img.src.endsWith('/13.webp')) img.src = bannerFallback;
+                    };
+                    img.src = bannerPath;
+                });
+            } catch (_) {}
+
             //MVの地域名も更新
             const mvRegionElement = document.getElementById('mv-region-name');
             if (mvRegionElement) {
@@ -2547,11 +2597,22 @@ class RankingApp {
                 comparisonTitle.innerHTML = `<span id="comparison-region-name">${regionName}</span>${titleText}`;
             }
 
-            // 比較表サブタイトルの更新（共通テキスト）
+            // 比較表サブタイトルの更新（地域別画像）
             const comparisonSubtitle = document.querySelector('.comparison-subtitle');
             if (comparisonSubtitle) {
-                const subtitleHtml = this.dataManager.getCommonText('比較表サブタイトル', 'クリニックを<span class="pink-text">徹底比較</span>');
-                comparisonSubtitle.innerHTML = this.dataManager.processDecoTags(subtitleHtml);
+                let ridNum = parseInt(regionId, 10);
+                if (!Number.isFinite(ridNum) || ridNum <= 0) ridNum = 13;
+                const cmpPath = `images/comparison_header/${ridNum}.webp`;
+                const cmpFallback = 'images/comparison_header/13.webp';
+                comparisonSubtitle.innerHTML = `<img src="${cmpPath}" alt="クリニックを徹底比較" style="width: 100%; height: auto;">`;
+                const cmpImg = comparisonSubtitle.querySelector('img');
+                if (cmpImg) {
+                    cmpImg.onerror = () => {
+                        if (cmpImg.src && !cmpImg.src.endsWith('/13.webp')) {
+                            cmpImg.src = cmpFallback;
+                        }
+                    };
+                }
             }
             
             // 案件詳細バナーのalt属性を更新（共通テキスト）
@@ -2710,7 +2771,6 @@ class RankingApp {
         // この関数は使用しない
         return;
     }
-
     // 比較表タブ機能のセットアップ
     setupComparisonTabs() {
         // タブボタンのHTMLを動的に生成する処理を削除
@@ -3430,7 +3490,6 @@ class RankingApp {
             });
         });
     }
-    
     // 詳細を見るリンクのイベントリスナーを設定
     setupDetailScrollLinks() {
         
@@ -4169,7 +4228,6 @@ class RankingApp {
             </iframe>
         `;
     }
-
     // 地図モーダルのイベントリスナーを設定
     setupMapAccordions() {
         
@@ -4896,7 +4954,6 @@ function initializeBannerSliders() {
         updateNavVisibility();
     });
 }
-
 // バナー拡大モーダル（potenza002から移植）
 function createAndShowModal(imageUrls, startIndex) {
     const existingModal = document.querySelector('.banner-modal');
