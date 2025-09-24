@@ -3,6 +3,56 @@
 /* Vercel deployment trigger - 2025/08/05 08:32:19 */
 
 /* グローバルリセット */
+:root {
+    /* デフォルトテーマカラー（custom/theme.css で上書き無い場合に使用） */
+    --theme-base-default: #2cc7c5;
+    --theme-action-default: #ff95ad;
+
+    /* 実際にUIで参照されるテーマカラー */
+    --theme-base: var(--theme-base-override, var(--theme-base-default));
+    --theme-action: var(--theme-action-override, var(--theme-action-default));
+
+    --theme-base-contrast: #ffffff;
+    --theme-base-soft: color-mix(in srgb, var(--theme-base) 12%, white 88%);
+    --theme-base-outline: color-mix(in srgb, var(--theme-base) 85%, white 15%);
+    --theme-base-shadow: color-mix(in srgb, var(--theme-base) 40%, transparent 60%);
+    --theme-base-dark: color-mix(in srgb, var(--theme-base) 75%, black 25%);
+    --theme-base-alpha-65: color-mix(in srgb, var(--theme-base) 65%, transparent 35%);
+    --theme-base-accent: hsl(
+        from var(--theme-base)
+        calc(h + 0.13deg)
+        clamp(0%, calc(s * 1.114), 100%)
+        clamp(0%, calc(l * 0.911), 100%)
+    );
+
+    --theme-action-contrast: #ffffff;
+    --theme-action-gradient-start: color-mix(in srgb, var(--theme-action) 80%, white 20%);
+    --theme-action-gradient-end: color-mix(in srgb, var(--theme-action) 55%, white 45%);
+    --theme-action-soft: color-mix(in srgb, var(--theme-action) 15%, white 85%);
+    --theme-action-soft-strong: color-mix(in srgb, var(--theme-action) 25%, white 75%);
+    --theme-action-border: color-mix(in srgb, var(--theme-action) 75%, white 25%);
+    --theme-action-dark: color-mix(in srgb, var(--theme-action) 70%, black 30%);
+    --theme-action-strong: color-mix(in srgb, var(--theme-action) 85%, black 40%);
+    --theme-action-shadow: color-mix(in srgb, var(--theme-action) 92%, white 8%);
+    --theme-action-shade-soft: hsl(
+        from var(--theme-action)
+        h
+        clamp(0%, calc(s * 0.793), 100%)
+        clamp(0%, calc(l * 0.903), 100%)
+    );
+    --theme-action-shade-medium: hsl(
+        from var(--theme-action)
+        h
+        clamp(0%, calc(s * 0.525), 100%)
+        clamp(0%, calc(l * 0.762), 100%)
+    );
+    --theme-action-shade-strong: hsl(
+        from var(--theme-action)
+        calc(h - 16.6deg)
+        clamp(0%, calc(s * 0.559), 100%)
+        clamp(0%, calc(l * 0.606), 100%)
+    );
+}
 *, *::before, *::after {
     box-sizing: border-box !important;
 }
@@ -50,11 +100,12 @@ section, main, header, footer, nav, aside, article {
     padding: 0 10px;
 }
 
+
 .brand-section h3 {
     font-size: 18px;
     margin-bottom: 15px;
     color: #333;
-    border-bottom: 2px solid #2CC7C5;
+    border-bottom: 2px solid var(--theme-base);
     padding-bottom: 5px;
 }
 
@@ -68,7 +119,7 @@ section, main, header, footer, nav, aside, article {
 .clinic-stores-section h4 {
     font-size: 16px;
     margin-bottom: 10px;
-    color: #2CC7C5;
+    color: var(--theme-base);
 }
 
 .stores-list {
@@ -351,7 +402,7 @@ select {
 }
 
 .accent-text {
-    color: #6bd1d0;
+    color: var(--theme-base);
 }
 
 .point-icon {
@@ -365,7 +416,7 @@ select {
 }
 
 .point-icon.lightbulb {
-    color: #f0a0a5;
+    color: var(--theme-action);
 }
 
 .point-icon.phone {
@@ -443,7 +494,7 @@ select {
     transform: translateX(-50%);
     width: 60px;
     height: 3px;
-    background: linear-gradient(90deg, #ff95ad, #f0a0a5);
+    background: linear-gradient(90deg, var(--theme-action-gradient-start), var(--theme-action-gradient-end));
     border-radius: 2px;
 }
 
@@ -456,7 +507,7 @@ select {
 
 #review_tab_box .wrap_long2 {
     padding: 10px 10px 0px;
-    border: 2px solid #6bd1d0;
+    border: 2px solid var(--theme-base);
     /* overflow: hidden; */
     background: #ffffff;
     font-size: 14px;
@@ -466,7 +517,7 @@ select {
 }
 
 #review_tab_box .review_tab2 {
-    border-bottom: 0px solid #f0a0a5;
+    border-bottom: 0 solid var(--theme-action);
 }
 
 #review_tab_box .review_tab2 ul {
@@ -502,11 +553,11 @@ select {
 
 #review_tab_box .review_tab2 ul li.select2 {
     border-radius: 10px 10px 0 0;
-    border-top: 1px solid #6bd1d0;
-    border-left: 1px solid #6bd1d0;
-    border-right: 1px solid #6bd1d0;
+    border-top: 1px solid var(--theme-base);
+    border-left: 1px solid var(--theme-base);
+    border-right: 1px solid var(--theme-base);
     color: #fff;
-    background-color: #6bd1d0;
+    background-color: var(--theme-base);
     padding: 5px 0 5px;
 }
 
@@ -554,7 +605,7 @@ select {
 }
 
 .review_tab_box_txt {
-    background: #6bd1d00f;
+    background: color-mix(in srgb, var(--theme-base) 6%, transparent 94%);
     padding: 6px;
     border-radius: 7px;
 }
@@ -683,6 +734,143 @@ select {
     font-size: 0.9rem;
 }
 
+<<<<<<< Updated upstream
+=======
+/* 施術風景セクション */
+.clinic-procedure-section {
+    margin: 20px 0;
+    padding: 2%;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+}
+
+.clinic-procedure-section .section-title {
+    text-align: center;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 20px;
+    letter-spacing: 2px;
+    position: relative;
+}
+
+.clinic-procedure-section .section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--theme-action-gradient-start), var(--theme-action-gradient-end));
+    border-radius: 2px;
+}
+
+.clinic-procedure-section .procedure-video-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.procedure-video-embed {
+    position: relative;
+    width: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #000;
+}
+
+.procedure-video {
+    cursor: pointer;
+}
+
+.procedure-video-embed video {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: none;
+    object-fit: contain;
+    background: #000;
+}
+
+.procedure-video-toggle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255, 255, 255, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.2);
+    transition: opacity 0.2s ease;
+}
+
+.procedure-video-toggle:focus-visible {
+    outline: 2px solid rgba(255, 149, 173, 0.8);
+    outline-offset: 2px;
+}
+
+.procedure-video-toggle-icon {
+    position: relative;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 10px 0 10px 16px;
+    border-color: transparent transparent transparent #7c7c7c;
+    margin-left: 4px;
+}
+
+.procedure-video-embed.is-playing .procedure-video-toggle {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.procedure-video-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 220px;
+    border-radius: 12px;
+    background: #f7f7f7;
+    color: #666;
+    font-size: 1rem;
+    letter-spacing: 1px;
+}
+
+.procedure-video-caption {
+    font-size: 0.95rem;
+    color: #555;
+    line-height: 1.6;
+}
+
+@media screen and (max-width: 768px) {
+    .clinic-procedure-section {
+        padding: 20px 16px;
+        margin: 16px 0;
+    }
+
+    .clinic-procedure-section .section-title {
+        font-size: 1.4rem;
+    }
+
+    .procedure-video-placeholder {
+        min-height: 180px;
+        font-size: 0.9rem;
+    }
+
+    .procedure-video-caption {
+        font-size: 0.85rem;
+    }
+}
+
+>>>>>>> Stashed changes
 /* POINTセクション - クリニック詳細内 */
 .clinic-points-section {
     margin: 20px 0 !important;
@@ -710,7 +898,7 @@ select {
     transform: translateX(-50%);
     width: 60px;
     height: 3px;
-    background: linear-gradient(90deg, #ff95ad, #f0a0a5);
+    background: linear-gradient(90deg, var(--theme-action-gradient-start), var(--theme-action-gradient-end));
     border-radius: 2px;
 }
 
@@ -904,7 +1092,7 @@ select {
 }
 
 .store-detail i {
-    color: #6bd1d0;
+    color: var(--theme-base);
     font-size: 0.9rem;
     margin-top: 2px;
     flex-shrink: 0;
@@ -972,14 +1160,14 @@ select {
 
 .campaign-container {
     background-color: #fff;
-    border: 1px solid #4fd1d0;
+    border: 1px solid var(--theme-base-accent);
     border-radius: 12px;
     /* overflow: hidden; */
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .campaign-header {
-    background-color: #6bd1d0;
+    background-color: var(--theme-base);
     color: #fff;
     text-align: center;
     padding: 12px 0;
@@ -1038,10 +1226,10 @@ select {
     line-height: 1.6;
     padding: 15px 20px;
     border-radius: 12px;
-    background: #2cc7c5a1;
-    color: #ffffff;
+    background: var(--theme-base-alpha-65);
+    color: var(--theme-base-contrast);
     flex: 1;
-    box-shadow: 0 2px 6px rgb(134 228 232 / 30%);
+    box-shadow: 0 2px 6px var(--theme-base-shadow);
 }
 
 .camp_header3 .camp_txt::before {
@@ -1054,7 +1242,7 @@ select {
     border-bottom: 8px solid transparent;
     left: -15px;
     top: 20px;
-    border-right: 15px solid #2cc7c5a1;
+    border-right: 15px solid var(--theme-base-alpha-65);
 }
 
 .cv_box_img {
@@ -1516,8 +1704,8 @@ body > .container main section {
     width: 45px;
     height: 45px;
     background-color: #fff;
-    border: 2px solid #6bd1d0;
-    color: #6bd1d0;
+    border: 2px solid var(--theme-base);
+    color: var(--theme-base);
     font-weight: 600;
     font-size: 1rem;
     text-decoration: none;
@@ -1865,29 +2053,29 @@ section.clinic-rankings .ranking-header-banner {
 }
 
 .rank-1 .stars {
-    color: #6bd1d0;
+    color: var(--theme-base);
 }
 
 .rank-2 .stars {
-    color: #6bd1d0;
+    color: var(--theme-base);
 }
 
 .rank-3 .stars {
-    color: #6bd1d0;
+    color: var(--theme-base);
 }
 
 .rank-4 .stars {
-    color: #6bd1d0;
+    color: var(--theme-base);
 }
 
 .rank-5 .stars {
-    color: #6bd1d0;
+    color: var(--theme-base);
 }
 
 .rating-score {
     font-size: 2.5rem;
     font-weight: 600;
-    color: #6bd1d0;
+    color: var(--theme-base);
     font-style: normal;
 }
 
@@ -2061,8 +2249,8 @@ section.clinic-rankings .ranking-header-banner {
     align-items: center;
     justify-content: center;
     gap: 0px;
-    background: linear-gradient(135deg, #ff95ad 0%, #ff95ad 100%);
-    border-bottom:solid 2px #cf657d;
+    background: linear-gradient(135deg, var(--theme-action-gradient-start) 0%, var(--theme-action-gradient-end) 100%);
+    border-bottom:solid 2px var(--theme-action-shade-medium);
     color: white;
     padding: 15px 25px;
     border-radius: 4px;
@@ -2109,10 +2297,17 @@ section.clinic-rankings .ranking-header-banner {
     justify-content: center;
     gap: 0px;
     background: #fff;
+<<<<<<< Updated upstream
     color: #ff95ad;
     border: 2px solid #ff95ad;
     border-bottom: solid 2.4px #ec839b;
     border-radius: 8px;
+=======
+    color: var(--theme-action);
+    border: 2px solid var(--theme-action-border);
+    border-bottom: solid 2.4px var(--theme-action-dark);
+    border-radius: 40px;
+>>>>>>> Stashed changes
     padding: 10px 16px;
     margin-top: 5px;
     text-decoration: none;
@@ -2132,17 +2327,17 @@ section.clinic-rankings .ranking-header-banner {
 }
 
 .btn.btn_outline_pink a:hover {
-    background: #fff5f8;
-    border-color: #ff95ad;
-    color: #ff95ad;
+    background: var(--theme-action-soft);
+    border-color: var(--theme-action-border);
+    color: var(--theme-action);
 }
 
 /* CTA右側の＞アイコン（擬似要素） */
 .btn.btn_outline_pink a.ctaBtn-direct::after {
     content: "";
     display: inline-block;
-    border-right: 2px solid #ff95ad;
-    border-bottom: 2px solid #ff95ad;
+    border-right: 2px solid var(--theme-action-border);
+    border-bottom: 2px solid var(--theme-action-border);
     width: 0.5rem;
     height: 0.5rem;
     position: absolute;
@@ -2165,15 +2360,15 @@ section.clinic-rankings .ranking-header-banner {
     justify-content: center;
     gap: 0px;
     background: white;
-    color: #ff95ad;
+    color: var(--theme-action);
     text-decoration: none;
     padding: 14px 18px;
     border-radius: 8px;
     font-weight: 700;
     font-size: 0.9rem;
     transition: all 0.3s ease;
-    box-shadow: 0 2px 8px rgba(255, 140, 162, 0.2);
-    border: 2px solid #ff95ad;
+    box-shadow: 0 2px 8px color-mix(in srgb, var(--theme-action) 30%, transparent 70%);
+    border: 2px solid var(--theme-action-border);
     text-align: center;
     position: relative;
     overflow: hidden;
@@ -2186,8 +2381,8 @@ section.clinic-rankings .ranking-header-banner {
 }
 
 .btn.btn_availability_check a:hover {
-    background: #fff5f7;
-    box-shadow: 0 4px 12px rgba(255, 140, 162, 0.3);
+    background: var(--theme-action-soft);
+    box-shadow: 0 4px 12px color-mix(in srgb, var(--theme-action) 40%, transparent 60%);
 }
 
 /* ===== 比較表セクション ===== */
@@ -2240,8 +2435,8 @@ section.clinic-rankings .ranking-header-banner {
 .comparison-tab-menu-item.tab-active,
 .tab-btn.tab-active {
     background: #fff;
-    color: #4bc0c0;
-    border-color: #4bc0c0;
+    color: var(--theme-base-outline);
+    border-color: var(--theme-base-outline);
     border-bottom: 2px solid #fff;
 }
 
@@ -2253,7 +2448,7 @@ section.clinic-rankings .ranking-header-banner {
 }
 
 .accent-text {
-    color: #6bd1d0;
+    color: var(--theme-base);
 }
 
 .comparison-subtitle {
@@ -2280,9 +2475,9 @@ section.clinic-rankings .ranking-header-banner {
 
 .comparison-tab-menu .comparison-tab-menu-item {
     border-radius: 4px 4px 0 0;
-    border-left: 1px solid #6bd1d0;
-    border-right: 1px solid #6bd1d0;
-    border-top: 1px solid #6bd1d0;
+    border-left: 1px solid var(--theme-base);
+    border-right: 1px solid var(--theme-base);
+    border-top: 1px solid var(--theme-base);
     width: 32%;
     text-align: center;
     padding: 8px 0 8px;
@@ -2291,12 +2486,12 @@ section.clinic-rankings .ranking-header-banner {
     font-size: 14px;
     cursor: pointer;
     background: #ffffff;
-    color: #6bd1d0;
+    color: var(--theme-base);
     transition: all 0.3s;
 }
 
 .comparison-tab-menu-item.tab-active {
-    background: #6bd1d0;
+    background: var(--theme-base);
     color: #fff;
     position: relative;
     z-index: 10;
@@ -2513,8 +2708,8 @@ section.clinic-rankings .ranking-header-banner {
 /* ボタンスタイル */
 .comparison-table .link_btn {
     display: inline-block;
-    background: #ff95ae;
-    border-bottom:solid 2px #cf657d;
+    background: var(--theme-action);
+    border-bottom:solid 2px var(--theme-action-shade-medium);
     color: white;
     text-decoration: none;
     padding: 8px 15px;
@@ -2547,13 +2742,13 @@ section.clinic-rankings .ranking-header-banner {
 
 /* 良い・普通・悪いの記号 */
 .sogood {
-    color: #6bd1d0;
+    color: var(--theme-base);
     font-size: 1.2em;
     font-weight: 600;
 }
 
 .good {
-    color: #6bd1d0;
+    color: var(--theme-base);
     font-size: 1.2em;
     font-weight: 600;
 }
@@ -2945,7 +3140,7 @@ section.clinic-rankings .ranking-header-banner {
     width: 8px; height: 8px; border-radius: 50%; border: none;
     background: #ccc; cursor: pointer; transition: background 0.3s;
 }
-.banner-slider .slider-dot.active { background: #2CC7C5; }
+.banner-slider .slider-dot.active { background: var(--theme-base); }
 .banner-slider .slider-dot:hover { background: #999; }
 
 /* ===== バナー拡大モーダル ===== */
@@ -2992,7 +3187,7 @@ section.clinic-rankings .ranking-header-banner {
     width: 10px; height: 10px; border-radius: 50%; border: none;
     background: #bbb; cursor: pointer; transition: background 0.2s;
 }
-.banner-modal-dot.active { background: #2CC7C5; }
+.banner-modal-dot.active { background: var(--theme-base); }
 .banner-modal-dot:hover { background: #888; }
 
 /* ===== クリニック詳細モーダル（ボトムシート） ===== */
@@ -3056,8 +3251,8 @@ body.no-scroll { overflow: hidden; }
     pointer-events: none;
     padding: clamp(2px, 0.5vw, 4px) clamp(4px, 1vw, 8px);
     border-radius: 8px;
-    text-shadow: 1px 1px 0 #ff94ae, -1px -1px 0 #ff94ae, 1px -1px 0 #ff94ae, -1px 1px 0 #ff94ae, 
-                 1px 0 0 #ff94ae, -1px 0 0 #ff94ae, 0 1px 0 #ff94ae, 0 -1px 0 #ff94ae, 
+    text-shadow: 1px 1px 0 var(--theme-action-shadow), -1px -1px 0 var(--theme-action-shadow), 1px -1px 0 var(--theme-action-shadow), -1px 1px 0 var(--theme-action-shadow), 
+                 1px 0 0 var(--theme-action-shadow), -1px 0 0 var(--theme-action-shadow), 0 1px 0 var(--theme-action-shadow), 0 -1px 0 var(--theme-action-shadow), 
                  2px 2px 0 #fff, -2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 
                  2px 0 0 #fff, -2px 0 0 #fff, 0 2px 0 #fff, 0 -2px 0 #fff;
     
@@ -3269,7 +3464,7 @@ body.no-scroll { overflow: hidden; }
 }
 
 .detail-rank-badge.bronze {
-    background: linear-gradient(135deg, #f0a0a5 0%, #e4a853 100%);
+    background: linear-gradient(135deg, var(--theme-action-gradient-start) 0%, #e4a853 100%);
     box-shadow: 0 4px 15px rgba(205, 127, 50, 0.4);
     border: 3px solid #e4a853;
 }
@@ -3659,7 +3854,7 @@ body.no-scroll { overflow: hidden; }
 }
 
 .medical-columns-section .toc-link {
-    color: #6bd1d0;
+    color: var(--theme-base);
     text-decoration: underline;
     font-size: 14px;
     line-height: 1.5;
@@ -3700,7 +3895,7 @@ body.no-scroll { overflow: hidden; }
 }
 
 .medical-columns-section .highlight-box .section-title {
-    color: #6bd1d0;
+    color: var(--theme-base);
     margin-bottom: 12px;
 }
 
@@ -3715,7 +3910,7 @@ body.no-scroll { overflow: hidden; }
 }
 
 .medical-columns-section .table-header {
-    background-color: #6bd1d0;
+    background-color: var(--theme-base);
     color: white;
 }
 
@@ -3902,7 +4097,7 @@ body.no-scroll { overflow: hidden; }
 }
 
 .medical-columns-section .contact-link {
-    color: #6bd1d0;
+    color: var(--theme-base);
     text-decoration: underline;
     font-size: 14px;
     line-height: 1.5;
@@ -3995,7 +4190,7 @@ body.no-scroll { overflow: hidden; }
 }
 
 .footer_contents a {
-    color: #6bd1d0;
+    color: var(--theme-base);
     text-decoration: none;
     transition: color 0.3s ease;
 }
@@ -4309,7 +4504,7 @@ body.no-scroll { overflow: hidden; }
         padding: 20px 5px;
         font-size: 16px;
         border-radius: 8px;
-        background: #6bd1d0;
+        background: var(--theme-base);
         color: white;
         text-align: center;
     }
@@ -5389,7 +5584,7 @@ body.no-scroll { overflow: hidden; }
     transform: translateX(-50%);
     width: 60px;
     height: 3px;
-    background: linear-gradient(90deg, #ff95ad, #f0a0a5);
+    background: linear-gradient(90deg, var(--theme-action-gradient-start), var(--theme-action-gradient-end));
     border-radius: 2px;
 }
 
@@ -5979,7 +6174,7 @@ body.no-scroll { overflow: hidden; }
     padding: 6px 8px;
     border-radius: 4px;
     background-color: #f39ea7;
-    border-bottom:solid 2px #cf657d;
+    border-bottom:solid 2px var(--theme-action-shade-medium);
     color: #fff;
     font-size: 13px;
     font-weight: 600;
@@ -6089,7 +6284,7 @@ body.no-scroll { overflow: hidden; }
     border-radius: 4px;
     font-size: 13px;
     background-color: #f39ea7;
-    border-bottom:solid 2px #cf657d;
+    border-bottom:solid 2px var(--theme-action-shade-medium);
     color: #fff;
     font-weight: 600;
     white-space: nowrap;
@@ -6203,7 +6398,7 @@ body.no-scroll { overflow: hidden; }
 
 .map-detail-item i {
     margin-right: 8px;
-    color: #6bd1d0;
+    color: var(--theme-base);
     font-size: 14px;
     flex-shrink: 0;
     margin-top: 2px;
@@ -6936,7 +7131,7 @@ body.no-scroll { overflow: hidden; }
 }
 
 .case-slider .slick-dots li.slick-active button:before {
-    color: #ff7094;
+    color: var(--theme-action-dark);
 }
 
 /* Slickの矢印 */
@@ -7176,7 +7371,7 @@ body.no-scroll { overflow: hidden; }
 }
 
 .detail-item .brand-section .shop-name {
-    color: #6bd1d0;
+    color: var(--theme-base);
     font-weight: 600;
 }
 
@@ -7268,7 +7463,7 @@ body.no-scroll { overflow: hidden; }
 
 .map-detail-item i {
     margin-right: 8px;
-    color: #6bd1d0;
+    color: var(--theme-base);
     font-size: 14px;
     flex-shrink: 0;
     margin-top: 2px;
@@ -8429,8 +8624,8 @@ body .case-slider .slick-slide img {
 .scroll-modal-btn {
     display: flex;
     align-items: center;
-    background: #ff95ad;
-    /* border-bottom: solid 5px #cf657d; */
+    background: var(--theme-action);
+    /* border-bottom: solid 5px var(--theme-action-shade-medium); */
     color: white;
     text-decoration: none;
     font-weight: bold;
@@ -8445,7 +8640,7 @@ body .case-slider .slick-slide img {
 }
 
 .scroll-modal-btn-free {
-    background: #f07d99;
+    background: var(--theme-action-shade-soft);
     padding: 8px 12px;
     height: 100%;
     display: flex;
@@ -8453,8 +8648,8 @@ body .case-slider .slick-slide img {
     justify-content: center;
     font-size: 14px;
     font-weight: bold;
-    /* border-right: 1px solid #cf657d; */
-    border-bottom: solid 2px #bf367b;
+    /* border-right: 1px solid var(--theme-action-shade-medium); */
+    border-bottom: solid 2px var(--theme-action-shade-strong);
 }
 
 .scroll-modal-btn-text {
@@ -8485,13 +8680,13 @@ body .case-slider .slick-slide img {
 }
 
 .scroll-modal-btn:hover {
-    background: #ff7a96;
+    background: var(--theme-action-dark);
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(255, 149, 173, 0.4);
 }
 
 .scroll-modal-btn:hover .scroll-modal-btn-free {
-    background: #ff3057;
+    background: var(--theme-action-strong);
 }
 
 @media (max-width: 768px) {
@@ -8549,8 +8744,8 @@ body .case-slider .slick-slide img {
     font-weight: 700;
     font-size: 13px;
     color: #fff;
-    background: linear-gradient(135deg, #ff95ad 0%, #ff95ad 100%);
-    box-shadow: inset 0 -2px 0 #cf657d; /* 濃いピンクの陰影（参照に寄せる） */
+    background: linear-gradient(135deg, var(--theme-action-gradient-start) 0%, var(--theme-action-gradient-end) 100%);
+    box-shadow: inset 0 -2px 0 var(--theme-action-shade-medium); /* 濃いピンクの陰影（参照に寄せる） */
     overflow: hidden; /* 左タグの角丸を活かす */
     position: relative;
     word-break: break-all;
@@ -8566,8 +8761,8 @@ body .case-slider .slick-slide img {
     height: 100%;
     width: 38px; /* 参照デザインに合わせる */
     background: #fff;
-    color: #cf657d; /* 既存の濃いピンク */
-    border-right: 2px solid #cf657d; /* 濃いピンクの仕切り */
+    color: var(--theme-action-shade-medium); /* 既存の濃いピンク */
+    border-right: 2px solid var(--theme-action-shade-medium); /* 濃いピンクの仕切り */
     border-radius: 3px 0 0 3px;
     box-sizing: border-box;
     font-size: 12px;

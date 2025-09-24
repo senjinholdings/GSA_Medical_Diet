@@ -1937,6 +1937,84 @@ class RankingApp {
         this.textsInitialized = false;
     }
 
+<<<<<<< Updated upstream
+=======
+    normalizeRegionId(regionId) {
+        if (regionId === undefined || regionId === null) return '';
+        const raw = String(regionId).trim();
+        if (!raw) return '';
+        if (/^\d+$/.test(raw)) {
+            const num = parseInt(raw, 10);
+            if (Number.isNaN(num)) return '';
+            return num.toString().padStart(3, '0');
+        }
+        return raw;
+    }
+
+    isNationalRegion(regionId, region = null) {
+        const normalized = this.normalizeRegionId(regionId ?? region?.id);
+        if (normalized === '000') return true;
+        const regionName = region && region.name ? String(region.name).trim() : '';
+        return regionName === '全国';
+    }
+
+    applyRegionLabels(region, options = {}) {
+        if (!region && options.regionId === undefined && this.currentRegionId === null) {
+            return;
+        }
+
+        const regionIdRaw = options.regionId !== undefined ? options.regionId : region?.id ?? this.currentRegionId;
+        const normalizedId = this.normalizeRegionId(regionIdRaw);
+        const regionName = region && region.name ? region.name : '';
+        const isNational = this.isNationalRegion(normalizedId, region);
+
+        const mvRegionElement = document.getElementById('mv-region-name');
+        if (mvRegionElement) {
+            mvRegionElement.textContent = isNational ? '最新' : regionName;
+        }
+
+        const detailRegionElement = document.getElementById('detail-region-name');
+        if (detailRegionElement) {
+            if (isNational) {
+                detailRegionElement.textContent = '[最新版] 人気のクリニック';
+                detailRegionElement.style.left = '3%';
+            } else {
+                detailRegionElement.textContent = `${regionName}で人気のクリニック`;
+                const nameLength = regionName.length;
+                let leftPosition = '3%';
+                if (nameLength === 2) {
+                    leftPosition = '4%';
+                } else if (nameLength === 3) {
+                    leftPosition = '1%';
+                }
+                detailRegionElement.style.left = leftPosition;
+            }
+        }
+
+        const rankRegionElement = document.getElementById('rank-region-name');
+        if (rankRegionElement) {
+            const baseText = (this.dataManager && typeof this.dataManager.getCommonText === 'function')
+                ? this.dataManager.getCommonText('ランキング地域名テキスト', 'で人気の脂肪溶解注射はココ！')
+                : 'で人気の脂肪溶解注射はココ！';
+            if (isNational) {
+                const suffix = baseText.replace(/^で/, '');
+                rankRegionElement.textContent = `いま${suffix}`;
+                rankRegionElement.style.left = '52%';
+            } else {
+                rankRegionElement.textContent = `${regionName}${baseText}`;
+                const nameLength = regionName.length;
+                let leftPosition = '52%';
+                if (nameLength === 3) {
+                    leftPosition = '51%';
+                } else if (nameLength >= 4) {
+                    leftPosition = '50%';
+                }
+                rankRegionElement.style.left = leftPosition;
+            }
+        }
+    }
+
+>>>>>>> Stashed changes
     async init() {
         try {
             // データマネージャーの初期化
@@ -2529,6 +2607,7 @@ class RankingApp {
                 rankingBanner.setAttribute('alt', rankingAlt);
             }
 
+<<<<<<< Updated upstream
             // 比較表タイトルの更新（共通テキスト）
             const comparisonTitle = document.querySelector('.comparison-title');
             if (comparisonTitle) {
@@ -2546,12 +2625,41 @@ class RankingApp {
                 
                 comparisonTitle.innerHTML = `<span id="comparison-region-name">${regionName}</span>${titleText}`;
             }
+=======
+            // 比較表ヘッダー画像の表示
+            const comparisonHeader = document.querySelector('.comparison-header');
+            if (comparisonHeader) {
+                let headerImage = comparisonHeader.querySelector('.comparison-header-image');
+                if (!headerImage) {
+                    comparisonHeader.innerHTML = '';
+                    headerImage = document.createElement('img');
+                    headerImage.className = 'comparison-header-image';
+                    headerImage.setAttribute('loading', 'lazy');
+                    headerImage.setAttribute('decoding', 'async');
+                    comparisonHeader.appendChild(headerImage);
+                }
+                headerImage.src = 'images/comparison_header_bannar.webp';
+                const headerAlt = this.dataManager.getCommonText('比較表ヘッダーalt', '脂肪冷却比較セクションのヘッダー');
+                headerImage.setAttribute('alt', headerAlt);
+>>>>>>> Stashed changes
 
-            // 比較表サブタイトルの更新（共通テキスト）
-            const comparisonSubtitle = document.querySelector('.comparison-subtitle');
-            if (comparisonSubtitle) {
-                const subtitleHtml = this.dataManager.getCommonText('比較表サブタイトル', 'クリニックを<span class="pink-text">徹底比較</span>');
-                comparisonSubtitle.innerHTML = this.dataManager.processDecoTags(subtitleHtml);
+                const baseTitleText = this.dataManager.getCommonText('比較表タイトル', 'で人気の脂肪冷却');
+                const suffixText = isNational ? baseTitleText.replace(/^で/, '') : baseTitleText;
+                const regionSpan = comparisonHeader.querySelector('#comparison-region-name');
+                if (regionSpan) {
+                    if (isNational) {
+                        regionSpan.textContent = '';
+                        regionSpan.classList.add('is-empty');
+                    } else {
+                        const effectiveRegionName = regionForDisplay?.name || regionName || '地域';
+                        regionSpan.textContent = effectiveRegionName;
+                        regionSpan.classList.remove('is-empty');
+                    }
+                }
+                const suffixSpan = comparisonHeader.querySelector('#comparison-header-suffix');
+                if (suffixSpan) {
+                    suffixSpan.textContent = suffixText;
+                }
             }
             
             // 案件詳細バナーのalt属性を更新（共通テキスト）

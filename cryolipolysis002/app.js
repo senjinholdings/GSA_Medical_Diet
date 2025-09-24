@@ -311,7 +311,7 @@ class DisplayManager {
             // 小数部分の処理
             if (decimalPart > 0) {
                 const percentage = Math.round(decimalPart * 100);
-                starsHtml += `<i class="fas fa-star" style="background: linear-gradient(90deg, #6bd1d0 ${percentage}%, transparent ${percentage}%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"></i>`;
+                starsHtml += `<i class="fas fa-star" style="background: linear-gradient(90deg, var(--theme-base) ${percentage}%, transparent ${percentage}%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"></i>`;
             }
             
             // 残りの空の星を表示
@@ -449,13 +449,13 @@ class DisplayManager {
                 hasAnyStores = true;
                 html += `
                     <div class="clinic-stores-section" style="margin-bottom: 30px; padding: 20px; background: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-                        <h4 style="color: #2CC7C5; margin-bottom: 15px; font-size: 20px;">${clinic.name}の【東京】の店舗</h4>
+                        <h4 style="color: var(--theme-base); margin-bottom: 15px; font-size: 20px;">${clinic.name}の【東京】の店舗</h4>
                         <div class="stores-list" style="display: grid; gap: 15px;">
                 `;
                 
                 clinicStores.forEach(store => {
                     html += `
-                        <div class="store-item" style="padding: 15px; background: #f8f9fa; border-left: 3px solid #2CC7C5;">
+                        <div class="store-item" style="padding: 15px; background: #f8f9fa; border-left: 3px solid var(--theme-base);">
                             <div class="store-name" style="font-weight: bold; margin-bottom: 5px;">${store.storeName || store.name || '店舗名不明'}</div>
                             <div class="store-address" style="color: #666; margin-bottom: 5px;">${store.address || '住所不明'}</div>
                             <div class="store-access" style="color: #888; font-size: 14px;">${store.access || ''}</div>
@@ -3146,7 +3146,7 @@ class RankingApp {
         // 各クリニックの注意事項を追加
         disclaimers.forEach((item, index) => {
             const disclaimerDiv = document.createElement('div');
-            disclaimerDiv.style.cssText = 'margin-bottom: 15px; padding: 10px; border-left: 3px solid #6bd1d0;';
+            disclaimerDiv.style.cssText = 'margin-bottom: 15px; padding: 10px; border-left: 3px solid var(--theme-base);';
             
             const titleDiv = document.createElement('div');
             titleDiv.style.cssText = 'font-weight: 600; color: #333; margin-bottom: 5px; font-size: 12px;';
@@ -3807,7 +3807,7 @@ class RankingApp {
                         `;
                     }).join('');
 
-                    const dotsHtml = imagesForClinic.map((_, i) => `<button type=\"button\" class=\"case-dot ${i===0?'active':''}\" data-index=\"${i}\" style=\"width:8px;height:8px;border-radius:50%;border:none;background:${i===0?'#2CC7C5':'#ccc'};margin:0 4px;cursor:pointer;\"></button>`).join('');
+                    const dotsHtml = imagesForClinic.map((_, i) => `<button type=\"button\" class=\"case-dot ${i===0?'active':''}\" data-index=\"${i}\" style=\"width:8px;height:8px;border-radius:50%;border:none;background:${i===0?'var(--theme-base)':'#ccc'};margin:0 4px;cursor:pointer;\"></button>`).join('');
                     
                     return `
                     <div class=\"clinic-points-section\">
@@ -4044,7 +4044,7 @@ class RankingApp {
                         slides.forEach(s => { s.style.minWidth = '100%'; s.style.boxSizing = 'border-box'; });
                         dots.forEach((d, idx) => {
                             d.classList.toggle('active', idx === current);
-                            d.style.background = (idx === current ? '#2CC7C5' : '#ccc');
+                            d.style.background = (idx === current ? 'var(--theme-base)' : '#ccc');
                         });
                     };
 
@@ -5261,7 +5261,7 @@ function initializeCaseSliderIn(root) {
         slides.forEach(s => { s.style.minWidth = '100%'; s.style.boxSizing = 'border-box'; });
         dots.forEach((d, idx) => {
             d.classList.toggle('active', idx === current);
-            d.style.background = (idx === current ? '#2CC7C5' : '#ccc');
+            d.style.background = (idx === current ? 'var(--theme-base)' : '#ccc');
         });
     };
     const imgs = Array.from(slider.querySelectorAll('img'));

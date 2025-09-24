@@ -2206,6 +2206,52 @@ section.clinic-rankings .ranking-header-banner {
     margin-bottom: 30px;
 }
 
+.comparison-header-visual {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+.comparison-header-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 12px;
+}
+
+.comparison-header-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    gap: 0.4em;
+    color: #ffffff;
+    font-size: clamp(20px, 4.5vw, 42px);
+    font-weight: 700;
+    line-height: 1.2;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
+    white-space: nowrap;
+    padding: clamp(6px, 1.5vw, 12px) clamp(10px, 2vw, 18px);
+}
+
+.comparison-header-text span {
+    display: inline-block;
+}
+
+.comparison-header-region.is-empty {
+    display: none;
+}
+
+@media (max-width: 480px) {
+    .comparison-header-text {
+        white-space: normal;
+        text-align: center;
+        gap: 0.25em;
+    }
+}
+
 /* タブボタンのスタイル */
 .comparison-tabs {
     display: flex;

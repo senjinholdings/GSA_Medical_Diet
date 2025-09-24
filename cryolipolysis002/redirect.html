@@ -7,6 +7,7 @@
     <meta name="description" content="公式サイトへリダイレクトしています。">
     <meta name="referrer" content="unsafe-url">
     <link rel="icon" type="image/png" href="/images/favicon.png">
+    <link rel="stylesheet" href="./custom/theme.css">
     <meta http-equiv="Content-Security-Policy" content="referrer unsafe-url">
     <style>
         body {
@@ -36,7 +37,7 @@
             font-size: 18px;
             font-weight: 600;
             margin-bottom: 15px;
-            color: #4bc0c0;
+            color: var(--theme-base);
         }
         .redirect-description {
             font-size: 14px;
@@ -49,7 +50,7 @@
             width: 40px;
             height: 40px;
             border: 3px solid #f3f3f3;
-            border-top: 3px solid #4bc0c0;
+            border-top: 3px solid var(--theme-base);
             border-radius: 50%;
             animation: spin 1s linear infinite;
             margin-bottom: 20px;
@@ -62,15 +63,15 @@
             display: inline-block;
             margin-top: 20px;
             padding: 12px 24px;
-            background: #4bc0c0;
-            color: white;
+            background: var(--theme-base);
+            color: var(--theme-base-contrast);
             text-decoration: none;
             border-radius: 25px;
             font-weight: 600;
             transition: background 0.3s ease;
         }
         .manual-link:hover {
-            background: #3da9a9;
+            background: var(--theme-base-dark);
         }
         .countdown {
             font-size: 16px;

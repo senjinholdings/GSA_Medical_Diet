@@ -11,6 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="./styles.css">
+    <link rel="stylesheet" href="./custom/theme.css">
     <link rel="icon" type="image/png" href="./images/favicon.png">
     <script src="/analytics.js"></script>
     <style>
@@ -28,13 +29,13 @@
         .result-title { font-size: 18px; font-weight: 700; margin: 0; }
         .result-meta { font-size: 12px; color: #666; }
         .result-tags { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 6px; }
-        .tag { font-size: 11px; color: #4bc0c0; background: #e9f7f7; padding: 3px 8px; border-radius: 999px; }
+        .tag { font-size: 11px; color: var(--theme-base-outline); background: color-mix(in srgb, var(--theme-base) 15%, white 85%); padding: 3px 8px; border-radius: 999px; }
         .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         @media (max-width: 640px) { .form-row { grid-template-columns: 1fr; } }
         .input, select { width: 100%; padding: 10px 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; }
         .actions { display: flex; gap: 10px; justify-content: center; }
         .btn { padding: 10px 16px; border-radius: 6px; border: 1px solid #ccc; background: #fff; cursor: pointer; }
-        .btn-primary { background: #4bc0c0; color: white; border-color: #4bc0c0; }
+        .btn-primary { background: var(--theme-base); color: var(--theme-base-contrast); border-color: var(--theme-base); }
     </style>
     <script src="./config.js"></script>
     <script defer src="./app.js"></script>
