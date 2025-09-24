@@ -14,21 +14,17 @@
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
     <style>
-        * { box-sizing: border-box; }
-        *::before, *::after { box-sizing: inherit; }
-        html { color-scheme: light; }
+        :root { color-scheme: light; }
+        *, *::before, *::after { box-sizing: border-box; }
         body {
             margin: 0;
-            padding: 0;
             font-family: 'Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             background-color: #ffffff;
             color: #333333;
             line-height: 1.6;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            width: 100%;
+        }
+        body.is-loading {
+            overflow: hidden;
         }
         body > *:not(.sidebar-menu):not(.sidebar-overlay):not(.map-modal):not(.disclaimer-modal):not(.banner-modal):not(.scroll-bottom-modal) {
             width: 100%;
@@ -36,78 +32,46 @@
             margin: 0 auto;
         }
         img {
-            max-width: 100%;
             display: block;
+            max-width: 100%;
             height: auto;
         }
-        a { color: inherit; text-decoration: none; }
         .container {
             width: 100%;
             max-width: 768px;
             margin: 0 auto;
             padding: 0 20px;
         }
-        .site-header {
-            position: sticky;
-            top: 0;
-            background-color: #ffffff;
-            z-index: 1000;
-            border-bottom: 1px solid #f0f0f0;
-        }
-        .header-content {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 10px 20px;
-        }
-        .logo-main {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .logo-icon img {
-            width: 40px;
-            height: 40px;
-        }
-        .site-logo {
-            margin: 0;
-            font-size: 1.1rem;
-            font-weight: 700;
-            letter-spacing: 0.02em;
-        }
-        .hero-section {
-            position: relative;
-            margin: 0;
-        }
-        .hero-image-wrapper {
-            position: relative;
-            width: 100%;
-            max-width: 768px;
-            margin: 0 auto;
-            overflow: hidden;
-            border-radius: 12px;
-            background: #f9f9f9;
-            aspect-ratio: 1500 / 928;
-        }
-        .hero-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
         @media (max-width: 768px) {
             .container { padding: 0 12px; }
-            .header-content { padding: 12px; }
-            .site-logo { font-size: 1rem; }
         }
-
-        /* 初期ロード時のチラつき防止用クラス */
-        .ranking-loading {
-            opacity: 0;
+        .ranking-loading { opacity: 0; transition: opacity 0.3s ease; }
+        .ranking-loaded { opacity: 1; }
+        #initial-loader {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: #ffffff;
+            color: #2cc7c5;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            z-index: 9999;
             transition: opacity 0.3s ease;
         }
-
-        .ranking-loaded {
-            opacity: 1;
+        #initial-loader .loader-text {
+            margin: 0;
+            font-size: clamp(16px, 4vw, 20px);
+        }
+        body.is-loading > :not(#initial-loader):not(script) {
+            visibility: hidden;
+        }
+        body:not(.is-loading) #initial-loader {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
         }
     </style>
     <!-- 重要なリソースのpreload -->
@@ -128,6 +92,9 @@
     
 </head>
 <body class="is-loading">
+    <div id="initial-loader" aria-live="polite">
+        <p class="loader-text">読み込み中…</p>
+    </div>
     
     <div class="container">
         <!-- ヘッダー -->
@@ -157,20 +124,20 @@
                 <picture>
                     <img src="images/mv.webp" alt="おすすめ比較ランキング - 2025年最新版" class="hero-image" loading="eager" fetchpriority="high" decoding="async" width="1500" height="928">
                 </picture>
-                <div id="mv-region-name" style="position:absolute;top: 8%;left: 1%;width: clamp(60px, 15vw, 115px);text-align: center;color: #808080;font-size: clamp(14px, 3.5vw, 27px);font-weight: 600;z-index:10;pointer-events:none;padding: clamp(4px, 1vw, 8px);border-radius: 8px;"></div>
-                <div id="mv-left-appeal-text" style="position:absolute;top: 25%;left: 14%;text-align: center;color: #808080;font-size: clamp(14px, 3.2vw, 25px);font-weight: 700;z-index:10;pointer-events:none;padding: clamp(6px, 1.5vw, 12px);"></div>
-                <svg id="mv-main-svg-text" style="position:absolute;top: 35%;left:39%;transform:translateX(-50%);z-index:10;pointer-events:none;overflow: visible;width: 60vw;height: 10vh;">
-                    <text x="50%" y="50%" text-anchor="middle" dominant-baseline="central" fill="#ff94ae" stroke="white" stroke-width="6px" paint-order="stroke" style="font-size: clamp(14px, 6.5vw, 50px);font-weight: 700;">
+                <div id="mv-region-name"></div>
+                <div id="mv-left-appeal-text"></div>
+                <svg id="mv-main-svg-text">
+                    <text x="50%" y="50%" text-anchor="middle" dominant-baseline="central" fill="#ff94ae" stroke="white" stroke-width="6px" paint-order="stroke">
                         <tspan id="mv-region-text"></tspan>
                     </text>
                 </svg>
-                <svg id="mv-appeal1-text" style="position:absolute;top: 52%;left:39%;transform:translateX(-50%);z-index:10;pointer-events:none;overflow: visible;width: 60vw;height: 10vh;">
-                    <text x="50%" y="50%" text-anchor="middle" dominant-baseline="central" fill="#ff94ae" stroke="white" stroke-width="6px" paint-order="stroke" style="font-size: clamp(14px, 8vw, 62px); font-weight: 700;">
+                <svg id="mv-appeal1-text">
+                    <text x="50%" y="50%" text-anchor="middle" dominant-baseline="central" fill="#ff94ae" stroke="white" stroke-width="6px" paint-order="stroke">
                         
                     </text>
                 </svg>
             </div>
-            <div id="pr-line" style="text-align: right; padding: 5px 20px; color: #808080; font-size: 10px; font-weight: normal; max-width: 768px; margin: 0 auto;"></div>
+            <div id="pr-line"></div>
         </section>
 
         <main>
@@ -180,24 +147,24 @@
                 <div class="ranking-header-banner">
                     <img src="images/ranking_header_banner.webp" alt="" class="ranking-banner-image" loading="lazy" decoding="async">
                 </div>
-                <div id="rank-region-name" style="position:absolute;top: 6%;left: 52%;white-space: nowrap;transform: translateX(-50%);text-align: center;color: rgb(255, 255, 255);font-size: clamp(14px, 4.2vw, 32px);font-weight: 600;z-index:10;pointer-events:none;"></div>
+                <div id="rank-region-name"></div>
                 <div id="ranking-list" class="ranking-container ranking-loading">
                     <!-- ランキングはJavaScriptで動的に生成 -->
                 </div>
             </section>
 
             <!-- ランキング表示セクション下の注意事項 -->
-            <section id="ranking-disclaimers-section" class="disclaimers-section" style="padding: 0px 10px; background: #ffffff;">
-                <div class="container" style="max-width: 768px; margin: 0 auto;">
+            <section id="ranking-disclaimers-section" class="disclaimers-section">
+                <div class="container">
                     <!-- 注意事項アコーディオン -->
-                    <div class="disclaimer-accordion" style="margin-top: 15px;">
+                    <div class="disclaimer-accordion">
                         <!-- 第1段階: 各クリニックの注意事項 -->
                         <div class="main-disclaimer">
-                            <button id="ranking-disclaimer-button" class="main-disclaimer-header ranking-disclaimer-header" style="width: 100%; text-align: left; padding: 8px 12px; background-color: #ffffff; border: 1px solid #f0f0f0; border-radius: 3px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
-                                <span style="font-size: 10px; font-weight: 500; color: #666;">各クリニックの注意事項</span>
-                                <span id="ranking-main-arrow" style="font-size: 8px; color: rgb(153, 153, 153); transition: transform 0.2s; transform: rotate(0deg);">▼</span>
+                            <button id="ranking-disclaimer-button" class="main-disclaimer-header ranking-disclaimer-header">
+                                <span class="disclaimer-button-label">各クリニックの注意事項</span>
+                                <span id="ranking-main-arrow" class="disclaimer-arrow">▼</span>
                             </button>
-                            <div id="ranking-disclaimers-content" class="main-disclaimer-content" style="display: none; padding: 5px; background-color: rgb(252, 252, 252); border-right: 1px solid rgb(240, 240, 240); border-bottom: 1px solid rgb(240, 240, 240); border-left: 1px solid rgb(240, 240, 240); border-image: initial; border-top: none; border-radius: 0px 0px 3px 3px; margin-top: -5px;">
+                            <div id="ranking-disclaimers-content" class="main-disclaimer-content ranking-disclaimer-content">
                                 <!-- 動的に生成される注釈コンテンツ -->
                             </div>
                         </div>
@@ -206,50 +173,50 @@
             </section>
 
             <!-- ユーザーの悩みを解消するためのTips -->
-            <div class="container tips-container" style="max-width: 768px; margin: 20px auto; padding: 0 10px; position: relative;">
-                <div class="tips-section" style="width: 100%;">
-                    <div style="display: flex; flex-direction: column;">
+            <div class="container tips-container">
+                <div class="tips-section">
+                    <div class="tips-inner">
                         <!-- タブナビゲーション -->
-                        <div class="tabs" style="display: flex; gap: 5px; margin-bottom: 0;">
-                            <div class="tab active" data-tab="0" style="flex: 1; background-color: #2CC7C5; color: white; padding: 10px 15px; text-align: center; cursor: pointer; border-radius: 4px 4px 0 0; font-weight: 600; transition: all 0.3s ease; font-size: 14px; display: flex; align-items: center; justify-content: center;">
+                        <div class="tabs">
+                            <div class="tab active" data-tab="0">
                                 <span class="tab-text"></span>
                             </div>
-                            <div class="tab" data-tab="1" style="flex: 1; background-color: #F1F1F1; color: #4C4C4C; padding: 10px 15px; text-align: center; cursor: pointer; border-radius: 4px 4px 0 0; font-weight: 600; transition: all 0.3s ease; font-size: 14px; display: flex; align-items: center; justify-content: center;">
+                            <div class="tab" data-tab="1">
                                 <span class="tab-text"></span>
                             </div>
-                            <div class="tab" data-tab="2" style="flex: 1; background-color: #F1F1F1; color: #4C4C4C; padding: 10px 15px; text-align: center; cursor: pointer; border-radius: 4px 4px 0 0; font-weight: 600; transition: all 0.3s ease; font-size: 14px; display: flex; align-items: center; justify-content: center;">
+                            <div class="tab" data-tab="2">
                                 <span class="tab-text"></span>
                             </div>
                         </div>
 
                         <!-- タブコンテンツコンテナ -->
-                        <div class="tab-contents" style="position: relative; background-color: #FFFFFF; border: 1px solid #E0E0E0; border-radius: 0 0 4px 4px; padding: 15px;">
+                        <div class="tab-contents">
                             <!-- タブ1: 効果 -->
-                            <div class="tab-content active" data-tab="0" style="display: block;">
-                                <div style="width: 100%; margin-bottom: 15px;">
-                                    <img src="images/Tips1.webp" alt="効果" style="width: 100%; height: auto; border-radius: 4px;" loading="lazy" decoding="async">
+                            <div class="tab-content active" data-tab="0">
+                                <div class="tab-figure">
+                                    <img src="images/Tips1.webp" alt="効果" class="tab-image" loading="lazy" decoding="async">
                                 </div>
-                                <p style="font-size: 14px; line-height: 1.8; color: #4C4C4C; margin-bottom: 15px;">
+                                <p class="tab-description">
                                     
                                 </p>
                             </div>
 
                             <!-- タブ2: クリニック選び -->
-                            <div class="tab-content" data-tab="1" style="display: none;">
-                                <div style="width: 100%; margin-bottom: 15px;">
-                                    <img src="images/Tips2.webp" alt="クリニック選びのポイント" style="width: 100%; height: auto; border-radius: 4px;" loading="lazy" decoding="async">
+                            <div class="tab-content" data-tab="1">
+                                <div class="tab-figure">
+                                    <img src="images/Tips2.webp" alt="クリニック選びのポイント" class="tab-image" loading="lazy" decoding="async">
                                 </div>
-                                <p style="font-size: 14px; line-height: 1.8; color: #4C4C4C; margin-bottom: 15px;">
+                                <p class="tab-description">
                                     
                                 </p>
                             </div>
 
                             <!-- タブ3: 今がおすすめ -->
-                            <div class="tab-content" data-tab="2" style="display: none;">
-                                <div style="width: 100%; margin-bottom: 15px;">
-                                    <img src="images/Tips3.webp" alt="今がおすすめの理由" style="width: 100%; height: auto; border-radius: 4px;" loading="lazy" decoding="async">
+                            <div class="tab-content" data-tab="2">
+                                <div class="tab-figure">
+                                    <img src="images/Tips3.webp" alt="今がおすすめの理由" class="tab-image" loading="lazy" decoding="async">
                                 </div>
-                                <p style="font-size: 14px; line-height: 1.8; color: #4C4C4C; margin-bottom: 15px;">
+                                <p class="tab-description">
                                     
                                 </p>
                             </div>
@@ -267,24 +234,12 @@
                     function updateTabs(index) {
                         // Update tabs
                         tabs.forEach((tab, i) => {
-                            if (i === index) {
-                                tab.classList.add('active');
-                                tab.style.backgroundColor = '#2B5797';
-                                tab.style.color = 'white';
-                            } else {
-                                tab.classList.remove('active');
-                                tab.style.backgroundColor = '#CCCCCC';
-                                tab.style.color = '#333';
-                            }
+                            tab.classList.toggle('active', i === index);
                         });
-                        
+
                         // Update tab contents
                         tabContents.forEach((content, i) => {
-                            if (i === index) {
-                                content.style.display = 'block';
-                            } else {
-                                content.style.display = 'none';
-                            }
+                            content.classList.toggle('active', i === index);
                         });
                     }
 
@@ -431,7 +386,7 @@ text-align: center;
             <div class="ribbon_point_box_no" id="first-choice-points">
                 
                     <div class="ribbon_point_title2_s">
-                        <i class="fas fa-clock point-icon-inline"></i>
+                        <img src="../common_data/images/icon/point_circle.svg" class="point-icon-inline" alt="" aria-hidden="true">
                         <strong id="point1-title"></strong>
                     </div>
                     <div class="ribbon_point_txt">
@@ -439,7 +394,7 @@ text-align: center;
                     </div>
                     
                     <div class="ribbon_point_title2_s">
-                        <i class="fas fa-clock point-icon-inline"></i>
+                        <img src="../common_data/images/icon/point_circle.svg" class="point-icon-inline" alt="" aria-hidden="true">
                         <strong id="point2-title"></strong>
                     </div>
                     <div class="ribbon_point_txt">
@@ -447,7 +402,7 @@ text-align: center;
                     </div>
                     
                     <div class="ribbon_point_title2_s">
-                        <i class="fas fa-clock point-icon-inline"></i>
+                        <img src="../common_data/images/icon/point_circle.svg" class="point-icon-inline" alt="" aria-hidden="true">
                         <strong id="point3-title"></strong>
                     </div>
                     <div class="ribbon_point_txt">
@@ -1151,15 +1106,11 @@ text-align: center;
             
             const officialUrl = `https://www.xn--ecki4eoz3204ct89aepry34c.com/go/${clinicSlug}/?max_scroll=100&region_id=013`;
             
-            // アイコンを3種類用意（案件詳細ポイントに合わせた雰囲気）
-            const iconClasses = ['fa-lightbulb', 'fa-mobile-alt', 'fa-yen-sign'];
-
             let html = '';
             reasons.forEach((reason, idx) => {
-                const icon = iconClasses[idx] || 'fa-clock';
                 html += `
                     <div class="ribbon_point_title2_s">
-                        <i class="fas ${icon} point-icon-inline"></i>
+                        <img src="../common_data/images/icon/point_circle.svg" class="point-icon-inline" alt="" aria-hidden="true">
                         <strong>${dm.processDecoTags ? dm.processDecoTags(reason.title) : reason.title}</strong>
                     </div>
                     <div class="ribbon_point_txt">

@@ -1574,7 +1574,7 @@ class DataManager {
                         </div>
                     </div>
                     <a class="shop-btn map-toggle-btn" href="javascript:void(0);" data-store-id="${storeId}-${index}">
-                        <i class='fas fa-map-marker-alt btn-icon'></i>
+                        <img src="../common_data/images/icon/map_pin.svg" class="btn-icon" alt="" aria-hidden="true">
                         地図
                     </a>
                 </div>
@@ -1607,7 +1607,7 @@ class DataManager {
                         </div>
                     </div>
                     <a class="shop-btn map-toggle-btn" href="javascript:void(0);" data-store-id="${storeId}-${index + 3}">
-                        <i class='fas fa-map-marker-alt btn-icon'></i>
+                        <img src="../common_data/images/icon/map_pin.svg" class="btn-icon" alt="" aria-hidden="true">
                         地図
                     </a>
                 </div>
@@ -2002,6 +2002,7 @@ class RankingApp {
         this.dataManager = null;
         this.currentRegionId = null;
         this.textsInitialized = false;
+        this.initialRenderCompleted = false;
     }
 
     normalizeRegionId(regionId) {
@@ -2112,23 +2113,12 @@ class RankingApp {
             this.setupEventListeners();
 
             // 初期表示の更新
-            this.updatePageContent(this.currentRegionId);
+            await this.updatePageContent(this.currentRegionId);
             // PR行の再描画（データ準備完了後に一度実行）
             try { if (typeof window.__renderPrLine === 'function') window.__renderPrLine(); } catch (_) {}
-
-            // データロード完了後、ローディングクラスを削除してコンテンツを表示
-            const loadingElements = document.querySelectorAll('.ranking-loading');
-            loadingElements.forEach(element => {
-                element.classList.add('ranking-loaded');
-                element.classList.remove('ranking-loading');
-            });
-
-            // 地図モーダルの設定
-            setTimeout(() => {
-                this.setupMapAccordions();
-            }, 100);
         } catch (error) {
             this.displayManager.showError('データの読み込みに失敗しました。ページを再読み込みしてください。');
+            this.revealContent();
         }
     }
 
@@ -2241,13 +2231,13 @@ class RankingApp {
 
     }
 
-    changeRegion(regionId) {
+    async changeRegion(regionId) {
         // URLパラメータの更新はしない（region_idを付与しない）
         // this.urlHandler.updateRegionId(regionId);
         this.currentRegionId = regionId;
 
         // ページコンテンツの更新
-        this.updatePageContent(regionId);
+        await this.updatePageContent(regionId);
     }
 
     // 指定地域にクリニックの店舗があるかチェック
@@ -2385,7 +2375,7 @@ class RankingApp {
 
     }
 
-    updatePageContent(regionId) {
+    async updatePageContent(regionId) {
         try {
             
             // region_idを正規化（"014" → "14"のように、先頭の0を削除）
@@ -2482,21 +2472,8 @@ class RankingApp {
             // 詳細コンテンツの更新 (正規化されたIDを使用)
             this.updateClinicDetails(allClinics, ranking, normalizedRegionId);
 
-            // ランキング詳細DOM挿入後にバナースライダーを確実に初期化
-            // （initializeBannerSlidersは多重初期化ガード付き）
-            setTimeout(() => {
-                try { initializeBannerSliders(); } catch (_) {}
-            }, 0);
-            
-            // 比較表の注釈を更新（1位〜5位）
-            setTimeout(() => {
-                initializeDisclaimers();
-            }, 100);
-
-            // 地図モーダルの設定
-            setTimeout(() => {
-                this.setupMapAccordions();
-            }, 100);
+            await this.runPostRenderTasks();
+            this.revealContent();
 
             // エラーメッセージを隠す
             this.displayManager.hideError();
@@ -2506,13 +2483,39 @@ class RankingApp {
             
             // デフォルト地域にフォールバック
             if (regionId !== '000') {
-                this.changeRegion('000');
+                this.changeRegion('000').catch(() => {});
             }
-        } finally {
-            if (typeof document !== 'undefined' && document.body) {
-                document.body.classList.remove('is-loading');
-            }
+            this.revealContent();
         }
+    }
+
+    async runPostRenderTasks() {
+        await this.waitForNextFrame();
+        try { initializeBannerSliders(); } catch (_) {}
+        await this.waitForNextFrame();
+        try { initializeDisclaimers(); } catch (_) {}
+        await this.waitForNextFrame();
+        try { this.setupMapAccordions(); } catch (_) {}
+    }
+
+    waitForNextFrame() {
+        return new Promise(resolve => requestAnimationFrame(() => resolve()));
+    }
+
+    revealContent() {
+        if (this.initialRenderCompleted) return;
+
+        const loadingElements = document.querySelectorAll('.ranking-loading');
+        loadingElements.forEach(element => {
+            element.classList.add('ranking-loaded');
+            element.classList.remove('ranking-loading');
+        });
+
+        if (typeof document !== 'undefined' && document.body) {
+            document.body.classList.remove('is-loading');
+        }
+
+        this.initialRenderCompleted = true;
     }
 
     // 地域名を復元（updateAllTexts後の上書き防止）
@@ -3305,14 +3308,14 @@ class RankingApp {
         if (point3Title) point3Title.textContent = window.dataManager.getClinicText(clinicCode, 'POINT3タイトル', '');
         if (point3Desc) point3Desc.innerHTML = window.dataManager.getClinicText(clinicCode, 'POINT3内容', '');
         
-        // おすすめ3ポイントのアイコンを設定（3種類）
+        // おすすめ3ポイントのアイコンを設定
         try {
-            const iconElems = document.querySelectorAll('#first-choice-points .ribbon_point_title2_s i.point-icon-inline');
-            const iconClasses = ['fa-lightbulb', 'fa-mobile-alt', 'fa-yen-sign'];
-            iconElems.forEach((el, idx) => {
-                // 既存の代表的なアイコンクラスをリセット
-                el.classList.remove('fa-clock', 'fa-lightbulb', 'fa-mobile-alt', 'fa-yen-sign', 'fa-user-md', 'fa-coins');
-                el.classList.add(iconClasses[idx] || 'fa-clock');
+            const iconElems = document.querySelectorAll('#first-choice-points .point-icon-inline');
+            iconElems.forEach((el) => {
+                if (el.tagName && el.tagName.toLowerCase() === 'img') {
+                    el.src = '../common_data/images/icon/point_circle.svg';
+                    el.alt = '';
+                }
             });
         } catch (_) {}
 
@@ -3868,15 +3871,10 @@ class RankingApp {
                 <div class="clinic-points-section">
                     <h4 class="section-title">POINT</h4>
                     <div class="ribbon_point_box_no">
-                        ${data.points.map((point, index) => {
-                            let iconClass = 'fa-clock';
-                            if (point.icon === 'lightbulb') iconClass = 'fa-lightbulb';
-                            else if (point.icon === 'phone') iconClass = 'fa-mobile-alt';
-                            else if (point.icon === 'coins') iconClass = 'fa-yen-sign';
-                            
+                        ${data.points.map((point) => {
                             return `
                             <div class="ribbon_point_title2_s">
-                                <i class="fas ${iconClass} point-icon-inline"></i>
+                                <img src="../common_data/images/icon/point_circle.svg" class="point-icon-inline" alt="" aria-hidden="true">
                                 <strong>${this.dataManager.processDecoTags(point.title)}</strong>
                             </div>
                             <div class="ribbon_point_txt">
@@ -3959,12 +3957,16 @@ class RankingApp {
                                 ${(() => {
                                     const clinicCodeForLabels = this.dataManager.getClinicCodeById(clinicId);
                                     const labels = this.dataManager.getReviewTabLabels(clinicCodeForLabels) || [];
-                                    const icons = ['fa-yen-sign', 'fa-user-md', 'fa-heart'];
+                                    const iconPaths = [
+                                        '../common_data/images/icon/yen.svg',
+                                        '../common_data/images/icon/heart.svg',
+                                        '../common_data/images/icon/staff.svg'
+                                    ];
                                     if (labels.length === 0) return '';
                                     return labels.map((label, idx) => {
-                                        const icon = icons[idx] || 'fa-comment-dots';
+                                        const iconSrc = iconPaths[idx] || iconPaths[Math.min(iconPaths.length - 1, idx)];
                                         const active = idx === 0 ? 'select2' : '';
-                                        return `<li class="${active}" data-tab="tab-${idx}"><i class="fas ${icon}"></i> ${label}</li>`;
+                                        return `<li class="${active}" data-tab="tab-${idx}"><img src="${iconSrc}" class="review-tab-icon" alt="" aria-hidden="true">${label}</li>`;
                                     }).join('');
                                 })()}
                             </ul>
@@ -4928,17 +4930,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const app = new RankingApp();
     window.app = app; // グローバルアクセス用
     
-    app.init();
-    
-    // 比較表の注釈を動的に初期化
-    setTimeout(() => {
-        initializeDisclaimers();
-    }, 100);
-    
-    // バナースライダーの初期化（potenza002同等）
-    setTimeout(() => {
-        try { initializeBannerSliders(); } catch (_) {}
-    }, 200);
+    app.init().catch(() => {
+        // 例外は個別のエラーハンドリングで通知済み
+    });
     
     // デバッグ用：グローバル関数として公開
     window.testInitializeDisclaimers = initializeDisclaimers;
