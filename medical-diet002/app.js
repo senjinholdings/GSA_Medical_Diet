@@ -106,11 +106,14 @@ class UrlParamHandler {
     }
 
     // クリニックURLを取得（CSVから直接URLを取得し、パラメータを適切に処理）
-    getClinicUrlWithRegionId(clinicId, rank = 1) {
+    getClinicUrlWithRegionId(clinicId, rank = 1, options = {}) {
         // DataManagerが初期化されているか確認
         if (!window.dataManager) {
             return '#';
         }
+
+        const opts = options || {};
+        const ctaType = typeof opts.ctaType === 'string' && opts.ctaType ? opts.ctaType : null;
         
         // パラメータをlocalStorageに保存（サーバーがURLパラメータを削除する対策）
         const regionId = this.getRegionId();
@@ -119,6 +122,9 @@ class UrlParamHandler {
             rank: rank,
             region_id: regionId || '013'
         };
+        if (ctaType) {
+            redirectParams.cta_type = ctaType;
+        }
         
         // クリックイベントでlocalStorageに保存するため、データ属性として埋め込む
         // 実際の保存はクリック時に行う
@@ -129,6 +135,9 @@ class UrlParamHandler {
         redirectUrl.searchParams.set('rank', rank);
         if (regionId) {
             redirectUrl.searchParams.set('region_id', regionId);
+        }
+        if (ctaType) {
+            redirectUrl.searchParams.set('cta_type', ctaType);
         }
         
         // データ属性用のJSON文字列を作成
@@ -224,6 +233,11 @@ class UrlParamHandler {
 
     // 直フォームの遷移先URL（存在しない場合は通常のリダイレクトURLにフォールバック）
     getDirectFormUrl(clinicId, rank = 1) {
+        const redirectUrl = this.getClinicUrlWithRegionId(clinicId, rank, { ctaType: 'direct' });
+        if (redirectUrl && redirectUrl !== '#') {
+            return redirectUrl;
+        }
+
         try {
             const dm = window.dataManager;
             if (!dm) return this.getClinicUrlWithRegionId(clinicId, rank);
@@ -235,7 +249,7 @@ class UrlParamHandler {
                 `直フォーム遷移先URL（${rank}位）`,
                 `直フォームURL（${rank}位）`
             ];
-            for (let i=0;i<rankKeys.length;i++){
+            for (let i = 0; i < rankKeys.length; i++) {
                 const v = dm.getClinicText(clinicCode, rankKeys[i], '').trim();
                 if (v) return v;
             }
@@ -3749,14 +3763,9 @@ class RankingApp {
                 ? `<div style="font-size: 12px;">${informationSubTextProcessed}</div>`
                 : '';
             const ctaMicrocopyHtml = '<span class="cta-subtext" style="display:block;font-size: 11px;color: #ff95ad;font-weight: 400;"><span>いつでも変更/キャンセルは可能です</span></span>';
-            const directCtaHtml = rank === 1
-                ? `<p class="btn btn_outline_pink">
-                        <a class="ctaBtn-direct" href="https://sss.ac01.l-ad.net/cl/p1a64143O61e70f7/?bid=56casdd8820sb67f" target="_blank" rel="noopener">
-                            <span class="bt_s">無料相談の空き状況をチェック</span>${ctaMicrocopyHtml}
-                        </a>
-                    </p>`
-                : `<p class="btn btn_outline_pink">
-                        <a class="ctaBtn-direct" href="${this.urlHandler.getDirectFormUrl(clinic.id, clinic.rank)}" target="_blank" rel="noopener noreferrer">
+            const directCtaUrl = this.urlHandler.getDirectFormUrl(clinic.id, clinic.rank || rank);
+            const directCtaHtml = `<p class="btn btn_outline_pink">
+                        <a class="ctaBtn-direct" href="${directCtaUrl}" target="_blank" rel="noopener noreferrer">
                             <span class="bt_s">無料相談の空き状況をチェック</span>${ctaMicrocopyHtml}
                         </a>
                     </p>`;
@@ -4088,17 +4097,14 @@ class RankingApp {
                                             <span class="btn-arrow">▶</span>
                                         </a>
                                     </p>
-                                    ${(rank === 1
-                                        ? `<p class="btn btn_outline_pink">
-                                            <a class="ctaBtn-direct" href="https://sss.ac01.l-ad.net/cl/p1a64143O61e70f7/?bid=56casdd8820sb67f" target="_blank" rel="noopener">
+                                    ${(() => {
+                                        const directUrl = this.urlHandler.getDirectFormUrl(clinicId, clinic.rank || 1);
+                                        return `<p class="btn btn_outline_pink">
+                                            <a class="ctaBtn-direct" href="${directUrl}" target="_blank" rel="noopener noreferrer">
                                                 <span class="bt_s">無料相談の空き状況をチェック</span>${ctaMicrocopyHtml}
                                             </a>
-                                        </p>`
-                                        : `<p class="btn btn_outline_pink">
-                                            <a class="ctaBtn-direct" href="${this.urlHandler.getDirectFormUrl(clinicId, clinic.rank || 1)}" target="_blank" rel="noopener">
-                                                <span class="bt_s">無料相談の空き状況をチェック</span>${ctaMicrocopyHtml}
-                                            </a>
-                                        </p>`)}
+                                        </p>`;
+                                    })()}
                                 </div>
                             </div>
                             `;
