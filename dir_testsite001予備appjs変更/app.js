@@ -1100,6 +1100,9 @@ class DataManager {
                 candidates.push(this.dataPath + filename);
                 candidates.push(this.regionDataPath + filename);
                 candidates.push(this.commonDataPath + filename);
+                // ASCII別名フォールバック（ホスティングで日本語/スペースが除外される対策）
+                candidates.push(this.dataPath + 'ranking.csv');
+                candidates.push(this.regionDataPath + 'ranking.csv');
             } else if (filename.includes('items.csv') || filename.includes('region.csv') || filename.includes('store_view.csv') || filename.includes('stores.csv') || filename.includes('campaigns.csv')) {
                 // まずは共通データ、次にローカルdata直下
                 candidates.push(this.commonDataPath + filename);
@@ -1187,7 +1190,27 @@ class DataManager {
 
     // ランキングデータの読み込み
     async loadRankings() {
-        const data = await this.loadCsvFile('出しわけSS - ranking.csv');
+        let data = [];
+        try {
+            data = await this.loadCsvFile('出しわけSS - ranking.csv');
+        } catch (_) {
+            data = [];
+        }
+        // フォールバック: CSVが取得できなければ、itemsの先頭から簡易ランキングを構築
+        if (!data || data.length === 0) {
+            const allClinics = this.clinics || [];
+            if (allClinics.length > 0) {
+                const fallback = {
+                    regionId: '013',
+                    ranks: {}
+                };
+                for (let i = 0; i < Math.min(5, allClinics.length); i++) {
+                    fallback.ranks[`no${i+1}`] = allClinics[i].id;
+                }
+                this.rankings = [fallback];
+                return;
+            }
+        }
         
         // 地域ごとにランキングをグループ化
         const rankingMap = {};

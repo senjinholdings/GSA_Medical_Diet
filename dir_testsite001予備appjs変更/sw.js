@@ -3,8 +3,7 @@ const urlsToCache = [
   './',
   './styles.css',
   './app.js',
-  './images/injection-MV.webp',
-  './images/favicon.png',
+  './images/mv.webp',
   './images/ranking_header_banner.webp'
 ];
 
