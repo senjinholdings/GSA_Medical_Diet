@@ -1,4 +1,4 @@
-const CACHE_NAME = 'mouthpiece-v2';
+const CACHE_NAME = 'mouthpiece-v3-20250924';
 const urlsToCache = [
   '/',
   '/styles.css',
@@ -18,6 +18,12 @@ self.addEventListener('install', event => {
 
 // フェッチ時にキャッシュから返す
 self.addEventListener('fetch', event => {
+  // CSVファイルはキャッシュしない
+  if (event.request.url.includes('.csv')) {
+    event.respondWith(fetch(event.request));
+    return;
+  }
+
   event.respondWith(
     caches.match(event.request)
       .then(response => {
@@ -25,11 +31,11 @@ self.addEventListener('fetch', event => {
         if (response) {
           return response;
         }
-        
+
         // なければネットワークから取得
         return fetch(event.request).then(response => {
-          // 画像とCSSはキャッシュに追加
-          if (event.request.url.match(/\.(webp|jpg|png|css|js)$/)) {
+          // 画像とCSSはキャッシュに追加（ただしCSVは除外）
+          if (event.request.url.match(/\.(webp|jpg|png|css|js)$/) && !event.request.url.includes('.csv')) {
             const responseClone = response.clone();
             caches.open(CACHE_NAME)
               .then(cache => cache.put(event.request, responseClone));
