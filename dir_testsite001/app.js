@@ -1099,6 +1099,8 @@ class DataManager {
                 candidates.push(this.dataPath + filename);
                 candidates.push(this.regionDataPath + filename);
             } else if (filename.includes('items.csv') || filename.includes('region.csv') || filename.includes('store_view.csv') || filename.includes('stores.csv')) {
+                // まずローカルのdataディレクトリを確認、なければcommon_dataを試す
+                candidates.push(this.dataPath + filename);
                 candidates.push(this.commonDataPath + filename);
             } else {
                 candidates.push(this.dataPath + filename);
