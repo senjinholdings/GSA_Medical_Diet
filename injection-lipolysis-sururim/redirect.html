@@ -330,16 +330,23 @@
             let clinicId = null;
             let rank = null;
             let regionId = null;
+            let storedClickSection = null;
+            let storedClickClinic = null;
+            let storedSourcePage = null;
             
             // 方法1: localStorageを最優先で確認（サーバーがパラメータを削除する場合の対策）
             const storedParams = localStorage.getItem('redirectParams');
+            console.log('redirectParams(raw):', storedParams);
             if (storedParams) {
                 try {
                     const params = JSON.parse(storedParams);
                     clinicId = params.clinic_id;
                     rank = params.rank;
                     regionId = params.region_id;
-                    console.log('方法1 localStorage（優先）:', { clinicId, rank, regionId });
+                    if (typeof params.click_section === 'string') storedClickSection = params.click_section;
+                    if (typeof params.click_clinic === 'string') storedClickClinic = params.click_clinic;
+                    if (typeof params.source_page === 'string') storedSourcePage = params.source_page;
+                    console.log('方法1 localStorage（優先）:', { clinicId, rank, regionId, storedClickSection, storedClickClinic, storedSourcePage });
                     // 使用後は削除
                     localStorage.removeItem('redirectParams');
                 } catch (e) {
@@ -413,7 +420,7 @@
             
             // 方法5: sessionStorageから取得（同一タブ内）
             if (!clinicId) {
-                const storedParams = sessionStorage.getItem('redirectParams');
+                const storedParams = localStorage.getItem('redirectParams');
                 if (storedParams) {
                     try {
                         const params = JSON.parse(storedParams);
@@ -421,7 +428,7 @@
                         rank = params.rank;
                         regionId = params.region_id;
                         console.log('方法5 sessionStorage:', { clinicId, rank, regionId });
-                        sessionStorage.removeItem('redirectParams');
+                        localStorage.removeItem('redirectParams');
                     } catch (e) {
                         console.error('sessionStorage解析エラー:', e);
                     }
@@ -519,9 +526,9 @@
             const currentPageWithParams = window.location.href;
             const baseReferrerUrl = currentPageWithParams.split('?')[0];
             const trackingParams = {
-                click_section: currentUrl.searchParams.get('click_section') || '',
-                click_clinic: currentUrl.searchParams.get('click_clinic') || clinicCode,
-                source_page: currentUrl.searchParams.get('source_page') || 'potenza',
+                click_section: currentUrl.searchParams.get('click_section') || storedClickSection || '',
+                click_clinic: currentUrl.searchParams.get('click_clinic') || storedClickClinic || clinicCode,
+                source_page: currentUrl.searchParams.get('source_page') || storedSourcePage || 'potenza',
                 region_id: regionId || '013',
                 referrer_url: baseReferrerUrl,  // パラメータを除いたベースURLのみ
                 timestamp: new Date().toISOString()

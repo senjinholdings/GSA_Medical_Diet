@@ -31,19 +31,33 @@
                         e.target.closest('a[href*="/go/"]') ||
                         e.target.closest('.btn_second_primary a') ||
                         e.target.closest('.cta-button') ||
+                        e.target.closest('.ctaBtn-direct') ||
                         e.target.closest('#first-choice-cta-link');
             if (!link) return;
             
             // リンク先がgo/xxx/形式の場合のみ処理
             const href = link.getAttribute('href');
-            if (!href || !href.includes('/go/')) return;
+            if (!href) return;
+
+            const isGoLink = href.includes('/go/');
+            const isRedirectLink = href.includes('redirect.html');
+            if (!isGoLink && !isRedirectLink) return;
             
             // クリニック名を取得
             let clinicName = 'Unknown';
-            
-            // URLからクリニック名を推測
-            const clinicIdMatch = href.match(/\/go\/(\w+)\//);
-            const clinicId = clinicIdMatch ? clinicIdMatch[1] : null;
+
+            let clinicId = null;
+            if (isGoLink) {
+                const clinicIdMatch = href.match(/\/go\/(\w+)\//);
+                clinicId = clinicIdMatch ? clinicIdMatch[1] : null;
+            } else if (isRedirectLink) {
+                try {
+                    const urlObj = new URL(href, window.location.origin);
+                    clinicId = urlObj.searchParams.get('clinic_id');
+                } catch (_) {
+                    clinicId = null;
+                }
+            }
             
             const clinicNameMap = {
                 'dio': 'ディオクリニック',
@@ -53,8 +67,20 @@
                 'sbc': '湘南美容クリニック'
             };
             
+            let clinicCode = null;
+            if (window.dataManager && typeof window.dataManager.getClinicCodeById === 'function' && clinicId) {
+                try {
+                    clinicCode = window.dataManager.getClinicCodeById(clinicId) || null;
+                } catch (_) {
+                    clinicCode = null;
+                }
+            }
+            
             if (clinicId && clinicNameMap[clinicId]) {
                 clinicName = clinicNameMap[clinicId];
+                if (!clinicCode) {
+                    clinicCode = clinicId;
+                }
             } else {
                 // 比較表から
                 if (link.closest('tr')) {
@@ -76,6 +102,10 @@
                     clinicName = document.getElementById('map-modal-clinic-name')?.textContent || clinicName;
                 }
             }
+
+            if (!clinicCode && clinicId) {
+                clinicCode = clinicId;
+            }
             
             // 現在は使用しないがコメントとして保持
             // const rankElement = link.closest('.ranking-item')?.querySelector('.rank-badge');
@@ -84,25 +114,34 @@
             
             // セクションを判別
             let clickSection = 'unknown';
-            if (link.closest('.ranking-container') || link.closest('.ranking-item')) {
-                clickSection = 'ranking';
-            } else if (link.closest('.comparison-table')) {
-                clickSection = 'comparison_table';
-            } else if (link.closest('.clinic-details-container') || link.closest('.detail-item')) {
-                clickSection = 'details';
-            } else if (link.closest('.campaign-section')) {
-                clickSection = 'campaign_section';
-            } else if (link.closest('.map-modal')) {
-                clickSection = 'map_modal';
-            } else if (link.closest('#first-choice-recommendation-section') || 
-                      link.closest('.first-choice-recommendation-section')) {
-                clickSection = 'first_choice_recommendation';
+            const dataSectionTarget = link.closest('[data-click-section]') || (link.dataset && link.dataset.clickSection ? link : null);
+            if (dataSectionTarget) {
+                const dataValue = dataSectionTarget.dataset.clickSection;
+                if (dataValue && dataValue.trim()) {
+                    clickSection = dataValue.trim();
+                }
+            }
+            if (clickSection === 'unknown') {
+                if (link.closest('.ranking-container') || link.closest('.ranking-item')) {
+                    clickSection = 'ranking';
+                } else if (link.closest('.comparison-table')) {
+                    clickSection = 'comparison_table';
+                } else if (link.closest('.clinic-details-container') || link.closest('.detail-item')) {
+                    clickSection = 'details';
+                } else if (link.closest('.campaign-section')) {
+                    clickSection = 'campaign_section';
+                } else if (link.closest('.map-modal')) {
+                    clickSection = 'map_modal';
+                } else if (link.closest('#first-choice-recommendation-section') || 
+                          link.closest('.first-choice-recommendation-section')) {
+                    clickSection = 'first_choice_recommendation';
+                }
             }
             
             // トラッキングパラメータ（click_sectionは必須で含める）
             const trackingParams = {
                 click_section: clickSection || 'unknown',
-                click_clinic: clinicName.replace(/\s+/g, '_'),
+                click_clinic: clinicCode ? clinicCode : clinicName.replace(/\s+/g, '_'),
                 source_page: window.location.pathname
             };
             
@@ -189,21 +228,41 @@
     // スクロール深度の記録
     function trackScrollDepth() {
         let maxScroll = 0;
-        
-        window.addEventListener('scroll', function() {
-            const scrollPercentage = Math.round((window.pageYOffset / (document.documentElement.scrollHeight - window.innerHeight)) * 100);
-            
+        const existingMax = parseInt(new URLSearchParams(window.location.search).get('max_scroll'), 10);
+        if (!Number.isNaN(existingMax)) {
+            maxScroll = Math.max(0, Math.min(100, existingMax));
+        }
+
+        let ticking = false;
+
+        function updateScrollDepth() {
+            ticking = false;
+            const doc = document.documentElement;
+            const scrollableHeight = doc.scrollHeight - window.innerHeight;
+            if (scrollableHeight <= 0) {
+                return;
+            }
+
+            const scrollTop = window.scrollY || window.pageYOffset || doc.scrollTop || document.body.scrollTop || 0;
+            const rawPercentage = (scrollTop / scrollableHeight) * 100;
+            const scrollPercentage = Math.max(0, Math.min(100, Math.floor(rawPercentage)));
+
             if (scrollPercentage > maxScroll) {
                 maxScroll = scrollPercentage;
-                
-                // 25%刻みで記録
-                if (maxScroll % 25 === 0) {
-                    const currentUrl = new URL(window.location.href);
-                    currentUrl.searchParams.set('max_scroll', maxScroll);
-                    window.history.replaceState({}, '', currentUrl.toString());
-                }
+                const currentUrl = new URL(window.location.href);
+                currentUrl.searchParams.set('max_scroll', maxScroll);
+                window.history.replaceState({}, '', currentUrl.toString());
             }
-        });
+        }
+
+        window.addEventListener('scroll', function() {
+            if (!ticking) {
+                window.requestAnimationFrame(updateScrollDepth);
+                ticking = true;
+            }
+        }, { passive: true });
+
+        updateScrollDepth();
     }
 
     // すべての外部リンクに対するフォールバック処理

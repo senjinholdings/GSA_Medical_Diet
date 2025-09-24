@@ -483,6 +483,20 @@ text-align: center;
                         try {
                             const paramsJson = decodeURIComponent(hashParams.substring(7));
                             const params = JSON.parse(paramsJson);
+                            const linkQueryParams = {};
+                            for (const [key, value] of url.searchParams) {
+                                linkQueryParams[key] = value;
+                            }
+
+                            if (Object.keys(linkQueryParams).length) {
+                                params.original_params = Object.assign({}, params.original_params || {}, linkQueryParams);
+
+                                ['click_section', 'click_clinic', 'source_page', 'cta_type', 'region_id'].forEach(key => {
+                                    if (linkQueryParams[key] && typeof params[key] === 'undefined') {
+                                        params[key] = linkQueryParams[key];
+                                    }
+                                });
+                            }
 
                             // 現在のページのパラメータも追加保存
                             const currentUrl = new URL(window.location.href);
@@ -512,11 +526,26 @@ text-align: center;
                         const regionId = url.searchParams.get('region_id');
 
                         if (clinicId) {
-                            const params = {
-                                clinic_id: clinicId,
-                                rank: rank || '1',
-                                region_id: regionId || '013'
-                            };
+                        const linkQueryParams = {};
+                        for (const [key, value] of url.searchParams) {
+                            linkQueryParams[key] = value;
+                        }
+
+                        const params = {
+                            clinic_id: clinicId,
+                            rank: rank || '1',
+                            region_id: regionId || '013'
+                        };
+
+                        if (Object.keys(linkQueryParams).length) {
+                            params.original_params = Object.assign({}, params.original_params || {}, linkQueryParams);
+
+                            ['click_section', 'click_clinic', 'source_page', 'cta_type', 'region_id'].forEach(key => {
+                                if (linkQueryParams[key] && typeof params[key] === 'undefined') {
+                                    params[key] = linkQueryParams[key];
+                                }
+                            });
+                        }
                             localStorage.setItem('redirectParams', JSON.stringify(params));
                             console.log('Saved redirect params from URL to localStorage:', params);
                             window.open(link.href, '_blank', 'noopener');
@@ -1758,7 +1787,7 @@ text-align: center;
     <!-- Clinic URLs are now managed dynamically from CSV database -->
     
     <!-- URL Parameter Tracking -->
-    <script src="/url-tracking.js?v=2025072201" defer></script>
+    <script src="/url-tracking.js?v=2025092401" defer></script>
     
     <!-- Service Worker登録 -->
     <script>
