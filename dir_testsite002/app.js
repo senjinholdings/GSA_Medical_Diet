@@ -674,8 +674,10 @@ class DataManager {
     async loadCommonTextsFromCsv() {
         this.commonTexts = {};
         try {
-            const primary = this.dataPath + 'site-common-texts.csv';
-            const legacy = this.dataPath + 'appeal_text/site-common-texts.csv';
+            // キャッシュバスティング用のタイムスタンプを追加
+            const timestamp = Date.now();
+            const primary = this.dataPath + 'site-common-texts.csv?v=' + timestamp;
+            const legacy = this.dataPath + 'appeal_text/site-common-texts.csv?v=' + timestamp;
             let respLocal = await fetch(primary);
             if (!respLocal.ok) {
                 respLocal = await fetch(legacy);
@@ -770,8 +772,10 @@ class DataManager {
     // clinic-texts.csv を直接読み込んで clinicTexts 構造を生成
     async loadClinicTextsFromCsv() {
         try {
-            const primary = this.dataPath + 'clinic-texts.csv';
-            const legacy = this.dataPath + 'clinic_text/clinic-texts.csv';
+            // キャッシュバスティング用のタイムスタンプを追加
+            const timestamp = Date.now();
+            const primary = this.dataPath + 'clinic-texts.csv?v=' + timestamp;
+            const legacy = this.dataPath + 'clinic_text/clinic-texts.csv?v=' + timestamp;
             let resp = await fetch(primary);
             if (!resp.ok) {
                 resp = await fetch(legacy);
@@ -1028,6 +1032,8 @@ class DataManager {
     // CSVファイルを読み込む汎用関数（エラーハンドリング付き）
     async loadCsvFile(filename) {
         try {
+            // キャッシュバスティング用のタイムスタンプを追加
+            const timestamp = Date.now();
             // 読み込み候補（新配置優先 → 旧配置）
             const candidates = [];
             if (filename.includes('ranking.csv')) {
@@ -1044,7 +1050,8 @@ class DataManager {
             let response = null;
             for (const url of candidates) {
                 try {
-                    const res = await fetch(url);
+                    // キャッシュバスティングを追加
+                    const res = await fetch(url + '?v=' + timestamp);
                     if (res.ok) { response = res; break; }
                 } catch (_) { /* try next */ }
             }
