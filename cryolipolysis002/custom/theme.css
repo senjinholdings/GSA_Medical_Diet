@@ -1,0 +1,10 @@
+:root {
+  /* Primary site brand color */
+  --theme-base-override: #f278a0;
+  /* Accent/CTA color */
+  --theme-action-override: #47cecb;
+
+  /* 後方互換のため、旧プロパティ名にも値を反映 */
+  --theme-base: var(--theme-base-override);
+  --theme-action: var(--theme-action-override);
+}
