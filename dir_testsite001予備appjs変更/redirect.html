@@ -6,7 +6,7 @@
     <title>公式サイトへ移動中...</title>
     <meta name="description" content="公式サイトへリダイレクトしています。">
     <meta name="referrer" content="unsafe-url">
-    <link rel="icon" type="image/png" href="/images/favicon.png">
+    <link rel="icon" type="image/png" href="../common_data/images/favicon.png">
     <meta http-equiv="Content-Security-Policy" content="referrer unsafe-url">
     <style>
         body {
@@ -679,7 +679,7 @@
             // ロゴの設定（meta13優先 -> 既定パス）
             try {
                 const metaLogo = window.dataManager && window.dataManager.getClinicText(clinicCode, 'meta13', '');
-                clinicLogo.src = metaLogo || `/images/clinics/${clinicCode}/${clinicCode}-logo.webp`;
+                clinicLogo.src = metaLogo || `../common_data/images/clinics/${clinicCode}/${clinicCode}-logo.webp`;
             } catch (_) {
                 clinicLogo.src = `/images/clinics/${clinicCode}/${clinicCode}-logo.webp`;
             }
@@ -688,7 +688,7 @@
             
             // ロゴのエラー処理
             clinicLogo.onerror = function() {
-                const jpgPath = `/images/clinics/${clinicCode}/${clinicCode}-logo.jpg`;
+                const jpgPath = `../common_data/images/clinics/${clinicCode}/${clinicCode}-logo.jpg`;
                 this.src = jpgPath;
                 this.onerror = function() {
                     this.style.display = 'none';

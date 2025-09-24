@@ -378,7 +378,7 @@ class DisplayManager {
             }
 
             // バナー画像をclinic-texts.jsonから取得
-            const imagesPath = window.SITE_CONFIG ? window.SITE_CONFIG.imagesPath + '/images' : '/images';
+            const imagesPath = window.SITE_CONFIG ? window.SITE_CONFIG.imagesPath + '/images' : './images';
             const clinicCodeForImage = window.dataManager.getClinicCodeById(clinic.id);
             let bannerImage = `../common_data/images/clinics/tcb/tcb-logo.webp`; // デフォルト
             
@@ -742,7 +742,7 @@ class DataManager {
                 console.warn('⚠️ ローカル site-common-texts.csv 読込エラー:', e);
             }
             try {
-                const respCommon = await fetch('../../../common_data/data/site-common-texts.json');
+                const respCommon = await fetch('../common_data/data/site-common-texts.json');
                 if (respCommon.ok) {
                     const jsonText = await respCommon.text();
                     try {
@@ -3155,7 +3155,7 @@ class RankingApp {
             };
             
             // クリニックのロゴ画像パスをclinic-texts.jsonから取得
-            const imagesPath = window.SITE_CONFIG ? window.SITE_CONFIG.imagesPath + '/images' : '/images';
+            const imagesPath = window.SITE_CONFIG ? window.SITE_CONFIG.imagesPath + '/images' : './images';
             let logoPath = getClinicData('meta13', '') || getClinicData('クリニックロゴ画像パス', '');
             
             if (!logoPath) {
