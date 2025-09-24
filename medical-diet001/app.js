@@ -4458,12 +4458,13 @@ class RankingApp {
                 
                 // コンテキストからクリニック名を優先的に取得（data-clinic-idベース）
                 let clinicName = 'クリニック';
+                let contextualClinic = null;
                 try {
                     const shopsContainer = shopContainer?.closest('.shops');
                     const clinicDetailElement = shopsContainer?.closest('.detail-item');
                     const contextualClinicId = clinicDetailElement?.getAttribute('data-clinic-id');
                     if (contextualClinicId && self.dataManager) {
-                        const contextualClinic = self.dataManager.clinics?.find(c => c.id == contextualClinicId);
+                        contextualClinic = self.dataManager.clinics?.find(c => c.id == contextualClinicId) || null;
                         if (contextualClinic) {
                             clinicName = contextualClinic.name;
                         }
@@ -4573,14 +4574,14 @@ class RankingApp {
                             fullStoreName = clinicName + storeName;
                         }
                         
-                        self.showMapModal(fullStoreName, address, access, clinicName);
+                        self.showMapModal(fullStoreName, address, access, contextualClinic || clinicName);
                     } catch (error) {
                     }
                 } else {
                     
                     // フォールバック: 最低限の情報でモーダルを表示
                     try {
-                        self.showMapModal('テストクリニック', 'テスト住所', 'テストアクセス', 'test');
+                        self.showMapModal('テストクリニック', 'テスト住所', 'テストアクセス', null);
                     } catch (error) {
                     }
                 }
@@ -4612,8 +4613,7 @@ class RankingApp {
     }
     
     // 地図モーダルを表示
-    showMapModal(clinicName, address, access, clinicCode) {
-        
+    showMapModal(clinicName, address, access, clinicContext) {
         const modal = document.getElementById('map-modal');
         const modalClinicName = document.getElementById('map-modal-clinic-name');
         const modalAddress = document.getElementById('map-modal-address');
@@ -4621,104 +4621,110 @@ class RankingApp {
         const modalHours = document.getElementById('map-modal-hours');
         const modalMapContainer = document.getElementById('map-modal-map-container');
         const modalButton = document.getElementById('map-modal-button');
-        
+
         if (modal && modalClinicName && modalAddress && modalAccess && modalMapContainer) {
-            // 変換コンテキストの影響を避けるため、body直下に移動（PCで左寄りになる問題の回避）
             try {
                 if (modal.parentNode !== document.body) {
                     document.body.appendChild(modal);
                 }
             } catch (_) {}
-            // まずモーダルを表示
+
             modal.style.display = 'flex';
-            document.body.style.overflow = 'hidden'; // スクロールを無効化
-            
-            // モーダルの内容を設定
+            document.body.style.overflow = 'hidden';
+
             modalClinicName.textContent = clinicName;
             modalAddress.textContent = address;
             modalAccess.textContent = access;
-            
-            // Google Maps iframeを生成
+
             modalMapContainer.innerHTML = this.generateMapIframe(address);
-            
-            // 公式サイトボタンのURLとテキストを設定（エラーが発生してもモーダルは表示される）
+
             if (modalButton) {
                 try {
-                // クリニック名からクリニックコードを取得
-                let clinicKey = '';
-                const clinics = this.dataManager.clinics || [];
-                
-                // clinicCodeパラメータはクリニック名なので、クリニック名で検索
-                const clinic = clinics.find(c => 
-                    c.name === clinicCode || 
-                    clinicName.includes(c.name) || 
-                    c.name === clinicName
-                );
-                
-                if (clinic) {
-                    clinicKey = clinic.code;
-                }
-                
-                // urlHandlerのインスタンスがある場合は使用、なければ直接URLを生成
-                let generatedUrl = '#';
-                
-                try {
-                    if (window.urlHandler) {
-                        generatedUrl = window.urlHandler.getClinicUrlByNameWithRegionId(clinicKey);
+                    const clinics = this.dataManager?.clinics || [];
+
+                    let resolvedClinic = null;
+                    if (clinicContext && typeof clinicContext === 'object') {
+                        resolvedClinic = clinicContext;
+                    } else if (clinicContext && typeof clinicContext === 'string') {
+                        resolvedClinic = clinics.find(c => clinicContext === c.code || clinicContext === c.name || clinicContext.includes(c.name)) || null;
                     }
-                } catch (e) {
-                }
-                
-                // URLが生成できなかった場合のフォールバック
-                if (!generatedUrl || generatedUrl === '#') {
-                    // 直接redirect.htmlへのリンクを生成
-                    const regionId = new URLSearchParams(window.location.search).get('region_id') || '000';
-                    if (clinic) {
-                        generatedUrl = `./redirect.html?clinic_id=${clinic.id}&rank=1&region_id=${regionId}`;
+                    if (!resolvedClinic) {
+                        resolvedClinic = clinics.find(c => clinicName.includes(c.name) || c.name.includes(clinicName)) || null;
                     }
-                }
-                
-                // URLが正しく生成されているか確認
-                if (generatedUrl && generatedUrl !== '#' && generatedUrl !== '') {
-                    modalButton.href = generatedUrl;
-                    modalButton.target = '_blank';
-                    modalButton.rel = 'noopener';
-                    
-                    // クリックイベントを削除（通常のリンクとして動作させる）
-                    modalButton.onclick = null;
-                } else {
-                    // URLが生成できない場合は、メインページのクリニック詳細へスクロール
-                    modalButton.href = '#';
-                    modalButton.onclick = (e) => {
-                        e.preventDefault();
-                        this.hideMapModal();
-                        // クリニック詳細セクションへスクロール
-                        const clinicDetail = document.querySelector(`[data-clinic-id="${clinic?.id || '1'}"]`);
-                        if (clinicDetail) {
-                            clinicDetail.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+                    let clinicId = resolvedClinic?.id || null;
+                    let clinicCode = resolvedClinic?.code || null;
+                    const clinicRank = resolvedClinic?.rank || 1;
+
+                    if (!clinicCode && clinicId && typeof this.dataManager?.getClinicCodeById === 'function') {
+                        try {
+                            clinicCode = this.dataManager.getClinicCodeById(clinicId) || null;
+                        } catch (_) {}
+                    }
+
+                    let generatedUrl = '#';
+                    try {
+                        if (clinicId && window.urlHandler) {
+                            generatedUrl = window.urlHandler.getClinicUrlWithRegionId(clinicId, clinicRank, { ctaType: 'official' });
                         }
-                    };
-                }
-                
-                    // ボタンテキストを設定
+                    } catch (_) {}
+
+                    if ((!generatedUrl || generatedUrl === '#') && clinicId) {
+                        const regionId = new URLSearchParams(window.location.search).get('region_id') || '013';
+                        generatedUrl = `./redirect.html?clinic_id=${clinicId}&rank=${clinicRank}&region_id=${regionId}`;
+                    }
+
+                    if (generatedUrl && generatedUrl !== '#' && generatedUrl !== '') {
+                        try {
+                            generatedUrl = new URL(generatedUrl, window.location.href).toString();
+                        } catch (_) {}
+                        modalButton.href = generatedUrl;
+                        modalButton.target = '_blank';
+                        modalButton.rel = 'noopener';
+                        modalButton.onclick = null;
+                        modalButton.dataset.clickSection = 'map_modal';
+                        if (clinicCode) {
+                            modalButton.dataset.clickClinic = clinicCode;
+                        } else {
+                            modalButton.removeAttribute('data-click-clinic');
+                        }
+                        if (clinicId) {
+                            modalButton.dataset.clinicId = clinicId;
+                        } else {
+                            modalButton.removeAttribute('data-clinic-id');
+                        }
+                    } else {
+                        modalButton.href = '#';
+                        modalButton.dataset.clickSection = 'map_modal';
+                        modalButton.removeAttribute('data-click-clinic');
+                        modalButton.removeAttribute('data-clinic-id');
+                        modalButton.onclick = (e) => {
+                            e.preventDefault();
+                            this.hideMapModal();
+                            const fallbackClinicId = resolvedClinic?.id || '1';
+                            const clinicDetail = document.querySelector(`[data-clinic-id="${fallbackClinicId}"]`);
+                            if (clinicDetail) {
+                                clinicDetail.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            }
+                        };
+                    }
+
                     const buttonText = document.getElementById('map-modal-button-text');
                     if (buttonText) {
-                        // CTAは店舗名ではなくクリニック名のみを表示
-                        const ctaClinicName = (clinic && clinic.name)
-                            || (typeof clinicCode === 'string' && clinicCode)
-                            || 'クリニック';
-                        buttonText.textContent = ctaClinicName + 'の公式サイト';
+                        const ctaClinicName = resolvedClinic?.name || clinicName || 'クリニック';
+                        buttonText.textContent = `${ctaClinicName}の公式サイト`;
                     }
                 } catch (error) {
-                    // エラーが発生してもモーダルは表示されたままにする
                     modalButton.href = '#';
+                    modalButton.dataset.clickSection = 'map_modal';
+                    modalButton.removeAttribute('data-click-clinic');
+                    modalButton.removeAttribute('data-clinic-id');
                     modalButton.onclick = (e) => {
                         e.preventDefault();
                         this.hideMapModal();
                     };
                 }
             }
-        } else {
         }
     }
     
