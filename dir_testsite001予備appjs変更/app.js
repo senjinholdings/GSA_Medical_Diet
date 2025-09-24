@@ -1096,10 +1096,14 @@ class DataManager {
         try {
             const candidates = [];
             if (filename.includes('ranking.csv')) {
+                // 新配置（data直下）→ 旧配置（data/ranking）→ 共通データ
                 candidates.push(this.dataPath + filename);
                 candidates.push(this.regionDataPath + filename);
-            } else if (filename.includes('items.csv') || filename.includes('region.csv') || filename.includes('store_view.csv') || filename.includes('stores.csv')) {
                 candidates.push(this.commonDataPath + filename);
+            } else if (filename.includes('items.csv') || filename.includes('region.csv') || filename.includes('store_view.csv') || filename.includes('stores.csv') || filename.includes('campaigns.csv')) {
+                // まずは共通データ、次にローカルdata直下
+                candidates.push(this.commonDataPath + filename);
+                candidates.push(this.dataPath + filename);
             } else {
                 candidates.push(this.dataPath + filename);
             }
@@ -5382,7 +5386,7 @@ function initializeScrollModal() {
 
     // デフォルトロゴ
     if (!clinicLogoUrl) {
-        clinicLogoUrl = './images/logo-placeholder.png';
+        clinicLogoUrl = '../common_data/images/favicon.png';
     }
 
     // 吹き出しテキスト（footer-modal1）をCSVから取得
