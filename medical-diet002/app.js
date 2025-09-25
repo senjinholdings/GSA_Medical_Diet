@@ -3863,8 +3863,9 @@ class RankingApp {
                         return '';
                     }
                     const baseVideoPath = (window.SITE_CONFIG && window.SITE_CONFIG.imagesPath) ? window.SITE_CONFIG.imagesPath : './images';
-                    const videoSrc = `${baseVideoPath}/${sanitizedClinicCode}_treatment.mp4`;
-                    const videoHtml = `<div class=\"procedure-video-embed\" data-clinic-code=\"${sanitizedClinicCode}\" data-video-src=\"${videoSrc}\">\n                            <video class=\"procedure-video\" controls playsinline preload=\"auto\" tabindex=\"0\" aria-label=\"${clinic.name}の施術風景\">\n                                <source src=\"${videoSrc}\" type=\"video/mp4\">\n                                お使いのブラウザでは動画を再生できません。\n                            </video>\n                            <button type=\"button\" class=\"procedure-video-toggle\" aria-label=\"再生\">\n                                <span class=\"procedure-video-toggle-icon\"></span>\n                            </button>\n                        </div>`;
+                    const videoSrcMp4 = `${baseVideoPath}/${sanitizedClinicCode}_treatment.mp4`;
+                    const videoSrcWebm = `${baseVideoPath}/${sanitizedClinicCode}_treatment.webm`;
+                    const videoHtml = `<div class=\"procedure-video-embed\" data-clinic-code=\"${sanitizedClinicCode}\" data-video-src=\"${videoSrcMp4}\">\n                            <video class=\"procedure-video\" controls playsinline preload=\"auto\" tabindex=\"0\" aria-label=\"${clinic.name}の施術風景\">\n                                <source src=\"${videoSrcWebm}\" type=\"video/webm\">\n                                <source src=\"${videoSrcMp4}\" type=\"video/mp4\">\n                                お使いのブラウザでは動画を再生できません。\n                            </video>\n                            <button type=\"button\" class=\"procedure-video-toggle\" aria-label=\"再生\">\n                                <span class=\"procedure-video-toggle-icon\"></span>\n                            </button>\n                        </div>`;
 
                     return `
                 <div class="clinic-procedure-section" data-procedure-section style="display:none;">
@@ -3906,9 +3907,9 @@ class RankingApp {
 
                     // 1位のクリニックコードを元に動的に症例画像のリストを生成
                     const imagesForClinic = [
-                        { fallbacks: [`images/${clinicCode}_case01.jpg`], alt: 'CASE 01' },
-                        { fallbacks: [`images/${clinicCode}_case02.jpg`], alt: 'CASE 02' },
-                        { fallbacks: [`images/${clinicCode}_case03.jpg`], alt: 'CASE 03' }
+                        { fallbacks: [`images/${clinicCode}_case01.webp`, `images/${clinicCode}_case01.jpg`], alt: 'CASE 01' },
+                        { fallbacks: [`images/${clinicCode}_case02.webp`, `images/${clinicCode}_case02.jpg`], alt: 'CASE 02' },
+                        { fallbacks: [`images/${clinicCode}_case03.webp`, `images/${clinicCode}_case03.jpg`], alt: 'CASE 03' }
                     ];
 
                     if (!imagesForClinic.length) return '';
@@ -3921,7 +3922,7 @@ class RankingApp {
                         const riskVal = dm.getClinicText(clinicCode, `${keyBase}副作用（リスク）`, '') || '—';
                         return `
                             <div class=\"case-slide\" style=\"min-width:100%;box-sizing:border-box;\">
-                                <img src=\"${img.fallbacks[0]}\" alt=\"${img.alt}\" loading=\"lazy\" style=\"width:100%;height:auto;object-fit:contain;\">
+                                <img src=\"${img.fallbacks[0]}\" alt=\"${img.alt}\" loading=\"lazy\" style=\"width:100%;height:auto;object-fit:contain;\"${img.fallbacks[1] ? ` onerror=\"if (!this.dataset.webpFallback) { this.dataset.webpFallback = '1'; this.src='${img.fallbacks[1]}'; }\"` : ''}>
                                 <div class=\"case-info\" style=\"margin-top: 5px; padding: 0 5%; text-align: left; font-size: 12px; line-height: 1.6; width: 100%;\">
                                     <table class=\"case-table\" style=\"width: 100% !important; border-collapse: collapse !important; font-size: 8px !important; line-height: 1.6 !important; display: table !important; table-layout: fixed !important;\">
                                         <tbody>
@@ -4500,6 +4501,9 @@ class RankingApp {
                             // クリニック名はDOMコンテキスト優先。未解決の場合のみCSVの値を採用
                             if (clinicName === 'クリニック' && matchingStore.clinicName) {
                                 clinicName = matchingStore.clinicName;
+                                if (!contextualClinic && self.dataManager?.clinics) {
+                                    contextualClinic = self.dataManager.clinics.find(c => c.name === matchingStore.clinicName) || null;
+                                }
                             }
                         } else {
                             // CSVから見つからない場合は、HTMLから取得を試みる
@@ -4535,6 +4539,7 @@ class RankingApp {
                                         );
                                         if (matchedClinic) {
                                             clinicName = matchedClinic.name;
+                                            contextualClinic = contextualClinic || matchedClinic;
                                         }
                                     }
                                 }
@@ -4551,6 +4556,7 @@ class RankingApp {
                                             const clinic = self.dataManager?.clinics?.find(c => c.id == extractedClinicId);
                                             if (clinic) {
                                                 clinicName = clinic.name;
+                                                contextualClinic = contextualClinic || clinic;
                                             }
                                         }
                                     }
