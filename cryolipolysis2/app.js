@@ -3864,8 +3864,7 @@ class RankingApp {
                     }
                     const baseVideoPath = (window.SITE_CONFIG && window.SITE_CONFIG.imagesPath) ? window.SITE_CONFIG.imagesPath : './images';
                     const videoSrcMp4 = `${baseVideoPath}/${sanitizedClinicCode}_treatment.mp4`;
-                    const videoSrcWebm = `${baseVideoPath}/${sanitizedClinicCode}_treatment.webm`;
-                    const videoHtml = `<div class=\"procedure-video-embed\" data-clinic-code=\"${sanitizedClinicCode}\" data-video-src=\"${videoSrcMp4}\">\n                            <video class=\"procedure-video\" controls playsinline preload=\"auto\" tabindex=\"0\" aria-label=\"${clinic.name}の施術風景\">\n                                <source src=\"${videoSrcWebm}\" type=\"video/webm\">\n                                <source src=\"${videoSrcMp4}\" type=\"video/mp4\">\n                                お使いのブラウザでは動画を再生できません。\n                            </video>\n                            <button type=\"button\" class=\"procedure-video-toggle\" aria-label=\"再生\">\n                                <span class=\"procedure-video-toggle-icon\"></span>\n                            </button>\n                        </div>`;
+                    const videoHtml = `<div class=\"procedure-video-embed\" data-clinic-code=\"${sanitizedClinicCode}\" data-video-src=\"${videoSrcMp4}\">\n                            <video class=\"procedure-video\" controls playsinline preload=\"auto\" tabindex=\"0\" aria-label=\"${clinic.name}の施術風景\">\n                                <source src=\"${videoSrcMp4}\" type=\"video/mp4\">\n                                お使いのブラウザでは動画を再生できません。\n                            </video>\n                            <button type=\"button\" class=\"procedure-video-toggle\" aria-label=\"再生\">\n                                <span class=\"procedure-video-toggle-icon\"></span>\n                            </button>\n                        </div>`;
 
                     return `
                 <div class="clinic-procedure-section" data-procedure-section style="display:none;">
@@ -5284,6 +5283,11 @@ function openClinicDetailModal(rank) {
         document.body.classList.add('no-scroll');
         try { initializeBannerSliders(); } catch (_) {}
         try { initializeCaseSliderIn(modal); } catch (_) {}
+        try {
+            if (window.app && typeof window.app.initializeProcedureVideos === 'function') {
+                window.app.initializeProcedureVideos(modal);
+            }
+        } catch (_) {}
     });
 
     const cleanup = () => { closeClinicDetailModal(); };
