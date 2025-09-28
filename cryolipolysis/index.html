@@ -598,98 +598,366 @@ text-align: center;
 
     <!-- 1位クリニック動的表示機能 -->
     <script>
-        // リダイレクトリンクのクリックハンドラー
-        document.addEventListener('click', function(e) {
-            const link = e.target.closest('a');
-            if (link && link.href) {
-                console.log('Link clicked:', link.href);
+        function shouldHandleClinicLink(link) {
+            if (!link) return false;
+            if (link.hasAttribute('data-handle-clinic-click')) return true;
+            if (link.dataset && (link.dataset.clinicId || link.dataset.rank || link.dataset.ctaType)) return true;
+            try {
+                const href = link.getAttribute('href') || '';
+                if (href.includes('/redirect.html')) {
+                    return true;
+                }
+            } catch (_) {}
+            return false;
+        }
 
-                // redirect.htmlへのリンクの場合
-                if (link.href.includes('/redirect.html')) {
-                    e.preventDefault(); // デフォルトのリンク動作を阻止
+        function getDataAttr(element, key) {
+            let el = element || null;
+            while (el) {
+                if (el.dataset && el.dataset[key] !== undefined) {
+                    return el.dataset[key];
+                }
+                el = el.parentElement;
+            }
+            return undefined;
+        }
 
-                    // URLからパラメータを抽出
-                    const url = new URL(link.href);
-                    const hashParams = url.hash ? url.hash.substring(1) : '';
+        function normalizeRegionId(value, fallback = '013') {
+            if (value === undefined || value === null) return fallback;
+            const raw = String(value).trim();
+            if (!raw) return fallback;
+            if (/^\d+$/.test(raw)) {
+                return raw.padStart(3, '0');
+            }
+            return raw;
+        }
 
-                    if (hashParams.startsWith('params=')) {
-                        try {
-                            const paramsJson = decodeURIComponent(hashParams.substring(7));
-                            const params = JSON.parse(paramsJson);
-                            const linkQueryParams = {};
-                            for (const [key, value] of url.searchParams) {
-                                linkQueryParams[key] = value;
-                            }
-
-                            if (Object.keys(linkQueryParams).length) {
-                                params.original_params = Object.assign({}, params.original_params || {}, linkQueryParams);
-
-                                ['click_section', 'click_clinic', 'source_page', 'cta_type', 'region_id'].forEach(key => {
-                                    if (linkQueryParams[key] && typeof params[key] === 'undefined') {
-                                        params[key] = linkQueryParams[key];
-                                    }
-                                });
-                            }
-
-                            // 現在のページのパラメータも追加保存
-                            const currentUrl = new URL(window.location.href);
-                            const originalParams = {};
-                            for (const [key, value] of currentUrl.searchParams) {
-                                originalParams[key] = value;
-                            }
-                            
-                            // paramsに元URLパラメータを追加
-                            params.original_params = originalParams;
-                            
-                            console.log('💾 保存するパラメータ:', params);
-
-                            // localStorageに保存
-                            localStorage.setItem('redirectParams', JSON.stringify(params));
-                            console.log('Saved redirect params to localStorage:', params);
-
-                            // redirect.htmlに移動
-                            window.open(link.href, '_blank', 'noopener');
-                        } catch (error) {
-                            console.error('Failed to save redirect params:', error);
-                        }
-                    } else {
-                        // ハッシュパラメータがない場合はURLパラメータから取得
-                        const clinicId = url.searchParams.get('clinic_id');
-                        const rank = url.searchParams.get('rank');
-                        const regionId = url.searchParams.get('region_id');
-
-                        if (clinicId) {
-                        const linkQueryParams = {};
-                        for (const [key, value] of url.searchParams) {
-                            linkQueryParams[key] = value;
-                        }
-
-                        const params = {
-                            clinic_id: clinicId,
-                            rank: rank || '1',
-                            region_id: regionId || '013'
-                        };
-
-                        if (Object.keys(linkQueryParams).length) {
-                            params.original_params = Object.assign({}, params.original_params || {}, linkQueryParams);
-
-                            ['click_section', 'click_clinic', 'source_page', 'cta_type', 'region_id'].forEach(key => {
-                                if (linkQueryParams[key] && typeof params[key] === 'undefined') {
-                                    params[key] = linkQueryParams[key];
-                                }
-                            });
-                        }
-                            localStorage.setItem('redirectParams', JSON.stringify(params));
-                            console.log('Saved redirect params from URL to localStorage:', params);
-                            window.open(link.href, '_blank', 'noopener');
-                        }
-                    }
-                } else {
-                    // 直接URLの場合もパラメータを保存（念のため）
-                    console.log('Direct URL link clicked:', link.href);
+        function buildClickContext(link, overrides = {}) {
+            const context = { ...overrides };
+            if (!context.target && link && link.getAttribute) {
+                const targetAttr = link.getAttribute('target');
+                if (targetAttr) {
+                    context.target = targetAttr;
                 }
             }
-        });
+
+            const datasetKeys = ['clinicId', 'rank', 'regionId', 'ctaType', 'clickSection', 'clickClinic', 'sourcePage'];
+            datasetKeys.forEach((key) => {
+                if (context[key] === undefined || context[key] === null) {
+                    const value = getDataAttr(link, key);
+                    if (value !== undefined) {
+                        context[key] = value;
+                    }
+                }
+            });
+
+            let parsedUrl = null;
+            const linkHref = (link && link.getAttribute && link.getAttribute('href')) || '';
+            try {
+                parsedUrl = new URL(linkHref, window.location.href);
+            } catch (_) {
+                parsedUrl = null;
+            }
+            context.linkUrl = parsedUrl;
+
+            const linkParams = {};
+            if (parsedUrl) {
+                parsedUrl.searchParams.forEach((value, key) => {
+                    linkParams[key] = value;
+                });
+            }
+            context.linkParams = linkParams;
+
+            if (!context.clinicId && linkParams.clinic_id) context.clinicId = linkParams.clinic_id;
+            if (!context.rank && linkParams.rank) context.rank = linkParams.rank;
+            if (!context.regionId && linkParams.region_id) context.regionId = linkParams.region_id;
+            if (!context.ctaType && linkParams.cta_type) context.ctaType = linkParams.cta_type;
+            if (!context.clickSection && linkParams.click_section) context.clickSection = linkParams.click_section;
+            if (!context.clickClinic && linkParams.click_clinic) context.clickClinic = linkParams.click_clinic;
+            if (!context.sourcePage && linkParams.source_page) context.sourcePage = linkParams.source_page;
+
+            const hashValues = {};
+            if (parsedUrl && parsedUrl.hash) {
+                const hash = parsedUrl.hash.substring(1);
+                if (hash.startsWith('params=')) {
+                    try {
+                        const paramsJson = decodeURIComponent(hash.substring(7));
+                        const paramsObj = JSON.parse(paramsJson);
+                        Object.assign(hashValues, paramsObj);
+                        if (!context.originalParams && paramsObj.original_params && typeof paramsObj.original_params === 'object') {
+                            context.originalParams = { ...paramsObj.original_params };
+                        }
+                    } catch (error) {
+                        console.warn('Failed to parse hash params:', error);
+                    }
+                } else {
+                    const hashSearch = new URLSearchParams(hash);
+                    hashSearch.forEach((value, key) => {
+                        hashValues[key] = value;
+                    });
+                }
+            }
+            context.hashParams = hashValues;
+
+            if (!context.clinicId && hashValues.clinic_id) context.clinicId = hashValues.clinic_id;
+            if (!context.rank && hashValues.rank) context.rank = hashValues.rank;
+            if (!context.regionId && hashValues.region_id) context.regionId = hashValues.region_id;
+            if (!context.ctaType && hashValues.cta_type) context.ctaType = hashValues.cta_type;
+            if (!context.clickSection && hashValues.click_section) context.clickSection = hashValues.click_section;
+            if (!context.clickClinic && hashValues.click_clinic) context.clickClinic = hashValues.click_clinic;
+            if (!context.sourcePage && hashValues.source_page) context.sourcePage = hashValues.source_page;
+
+            const originalParams = { ...(context.originalParams || {}) };
+            const currentSearch = new URLSearchParams(window.location.search || '');
+            currentSearch.forEach((value, key) => {
+                if (originalParams[key] === undefined) {
+                    originalParams[key] = value;
+                }
+            });
+            Object.entries(linkParams).forEach(([key, value]) => {
+                if (originalParams[key] === undefined) {
+                    originalParams[key] = value;
+                }
+            });
+            Object.entries(hashValues).forEach(([key, value]) => {
+                if (typeof value === 'string' && originalParams[key] === undefined) {
+                    originalParams[key] = value;
+                }
+            });
+
+            context.originalParams = originalParams;
+            context.regionId = normalizeRegionId(context.regionId);
+            context.rank = context.rank !== undefined ? context.rank : '1';
+            context.ctaType = (context.ctaType || 'official');
+
+            if (!context.referrerUrl && document.referrer) {
+                try {
+                    context.referrerUrl = new URL(document.referrer);
+                } catch (_) {
+                    context.referrerUrl = null;
+                }
+            }
+
+            return context;
+        }
+
+        function resolveClinicTargetUrl(clinicId, rank, ctaType) {
+            if (!clinicId) return null;
+            const dataManager = window.dataManager;
+            if (!dataManager || typeof dataManager.getClinicText !== 'function') {
+                return null;
+            }
+
+            const clinic = typeof dataManager.getClinicById === 'function' ? dataManager.getClinicById(clinicId) : null;
+            const clinicCode = (typeof dataManager.getClinicCodeById === 'function' && dataManager.getClinicCodeById(clinicId)) || clinic?.code || null;
+            if (!clinicCode) {
+                return null;
+            }
+
+            const getField = (field) => {
+                const value = dataManager.getClinicText(clinicCode, field, '');
+                if (value === undefined || value === null) return '';
+                return String(value).trim();
+            };
+
+            const numericRank = Number.parseInt(rank, 10);
+            const finalRank = Number.isFinite(numericRank) && numericRank > 0 ? numericRank : 1;
+            const normalizedCtaType = String(ctaType || 'official').toLowerCase() === 'direct' ? 'direct' : 'official';
+
+            let targetUrl = '';
+
+            if (normalizedCtaType === 'direct') {
+                const directRankFields = [
+                    `直フォームの遷移先URL（${finalRank}位）`,
+                    `直フォーム遷移先URL（${finalRank}位）`,
+                    `直フォームURL（${finalRank}位）`
+                ];
+                for (const field of directRankFields) {
+                    const value = getField(field);
+                    if (value) {
+                        targetUrl = value;
+                        break;
+                    }
+                }
+                if (!targetUrl) {
+                    const directFallbackFields = ['直フォームURL','直フォーム遷移先URL','無料相談フォームURL','予約フォームURL','フォームURL','問い合わせフォームURL','CTA直リンクURL'];
+                    for (const field of directFallbackFields) {
+                        const value = getField(field);
+                        if (value) {
+                            targetUrl = value;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if (!targetUrl) {
+                targetUrl = getField(`遷移先URL（${finalRank}位）`);
+                if (!targetUrl) {
+                    targetUrl = getField('遷移先URL（1位）');
+                }
+            }
+
+            if (!targetUrl) {
+                return null;
+            }
+
+            let resolvedUrl;
+            try {
+                resolvedUrl = new URL(targetUrl);
+            } catch (_) {
+                try {
+                    resolvedUrl = new URL(targetUrl, window.location.origin);
+                } catch (error) {
+                    console.error('Failed to resolve clinic target URL:', error);
+                    return null;
+                }
+            }
+
+            return {
+                url: resolvedUrl,
+                clinicCode,
+                clinic
+            };
+        }
+
+        function buildTrackedUrl(context, targetInfo) {
+            if (!targetInfo || !targetInfo.url) return null;
+            const destination = new URL(targetInfo.url.toString());
+            const normalizedCtaType = String(context.ctaType || 'official').toLowerCase() === 'direct' ? 'direct' : 'official';
+            const regionId = normalizeRegionId(context.regionId);
+            const currentUrl = new URL(window.location.href);
+            const baseReferrer = `${currentUrl.origin}${currentUrl.pathname}`;
+
+            const trackingParams = {
+                click_section: context.clickSection || context.linkParams?.click_section || context.hashParams?.click_section || currentUrl.searchParams.get('click_section') || '',
+                click_clinic: context.clickClinic || context.linkParams?.click_clinic || context.hashParams?.click_clinic || targetInfo.clinicCode || '',
+                source_page: context.sourcePage || context.linkParams?.source_page || context.hashParams?.source_page || window.SITE_CONFIG?.sourcePage || 'potenza',
+                region_id: regionId || '013',
+                cta_type: normalizedCtaType,
+                referrer_url: baseReferrer,
+                timestamp: new Date().toISOString()
+            };
+
+            const originalParams = context.originalParams || {};
+            const referrerUrl = context.referrerUrl instanceof URL ? context.referrerUrl : null;
+
+            function getOriginalParam(paramName) {
+                if (originalParams && originalParams[paramName]) {
+                    return originalParams[paramName];
+                }
+                if (context.linkParams && context.linkParams[paramName]) {
+                    return context.linkParams[paramName];
+                }
+                if (context.hashParams && context.hashParams[paramName]) {
+                    return context.hashParams[paramName];
+                }
+                if (referrerUrl && referrerUrl.searchParams) {
+                    const value = referrerUrl.searchParams.get(paramName);
+                    if (value) return value;
+                }
+                return '';
+            }
+
+            const utmCreative = getOriginalParam('utm_creative');
+            if (utmCreative) {
+                destination.searchParams.set('param2', utmCreative);
+            }
+
+            const gclid = getOriginalParam('gclid');
+            if (gclid) {
+                destination.searchParams.set('param3', gclid);
+                destination.searchParams.set('gclid', gclid);
+            }
+
+            destination.searchParams.set('param4', encodeURIComponent(JSON.stringify(trackingParams)));
+
+            if (regionId) {
+                destination.searchParams.set('region_id', regionId);
+            }
+
+            const userAgent = navigator.userAgent.toLowerCase();
+            const deviceType = userAgent.includes('mobile') || userAgent.includes('android') || userAgent.includes('iphone')
+                ? 'm'
+                : (userAgent.includes('tablet') || userAgent.includes('ipad')) ? 't' : 'c';
+            destination.searchParams.set('device', deviceType);
+
+            const utmDefaults = {
+                utm_source: 'google',
+                utm_medium: 'cpc',
+                utm_campaign: '{campaignid}',
+                utm_term: '{keyword}'
+            };
+
+            Object.entries(utmDefaults).forEach(([param, defaultValue]) => {
+                const value = getOriginalParam(param) || defaultValue;
+                destination.searchParams.set(param, value);
+            });
+
+            if (utmCreative) {
+                destination.searchParams.set('utm_creative', utmCreative);
+            } else {
+                destination.searchParams.set('utm_creative', '{creative}');
+            }
+
+            const utmContent = getOriginalParam('utm_content');
+            if (utmContent) {
+                destination.searchParams.set('utm_content', utmContent);
+            }
+
+            return destination.toString();
+        }
+
+        window.handleClinicClick = function(event, link, overrides = {}) {
+            if (event) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+
+            try {
+                const context = buildClickContext(link, overrides || {});
+                const targetInfo = resolveClinicTargetUrl(context.clinicId, context.rank, context.ctaType);
+                if (!targetInfo) {
+                    if (link && link.href) {
+                        window.open(link.href, context.target || '_blank', 'noopener');
+                    }
+                    return false;
+                }
+
+                const finalUrl = buildTrackedUrl(context, targetInfo);
+                if (!finalUrl) {
+                    if (link && link.href) {
+                        window.open(link.href, context.target || '_blank', 'noopener');
+                    }
+                    return false;
+                }
+
+                const target = context.target || '_blank';
+                if (target === '_self') {
+                    window.location.href = finalUrl;
+                } else {
+                    window.open(finalUrl, target, 'noopener');
+                }
+            } catch (error) {
+                console.error('handleClinicClick failed:', error);
+                if (link && link.href) {
+                    const fallbackTarget = (overrides && overrides.target) || link.getAttribute('target') || '_blank';
+                    window.open(link.href, fallbackTarget, 'noopener');
+                }
+            }
+
+            return false;
+        };
+
+        document.addEventListener('click', function(e) {
+            const link = e.target && e.target.closest ? e.target.closest('a') : null;
+            if (!link || !shouldHandleClinicLink(link)) {
+                return;
+            }
+            if (window.handleClinicClick) {
+                window.handleClinicClick(e, link);
+            }
+        }, true);
         
                 // ランキングセクション用のアコーディオン関数
         function toggleRankingDisclaimer(event) {

@@ -1569,11 +1569,10 @@ class DataManager {
             
             // ハッシュフラグメントを使用（サーバーのURL書き換えに影響されない）
             const redirectUrl = `./redirect.html#clinic_id=${clinicId}&rank=${rank}&region_id=${regionId}`;
-            
-            // localStorageを先に設定してから開く（サーバーがパラメータを削除する場合の対策）
-            const onclickHandler = targetUrl ? 
-                `onclick="localStorage.setItem('redirectParams', JSON.stringify({clinic_id: '${clinicId}', rank: '${rank}', region_id: '${regionId}'})); setTimeout(() => { window.open('${redirectUrl}', '_blank'); }, 10); return false;"` : '';
-            
+            const linkAttributes = targetUrl ?
+                `href="${redirectUrl}" data-handle-clinic-click="true" data-clinic-id="${clinicId}" data-rank="${rank}" data-region-id="${regionId}" data-cta-type="official" data-click-section="shop_list" target="_blank" rel="noopener"` :
+                `href="#" class="disabled"`;
+
             html += `
                 <div class='shop'>
                     <div class='shop-image'>
@@ -1581,7 +1580,7 @@ class DataManager {
                     </div>
                     <div class='shop-info'>
                         <div class='shop-name'>
-                            <a href="#" ${onclickHandler} style="cursor: pointer;">${storeName}</a>
+                            <a ${linkAttributes} class="shop-name-link" style="${targetUrl ? 'cursor: pointer;' : 'cursor: default;'}">${storeName}</a>
                         </div>
                         <div class='shop-address line-clamp'>
                             ${storeAddress}
@@ -1602,11 +1601,10 @@ class DataManager {
             
             // ハッシュフラグメントを使用（サーバーのURL書き換えに影響されない）
             const redirectUrl = `./redirect.html#clinic_id=${clinicId}&rank=${rank}&region_id=${regionId}`;
-            
-            // localStorageを先に設定してから開く（サーバーがパラメータを削除する場合の対策）
-            const onclickHandler = targetUrl ? 
-                `onclick="localStorage.setItem('redirectParams', JSON.stringify({clinic_id: '${clinicId}', rank: '${rank}', region_id: '${regionId}'})); setTimeout(() => { window.open('${redirectUrl}', '_blank'); }, 10); return false;"` : '';
-            
+            const linkAttributes = targetUrl ?
+                `href="${redirectUrl}" data-handle-clinic-click="true" data-clinic-id="${clinicId}" data-rank="${rank}" data-region-id="${regionId}" data-cta-type="official" data-click-section="shop_list" target="_blank" rel="noopener"` :
+                `href="#" class="disabled"`;
+
             html += `
                 <div class='shop hidden-content hidden'>
                     <div class='shop-image'>
@@ -1614,7 +1612,7 @@ class DataManager {
                     </div>
                     <div class='shop-info'>
                         <div class='shop-name'>
-                            <a href="#" ${onclickHandler} style="cursor: pointer;">${storeName}</a>
+                            <a ${linkAttributes} class="shop-name-link" style="${targetUrl ? 'cursor: pointer;' : 'cursor: default;'}">${storeName}</a>
                         </div>
                         <div class='shop-address line-clamp'>
                             ${storeAddress}
@@ -2948,12 +2946,12 @@ class RankingApp {
                     }
                     
                     const redirectUrl = `./redirect.html#clinic_id=${clinicId}&rank=${rankNum}&region_id=${regionId}`;
-                    const clinicNameOnclick = `onclick="localStorage.setItem('redirectParams', JSON.stringify({clinic_id: '${clinicId}', rank: '${rankNum}', region_id: '${regionId}'})); setTimeout(() => { window.open('${redirectUrl}', '_blank'); }, 10); return false;"`;
+                    const clinicLinkAttrs = `href="${redirectUrl}" data-handle-clinic-click="true" data-clinic-id="${clinicId}" data-rank="${rankNum}" data-region-id="${regionId}" data-cta-type="official" data-click-section="comparison_table" target="_blank" rel="noopener"`;
                     
                     td.className = 'ranking-table_td1';
                     td.innerHTML = `
                         <img src="${logoPath}" alt="${clinic.name}" width="80" data-rank="${rankNum}" class="comparison-logo">
-                        <a href="#" ${clinicNameOnclick} class="clinic-link" style="cursor: pointer;">${clinic.name}</a>
+                        <a ${clinicLinkAttrs} class="clinic-link" style="cursor: pointer;">${clinic.name}</a>
                     `;
                 } else if (fieldName === 'comparison1') {
                     // 総合評価と星表示
@@ -3198,12 +3196,12 @@ class RankingApp {
             const redirectUrl = `./redirect.html#clinic_id=${clinicId}&rank=${rankNum}&region_id=${regionId}`;
             
             // クリニック名リンクにもlocalStorageとリダイレクトを適用
-            const clinicNameOnclick = `onclick="localStorage.setItem('redirectParams', JSON.stringify({clinic_id: '${clinicId}', rank: '${rankNum}', region_id: '${regionId}'})); setTimeout(() => { window.open('${redirectUrl}', '_blank'); }, 10); return false;"`;
+            const clinicLinkAttrs = `href="${redirectUrl}" data-handle-clinic-click="true" data-clinic-id="${clinicId}" data-rank="${rankNum}" data-region-id="${regionId}" data-cta-type="official" data-click-section="comparison_table" target="_blank" rel="noopener"`;
             
             tr.innerHTML = `
                 <td class="ranking-table_td1">
                     <img src="${logoPath}" alt="${clinic.name}" width="80">
-                    <a href="#" ${clinicNameOnclick} class="clinic-link" style="cursor: pointer;">${clinic.name}</a>
+                    <a ${clinicLinkAttrs} class="clinic-link" style="cursor: pointer;">${clinic.name}</a>
                 </td>
                 <td class="" style="">
                     <span class="ranking_evaluation">${getClinicData('総合評価', '4.5')}</span><br>
