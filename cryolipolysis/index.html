@@ -876,6 +876,24 @@ text-align: center;
                 return '';
             }
 
+            const maxScrollValue = (() => {
+                const fromOriginal = getOriginalParam('max_scroll');
+                if (fromOriginal !== '') {
+                    return fromOriginal;
+                }
+                const fromCurrent = currentUrl.searchParams.get('max_scroll');
+                return fromCurrent !== null ? fromCurrent : '';
+            })();
+            if (maxScrollValue !== null && maxScrollValue !== undefined && maxScrollValue !== '') {
+                const parsed = parseInt(maxScrollValue, 10);
+                if (!Number.isNaN(parsed)) {
+                    const clamped = Math.max(0, Math.min(100, parsed));
+                    trackingParams.max_scroll = String(clamped);
+                } else {
+                    trackingParams.max_scroll = String(maxScrollValue);
+                }
+            }
+
             const utmCreative = getOriginalParam('utm_creative');
             if (utmCreative) {
                 destination.searchParams.set('param2', utmCreative);
