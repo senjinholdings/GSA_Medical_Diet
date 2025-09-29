@@ -48,20 +48,20 @@ a {
 #mv-appeal1-text {
     position: absolute;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translate(-50%, -50%);
     z-index: 10;
     pointer-events: none;
     overflow: visible;
-    width: 60vw;
-    height: 10vh;
+    width: clamp(240px, 60vw, 640px);
+    height: auto;
 }
 
 #mv-main-svg-text {
-    top: 15%;
+    top: 20%;
 }
 
 #mv-appeal1-text {
-    top: 41%;
+    top: 48%;
 }
 
 #mv-main-svg-text text {
@@ -89,7 +89,7 @@ a {
     top: 6%;
     left: 52%;
     white-space: nowrap;
-    transform: translateX(-50%);
+    transform: translate(-50%, -50%);
     text-align: center;
     color: #ffffff;
     font-size: clamp(14px, 5.2vw, 38px);
@@ -776,7 +776,7 @@ select {
     position: absolute;
     bottom: -8px;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translate(-50%, -50%);
     width: 60px;
     height: 3px;
     background: linear-gradient(90deg, #ff95ad, #f0a0a5);
@@ -1049,7 +1049,7 @@ select {
     position: absolute;
     bottom: -6px;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translate(-50%, -50%);
     width: 50px;
     height: 2px;
     background: linear-gradient(90deg, #ff95ad, #f0a0a5);
@@ -1183,7 +1183,7 @@ select {
     position: absolute;
     bottom: -8px;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translate(-50%, -50%);
     width: 60px;
     height: 3px;
     background: linear-gradient(90deg, #ff95ad, #f0a0a5);
@@ -2233,7 +2233,7 @@ section.clinic-rankings .ranking-header-banner {
     position: absolute;
     top: -15px;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translate(-50%, -50%);
     width: 80px;
     height: 80px;
     display: flex;
@@ -3514,7 +3514,7 @@ section.clinic-rankings .ranking-header-banner {
     .banner-modal-content { max-width: 90vw; max-height: 90vh; }
 }
 .banner-modal-dots {
-    position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
+    position: absolute; bottom: 20px; left: 50%; transform: translate(-50%, -50%);
     display: flex; gap: 8px; align-items: center; justify-content: center; z-index: 10002;
 }
 .banner-modal-dot {
@@ -5937,7 +5937,7 @@ body.no-scroll { overflow: hidden; }
     position: absolute;
     bottom: -8px;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translate(-50%, -50%);
     width: 60px;
     height: 3px;
     background: linear-gradient(90deg, #ff95ad, #f0a0a5);
@@ -8875,7 +8875,7 @@ body .case-slider .slick-slide img {
     bottom: 0;
     left: 50%;
     right: auto;
-    height: 10vh; /* ビューポートの10% */
+    height: auto; /* ビューポートの10% */
     min-height: 80px;
     max-height: 120px;
     background: #fff; /* 背景は白 */
