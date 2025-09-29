@@ -86,7 +86,7 @@ a {
 
 #rank-region-name {
     position: absolute;
-    top: 6%;
+    top: 10%;
     left: 52%;
     white-space: nowrap;
     transform: translate(-50%, -50%);
@@ -2231,17 +2231,18 @@ section.clinic-rankings .ranking-header-banner {
 /* ランクメダル */
 .rank-medal {
     position: absolute;
-    top: -15px;
+    top: 7px;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 80px;
-    height: 80px;
+    width: 45px;
+    height: 45px;
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 2;
     background: transparent;
     border: none;
+    font-size: 0.7rem;
 }
 
 /* メダルクラスは画像を使用するため背景を削除 */
@@ -4903,7 +4904,7 @@ body.no-scroll { overflow: hidden; }
         width: 45px;
         height: 45px;
         font-size: 0.7rem;
-        top: -13px;
+        top: 5px;
     }
     
     .clinic-card {
@@ -6061,8 +6062,8 @@ body.no-scroll { overflow: hidden; }
 /* 480px以上でのメダル表示調整 */
 @media (min-width: 481px) {
     .rank-medal {
-        width: 60px;
-        height: 60px;
+        width: 45px;
+        height: 45px;
     }
     
     .medal-image {
