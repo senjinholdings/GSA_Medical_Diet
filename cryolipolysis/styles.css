@@ -2725,7 +2725,7 @@ section.clinic-rankings .ranking-header-banner {
     transform: translate(-50%, -50%);
     width: 92%;
     margin: 0;
-    font-size: clamp(8px, 3vw, 24px);
+    font-size: clamp(8px, 3vw, 16px);
     font-weight: 300;
     color: #ffffff;
     letter-spacing: 0.08em;
