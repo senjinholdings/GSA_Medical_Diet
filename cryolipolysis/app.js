@@ -2046,11 +2046,6 @@ class RankingApp {
         const regionName = region && region.name ? region.name : '';
         const isNational = this.isNationalRegion(normalizedId, region);
 
-        const mvRegionElement = document.getElementById('mv-region-name');
-        if (mvRegionElement) {
-            mvRegionElement.textContent = isNational ? '最新' : regionName;
-        }
-
         const detailRegionElement = document.getElementById('detail-region-name');
         if (detailRegionElement) {
             if (isNational) {
@@ -2583,50 +2578,34 @@ class RankingApp {
                 console.warn('⚠️ サイトロゴ要素が見つかりません');
             }
 
-            // MVアピールテキストの更新（共通テキスト）
-            const appealText1Element = document.getElementById('mv-left-appeal-text');
-            if (appealText1Element) {
-                const text1 = this.dataManager.getCommonText('MVアピールテキスト1', 'コスパ');
-                appealText1Element.textContent = text1;
-            }
-
-
             // SVGテキストの更新（共通テキスト）
-            const svgText1Element = document.querySelector('#mv-main-svg-text text');
-            if (svgText1Element) {
-                const svgText1 = this.dataManager.getCommonText('MVSVGテキスト1', '脂肪溶解注射');
-                svgText1Element.textContent = svgText1;
+            const svgRegionElement = document.getElementById('mv-region-text');
+            if (svgRegionElement) {
+                const regionLabel = isNational ? this.dataManager.getCommonText('MV全国表示テキスト', '全国') : (regionForDisplay?.name || region?.name || '');
+                svgRegionElement.textContent = regionLabel;
             }
 
-            // SVGテキスト2の更新（共通テキスト、ランキング数を動的に計算）
-            const svgText2Element = document.querySelector('#mv-appeal1-text text');
-            if (svgText2Element) {
-                // 現在の地域のランキング数を取得 (正規化されたIDを使用)
+            const svgServiceElement = document.getElementById('mv-service-text');
+            if (svgServiceElement) {
+                const serviceText = this.dataManager.getCommonText('MVSVGテキスト2', '脂肪冷却');
+                svgServiceElement.textContent = serviceText;
+            }
+
+            // detail-rank-best要素の更新（従来機能の互換性保持）
+            const detailRankBestElement = document.getElementById('detail-rank-best');
+            if (detailRankBestElement) {
                 const normalizedRegionId = String(parseInt(regionId, 10));
                 const ranking = this.dataManager.getRankingByRegionId(normalizedRegionId);
-                let rankCount = 5; // デフォルト値
-                
+                let rankCount = 5;
                 if (ranking && ranking.ranks) {
-                    // ランキングに含まれるクリニック数を計算（"-"以外のものをカウント）
                     const validRanks = Object.entries(ranking.ranks)
                         .filter(([key, value]) => value !== '-' && value !== null && value !== undefined)
                         .length;
                     if (validRanks > 0) {
-                        rankCount = Math.min(validRanks, 5); // 最大5位まで
+                        rankCount = Math.min(validRanks, 5);
                     }
                 }
-                
-                // プレースホルダーを使用してテキストを取得
-                const svgText2 = this.dataManager.getCommonText('MVSVGテキスト2', 'ランキング', {
-                    RANK_COUNT: rankCount
-                });
-                svgText2Element.textContent = svgText2;
-                
-                // detail-rank-best要素の更新
-                const detailRankBestElement = document.getElementById('detail-rank-best');
-                if (detailRankBestElement) {
-                    detailRankBestElement.innerHTML = `${rankCount}<span style="font-size: 0.6em;"> 選！</span>`;
-                }
+                detailRankBestElement.innerHTML = `${rankCount}<span style="font-size: 0.6em;"> 選！</span>`;
             }
 
             // ランキングバナーのalt属性更新（共通テキスト）
