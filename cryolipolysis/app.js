@@ -2585,26 +2585,33 @@ class RankingApp {
                 svgRegionElement.textContent = regionLabel;
             }
 
+            const normalizedRankingRegionId = String(parseInt(regionId, 10));
+            const ranking = this.dataManager.getRankingByRegionId(normalizedRankingRegionId);
+            let rankCount = 5;
+            if (ranking && ranking.ranks) {
+                const validRanks = Object.entries(ranking.ranks)
+                    .filter(([key, value]) => value !== '-' && value !== null && value !== undefined)
+                    .length;
+                if (validRanks > 0) {
+                    rankCount = Math.min(validRanks, 5);
+                }
+            }
+
             const svgServiceElement = document.getElementById('mv-service-text');
             if (svgServiceElement) {
-                const serviceText = this.dataManager.getCommonText('MVSVGテキスト2', '脂肪冷却');
-                svgServiceElement.textContent = serviceText;
+                const serviceText = this.dataManager.getCommonText('MVSVGテキスト2', '人気クリニック{{RANK_COUNT}}選', {
+                    RANK_COUNT: rankCount,
+                    REGION_NAME: regionForDisplay?.name || region?.name || ''
+                });
+                const processedServiceText = this.dataManager.processTemplateString
+                    ? this.dataManager.processTemplateString(serviceText, { RANK_COUNT: rankCount, REGION_NAME: regionForDisplay?.name || region?.name || '' })
+                    : serviceText.replace(/{{\s*RANK_COUNT\s*}}/g, String(rankCount));
+                svgServiceElement.textContent = processedServiceText;
             }
 
             // detail-rank-best要素の更新（従来機能の互換性保持）
             const detailRankBestElement = document.getElementById('detail-rank-best');
             if (detailRankBestElement) {
-                const normalizedRegionId = String(parseInt(regionId, 10));
-                const ranking = this.dataManager.getRankingByRegionId(normalizedRegionId);
-                let rankCount = 5;
-                if (ranking && ranking.ranks) {
-                    const validRanks = Object.entries(ranking.ranks)
-                        .filter(([key, value]) => value !== '-' && value !== null && value !== undefined)
-                        .length;
-                    if (validRanks > 0) {
-                        rankCount = Math.min(validRanks, 5);
-                    }
-                }
                 detailRankBestElement.innerHTML = `${rankCount}<span style="font-size: 0.6em;"> 選！</span>`;
             }
 
