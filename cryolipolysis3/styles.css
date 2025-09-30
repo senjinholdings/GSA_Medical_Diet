@@ -2951,7 +2951,7 @@ section.clinic-rankings .ranking-header-banner {
 }
 
 .comparison-table table tbody tr:first-child {
-    background: #F0FAF9;
+    background: rgb(255, 251, 220);
     height: auto;
 }
 
