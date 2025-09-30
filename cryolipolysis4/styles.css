@@ -104,8 +104,59 @@ a {
     background-color: #ffffff;
 }
 
+/* ランキング下部の注意事項をスクロールに追従させ固定表示 */
+#ranking-disclaimers-section {
+    position: sticky;
+    top: 0;
+    z-index: 1200;
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
+}
+
+@supports (top: max(0px)) {
+    #ranking-disclaimers-section {
+        top: max(0px, env(safe-area-inset-top));
+    }
+}
+
 .disclaimer-accordion {
     margin-top: 0;
+}
+
+/* 比較表レイアウトBで横スクロールしても注意事項が動かないよう固定 */
+.comparison-table--matrix .main-disclaimer {
+    position: -webkit-sticky;
+    position: sticky;
+    left: 0;
+    z-index: 10;
+    background-color: #ffffff;
+}
+
+/* 比較表セクション内の注意事項を固定 */
+.comparison-section .main-disclaimer {
+    position: relative;
+    z-index: 10;
+    background-color: #ffffff;
+    width: 100%;
+    max-width: 100%;
+}
+
+/* 比較表の次にある注意事項アコーディオンを固定配置 */
+.comparison-section .disclaimer-accordion {
+    position: relative;
+    z-index: 5;
+    background-color: #ffffff;
+    width: 100%;
+    margin-top: 15px;
+}
+
+/* 注意事項はスクロール領域の外側に配置されているので、通常の配置 */
+.comparison-table--matrix ~ .disclaimer-accordion .main-disclaimer,
+.comparison-table ~ .disclaimer-accordion .main-disclaimer {
+    position: relative;
+    z-index: 15;
+    background-color: #ffffff;
+    width: 100%;
 }
 
 .ranking-disclaimer-header {
@@ -2783,6 +2834,7 @@ section.clinic-rankings .ranking-header-banner {
     /* border-top: 1px solid #E0E0E0; */
     width: 100%;
     box-sizing: border-box;
+    position: relative;
 }
 
 .comparison-header {
@@ -3203,6 +3255,7 @@ section.clinic-rankings .ranking-header-banner {
     margin: 0 auto 20px;
     --comparison-fixed-col-width: 180px;
     --comparison-clinic-col-width: 100px;
+    position: relative;
 }
 
 .comparison-table--matrix .comparison-table-wrapper {
@@ -3416,6 +3469,7 @@ section.clinic-rankings .ranking-header-banner {
 .comparison-table {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
+    position: relative;
 }
 
 /* 比較表コンテナの最小幅 */
