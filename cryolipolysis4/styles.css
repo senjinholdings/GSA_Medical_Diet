@@ -13,6 +13,10 @@ html {
 }
 
 body {
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background-color: #ffffff;
     overflow-x: hidden;
     max-width: 100vw;
     display: flex;
@@ -40,58 +44,33 @@ a {
 }
 
 /* ヒーロー周辺のオーバーレイ要素 */
-#mv-region-name {
-    position: absolute;
-    top: 10%;
-    left: 1%;
-    width: clamp(60px, 15vw, 115px);
-    text-align: center;
-    color: #808080;
-    font-size: clamp(14px, 3.5vw, 27px);
-    font-weight: 600;
-    z-index: 10;
-}
-
-#mv-left-appeal-text {
-    position: absolute;
-    top: 25%;
-    left: 14%;
-    text-align: center;
-    color: #808080;
-    font-size: clamp(14px, 3.2vw, 25px);
-    font-weight: 700;
-    z-index: 10;
-    pointer-events: none;
-    padding: clamp(6px, 1.5vw, 12px);
-}
-
 #mv-main-svg-text,
 #mv-appeal1-text {
     position: absolute;
-    left: 39%;
-    transform: translateX(-50%);
+    left: 50%;
+    transform: translate(-50%, -50%);
     z-index: 10;
     pointer-events: none;
     overflow: visible;
-    width: 60vw;
-    height: 10vh;
+    width: clamp(240px, 60vw, 640px);
+    height: auto;
 }
 
 #mv-main-svg-text {
-    top: 35%;
+    top: 30%;
 }
 
 #mv-appeal1-text {
-    top: 52%;
+    top: 55%;
 }
 
 #mv-main-svg-text text {
-    font-size: clamp(14px, 8vw, 62px);
+    font-size: clamp(11px, 6vw, 46px);
     font-weight: 700;
 }
 
 #mv-appeal1-text text {
-    font-size: clamp(14px, 8vw, 62px);
+    font-size: clamp(11px, 6vw, 46px);
     font-weight: 700;
 }
 
@@ -107,10 +86,10 @@ a {
 
 #rank-region-name {
     position: absolute;
-    top: 6%;
+    top: 10%;
     left: 52%;
     white-space: nowrap;
-    transform: translateX(-50%);
+    transform: translate(-50%, -50%);
     text-align: center;
     color: #ffffff;
     font-size: clamp(14px, 5.2vw, 38px);
@@ -126,7 +105,7 @@ a {
 }
 
 .disclaimer-accordion {
-    margin-top: 15px;
+    margin-top: 0;
 }
 
 .ranking-disclaimer-header {
@@ -135,7 +114,7 @@ a {
     padding: 8px 12px;
     background-color: #ffffff;
     border: 1px solid #f0f0f0;
-    border-radius: 3px;
+    border-radius: 40px;
     cursor: pointer;
     display: flex;
     justify-content: space-between;
@@ -176,27 +155,43 @@ a {
 
 /* Tips セクション */
 .tips-container {
-    margin: 20px auto;
+    margin: 24px auto 16px;
     padding: 0 10px;
     position: relative;
 }
 
-.tips-section {
+.tips-layout[hidden] {
+    display: none !important;
+}
+
+[data-lead-variant="B"] .tips-layout-a {
+    display: none !important;
+}
+
+[data-lead-variant="B"] .tips-layout-b {
+    display: block;
+}
+
+[data-lead-variant="A"] .tips-layout-b {
+    display: none !important;
+}
+
+.tips-layout-a .tips-section {
     width: 100%;
 }
 
-.tips-inner {
+.tips-layout-a .tips-inner {
     display: flex;
     flex-direction: column;
 }
 
-.tabs {
+.tips-container .tabs {
     display: flex;
     gap: 5px;
     margin-bottom: 0;
 }
 
-.tab {
+.tips-container .tab {
     flex: 1;
     background-color: #f1f1f1;
     color: #4c4c4c;
@@ -212,12 +207,12 @@ a {
     justify-content: center;
 }
 
-.tab.active {
+.tips-container .tab.active {
     background-color: #2cc7c5;
     color: #ffffff;
 }
 
-.tab-contents {
+.tips-container .tab-contents {
     position: relative;
     background-color: #ffffff;
     border: 1px solid #e0e0e0;
@@ -225,30 +220,222 @@ a {
     padding: 15px;
 }
 
-.tab-content {
+.tips-container .tab-content {
     display: none;
 }
 
-.tab-content.active {
+.tips-container .tab-content.active {
     display: block;
 }
 
-.tab-figure {
+.tips-container .tab-figure {
     width: 100%;
     margin-bottom: 15px;
 }
 
-.tab-image {
+.tips-container .tab-image {
     width: 100%;
     height: auto;
     border-radius: 4px;
 }
 
-.tab-description {
+.tips-container .tab-description {
     font-size: 14px;
     line-height: 1.8;
     color: #4c4c4c;
     margin-bottom: 15px;
+}
+
+
+.tips-flow {
+    width: 100%;
+    background: #ffffff;
+    border-radius: 0px;
+    padding: 22px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    box-shadow: 0 14px 32px rgba(44, 199, 197, 0.1);
+}
+
+.tips-step {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    position: relative;
+    padding: 4px 0 24px;
+}
+
+.tips-step:last-of-type {
+    padding-bottom: 0;
+}
+
+.tips-step:not(:last-of-type)::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(44, 199, 197, 0.25) 0%, rgba(44, 199, 197, 0) 100%);
+}
+
+.tips-step-content {
+    display: grid;
+    gap: 14px;
+}
+
+.tips-step-content p {
+    margin: 0;
+    font-size: 14px;
+    line-height: 2;
+    color: #4c4c4c;
+}
+
+
+.tips-step-figure {
+    margin: 0;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.tips-step-figure img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.tips-quotes {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.tips-quote {
+    position: relative;
+    padding: 10px 14px 10px 32px;
+    background: #f6fcfc;
+    border-left: 3px solid #2cc7c5;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #2e4f55;
+    font-weight: 600;
+    margin: 0;
+}
+
+.tips-quote::before {
+    content: '“';
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 28px;
+    color: rgba(44, 199, 197, 0.6);
+}
+
+.tips-highlight {
+    background: linear-gradient(120deg, rgba(44, 199, 197, 0.28) 0%, rgba(44, 199, 197, 0) 100%);
+    padding: 0 4px;
+    border-radius: 4px;
+    font-weight: 600;
+    color: #166b6a;
+}
+
+.tips-type-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.tips-type-list li {
+    background: #f6fcfc;
+    border-radius: 10px;
+    padding: 12px 14px;
+    border: 1px solid rgba(44, 199, 197, 0.25);
+    font-size: 14px;
+    line-height: 1.8;
+    color: #3a4e53;
+}
+
+.tips-type-label {
+    font-weight: 700;
+    color: #2cc7c5;
+}
+
+.tips-type-figure {
+    margin: 0;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 24px rgba(44, 199, 197, 0.12);
+}
+
+.tips-type-figure img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.tips-ba-figure {
+    margin: 0;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 24px rgba(44, 199, 197, 0.12);
+}
+
+.tips-ba-figure img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+@media (max-width: 480px) {
+    .clinic-rankings {
+        padding: 15px 10px 0px;
+        width: 100%;
+        max-width: 100%;
+        margin: 0 auto;
+        box-sizing: border-box;
+    }
+
+    .tips-container {
+        padding: 0 0px !important;
+        margin: 0px auto !important;
+    }
+
+    .tips-container p,
+    .tips-container li,
+    .tips-container label {
+        font-size: 12px !important;
+    }
+
+    .comparison-headline {
+        max-width: 360px;
+        margin-bottom: 14px;
+    }
+
+    .comparison-headline .comparison-title {
+        top: 20%;
+        font-size: clamp(10px, 5vw, 18px);
+        letter-spacing: 0.06em;
+    }
+}
+
+@media (max-width: 640px) {
+    .tips-flow {
+        padding: 22px 10px;
+        gap: 22px;
+    }
+
+    .tips-step {
+        padding-bottom: 18px;
+    }
+
+    .tips-quote {
+        font-size: 13px;
+    }
 }
 
 /* ビューポート外セクションの遅延レンダリング */
@@ -675,7 +862,7 @@ select {
     position: absolute;
     bottom: -8px;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translate(-50%, -50%);
     width: 60px;
     height: 3px;
     background: linear-gradient(90deg, #ff95ad, #f0a0a5);
@@ -717,7 +904,7 @@ select {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
+    gap: 0;
     width: calc(230 / 710 * 100%);
     line-height: 1;
     font-weight: bold;
@@ -948,7 +1135,7 @@ select {
     position: absolute;
     bottom: -6px;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translate(-50%, -50%);
     width: 50px;
     height: 2px;
     background: linear-gradient(90deg, #ff95ad, #f0a0a5);
@@ -1082,7 +1269,7 @@ select {
     position: absolute;
     bottom: -8px;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translate(-50%, -50%);
     width: 60px;
     height: 3px;
     background: linear-gradient(90deg, #ff95ad, #f0a0a5);
@@ -1109,9 +1296,9 @@ select {
 }
 
 .clinic-points-section .point-icon-inline {
-    width: 20px;
-    height: 20px;
-    margin: 0 6px 0 0;
+    width: 18px;
+    height: 18px;
+    margin: 0;
     flex-shrink: 0;
     display: inline-block;
     vertical-align: middle;
@@ -1119,7 +1306,7 @@ select {
 
 .clinic-points-section .ribbon_point_title2_s strong {
     font-size: 13px;
-    margin: 0px 0px 0px 10px;
+    margin: 0 0 0 6px;
     display: inline-block;
     font-weight: 700;
     color: #6a6a6a;
@@ -1665,10 +1852,10 @@ select {
 }
 
 body {
-    font-family: 'Noto Sans JP', 'Yu Gothic UI', 'Meiryo UI', 'MS UI Gothic', sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     line-height: 1.6;
     color: #6a6a6a;
-    background-color: #f8fafe;
+    background-color: #ffffff;
     font-size: 14px;
 }
 
@@ -2130,17 +2317,18 @@ section.clinic-rankings .ranking-header-banner {
 /* ランクメダル */
 .rank-medal {
     position: absolute;
-    top: -15px;
+    top: 7px;
     left: 50%;
-    transform: translateX(-50%);
-    width: 80px;
-    height: 80px;
+    transform: translate(-50%, -50%);
+    width: 45px;
+    height: 45px;
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 2;
     background: transparent;
     border: none;
+    font-size: 0.7rem;
 }
 
 /* メダルクラスは画像を使用するため背景を削除 */
@@ -2586,10 +2774,13 @@ section.clinic-rankings .ranking-header-banner {
     box-shadow: 0 4px 12px rgba(255, 140, 162, 0.3);
 }
 
-/* ===== 比較表セクション（構成切り替え対応） ===== */
+/* ===== 比較表セクション ===== */
 .comparison-section {
     padding: 30px 10px;
-    background: #ffffff;
+    background: white;
+    /* overflow: hidden; */
+    /* margin: 0px 0; */
+    /* border-top: 1px solid #E0E0E0; */
     width: 100%;
     box-sizing: border-box;
 }
@@ -2604,7 +2795,7 @@ section.clinic-rankings .ranking-header-banner {
     display: inline-block;
     width: 100%;
     max-width: 520px;
-    margin: 0 auto 8px;
+    margin: 0 auto 0px;
 }
 
 .comparison-headline-image {
@@ -2620,292 +2811,11 @@ section.clinic-rankings .ranking-header-banner {
     transform: translate(-50%, -50%);
     width: 92%;
     margin: 0;
-    font-size: clamp(12px, 3vw, 18px);
-    font-weight: 400;
+    font-size: clamp(8px, 3vw, 16px);
+    font-weight: 300;
     color: #ffffff;
     letter-spacing: 0.08em;
     text-align: center;
-}
-
-.comparison-title {
-    font-size: 1.8rem;
-    color: #4c4c4c;
-    margin-bottom: 5px;
-    font-weight: 600;
-}
-
-.comparison-subtitle {
-    font-size: 1.6rem;
-    color: #4c4c4c;
-    font-weight: 600;
-    margin: 0;
-}
-
-.comparison-scroll-hint {
-    display: none;
-    margin: 8px 0 16px;
-    text-align: center;
-    font-size: 11px;
-    color: #7a8a89;
-    letter-spacing: 0.02em;
-}
-
-.comparison-table--matrix {
-    width: 100%;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    touch-action: pan-x;
-    margin: 0 auto 20px;
-    --comparison-fixed-col-width: 180px;
-    --comparison-clinic-col-width: 100px;
-}
-
-.comparison-table--matrix .comparison-table-wrapper {
-    display: inline-block;
-    position: relative;
-    min-width: calc(var(--comparison-fixed-col-width) + (var(--comparison-clinic-col-width) * var(--clinic-count, 1)));
-}
-
-.comparison-table--matrix #comparison-table {
-    width: 100%;
-    border-collapse: collapse;
-    min-width: calc(75px + var(--comparison-clinic-col-width) * var(--clinic-count, 1));
-    background: #ffffff;
-}
-
-.comparison-table--matrix #comparison-table thead th {
-    background: #f4fbfa;
-    color: #2f4f4e;
-    font-weight: 700;
-    padding: 5px;
-    text-align: center;
-    border: 1px solid #ecf2f1;
-    white-space: nowrap;
-}
-
-.comparison-table--matrix #comparison-table thead th.comparison-heading--item {
-    position: -webkit-sticky;
-    position: sticky;
-    left: 0;
-    z-index: 5;
-    min-width: var(--comparison-fixed-col-width);
-    max-width: var(--comparison-fixed-col-width);
-    width: var(--comparison-fixed-col-width);
-    box-shadow: 2px 0 6px rgba(0, 0, 0, 0.04);
-}
-
-.comparison-table--matrix #comparison-table tbody th {
-    position: -webkit-sticky;
-    position: sticky;
-    left: 0;
-    z-index: 4;
-    background: #f4fbfa;
-}
-
-.comparison-table--matrix #comparison-table tbody td,
-.comparison-table--matrix #comparison-table tbody th {
-    border: 1px solid #ecf2f1;
-    padding: 10px 5px;
-    text-align: center;
-    vertical-align: middle;
-    background: #ffffff;
-    min-width: var(--comparison-clinic-col-width);
-}
-
-.comparison-table--matrix #comparison-table thead th.comparison-heading--clinic,
-.comparison-table--matrix #comparison-table tbody td.comparison-cell {
-    min-width: var(--comparison-clinic-col-width);
-    max-width: var(--comparison-clinic-col-width);
-    width: var(--comparison-clinic-col-width);
-}
-
-.comparison-table--matrix #comparison-table tbody th.comparison-item-label {
-    position: -webkit-sticky;
-    position: sticky;
-    left: 0;
-    z-index: 4;
-    background: #f4fbfa;
-    font-weight: 600;
-    color: #4c4c4c;
-    white-space: nowrap;
-    min-width: var(--comparison-fixed-col-width);
-    max-width: var(--comparison-fixed-col-width);
-    width: var(--comparison-fixed-col-width);
-    box-shadow: 2px 0 6px rgba(0, 0, 0, 0.03);
-}
-
-.comparison-table--matrix #comparison-table tbody tr:nth-child(even) td.comparison-cell {
-    background: #fefefe;
-}
-
-.comparison-table--matrix #comparison-table tbody td.comparison-cell.is-rank-1,
-.comparison-table--matrix #comparison-table thead th.comparison-heading--clinic.is-rank-1 {
-    background: #fffbdc;
-}
-
-.comparison-table--matrix #comparison-table tbody td.comparison-cell.is-rank-2,
-.comparison-table--matrix #comparison-table thead th.comparison-heading--clinic.is-rank-2 {
-    background: #f4f9ff;
-}
-
-.comparison-table--matrix #comparison-table tbody td.comparison-cell.is-rank-3,
-.comparison-table--matrix #comparison-table thead th.comparison-heading--clinic.is-rank-3 {
-    background: #f3fffb;
-}
-
-.comparison-table--matrix #comparison-table tbody td.comparison-cell.is-rank-4,
-.comparison-table--matrix #comparison-table tbody td.comparison-cell.is-rank-5,
-.comparison-table--matrix #comparison-table thead th.comparison-heading--clinic.is-rank-4,
-.comparison-table--matrix #comparison-table thead th.comparison-heading--clinic.is-rank-5 {
-    background: #f4fbfa;
-}
-
-.comparison-table--matrix .comparison-clinic-header {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-}
-
-.comparison-table--matrix .comparison-clinic-logo-wrap {
-    width: 72px;
-    height: 72px;
-    border-radius: 50%;
-    background: #ffffff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: inset 0 0 0 1px #e1eceb;
-}
-
-.comparison-table--matrix .comparison-clinic-header .comparison-logo {
-    max-width: 60px;
-    max-height: 36px;
-    width: 60px;
-}
-
-.comparison-table--matrix .comparison-clinic-header .clinic-link {
-    font-size: 12px;
-    font-weight: 600;
-    color: #2f4f4e;
-    text-decoration: none;
-    text-align: center;
-    line-height: 1.4;
-}
-
-.comparison-table--matrix .comparison-rating {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    text-align: center;
-}
-
-.comparison-table--matrix .comparison-rating-score {
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: #ff7f9c;
-    line-height: 1;
-}
-
-.comparison-table--matrix .comparison-cta {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    align-items: center;
-}
-
-.comparison-table--matrix .comparison-cta .link_btn {
-    display: inline-block;
-    background: #ff95ae;
-    border-bottom: solid 2px #cf657d;
-    color: #fff;
-    text-decoration: none;
-    padding: 8px 15px;
-    border-radius: 15px;
-    font-size: 0.8rem;
-    font-weight: 600;
-    transition: all 0.3s;
-}
-
-.comparison-table--matrix .comparison-cta .detail_btn {
-    display: inline-block;
-    background: #ffffff;
-    color: #4c4c4c;
-    text-decoration: none;
-    padding: 6px 12px;
-    border: 1px solid #e0e0e0;
-    border-radius: 15px;
-    font-size: 0.75rem;
-    transition: all 0.3s;
-}
-
-.comparison-table--matrix .comparison-cta .detail_btn:hover {
-    background: #f1f1f1;
-}
-
-@media (max-width: 768px) {
-    .comparison-table--matrix {
-        overflow-x: auto !important;
-        -webkit-overflow-scrolling: touch !important;
-        touch-action: pan-x;
-        --comparison-fixed-col-width: 75px;
-        --comparison-clinic-col-width: 100px;
-    }
-
-    .comparison-table--matrix #comparison-table {
-        min-width: calc(var(--comparison-fixed-col-width) + (var(--comparison-clinic-col-width) * var(--clinic-count, 1)));
-    }
-
-    .comparison-table--matrix .comparison-cta .link_btn,
-    .comparison-table--matrix .comparison-cta .detail_btn {
-        width: 100%;
-        text-align: center;
-    }
-
-    .comparison-table--matrix .comparison-clinic-header .clinic-link {
-        font-size: 9px;
-    }
-
-    .comparison-table--matrix .comparison-rating-score {
-        font-size: 1rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .comparison-table--matrix {
-        --comparison-fixed-col-width: 75px;
-        --comparison-clinic-col-width: 100px;
-    }
-}
-
-.comparison-table .comparison-table-wrapper {
-    width: 100%;
-    overflow-x: auto;
-}
-
-.classic-cta {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    align-items: flex-start;
-}
-
-/* ===== 比較表セクション ===== */
-.comparison-section {
-    padding: 30px 10px;
-    background: white;
-    /* overflow: hidden; */
-    /* margin: 0px 0; */
-    border-top: 1px solid #E0E0E0;
-    width: 100%;
-    box-sizing: border-box;
-}
-
-.comparison-header {
-    text-align: center;
-    margin-bottom: 30px;
 }
 
 /* タブボタンのスタイル */
@@ -3111,7 +3021,7 @@ section.clinic-rankings .ranking-header-banner {
 }
 
 .comparison-table table tbody td:nth-of-type(1) {
-    font-size: 11px;
+    font-size: 10px;
     vertical-align: middle;
     border-bottom: 1px solid #E0E0E0;
     font-size: 10px;
@@ -3128,7 +3038,7 @@ section.clinic-rankings .ranking-header-banner {
 }
 
 .comparison-table table tbody tr:first-child {
-    background: #F0FAF9;
+    background: rgb(255, 251, 220);
     height: auto;
 }
 
@@ -3285,131 +3195,221 @@ section.clinic-rankings .ranking-header-banner {
     color: #9D9D9D;
 }
 
-.comparison-table .division {
-    display: block;
-    line-height: 1.2;
-}
-
-/* Tipsレイアウト切替 */
-.tips-layout[hidden] {
-    display: none !important;
-}
-
-[data-lead-variant="B"] .tips-layout-a {
-    display: none !important;
-}
-
-[data-lead-variant="B"] .tips-layout-b {
-    display: block;
-}
-
-[data-lead-variant="A"] .tips-layout-b {
-    display: none !important;
-}
-
-.tips-layout-b .tips-flow {
+.comparison-table--matrix {
     width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-x;
+    margin: 0 auto 20px;
+    --comparison-fixed-col-width: 180px;
+    --comparison-clinic-col-width: 100px;
+}
+
+.comparison-table--matrix .comparison-table-wrapper {
+    display: inline-block;
+    min-width: calc(var(--comparison-fixed-col-width) + (var(--comparison-clinic-col-width) * var(--clinic-count, 1)));
+}
+
+.comparison-table--matrix #comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: calc(75px + var(--comparison-clinic-col-width) * var(--clinic-count, 1));
     background: #ffffff;
-    border-radius: 0;
-    padding: 22px 18px;
-    display: flex;
-    flex-direction: column;
-    gap: 22px;
-    box-shadow: 0 14px 32px rgba(44, 199, 197, 0.1);
 }
 
-.tips-layout-b .tips-step {
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
-    position: relative;
-    padding: 4px 0 24px;
+.comparison-table--matrix #comparison-table thead th {
+    background: #f4fbfa;
+    color: #2f4f4e;
+    font-weight: 700;
+    padding: 5px 5px;
+    text-align: center;
+    border: 1px solid #ecf2f1;
+    white-space: nowrap;
 }
 
-.tips-layout-b .tips-step:last-of-type {
-    padding-bottom: 0;
-}
-
-.tips-layout-b .tips-step:not(:last-of-type)::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
+.comparison-table--matrix #comparison-table thead th.comparison-heading--item {
+    position: sticky;
     left: 0;
-    width: 100%;
-    height: 1px;
-    background: linear-gradient(90deg, rgba(44, 199, 197, 0.25) 0%, rgba(44, 199, 197, 0) 100%);
+    z-index: 3;
+    min-width: var(--comparison-fixed-col-width);
+    max-width: var(--comparison-fixed-col-width);
+    width: var(--comparison-fixed-col-width);
+    box-shadow: 2px 0 6px rgba(0, 0, 0, 0.04);
 }
 
-.tips-layout-b .tips-step-content {
-    display: grid;
-    gap: 14px;
+.comparison-table--matrix #comparison-table tbody td,
+.comparison-table--matrix #comparison-table tbody th {
+    border: 1px solid #ecf2f1;
+    padding: 10px 5px;
+    text-align: center;
+    vertical-align: middle;
+    background: #ffffff;
+    min-width: var(--comparison-clinic-col-width);
 }
 
-.tips-layout-b .tips-step-content p {
-    margin: 0;
-    font-size: 12px;
-    line-height: 1.8;
+.comparison-table--matrix #comparison-table thead th.comparison-heading--clinic,
+.comparison-table--matrix #comparison-table tbody td.comparison-cell {
+    min-width: var(--comparison-clinic-col-width);
+    max-width: var(--comparison-clinic-col-width);
+    width: var(--comparison-clinic-col-width);
+}
+
+.comparison-table--matrix #comparison-table tbody th.comparison-item-label {
+    position: sticky;
+    left: 0;
+    z-index: 2;
+    background: #f4fbfa;
+    font-weight: 600;
     color: #4c4c4c;
+    white-space: nowrap;
+    min-width: var(--comparison-fixed-col-width);
+    max-width: var(--comparison-fixed-col-width);
+    width: var(--comparison-fixed-col-width);
+    box-shadow: 2px 0 6px rgba(0, 0, 0, 0.03);
 }
 
-.tips-layout-b .tips-step-figure,
-.tips-layout-b .tips-type-figure,
-.tips-layout-b .tips-ba-figure {
-    margin: 0;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 10px 24px rgba(44, 199, 197, 0.12);
+.comparison-table--matrix #comparison-table tbody tr:nth-child(even) td.comparison-cell {
+    background: #fefefe;
 }
 
-.tips-layout-b .tips-step-figure img,
-.tips-layout-b .tips-type-figure img,
-.tips-layout-b .tips-ba-figure img {
-    width: 100%;
-    height: auto;
-    display: block;
+.comparison-table--matrix #comparison-table tbody td.comparison-cell.is-rank-1,
+.comparison-table--matrix #comparison-table thead th.comparison-heading--clinic.is-rank-1 {
+    background: #fffbdc;
 }
 
-.tips-layout-b .tips-quotes {
+.comparison-table--matrix #comparison-table tbody td.comparison-cell.is-rank-2,
+.comparison-table--matrix #comparison-table thead th.comparison-heading--clinic.is-rank-2 {
+    background: #f4f9ff;
+}
+
+.comparison-table--matrix #comparison-table tbody td.comparison-cell.is-rank-3,
+.comparison-table--matrix #comparison-table thead th.comparison-heading--clinic.is-rank-3 {
+    background: #f3fffb;
+}
+
+.comparison-table--matrix #comparison-table tbody td.comparison-cell.is-rank-4,
+.comparison-table--matrix #comparison-table tbody td.comparison-cell.is-rank-5,
+.comparison-table--matrix #comparison-table thead th.comparison-heading--clinic.is-rank-4,
+.comparison-table--matrix #comparison-table thead th.comparison-heading--clinic.is-rank-5 {
+    background: #f4fbfa;
+}
+
+.comparison-table--matrix .comparison-clinic-header {
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 8px;
 }
 
-.tips-layout-b .tips-quote {
-    position: relative;
-    padding: 10px 14px 10px 32px;
-    background: #f6fcfc;
-    border-left: 3px solid #2cc7c5;
-    border-radius: 8px;
-    font-size: 14px;
-    color: #2e4f55;
+.comparison-table--matrix .comparison-clinic-logo-wrap {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: inset 0 0 0 1px #e1eceb;
+}
+
+.comparison-table--matrix .comparison-clinic-header .comparison-logo {
+    max-width: 60px;
+    max-height: 36px;
+    width: 60px;
+}
+
+.comparison-table--matrix .comparison-clinic-header .clinic-link {
+    font-size: 12px;
     font-weight: 600;
-    margin: 0;
+    color: #2f4f4e;
+    text-decoration: none;
+    text-align: center;
+    line-height: 1.4;
 }
 
-.tips-layout-b .tips-quote::before {
-    content: '“';
-    position: absolute;
-    left: 12px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 28px;
-    color: rgba(44, 199, 197, 0.6);
+.comparison-table--matrix .comparison-rating {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    text-align: center;
 }
 
-.tips-layout-b .tips-highlight {
-    background: linear-gradient(120deg, rgba(44, 199, 197, 0.28) 0%, rgba(44, 199, 197, 0) 100%);
-    padding: 0 4px;
-    border-radius: 4px;
+.comparison-table--matrix .comparison-rating-score {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #ff7f9c;
+    line-height: 1;
+}
+
+.comparison-table--matrix .comparison-cta {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    align-items: center;
+}
+
+.comparison-table--matrix .comparison-cta .link_btn {
+    display: inline-block;
+    background: #ff95ae;
+    border-bottom: solid 2px #cf657d;
+    color: #fff;
+    text-decoration: none;
+    padding: 8px 15px;
+    border-radius: 15px;
+    font-size: 0.8rem;
     font-weight: 600;
-    color: #166b6a;
+    transition: all 0.3s;
 }
 
-@media (max-width: 480px) {
-    .tips-container[data-lead-variant="B"] {
-        padding: 0;
-        margin: 0 auto;
+.comparison-table--matrix .comparison-cta .detail_btn {
+    display: inline-block;
+    background: #ffffff;
+    color: #4c4c4c;
+    text-decoration: none;
+    padding: 6px 12px;
+    border: 1px solid #E0E0E0;
+    border-radius: 15px;
+    font-size: 0.75rem;
+    transition: all 0.3s;
+}
+
+.comparison-table--matrix .comparison-cta .detail_btn:hover {
+    background: #f1f1f1;
+}
+
+.comparison-table--matrix .comparison-scroll-hint {
+    margin: 8px 0 12px;
+    text-align: center;
+    font-size: 11px;
+    color: #7a8a89;
+    letter-spacing: 0.02em;
+}
+
+@media (max-width: 768px) {
+    .comparison-table--matrix #comparison-table {
+        min-width: calc(var(--comparison-fixed-col-width) + (var(--comparison-clinic-col-width) * var(--clinic-count, 1)));
     }
+
+    .comparison-table--matrix .comparison-cta .link_btn,
+    .comparison-table--matrix .comparison-cta .detail_btn {
+        width: 100%;
+        text-align: center;
+    }
+
+    .comparison-table--matrix .comparison-clinic-header .clinic-link {
+        font-size: 9px;
+    }
+
+    .comparison-table--matrix .comparison-rating-score {
+        font-size: 1rem;
+    }
+}
+
+.comparison-table .division {
+    display: block;
+    line-height: 1.2;
 }
 
 /* 比較表のレスポンシブ対応 */
@@ -3495,7 +3495,8 @@ section.clinic-rankings .ranking-header-banner {
 
 /* さらに小さい画面用 */
 @media (max-width: 480px) {
-    .comparison-table, .comparison-table * {
+    .comparison-table--classic,
+    .comparison-table--classic * {
         max-width: 100% !important;
         box-sizing: border-box !important;
     }
@@ -3813,7 +3814,7 @@ section.clinic-rankings .ranking-header-banner {
     .banner-modal-content { max-width: 90vw; max-height: 90vh; }
 }
 .banner-modal-dots {
-    position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
+    position: absolute; bottom: 20px; left: 50%; transform: translate(-50%, -50%);
     display: flex; gap: 8px; align-items: center; justify-content: center; z-index: 10002;
 }
 .banner-modal-dot {
@@ -4960,11 +4961,11 @@ body.no-scroll { overflow: hidden; }
     .clinic-points-section .point-icon-inline {
         width: 18px;
         height: 18px;
-        margin: 0 6px 0 0;
+        margin: 0;
     }
     
     .clinic-points-section .ribbon_point_title2_s strong {
-        margin: 0px 0px 0px 25px;
+        margin: 0 0 0 6px;
         font-size: 14px;
     }
     
@@ -5185,10 +5186,10 @@ body.no-scroll { overflow: hidden; }
         box-sizing: border-box;
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
-        padding: 0 10px;
+        padding: 10px 10px;
         scroll-behavior: smooth;
     }
-    
+
     .ranking-item {
         width: calc((100vw - 40px) / 3);
         min-width: 100px;
@@ -5202,7 +5203,7 @@ body.no-scroll { overflow: hidden; }
         width: 45px;
         height: 45px;
         font-size: 0.7rem;
-        top: -13px;
+        top: 5px;
     }
     
     .clinic-card {
@@ -5392,11 +5393,11 @@ body.no-scroll { overflow: hidden; }
     
     /* 比較表モバイル対応 */
     .comparison-section {
-        padding: 30px 10px;
+        padding: 10px 10px;
         background: white;
         /* overflow: hidden; */
         /* margin: 40px 0; */
-        border-top: 1px solid #f0f0f0;
+        /* border-top: 1px solid #f0f0f0; */
         width: 100%;
         box-sizing: border-box;
         width: 100%;
@@ -5405,7 +5406,7 @@ body.no-scroll { overflow: hidden; }
     
     .comparison-header {
         padding: 0;
-        margin-bottom: 30px;
+        margin-bottom: 0px;
     }
     
     .comparison-title {
@@ -6050,7 +6051,7 @@ body.no-scroll { overflow: hidden; }
     }
     
     .ranking-item {
-        transform: scale(0.95);
+        transform: none;
         margin: 0;
     }
     
@@ -6236,7 +6237,7 @@ body.no-scroll { overflow: hidden; }
     position: absolute;
     bottom: -8px;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translate(-50%, -50%);
     width: 60px;
     height: 3px;
     background: linear-gradient(90deg, #ff95ad, #f0a0a5);
@@ -6360,8 +6361,8 @@ body.no-scroll { overflow: hidden; }
 /* 480px以上でのメダル表示調整 */
 @media (min-width: 481px) {
     .rank-medal {
-        width: 60px;
-        height: 60px;
+        width: 45px;
+        height: 45px;
     }
     
     .medal-image {
@@ -6508,7 +6509,7 @@ body.no-scroll { overflow: hidden; }
         box-sizing: border-box;
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
-        padding: 0 10px;
+        padding: 10px 10px;
         scroll-behavior: smooth;
     }
     
@@ -6945,7 +6946,6 @@ body.no-scroll { overflow: hidden; }
     border-radius: 20px;
     font-size: 13px;
     background-color: #f39ea7;
-    border-bottom:solid 2px #cf657d;
     color: #fff;
     font-weight: 600;
     white-space: nowrap;
@@ -6954,13 +6954,13 @@ body.no-scroll { overflow: hidden; }
     transition: background-color 0.3s;
     display: inline-flex;
     align-items: center;
-    gap: 4px;
+    gap: 0;
 }
 
 .detail-item .brand-section .shop-btn .btn-icon {
     width: 16px;
     height: 16px;
-    margin-right: 4px;
+    margin-right: 2px;
     display: inline-block;
     vertical-align: middle;
     filter: brightness(0) invert(1);
@@ -7301,8 +7301,7 @@ body.no-scroll { overflow: hidden; }
     }
     
     .tips-container p,
-    .tips-container li,
-    .tips-container label {
+    .tips-container li {
         font-size: 12px !important;
     }
     
@@ -7322,8 +7321,8 @@ body.no-scroll { overflow: hidden; }
 /* Tips container mobile responsiveness */
 @media (max-width: 480px) {
     .tips-container {
-        padding: 0 10px !important;
-        margin: 20px auto !important;
+        padding: 0 0px !important;
+        margin: 0px auto !important;
     }
     
     .tips-container .tabs {
@@ -8068,13 +8067,13 @@ body.no-scroll { overflow: hidden; }
     transition: background-color 0.3s;
     display: inline-flex;
     align-items: center;
-    gap: 4px;
+    gap: 0;
 }
 
 .detail-item .brand-section .shop-btn .btn-icon {
     width: 16px;
     height: 16px;
-    margin-right: 4px;
+    margin-right: 2px;
     display: inline-block;
     vertical-align: middle;
     filter: brightness(0) invert(1);
@@ -8926,7 +8925,7 @@ body .case-slider .slick-slide img {
         max-width: 100% !important;
         padding: 30px 0 !important; /* 左右のpaddingを削除 */
         box-sizing: border-box !important;
-        overflow: hidden !important;
+        overflow: visible !important;
     }
     
     /* 比較セクション内のコンテンツにpaddingを追加 */
@@ -9150,6 +9149,33 @@ body .case-slider .slick-slide img {
     }
 }
 
+@media (max-width: 768px) {
+    .comparison-section {
+        overflow-x: hidden !important;
+        overflow-y: visible !important;
+    }
+
+    .comparison-table--matrix {
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+        touch-action: pan-x;
+        --comparison-fixed-col-width: 75px;
+        --comparison-clinic-col-width: 100px;
+    }
+
+    .comparison-table--matrix .comparison-table-wrapper {
+        display: inline-block;
+        min-width: calc(var(--comparison-fixed-col-width) + (var(--comparison-clinic-col-width) * var(--clinic-count, 1)));
+    }
+}
+
+@media (max-width: 480px) {
+    .comparison-table--matrix {
+        --comparison-fixed-col-width: 75px;
+        --comparison-clinic-col-width: 100px;
+    }
+}
+
 /* 特定の幅での微調整 */
 @media (min-width: 481px) and (max-width: 600px) {
     .ranking-item {
@@ -9176,7 +9202,7 @@ body .case-slider .slick-slide img {
     bottom: 0;
     left: 50%;
     right: auto;
-    height: 10vh; /* ビューポートの10% */
+    height: auto; /* ビューポートの10% */
     min-height: 80px;
     max-height: 120px;
     background: #fff; /* 背景は白 */

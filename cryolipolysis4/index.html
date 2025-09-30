@@ -85,7 +85,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
-    <link rel="icon" type="image/webp" href="../common_data/images/favicon.webp" id="favicon">
+    <link rel="icon" type="image/png" href="../common_data/images/favicon.png" id="favicon">
     <!-- Critical CSS -->
     <!-- Font loading detection -->
     <script>'fonts' in document&&document.fonts.ready.then(function(){document.documentElement.classList.add('fonts-loaded')})</script>
@@ -103,7 +103,7 @@
                 <div class="logo-section">
                     <a href="/" class="logo-link">
                         <div class="logo-main">
-                            <span class="logo-icon"><img src="../common_data/images/favicon.webp" alt="医療ダイエット比較.com" id="header-logo-icon"></span>
+                            <span class="logo-icon"><img src="../common_data/images/favicon.png" alt="医療ダイエット比較.com" id="header-logo-icon"></span>
                             <h1 class="site-logo" id="site-logo">おすすめ比較.com</h1>
                         </div>
                     </a>
@@ -124,17 +124,11 @@
                 <picture>
                     <img src="images/mv.webp" alt="おすすめ比較ランキング - 2025年最新版" class="hero-image" loading="eager" fetchpriority="high" decoding="async" width="1500" height="928">
                 </picture>
-                <div id="mv-region-name"></div>
-                <div id="mv-left-appeal-text"></div>
                 <svg id="mv-main-svg-text">
-                    <text x="50%" y="50%" text-anchor="middle" dominant-baseline="central" fill="#ff94ae" stroke="white" stroke-width="6px" paint-order="stroke">
-                        <tspan id="mv-region-text"></tspan>
-                    </text>
+                    <text id="mv-region-text" x="50%" y="50%" text-anchor="middle" dominant-baseline="central" fill="#4c4c4c" stroke="white" stroke-width="6px" paint-order="stroke"></text>
                 </svg>
                 <svg id="mv-appeal1-text">
-                    <text x="50%" y="50%" text-anchor="middle" dominant-baseline="central" fill="#ff94ae" stroke="white" stroke-width="6px" paint-order="stroke">
-                        
-                    </text>
+                    <text id="mv-service-text" x="50%" y="50%" text-anchor="middle" dominant-baseline="central" fill="#4c4c4c" stroke="white" stroke-width="6px" paint-order="stroke"></text>
                 </svg>
             </div>
             <div id="pr-line"></div>
@@ -170,137 +164,105 @@
                         </div>
                     </div>
                 </div>
-            </section>
+            </section>        <!-- ユーザーの悩みを解消するためのTips -->
+        <div class="container tips-container" data-lead-variant="A">
+            <div class="tips-layout tips-layout-a" data-tips-variant="A">
+                <div class="tips-section">
+                    <div class="tips-inner">
+                        <div class="tabs">
+                            <div class="tab active" data-tab="0">
+                                <span class="tab-text"></span>
+                            </div>
+                            <div class="tab" data-tab="1">
+                                <span class="tab-text"></span>
+                            </div>
+                            <div class="tab" data-tab="2">
+                                <span class="tab-text"></span>
+                            </div>
+                        </div>
 
-            <!-- ユーザーの悩みを解消するためのTips -->
-            <div class="container tips-container" data-lead-variant="A">
-                <div class="tips-layout tips-layout-a" data-tips-variant="A">
-                    <div class="tips-section">
-                        <div class="tips-inner">
-                            <!-- タブナビゲーション -->
-                            <div class="tabs">
-                                <div class="tab active" data-tab="0">
-                                    <span class="tab-text"></span>
+                        <div class="tab-contents">
+                            <div class="tab-content active" data-tab="0">
+                                <div class="tab-figure">
+                                    <img src="images/Tips1.webp" alt="効果" class="tab-image" loading="lazy" decoding="async">
                                 </div>
-                                <div class="tab" data-tab="1">
-                                    <span class="tab-text"></span>
-                                </div>
-                                <div class="tab" data-tab="2">
-                                    <span class="tab-text"></span>
-                                </div>
+                                <p class="tab-description"></p>
                             </div>
 
-                            <!-- タブコンテンツコンテナ -->
-                            <div class="tab-contents">
-                                <!-- タブ1: 効果 -->
-                                <div class="tab-content active" data-tab="0">
-                                    <div class="tab-figure">
-                                        <img src="images/Tips1.webp" alt="効果" class="tab-image" loading="lazy" decoding="async">
-                                    </div>
-                                    <p class="tab-description"></p>
+                            <div class="tab-content" data-tab="1">
+                                <div class="tab-figure">
+                                    <img src="images/Tips2.webp" alt="クリニック選びのポイント" class="tab-image" loading="lazy" decoding="async">
                                 </div>
+                                <p class="tab-description"></p>
+                            </div>
 
-                                <!-- タブ2: クリニック選び -->
-                                <div class="tab-content" data-tab="1">
-                                    <div class="tab-figure">
-                                        <img src="images/Tips2.webp" alt="クリニック選びのポイント" class="tab-image" loading="lazy" decoding="async">
-                                    </div>
-                                    <p class="tab-description"></p>
+                            <div class="tab-content" data-tab="2">
+                                <div class="tab-figure">
+                                    <img src="images/Tips3.webp" alt="今がおすすめの理由" class="tab-image" loading="lazy" decoding="async">
                                 </div>
-
-                                <!-- タブ3: 今がおすすめ -->
-                                <div class="tab-content" data-tab="2">
-                                    <div class="tab-figure">
-                                        <img src="images/Tips3.webp" alt="今がおすすめの理由" class="tab-image" loading="lazy" decoding="async">
-                                    </div>
-                                    <p class="tab-description"></p>
-                                </div>
+                                <p class="tab-description"></p>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <div class="tips-layout tips-layout-b" data-tips-variant="B" hidden>
-                    <section class="tips-flow" aria-label="脂肪冷却を検討中の方向けTips">
-                        <article class="tips-step" aria-label="脂肪冷却への不安に寄り添うメッセージ">
-                            <div class="tips-step-content">
-                                <div class="tips-quotes" aria-hidden="false">
-                                    <p class="tips-quote">「脂肪冷却って本当に効果があるの？」</p>
-                                    <p class="tips-quote">「始めてみたいけど、自分に合うのか不安…」</p>
-                                </div>
-                                <p>
-                                    そんな迷いを抱える方は少なくありません。<br><br><span class="tips-highlight">脂肪冷却は、従来のように切ったり激しい運動をしたりせず</span>、気になる部分にピンポイントでアプローチできる最新の美容医療です。<br><br>諦めかけていた部位にも“冷却するだけ”で挑める、新しい選択肢として注目されています。
-                                </p>
-                            </div>
-                        </article>
-
-                        <article class="tips-step" aria-label="脂肪冷却の特徴と効果">
-                            <div class="tips-step-content">
-                                <figure class="tips-step-figure">
-                                    <img src="images/Tips1.webp" alt="脂肪冷却の特徴" loading="lazy" decoding="async">
-                                </figure>
-                                <p>
-                                    専門スタッフが肌質や脂肪のつき方を確認しながら、<span class="tips-highlight">冷却と吸引を組み合わせて脂肪細胞だけを凍結</span>。施術中の痛みはほとんどなく、ダウンタイムも短いのが魅力です。<br><br>例えば20代の田山さんは6ヶ月で体重が61.6kgから46.5kgへとマイナス15.1kg※となり、体脂肪率は-14.0％もダウン！<br><br>（※ディオクリニックの提供。効果には個人差があり、すべての方に同様の結果を保証するものではありません）
-                                </p>
-                                <figure class="tips-ba-figure">
-                                    <img src="images/tips-ba.webp" alt="脂肪冷却のビフォーアフター" loading="lazy" decoding="async">
-                                </figure>
-                            </div>
-                        </article>
-
-                        <article class="tips-step" aria-label="従来手法との違いと種類">
-                            <div class="tips-step-content">
-                                <p>
-                                    脂肪溶解注射やスルリム注射、マンジャロなどの薬剤は「脂肪を溶かす」「食欲を抑える」仕組みで体重減少を狙いますが、脂肪冷却は物理的に冷却して<span class="tips-highlight">脂肪細胞そのものを減らす</span>アプローチ。<br><br>施術後は自然に体外へ排出され、リバウンドしにくいのがメリットです。
-                                </p>
-                                <figure class="tips-type-figure">
-                                    <img src="images/tips-type-chart.webp" alt="脂肪冷却ハンドピースのタイプ別比較" loading="lazy" decoding="async">
-                                </figure>
-                            </div>
-                        </article>
-
-                        <article class="tips-step" aria-label="クリニック選びのポイント">
-                            <div class="tips-step-content">
-                                <p>
-                                    「どれを選べばいいの？」と迷う方のために、編集部が厳選したクリニックを紹介！一目でわかる早見表でチェックしてみてください。
-                                </p>
-                                <figure class="tips-step-figure">
-                                    <img src="images/tips-matrix.webp" alt="クリニック比較マトリクス" loading="lazy" decoding="async">
-                                </figure>
-                                <p>
-                                    さらに詳しく知りたい方は、<span class="tips-highlight">価格・施術メニュー・保証・アフターケア</span>まで比較した表をご用意しました。<br><br>気になるクリニックをチェックして、自分に合った1院を見つけましょう。初回カウンセリングで気になる点を相談し、納得してからスタートすれば安心です。
-                                </p>
-                            </div>
-                        </article>
-                    </section>
-                </div>
             </div>
 
-            <script>
-                // Tips section tab functionality
-                (function() {
-                    const tabs = document.querySelectorAll('.tips-container .tab');
-                    const tabContents = document.querySelectorAll('.tips-container .tab-content');
+            <div class="tips-layout tips-layout-b" data-tips-variant="B" hidden>
+                <section class="tips-flow" aria-label="脂肪冷却を検討中の方向けTips">
+                    <article class="tips-step" aria-label="脂肪冷却への不安に寄り添うメッセージ">
+                        <div class="tips-step-content">
+                            <div class="tips-quotes" aria-hidden="false">
+                                <p class="tips-quote">「脂肪冷却って本当に効果があるの？」</p>
+                                <p class="tips-quote">「始めてみたいけど、自分に合うのか不安…」</p>
+                            </div>
+                            <p>
+                                そんな迷いを抱える方は少なくありません。<br><br><span class="tips-highlight">脂肪冷却は、従来のように切ったり激しい運動をしたりせず</span>、気になる部分にピンポイントでアプローチできる最新の美容医療です。<br><br>諦めかけていた部位にも“冷却するだけ”で挑める、新しい選択肢として注目されています。
+                            </p>
+                        </div>
+                    </article>
 
-                    function updateTabs(index) {
-                        // Update tabs
-                        tabs.forEach((tab, i) => {
-                            tab.classList.toggle('active', i === index);
-                        });
+                    <article class="tips-step" aria-label="脂肪冷却の特徴と効果">
+                        <div class="tips-step-content">
+                            <figure class="tips-step-figure">
+                                <img src="images/Tips1.webp" alt="脂肪冷却の特徴" loading="lazy" decoding="async">
+                            </figure>
+                            <p>
+                                専門スタッフが肌質や脂肪のつき方を確認しながら、<span class="tips-highlight">冷却と吸引を組み合わせて脂肪細胞だけを凍結</span>。施術中の痛みはほとんどなく、ダウンタイムも短いのが魅力です。<br><br>例えば20代の田山さんは6ヶ月で体重が61.6kgから46.5kgへとマイナス15.1kg※となり、体脂肪率は-14.0％もダウン！<br><br>（※ディオクリニックの提供。効果には個人差があり、すべての方に同様の結果を保証するものではありません）
+                            </p>
+                            <figure class="tips-ba-figure">
+                                <img src="images/tips-ba.webp" alt="脂肪冷却のビフォーアフター" loading="lazy" decoding="async">
+                            </figure>
+                        </div>
+                    </article>
 
-                        // Update tab contents
-                        tabContents.forEach((content, i) => {
-                            content.classList.toggle('active', i === index);
-                        });
-                    }
+                    <article class="tips-step" aria-label="従来手法との違いと種類">
+                        <div class="tips-step-content">
+                            <p>
+                                脂肪溶解注射やスルリム注射、マンジャロなどの薬剤は「脂肪を溶かす」「食欲を抑える」仕組みで体重減少を狙いますが、脂肪冷却は物理的に冷却して<span class="tips-highlight">脂肪細胞そのものを減らす</span>アプローチ。<br><br>施術後は自然に体外へ排出され、リバウンドしにくいのがメリットです。
+                            </p>
+                            <figure class="tips-type-figure">
+                                <img src="images/tips-type-chart.webp" alt="脂肪冷却ハンドピースのタイプ別比較" loading="lazy" decoding="async">
+                            </figure>
+                        </div>
+                    </article>
 
-                    // Tab click handlers
-                    tabs.forEach((tab, index) => {
-                        tab.addEventListener('click', () => updateTabs(index));
-                    });
-                })();
-            </script>
-        
+                    <article class="tips-step" aria-label="クリニック選びのポイント">
+                        <div class="tips-step-content">
+                            <p>
+                                「どれを選べばいいの？」と迷う方のために、編集部が厳選したクリニックを紹介！一目でわかる早見表でチェックしてみてください。
+                            </p>
+                            <figure class="tips-step-figure">
+                                <img src="images/tips-matrix.webp" alt="クリニック比較マトリクス" loading="lazy" decoding="async">
+                            </figure>
+                            <p>
+                                さらに詳しく知りたい方は、<span class="tips-highlight">価格・施術メニュー・保証・アフターケア</span>まで比較した表をご用意しました。<br><br>気になるクリニックをチェックして、自分に合った1院を見つけましょう。初回カウンセリングで気になる点を相談し、納得してからスタートすれば安心です。
+                            </p>
+                        </div>
+                    </article>
+                </section>
+            </div>
+        </div>
+
         <script>
         // 詳細情報を表示する関数
         function showDisclaimerInfo(type) {
@@ -346,8 +308,33 @@
                         <h2 class="comparison-title">ー<span id="comparison-region-name">地域</span>で人気の脂肪冷却ー</h2>
                     </div>
                 </div>
-                <p class="comparison-scroll-hint" aria-hidden="true">← 横スクロールできます →</p>
-                <div class="comparison-table ranking-loading" id="comparison-table-container"></div>
+                <p class="comparison-scroll-hint">← 横スクロールできます →</p>
+                
+                <div class="comparison-table comparison-table--matrix ranking-loading" id="comparison-table-container">
+                    <div class="comparison-table-wrapper">
+                        <table id="comparison-table">
+                            <thead>
+                                <tr id="comparison-header-row"></tr>
+                            </thead>
+                            <tbody id="comparison-tbody">
+                                <!-- 動的に生成される比較表の内容がここに表示されます -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- 注意事項アコーディオン -->
+                    <div class="disclaimer-accordion" style="margin-top: 15px;">
+                        <!-- 第1段階: 各クリニックの注意事項 -->
+                        <div class="main-disclaimer">
+                            <button id="comparison-disclaimer-button" class="main-disclaimer-header comparison-disclaimer-header" style="width: 100%; text-align: left; padding: 8px 12px; background-color: #fafafa; border: 1px solid #f0f0f0; border-radius: 3px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
+                                <span style="font-size: 10px; font-weight: 500; color: #666;">各クリニックの注意事項</span>
+                                <span id="main-arrow" style="font-size: 8px; color: rgb(153, 153, 153); transition: transform 0.2s; transform: rotate(0deg);">▼</span>
+                            </button>
+                            <div id="main-content" class="main-disclaimer-content" style="display: none; padding: 5px; background-color: rgb(252, 252, 252); border-right: 1px solid rgb(240, 240, 240); border-bottom: 1px solid rgb(240, 240, 240); border-left: 1px solid rgb(240, 240, 240); border-image: initial; border-top: none; border-radius: 0px 0px 3px 3px; margin-top: -5px;">
+                                <!-- 動的に生成される注釈コンテンツ -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </section>
 
             <!-- 案件詳細セクション -->
@@ -610,98 +597,427 @@ text-align: center;
 
     <!-- 1位クリニック動的表示機能 -->
     <script>
-        // リダイレクトリンクのクリックハンドラー
-        document.addEventListener('click', function(e) {
-            const link = e.target.closest('a');
-            if (link && link.href) {
-                console.log('Link clicked:', link.href);
+        function shouldHandleClinicLink(link) {
+            if (!link) return false;
+            if (link.hasAttribute('data-handle-clinic-click')) return true;
+            if (link.dataset && (link.dataset.clinicId || link.dataset.rank || link.dataset.ctaType)) return true;
+            try {
+                const href = link.getAttribute('href') || '';
+                if (href.includes('/redirect.html')) {
+                    return true;
+                }
+            } catch (_) {}
+            return false;
+        }
 
-                // redirect.htmlへのリンクの場合
-                if (link.href.includes('/redirect.html')) {
-                    e.preventDefault(); // デフォルトのリンク動作を阻止
+        function getDataAttr(element, key) {
+            let el = element || null;
+            while (el) {
+                if (el.dataset && el.dataset[key] !== undefined) {
+                    return el.dataset[key];
+                }
+                el = el.parentElement;
+            }
+            return undefined;
+        }
 
-                    // URLからパラメータを抽出
-                    const url = new URL(link.href);
-                    const hashParams = url.hash ? url.hash.substring(1) : '';
+        function detectClickSection(link) {
+            if (!link || typeof link.closest !== 'function') {
+                return '';
+            }
 
-                    if (hashParams.startsWith('params=')) {
-                        try {
-                            const paramsJson = decodeURIComponent(hashParams.substring(7));
-                            const params = JSON.parse(paramsJson);
-                            const linkQueryParams = {};
-                            for (const [key, value] of url.searchParams) {
-                                linkQueryParams[key] = value;
-                            }
+            const sectionMap = [
+                { selector: '.ranking-item, .ranking__card, .ranking_box, [data-rank="1"], [data-rank="2"], [data-rank="3"]', value: 'ranking' },
+                { selector: '.clinic-detail-card, .clinic-card, .clinic-detail-modal', value: 'details' },
+                { selector: '.comparison-table, .ranking-table, .comparison-section', value: 'comparison' },
+                { selector: '.map-modal', value: 'map_modal' },
+                { selector: '.shop', value: 'shop_list' },
+                { selector: '.scroll-bottom-modal', value: 'scroll_modal' },
+                { selector: '.first-choice-section, #first-choice-cta-link', value: 'first_choice' }
+            ];
 
-                            if (Object.keys(linkQueryParams).length) {
-                                params.original_params = Object.assign({}, params.original_params || {}, linkQueryParams);
-
-                                ['click_section', 'click_clinic', 'source_page', 'cta_type', 'region_id'].forEach(key => {
-                                    if (linkQueryParams[key] && typeof params[key] === 'undefined') {
-                                        params[key] = linkQueryParams[key];
-                                    }
-                                });
-                            }
-
-                            // 現在のページのパラメータも追加保存
-                            const currentUrl = new URL(window.location.href);
-                            const originalParams = {};
-                            for (const [key, value] of currentUrl.searchParams) {
-                                originalParams[key] = value;
-                            }
-                            
-                            // paramsに元URLパラメータを追加
-                            params.original_params = originalParams;
-                            
-                            console.log('💾 保存するパラメータ:', params);
-
-                            // localStorageに保存
-                            localStorage.setItem('redirectParams', JSON.stringify(params));
-                            console.log('Saved redirect params to localStorage:', params);
-
-                            // redirect.htmlに移動
-                            window.open(link.href, '_blank', 'noopener');
-                        } catch (error) {
-                            console.error('Failed to save redirect params:', error);
-                        }
-                    } else {
-                        // ハッシュパラメータがない場合はURLパラメータから取得
-                        const clinicId = url.searchParams.get('clinic_id');
-                        const rank = url.searchParams.get('rank');
-                        const regionId = url.searchParams.get('region_id');
-
-                        if (clinicId) {
-                        const linkQueryParams = {};
-                        for (const [key, value] of url.searchParams) {
-                            linkQueryParams[key] = value;
-                        }
-
-                        const params = {
-                            clinic_id: clinicId,
-                            rank: rank || '1',
-                            region_id: regionId || '013'
-                        };
-
-                        if (Object.keys(linkQueryParams).length) {
-                            params.original_params = Object.assign({}, params.original_params || {}, linkQueryParams);
-
-                            ['click_section', 'click_clinic', 'source_page', 'cta_type', 'region_id'].forEach(key => {
-                                if (linkQueryParams[key] && typeof params[key] === 'undefined') {
-                                    params[key] = linkQueryParams[key];
-                                }
-                            });
-                        }
-                            localStorage.setItem('redirectParams', JSON.stringify(params));
-                            console.log('Saved redirect params from URL to localStorage:', params);
-                            window.open(link.href, '_blank', 'noopener');
-                        }
+            for (const { selector, value } of sectionMap) {
+                try {
+                    if (link.closest(selector)) {
+                        return value;
                     }
-                } else {
-                    // 直接URLの場合もパラメータを保存（念のため）
-                    console.log('Direct URL link clicked:', link.href);
+                } catch (_) {
+                    // 無効なセレクタは無視
                 }
             }
-        });
+
+            return '';
+        }
+
+        function normalizeRegionId(value, fallback = '013') {
+            if (value === undefined || value === null) return fallback;
+            const raw = String(value).trim();
+            if (!raw) return fallback;
+            if (/^\d+$/.test(raw)) {
+                return raw.padStart(3, '0');
+            }
+            return raw;
+        }
+
+        function buildClickContext(link, overrides = {}) {
+            const context = { ...overrides };
+            if (!context.target && link && link.getAttribute) {
+                const targetAttr = link.getAttribute('target');
+                if (targetAttr) {
+                    context.target = targetAttr;
+                }
+            }
+
+            const datasetKeys = ['clinicId', 'rank', 'regionId', 'ctaType', 'clickSection', 'clickClinic', 'sourcePage'];
+            datasetKeys.forEach((key) => {
+                if (context[key] === undefined || context[key] === null) {
+                    const value = getDataAttr(link, key);
+                    if (value !== undefined) {
+                        context[key] = value;
+                    }
+                }
+            });
+
+            if (!context.clickSection) {
+                const detectedSection = detectClickSection(link);
+                if (detectedSection) {
+                    context.clickSection = detectedSection;
+                }
+            }
+
+            let parsedUrl = null;
+            const linkHref = (link && link.getAttribute && link.getAttribute('href')) || '';
+            try {
+                parsedUrl = new URL(linkHref, window.location.href);
+            } catch (_) {
+                parsedUrl = null;
+            }
+            context.linkUrl = parsedUrl;
+
+            const linkParams = {};
+            if (parsedUrl) {
+                parsedUrl.searchParams.forEach((value, key) => {
+                    linkParams[key] = value;
+                });
+            }
+            context.linkParams = linkParams;
+
+            if (!context.clinicId && linkParams.clinic_id) context.clinicId = linkParams.clinic_id;
+            if (!context.rank && linkParams.rank) context.rank = linkParams.rank;
+            if (!context.regionId && linkParams.region_id) context.regionId = linkParams.region_id;
+            if (!context.ctaType && linkParams.cta_type) context.ctaType = linkParams.cta_type;
+            if (!context.clickSection && linkParams.click_section) context.clickSection = linkParams.click_section;
+            if (!context.clickClinic && linkParams.click_clinic) context.clickClinic = linkParams.click_clinic;
+            if (!context.sourcePage && linkParams.source_page) context.sourcePage = linkParams.source_page;
+
+            const hashValues = {};
+            if (parsedUrl && parsedUrl.hash) {
+                const hash = parsedUrl.hash.substring(1);
+                if (hash.startsWith('params=')) {
+                    try {
+                        const paramsJson = decodeURIComponent(hash.substring(7));
+                        const paramsObj = JSON.parse(paramsJson);
+                        Object.assign(hashValues, paramsObj);
+                        if (!context.originalParams && paramsObj.original_params && typeof paramsObj.original_params === 'object') {
+                            context.originalParams = { ...paramsObj.original_params };
+                        }
+                    } catch (error) {
+                        console.warn('Failed to parse hash params:', error);
+                    }
+                } else {
+                    const hashSearch = new URLSearchParams(hash);
+                    hashSearch.forEach((value, key) => {
+                        hashValues[key] = value;
+                    });
+                }
+            }
+            context.hashParams = hashValues;
+
+            if (!context.clinicId && hashValues.clinic_id) context.clinicId = hashValues.clinic_id;
+            if (!context.rank && hashValues.rank) context.rank = hashValues.rank;
+            if (!context.regionId && hashValues.region_id) context.regionId = hashValues.region_id;
+            if (!context.ctaType && hashValues.cta_type) context.ctaType = hashValues.cta_type;
+            if (!context.clickSection && hashValues.click_section) context.clickSection = hashValues.click_section;
+            if (!context.clickClinic && hashValues.click_clinic) context.clickClinic = hashValues.click_clinic;
+            if (!context.sourcePage && hashValues.source_page) context.sourcePage = hashValues.source_page;
+
+            const originalParams = { ...(context.originalParams || {}) };
+            const currentSearch = new URLSearchParams(window.location.search || '');
+            currentSearch.forEach((value, key) => {
+                if (originalParams[key] === undefined) {
+                    originalParams[key] = value;
+                }
+            });
+            Object.entries(linkParams).forEach(([key, value]) => {
+                if (originalParams[key] === undefined) {
+                    originalParams[key] = value;
+                }
+            });
+            Object.entries(hashValues).forEach(([key, value]) => {
+                if (typeof value === 'string' && originalParams[key] === undefined) {
+                    originalParams[key] = value;
+                }
+            });
+
+            context.originalParams = originalParams;
+            context.regionId = normalizeRegionId(context.regionId);
+            context.rank = context.rank !== undefined ? context.rank : '1';
+            context.ctaType = (context.ctaType || 'official');
+            if (!context.clickSection && context.ctaType === 'direct') {
+                context.clickSection = 'direct';
+            }
+            if (!context.sourcePage) {
+                context.sourcePage = window.location.pathname || '';
+            }
+
+            if (!context.referrerUrl && document.referrer) {
+                try {
+                    context.referrerUrl = new URL(document.referrer);
+                } catch (_) {
+                    context.referrerUrl = null;
+                }
+            }
+
+            return context;
+        }
+
+        function resolveClinicTargetUrl(clinicId, rank, ctaType) {
+            if (!clinicId) return null;
+            const dataManager = window.dataManager;
+            if (!dataManager || typeof dataManager.getClinicText !== 'function') {
+                return null;
+            }
+
+            const clinic = typeof dataManager.getClinicById === 'function' ? dataManager.getClinicById(clinicId) : null;
+            const clinicCode = (typeof dataManager.getClinicCodeById === 'function' && dataManager.getClinicCodeById(clinicId)) || clinic?.code || null;
+            if (!clinicCode) {
+                return null;
+            }
+
+            const getField = (field) => {
+                const value = dataManager.getClinicText(clinicCode, field, '');
+                if (value === undefined || value === null) return '';
+                return String(value).trim();
+            };
+
+            const numericRank = Number.parseInt(rank, 10);
+            const finalRank = Number.isFinite(numericRank) && numericRank > 0 ? numericRank : 1;
+            const normalizedCtaType = String(ctaType || 'official').toLowerCase() === 'direct' ? 'direct' : 'official';
+
+            let targetUrl = '';
+
+            if (normalizedCtaType === 'direct') {
+                const directRankFields = [
+                    `直フォームの遷移先URL（${finalRank}位）`,
+                    `直フォーム遷移先URL（${finalRank}位）`,
+                    `直フォームURL（${finalRank}位）`
+                ];
+                for (const field of directRankFields) {
+                    const value = getField(field);
+                    if (value) {
+                        targetUrl = value;
+                        break;
+                    }
+                }
+                if (!targetUrl) {
+                    const directFallbackFields = ['直フォームURL','直フォーム遷移先URL','無料相談フォームURL','予約フォームURL','フォームURL','問い合わせフォームURL','CTA直リンクURL'];
+                    for (const field of directFallbackFields) {
+                        const value = getField(field);
+                        if (value) {
+                            targetUrl = value;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if (!targetUrl) {
+                targetUrl = getField(`遷移先URL（${finalRank}位）`);
+                if (!targetUrl) {
+                    targetUrl = getField('遷移先URL（1位）');
+                }
+            }
+
+            if (!targetUrl) {
+                return null;
+            }
+
+            let resolvedUrl;
+            try {
+                resolvedUrl = new URL(targetUrl);
+            } catch (_) {
+                try {
+                    resolvedUrl = new URL(targetUrl, window.location.origin);
+                } catch (error) {
+                    console.error('Failed to resolve clinic target URL:', error);
+                    return null;
+                }
+            }
+
+            return {
+                url: resolvedUrl,
+                clinicCode,
+                clinic
+            };
+        }
+
+        function buildTrackedUrl(context, targetInfo) {
+            if (!targetInfo || !targetInfo.url) return null;
+            const destination = new URL(targetInfo.url.toString());
+            const normalizedCtaType = String(context.ctaType || 'official').toLowerCase() === 'direct' ? 'direct' : 'official';
+            const regionId = normalizeRegionId(context.regionId);
+            const currentUrl = new URL(window.location.href);
+            const baseReferrer = `${currentUrl.origin}${currentUrl.pathname}`;
+            const fallbackSourcePage = window.location.pathname || window.SITE_CONFIG?.sourcePage || 'potenza';
+            const sourcePage = context.sourcePage || context.linkParams?.source_page || context.hashParams?.source_page || fallbackSourcePage;
+
+            const trackingParams = {
+                click_section: context.clickSection || context.linkParams?.click_section || context.hashParams?.click_section || currentUrl.searchParams.get('click_section') || '',
+                click_clinic: context.clickClinic || context.linkParams?.click_clinic || context.hashParams?.click_clinic || targetInfo.clinicCode || '',
+                source_page: sourcePage,
+                region_id: regionId || '013',
+                cta_type: normalizedCtaType,
+                referrer_url: baseReferrer,
+                timestamp: new Date().toISOString()
+            };
+
+            const originalParams = context.originalParams || {};
+            const referrerUrl = context.referrerUrl instanceof URL ? context.referrerUrl : null;
+
+            function getOriginalParam(paramName) {
+                if (originalParams && originalParams[paramName]) {
+                    return originalParams[paramName];
+                }
+                if (context.linkParams && context.linkParams[paramName]) {
+                    return context.linkParams[paramName];
+                }
+                if (context.hashParams && context.hashParams[paramName]) {
+                    return context.hashParams[paramName];
+                }
+                if (referrerUrl && referrerUrl.searchParams) {
+                    const value = referrerUrl.searchParams.get(paramName);
+                    if (value) return value;
+                }
+                return '';
+            }
+
+            const maxScrollValue = (() => {
+                const fromOriginal = getOriginalParam('max_scroll');
+                if (fromOriginal !== '') {
+                    return fromOriginal;
+                }
+                const fromCurrent = currentUrl.searchParams.get('max_scroll');
+                return fromCurrent !== null ? fromCurrent : '';
+            })();
+            if (maxScrollValue !== null && maxScrollValue !== undefined && maxScrollValue !== '') {
+                const parsed = parseInt(maxScrollValue, 10);
+                if (!Number.isNaN(parsed)) {
+                    const clamped = Math.max(0, Math.min(100, parsed));
+                    trackingParams.max_scroll = String(clamped);
+                } else {
+                    trackingParams.max_scroll = String(maxScrollValue);
+                }
+            }
+
+            const utmCreative = getOriginalParam('utm_creative');
+            if (utmCreative) {
+                destination.searchParams.set('param2', utmCreative);
+            }
+
+            const gclid = getOriginalParam('gclid');
+            if (gclid) {
+                destination.searchParams.set('param3', gclid);
+                destination.searchParams.set('gclid', gclid);
+            }
+
+            destination.searchParams.set('param4', encodeURIComponent(JSON.stringify(trackingParams)));
+
+            if (regionId) {
+                destination.searchParams.set('region_id', regionId);
+            }
+
+            const userAgent = navigator.userAgent.toLowerCase();
+            const deviceType = userAgent.includes('mobile') || userAgent.includes('android') || userAgent.includes('iphone')
+                ? 'm'
+                : (userAgent.includes('tablet') || userAgent.includes('ipad')) ? 't' : 'c';
+            destination.searchParams.set('device', deviceType);
+
+            const utmDefaults = {
+                utm_source: 'google',
+                utm_medium: 'cpc',
+                utm_campaign: '{campaignid}',
+                utm_term: '{keyword}'
+            };
+
+            Object.entries(utmDefaults).forEach(([param, defaultValue]) => {
+                const value = getOriginalParam(param) || defaultValue;
+                destination.searchParams.set(param, value);
+            });
+
+            if (utmCreative) {
+                destination.searchParams.set('utm_creative', utmCreative);
+            } else {
+                destination.searchParams.set('utm_creative', '{creative}');
+            }
+
+            const utmContent = getOriginalParam('utm_content');
+            if (utmContent) {
+                destination.searchParams.set('utm_content', utmContent);
+            }
+
+            return destination.toString();
+        }
+
+        window.handleClinicClick = function(event, link, overrides = {}) {
+            if (event) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+
+            try {
+                const context = buildClickContext(link, overrides || {});
+                const targetInfo = resolveClinicTargetUrl(context.clinicId, context.rank, context.ctaType);
+                if (!targetInfo) {
+                    if (link && link.href) {
+                        window.open(link.href, context.target || '_blank', 'noopener');
+                    }
+                    return false;
+                }
+
+                const finalUrl = buildTrackedUrl(context, targetInfo);
+                if (!finalUrl) {
+                    if (link && link.href) {
+                        window.open(link.href, context.target || '_blank', 'noopener');
+                    }
+                    return false;
+                }
+
+                const target = context.target || '_blank';
+                if (target === '_self') {
+                    window.location.href = finalUrl;
+                } else {
+                    window.open(finalUrl, target, 'noopener');
+                }
+            } catch (error) {
+                console.error('handleClinicClick failed:', error);
+                if (link && link.href) {
+                    const fallbackTarget = (overrides && overrides.target) || link.getAttribute('target') || '_blank';
+                    window.open(link.href, fallbackTarget, 'noopener');
+                }
+            }
+
+            return false;
+        };
+
+        document.addEventListener('click', function(e) {
+            const link = e.target && e.target.closest ? e.target.closest('a') : null;
+            if (!link || !shouldHandleClinicLink(link)) {
+                return;
+            }
+            if (window.handleClinicClick) {
+                window.handleClinicClick(e, link);
+            }
+        }, true);
         
                 // ランキングセクション用のアコーディオン関数
         function toggleRankingDisclaimer(event) {
@@ -1434,127 +1750,6 @@ text-align: center;
             // パラメータを引き継ぐ
             preserveAllParams();
             
-            const tabMenuItems = document.querySelectorAll('.comparison-tab-menu-item');
-            const table = document.querySelector('.comparison-table table');
-            
-            function updateTableColumns(tabType) {
-                if (!table) return;
-                
-                const tableContainer = document.querySelector('.comparison-table');
-                const headers = table.querySelectorAll('th');
-                const rows = table.querySelectorAll('tbody tr');
-                
-                // タブごとの表示列インデックス（実際のHTMLの列番号に合わせて修正）
-                const tabColumnsMap = {
-                    'tab1': [0, 1, 2, 3, 10], // 総合: クリニック名, 総合評価, 費用, 特徴, 公式サイトURL
-                    'tab2': [0, 4, 5, 6, 10], // 施術内容: クリニック名, 矯正範囲, 目安期間, 通院頻度, 公式サイトURL
-                    'tab3': [0, 7, 8, 9, 10]  // サービス: クリニック名, 実績/症例数, ワイヤー矯正の紹介, サポート, 公式サイトURL
-                };
-                
-                const showIndexes = tabColumnsMap[tabType] || tabColumnsMap['tab1'];
-                
-                // コンテナにアクティブなタブを設定
-                tableContainer.setAttribute('data-active-tab', tabType);
-                
-                // タブに応じて動的にヘッダーテキストを更新（JSONファイルから取得）
-                const headerConfig = window.dataManager ? window.dataManager.getClinicHeaderConfig() : null;
-                
-                const headerTextMap = {
-                    'tab1': [
-                        headerConfig && headerConfig['比較表ヘッダー1'] || 'クリニック', 
-                        headerConfig && headerConfig['比較表ヘッダー2'] || '総合評価',
-                        headerConfig && headerConfig['比較表ヘッダー3'] || '費用',
-                        headerConfig && headerConfig['比較表ヘッダー4'] || '特徴',
-                        headerConfig && headerConfig['比較表ヘッダー11'] || '公式サイト'
-                    ],
-                    'tab2': [
-                        headerConfig && headerConfig['比較表ヘッダー1'] || 'クリニック', 
-                        headerConfig && headerConfig['比較表ヘッダー5'] || '矯正範囲',
-                        headerConfig && headerConfig['比較表ヘッダー6'] || '目安期間',
-                        headerConfig && headerConfig['比較表ヘッダー7'] || '通院頻度',
-                        headerConfig && headerConfig['比較表ヘッダー11'] || '公式サイト'
-                    ], 
-                    'tab3': [
-                        headerConfig && headerConfig['比較表ヘッダー1'] || 'クリニック', 
-                        headerConfig && headerConfig['比較表ヘッダー8'] || '実績/症例数',
-                        headerConfig && headerConfig['比較表ヘッダー9'] || 'ワイヤー矯正の紹介',
-                        headerConfig && headerConfig['比較表ヘッダー10'] || 'サポート',
-                        headerConfig && headerConfig['比較表ヘッダー11'] || '公式サイト'
-                    ]
-                };
-                
-                const currentHeaderTexts = headerTextMap[tabType] || headerTextMap['tab1'];
-                
-                // requestAnimationFrameを使用して最適化
-                requestAnimationFrame(() => {
-                    // 表示される列のヘッダーテキストを動的に更新
-                    let headerTextIndex = 0;
-                    headers.forEach((th, index) => {
-                        if (showIndexes.includes(index)) {
-                            if (headerTextIndex < currentHeaderTexts.length) {
-                                th.textContent = currentHeaderTexts[headerTextIndex];
-                                headerTextIndex++;
-                            }
-                        }
-                    });
-                    
-                    // ヘッダーの表示/非表示
-                    headers.forEach((th, index) => {
-                        if (showIndexes.includes(index)) {
-                            // 表示する列: すべてのインラインスタイルを削除
-                            th.removeAttribute('style');
-                            th.classList.remove('th-none');
-                            th.classList.remove('td-none');
-                        } else {
-                            // 非表示の列
-                            th.style.display = 'none';
-                            th.style.visibility = 'hidden';
-                            th.style.width = '0';
-                            th.style.padding = '0';
-                            th.style.border = '0';
-                            th.classList.add('th-none');
-                        }
-                    });
-                    
-                    // 各行のセルの表示/非表示
-                    rows.forEach(row => {
-                        const cells = row.querySelectorAll('td');
-                        cells.forEach((td, index) => {
-                            if (showIndexes.includes(index)) {
-                                // 表示する列: すべてのインラインスタイルを削除
-                                td.removeAttribute('style');
-                                td.classList.remove('th-none');
-                                td.classList.remove('td-none');
-                            } else {
-                                // 非表示の列
-                                td.style.display = 'none';
-                                td.style.visibility = 'hidden';
-                                td.style.width = '0';
-                                td.style.padding = '0';
-                                td.style.border = '0';
-                                td.classList.add('td-none');
-                            }
-                        });
-                    });
-                });
-            }
-            
-            tabMenuItems.forEach(item => {
-                item.addEventListener('click', function() {
-                    // すべてのタブを非アクティブに
-                    tabMenuItems.forEach(tab => tab.classList.remove('tab-active'));
-                    // クリックしたタブをアクティブに
-                    this.classList.add('tab-active');
-
-                    // タブに応じて表示列を切り替え
-                    const tabType = this.getAttribute('data-tab');
-                    updateTableColumns(tabType);
-                });
-            });
-            
-            // 初期表示
-            updateTableColumns('tab1');
-            
         });
 
         // アコーディオン機能（2段階）
@@ -1900,28 +2095,22 @@ text-align: center;
             const tabs = document.querySelectorAll('.tips-container .tab');
             const tabContents = document.querySelectorAll('.tips-container .tab-content');
 
-            tabs.forEach(tab => {
-                tab.addEventListener('click', function() {
-                    const tabIndex = this.getAttribute('data-tab');
-                    
-                    // Update tab styles
-                    tabs.forEach(t => {
-                        t.style.backgroundColor = '#F1F1F1';
-                        t.style.color = '#4C4C4C';
+            if (tabs.length && tabContents.length) {
+                const activateTab = (index) => {
+                    tabs.forEach((tab, i) => {
+                        tab.classList.toggle('active', i === index);
                     });
-                    this.style.backgroundColor = '#2CC7C5';
-                    this.style.color = 'white';
-                    
-                    // Show/hide content
-                    tabContents.forEach(content => {
-                        if (content.getAttribute('data-tab') === tabIndex) {
-                            content.style.display = 'block';
-                        } else {
-                            content.style.display = 'none';
-                        }
+                    tabContents.forEach((content, i) => {
+                        content.classList.toggle('active', i === index);
                     });
+                };
+
+                tabs.forEach((tab, index) => {
+                    tab.addEventListener('click', () => activateTab(index));
                 });
-            });
+
+                activateTab(0);
+            }
         });
     </script>
     
@@ -1934,7 +2123,7 @@ text-align: center;
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./sw.js')
+                navigator.serviceWorker.register('/sw.js')
                     .then(registration => {})
                     .catch(err => {});
             });

@@ -3,7 +3,7 @@ MV画像パス,メインビジュアルの背景画像,./images/mv.webp
 MVアピールテキスト1,メインビジュアルの左側テキスト,【コスパ】×【通いやすさ】で選ぶ
 MVアピールテキスト2,メインビジュアルの右側テキスト,
 MVSVGテキスト1,メインビジュアルの大きなSVGテキスト,脂肪冷却おすすめ
-MVSVGテキスト2,メインビジュアルの小さなSVGテキスト,人気クリニック{{RANK_COUNT}}選
+MVSVGテキスト2,メインビジュアルの小さなSVGテキスト,脂肪冷却
 ランキングバナー画像パス,ランキングセクションのバナー画像,./images/ranking_header_banner.webp
 ランキング地域名テキスト,ランキングセクション上部の地域名に続くテキスト,で人気の脂肪冷却はココ！
 Tipsタブ1タイトル,Tipsセクションの1つ目のタブ,脂肪冷却の効果
@@ -18,6 +18,4 @@ Tips3画像パス,Tips3セクションの画像,./images/Tips3.webp
 比較表タイトル,比較表セクションの見出し,で人気の脂肪冷却
 比較表サブタイトル,比較表のサブタイトル,クリニックを<span class="accent-text">徹底比較</span>
 詳細バナー画像パス,詳細セクションのバナー画像,./images/details_header_bannar3.webp
-注意事項HTML,詳細セクションの注意事項HTML,<div class="main-disclaimer"><span id="main-arrow" style="font-size: 8px; color: rgb(153, 153, 153); transition: transform 0.2s; transform: rotate(180deg);">▼</span><div id="main-content" class="main-disclaimer-content" style="display: block; padding: 5px; background-color: rgb(252, 252, 252); border-right: 1px solid rgb(240, 240, 240); border-bottom: 1px solid rgb(240, 240, 240); border-left: 1px solid rgb(240, 240, 240);"><p>「12ヶ月分 0円」※支払総額193,000円に分割し、12ヶ月分（12回分）の分割金が減額されます。※他キャンペーンとの併用不可※当社指定の信販会社で契約をした方限定※コースのみ契約者適用※契約時の申し出のみ有効。</p></div></div>
-リード文A,リードセクションで使用するリード文A,
-リード文B,リードセクションで使用するリード文B,
+注意事項HTML,詳細セクションの注意事項HTML,"<div class="main-disclaimer"><span id="main-arrow" style="font-size: 8px; color: rgb(153, 153, 153); transition: transform 0.2s; transform: rotate(180deg);">▼</span><div id="main-content" class="main-disclaimer-content" style="display: block; padding: 5px; background-color: rgb(252, 252," 252); border-right: 1px solid rgb(240, 240, 240); border-bottom: 1px solid rgb(240, 240, 240); border-left: 1px solid rgb(240, 240, 240);"><p>「12ヶ月分 0円」※支払総額193,000円に分割し、12ヶ月分（12回分）の分割金が減額されます。※他キャンペーンとの併用不可※当社指定の信販会社で契約をした方限定※コースのみ契約者適用※契約時の申し出のみ有効。</p></div></div>"

@@ -20,7 +20,7 @@ function getClinicUrlFromConfig(clinicId, rank = 1) {
 // URLパラメータ処理クラス
 // CSV等の読み込み結果を短期間ブラウザにキャッシュして初期描画の待ち時間を短縮する
 const DATA_CACHE_VERSION = 'v1';
-const DATA_CACHE_TTL_MS = 10 * 60 * 1000; // 10 minutes
+const DATA_CACHE_TTL_MS = 3 * 60 * 1000; // 3 minutes
 const DATA_CACHE_PREFIX = 'dir_testsite001::cache::';
 
 const dataCache = (() => {
@@ -709,6 +709,7 @@ class DataManager {
             }, 100);
 
             await this.loadClinicTextsFromCsv();
+
             await this.loadStructureConfig();
 
             if (!this.stores || this.stores.length === 0) {
@@ -1404,12 +1405,37 @@ class DataManager {
         return {};
     }
 
-    getSectionLayout(sectionName, defaultValue = 'A') {
+    getSectionLayout(sectionName, defaultValue = 'B') {
         if (!sectionName) return defaultValue;
-        const layout = this.structureConfig && this.structureConfig[sectionName];
-        if (!layout) return defaultValue;
-        const normalized = layout.trim().toUpperCase();
-        return normalized || defaultValue;
+
+        const normalizedName = (sectionName || '').trim();
+        const aliasMap = {
+            'リードセクション': ['リード文セクション'],
+            'リード文セクション': ['リードセクション']
+        };
+
+        const candidates = [normalizedName];
+        const aliases = aliasMap[normalizedName];
+        if (aliases && Array.isArray(aliases)) {
+            aliases.forEach(alias => {
+                if (alias && !candidates.includes(alias)) {
+                    candidates.push(alias);
+                }
+            });
+        }
+
+        for (const name of candidates) {
+            const layout = this.structureConfig && this.structureConfig[name];
+            if (!layout) {
+                continue;
+            }
+            const normalized = (layout || '').trim().toUpperCase();
+            if (normalized) {
+                return normalized;
+            }
+        }
+
+        return defaultValue;
     }
     
     // クリニックコードと項目名でクリニック別テキストを取得
@@ -1627,11 +1653,10 @@ class DataManager {
             
             // ハッシュフラグメントを使用（サーバーのURL書き換えに影響されない）
             const redirectUrl = `./redirect.html#clinic_id=${clinicId}&rank=${rank}&region_id=${regionId}`;
-            
-            // localStorageを先に設定してから開く（サーバーがパラメータを削除する場合の対策）
-            const onclickHandler = targetUrl ? 
-                `onclick="localStorage.setItem('redirectParams', JSON.stringify({clinic_id: '${clinicId}', rank: '${rank}', region_id: '${regionId}'})); setTimeout(() => { window.open('${redirectUrl}', '_blank'); }, 10); return false;"` : '';
-            
+            const linkAttributes = targetUrl ?
+                `href="${redirectUrl}" data-handle-clinic-click="true" data-clinic-id="${clinicId}" data-rank="${rank}" data-region-id="${regionId}" data-cta-type="official" data-click-section="shop_list" target="_blank" rel="noopener"` :
+                `href="#" class="disabled"`;
+
             html += `
                 <div class='shop'>
                     <div class='shop-image'>
@@ -1639,7 +1664,7 @@ class DataManager {
                     </div>
                     <div class='shop-info'>
                         <div class='shop-name'>
-                            <a href="#" ${onclickHandler} style="cursor: pointer;">${storeName}</a>
+                            <a ${linkAttributes} class="shop-name-link" style="${targetUrl ? 'cursor: pointer;' : 'cursor: default;'}">${storeName}</a>
                         </div>
                         <div class='shop-address line-clamp'>
                             ${storeAddress}
@@ -1660,11 +1685,10 @@ class DataManager {
             
             // ハッシュフラグメントを使用（サーバーのURL書き換えに影響されない）
             const redirectUrl = `./redirect.html#clinic_id=${clinicId}&rank=${rank}&region_id=${regionId}`;
-            
-            // localStorageを先に設定してから開く（サーバーがパラメータを削除する場合の対策）
-            const onclickHandler = targetUrl ? 
-                `onclick="localStorage.setItem('redirectParams', JSON.stringify({clinic_id: '${clinicId}', rank: '${rank}', region_id: '${regionId}'})); setTimeout(() => { window.open('${redirectUrl}', '_blank'); }, 10); return false;"` : '';
-            
+            const linkAttributes = targetUrl ?
+                `href="${redirectUrl}" data-handle-clinic-click="true" data-clinic-id="${clinicId}" data-rank="${rank}" data-region-id="${regionId}" data-cta-type="official" data-click-section="shop_list" target="_blank" rel="noopener"` :
+                `href="#" class="disabled"`;
+
             html += `
                 <div class='shop hidden-content hidden'>
                     <div class='shop-image'>
@@ -1672,7 +1696,7 @@ class DataManager {
                     </div>
                     <div class='shop-info'>
                         <div class='shop-name'>
-                            <a href="#" ${onclickHandler} style="cursor: pointer;">${storeName}</a>
+                            <a ${linkAttributes} class="shop-name-link" style="${targetUrl ? 'cursor: pointer;' : 'cursor: default;'}">${storeName}</a>
                         </div>
                         <div class='shop-address line-clamp'>
                             ${storeAddress}
@@ -2075,13 +2099,14 @@ class RankingApp {
         this.currentRegionId = null;
         this.textsInitialized = false;
         this.initialRenderCompleted = false;
+        this.boundLeadResizeHandler = null;
         this.currentComparisonClinicCount = 0;
         this.boundClinicColumnVisibilityHandler = null;
         this.mobileComparisonColumnsPerSlide = 3;
         this.mobileComparisonSlideIndex = 0;
         this.comparisonMobileControls = null;
         this.comparisonSwipeState = null;
-        this.comparisonLayout = 'A';
+        this.comparisonLayout = 'B';
         this.preparedComparisonLayout = null;
         this.currentComparisonClinics = [];
         this.activeComparisonTab = 'tab1';
@@ -2091,7 +2116,6 @@ class RankingApp {
             tab2: ['クリニック名', 'comparison4', 'comparison5', 'comparison6', '公式サイト'],
             tab3: ['クリニック名', 'comparison7', 'comparison8', 'comparison9', '公式サイト']
         };
-        this.boundLeadResizeHandler = null;
     }
 
     normalizeRegionId(regionId) {
@@ -2114,20 +2138,6 @@ class RankingApp {
         return this.comparisonLayout !== 'A';
     }
 
-    buildComparisonDisclaimerHtml() {
-        return `
-            <div class="disclaimer-accordion" style="margin-top: 15px;">
-                <div class="main-disclaimer">
-                    <button id="comparison-disclaimer-button" class="main-disclaimer-header comparison-disclaimer-header" style="width: 100%; text-align: left; padding: 8px 12px; background-color: #fafafa; border: 1px solid #f0f0f0; border-radius: 3px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
-                        <span style="font-size: 10px; font-weight: 500; color: #666;">各クリニックの注意事項</span>
-                        <span id="main-arrow" style="font-size: 8px; color: rgb(153, 153, 153); transition: transform 0.2s; transform: rotate(0deg);">▼</span>
-                    </button>
-                    <div id="main-content" class="main-disclaimer-content" style="display: none; padding: 5px; background-color: rgb(252, 252, 252); border-right: 1px solid rgb(240, 240, 240); border-bottom: 1px solid rgb(240, 240, 240); border-left: 1px solid rgb(240, 240, 240); border-image: initial; border-top: none; border-radius: 0px 0px 3px 3px; margin-top: -5px;"></div>
-                </div>
-            </div>
-        `;
-    }
-
     prepareComparisonDom() {
         const container = document.getElementById('comparison-table-container');
         const scrollHint = document.querySelector('.comparison-scroll-hint');
@@ -2135,45 +2145,54 @@ class RankingApp {
             return;
         }
 
-        const layout = this.isComparisonLayoutA() ? 'A' : 'B';
-
+        const layout = this.comparisonLayout === 'A' ? 'A' : 'B';
         if (layout === 'A') {
             if (scrollHint) {
                 scrollHint.style.display = 'none';
             }
 
-            if (this.preparedComparisonLayout !== 'A') {
-                container.className = 'comparison-table comparison-table--classic';
-                container.dataset.activeTab = this.activeComparisonTab || 'tab1';
-                container.innerHTML = `
-                    <div class="comparison-tab-menu">
-                        <div class="comparison-tab-menu-item" data-tab="tab1">総合</div>
-                        <div class="comparison-tab-menu-item" data-tab="tab2">施術内容</div>
-                        <div class="comparison-tab-menu-item" data-tab="tab3">サービス</div>
-                    </div>
-                    <div class="comparison-table-wrapper">
-                        <table id="comparison-table">
-                            <thead>
-                                <tr id="comparison-header-row"></tr>
-                            </thead>
-                            <tbody id="comparison-tbody"></tbody>
-                        </table>
-                    </div>
-                    ${this.buildComparisonDisclaimerHtml()}
-                `;
-                this.classicTabInitialized = false;
-                this.preparedComparisonLayout = 'A';
+            if (this.preparedComparisonLayout === 'A') {
+                return;
             }
 
-            const tabMenuItems = container.querySelectorAll('.comparison-tab-menu-item');
-            tabMenuItems.forEach((item) => {
+            const disclaimer = container.querySelector('.disclaimer-accordion');
+            if (disclaimer) {
+                container.removeChild(disclaimer);
+            }
+
+            container.classList.remove('comparison-table--matrix');
+            container.classList.add('comparison-table');
+            container.classList.add('comparison-table--classic');
+            container.dataset.activeTab = this.activeComparisonTab || 'tab1';
+
+            container.innerHTML = `
+                <div class="comparison-tab-menu">
+                    <div class="comparison-tab-menu-item" data-tab="tab1">総合</div>
+                    <div class="comparison-tab-menu-item" data-tab="tab2">施術内容</div>
+                    <div class="comparison-tab-menu-item" data-tab="tab3">サービス</div>
+                </div>
+                <table id="comparison-table">
+                    <thead>
+                        <tr id="comparison-header-row"></tr>
+                    </thead>
+                    <tbody id="comparison-tbody"></tbody>
+                </table>
+            `;
+
+            const activeTab = this.activeComparisonTab || 'tab1';
+            container.querySelectorAll('.comparison-tab-menu-item').forEach((item) => {
                 const tabId = item.getAttribute('data-tab') || 'tab1';
-                if (tabId === (this.activeComparisonTab || 'tab1')) {
+                if (tabId === activeTab) {
                     item.classList.add('tab-active');
-                } else {
-                    item.classList.remove('tab-active');
                 }
             });
+
+            if (disclaimer) {
+                container.appendChild(disclaimer);
+            }
+
+            this.classicTabInitialized = false;
+            this.preparedComparisonLayout = 'A';
             return;
         }
 
@@ -2181,22 +2200,35 @@ class RankingApp {
             scrollHint.style.removeProperty('display');
         }
 
-        if (this.preparedComparisonLayout !== 'B') {
-            container.className = 'comparison-table comparison-table--matrix';
-            container.removeAttribute('data-active-tab');
-            container.innerHTML = `
-                <div class="comparison-table-wrapper">
-                    <table id="comparison-table">
-                        <thead>
-                            <tr id="comparison-header-row"></tr>
-                        </thead>
-                        <tbody id="comparison-tbody"></tbody>
-                    </table>
-                </div>
-                ${this.buildComparisonDisclaimerHtml()}
-            `;
-            this.preparedComparisonLayout = 'B';
+        if (this.preparedComparisonLayout === 'B') {
+            return;
         }
+
+        const disclaimer = container.querySelector('.disclaimer-accordion');
+        if (disclaimer) {
+            container.removeChild(disclaimer);
+        }
+
+        container.classList.add('comparison-table--matrix');
+        container.classList.remove('comparison-table--classic');
+
+        container.innerHTML = `
+            <div class="comparison-table-wrapper">
+                <table id="comparison-table">
+                    <thead>
+                        <tr id="comparison-header-row"></tr>
+                    </thead>
+                    <tbody id="comparison-tbody"></tbody>
+                </table>
+            </div>
+        `;
+
+        if (disclaimer) {
+            container.appendChild(disclaimer);
+        }
+
+        this.classicTabInitialized = false;
+        this.preparedComparisonLayout = 'B';
     }
 
     updateLeadSection() {
@@ -2207,12 +2239,6 @@ class RankingApp {
 
         const layoutRaw = this.dataManager.getSectionLayout ? this.dataManager.getSectionLayout('リードセクション', 'A') : 'A';
         let variant = (layoutRaw || 'A').trim().toUpperCase() === 'B' ? 'B' : 'A';
-
-        if (typeof window !== 'undefined' && window.matchMedia) {
-            if (window.matchMedia('(max-width: 768px)').matches) {
-                variant = 'B';
-            }
-        }
 
         const layoutA = container.querySelector('.tips-layout-a');
         const layoutB = container.querySelector('.tips-layout-b');
@@ -2427,11 +2453,6 @@ class RankingApp {
         const regionName = region && region.name ? region.name : '';
         const isNational = this.isNationalRegion(normalizedId, region);
 
-        const mvRegionElement = document.getElementById('mv-region-name');
-        if (mvRegionElement) {
-            mvRegionElement.textContent = isNational ? '最新' : regionName;
-        }
-
         const detailRegionElement = document.getElementById('detail-region-name');
         if (detailRegionElement) {
             if (isNational) {
@@ -2494,12 +2515,14 @@ class RankingApp {
             window.dataManager = this.dataManager;
             window.urlHandler = this.urlHandler;
 
-            const layoutValue = this.dataManager.getSectionLayout ? this.dataManager.getSectionLayout('比較表セクション', 'A') : 'A';
+            this.updateLeadSection();
+            
+            const layoutValue = this.dataManager.getSectionLayout ? this.dataManager.getSectionLayout('比較表セクション', 'B') : 'B';
             if (layoutValue && typeof layoutValue === 'string') {
                 const normalized = layoutValue.trim().toUpperCase();
                 this.comparisonLayout = normalized === 'A' ? 'A' : 'B';
             } else {
-                this.comparisonLayout = 'A';
+                this.comparisonLayout = 'B';
             }
             this.prepareComparisonDom();
 
@@ -2862,9 +2885,6 @@ class RankingApp {
             // const clinicsWithStores = this.groupStoresByClinics(stores, ranking, allClinics);
             // this.displayManager.updateStoresDisplay(stores, clinicsWithStores);
 
-            // 比較表ヘッダーの更新
-            this.updateComparisonHeaders();
-            
             // 比較表の更新
             this.updateComparisonTable(allClinics, ranking);
             
@@ -2976,50 +2996,41 @@ class RankingApp {
                 console.warn('⚠️ サイトロゴ要素が見つかりません');
             }
 
-            // MVアピールテキストの更新（共通テキスト）
-            const appealText1Element = document.getElementById('mv-left-appeal-text');
-            if (appealText1Element) {
-                const text1 = this.dataManager.getCommonText('MVアピールテキスト1', 'コスパ');
-                appealText1Element.textContent = text1;
-            }
-
-
             // SVGテキストの更新（共通テキスト）
-            const svgText1Element = document.querySelector('#mv-main-svg-text text');
-            if (svgText1Element) {
-                const svgText1 = this.dataManager.getCommonText('MVSVGテキスト1', '脂肪溶解注射');
-                svgText1Element.textContent = svgText1;
+            const svgRegionElement = document.getElementById('mv-region-text');
+            if (svgRegionElement) {
+                const regionLabel = isNational ? this.dataManager.getCommonText('MV全国表示テキスト', '全国') : (regionForDisplay?.name || region?.name || '');
+                svgRegionElement.textContent = regionLabel;
             }
 
-            // SVGテキスト2の更新（共通テキスト、ランキング数を動的に計算）
-            const svgText2Element = document.querySelector('#mv-appeal1-text text');
-            if (svgText2Element) {
-                // 現在の地域のランキング数を取得 (正規化されたIDを使用)
-                const normalizedRegionId = String(parseInt(regionId, 10));
-                const ranking = this.dataManager.getRankingByRegionId(normalizedRegionId);
-                let rankCount = 5; // デフォルト値
-                
-                if (ranking && ranking.ranks) {
-                    // ランキングに含まれるクリニック数を計算（"-"以外のものをカウント）
-                    const validRanks = Object.entries(ranking.ranks)
-                        .filter(([key, value]) => value !== '-' && value !== null && value !== undefined)
-                        .length;
-                    if (validRanks > 0) {
-                        rankCount = Math.min(validRanks, 5); // 最大5位まで
-                    }
+            const normalizedRankingRegionId = String(parseInt(regionId, 10));
+            const ranking = this.dataManager.getRankingByRegionId(normalizedRankingRegionId);
+            let rankCount = 5;
+            if (ranking && ranking.ranks) {
+                const validRanks = Object.entries(ranking.ranks)
+                    .filter(([key, value]) => value !== '-' && value !== null && value !== undefined)
+                    .length;
+                if (validRanks > 0) {
+                    rankCount = Math.min(validRanks, 5);
                 }
-                
-                // プレースホルダーを使用してテキストを取得
-                const svgText2 = this.dataManager.getCommonText('MVSVGテキスト2', 'ランキング', {
-                    RANK_COUNT: rankCount
+            }
+
+            const svgServiceElement = document.getElementById('mv-service-text');
+            if (svgServiceElement) {
+                const serviceText = this.dataManager.getCommonText('MVSVGテキスト2', '人気クリニック{{RANK_COUNT}}選', {
+                    RANK_COUNT: rankCount,
+                    REGION_NAME: regionForDisplay?.name || region?.name || ''
                 });
-                svgText2Element.textContent = svgText2;
-                
-                // detail-rank-best要素の更新
-                const detailRankBestElement = document.getElementById('detail-rank-best');
-                if (detailRankBestElement) {
-                    detailRankBestElement.innerHTML = `${rankCount}<span style="font-size: 0.6em;"> 選！</span>`;
-                }
+                const processedServiceText = this.dataManager.processTemplateString
+                    ? this.dataManager.processTemplateString(serviceText, { RANK_COUNT: rankCount, REGION_NAME: regionForDisplay?.name || region?.name || '' })
+                    : serviceText.replace(/{{\s*RANK_COUNT\s*}}/g, String(rankCount));
+                svgServiceElement.textContent = processedServiceText;
+            }
+
+            // detail-rank-best要素の更新（従来機能の互換性保持）
+            const detailRankBestElement = document.getElementById('detail-rank-best');
+            if (detailRankBestElement) {
+                detailRankBestElement.innerHTML = `${rankCount}<span style="font-size: 0.6em;"> 選！</span>`;
             }
 
             // ランキングバナーのalt属性更新（共通テキスト）
@@ -3154,153 +3165,6 @@ class RankingApp {
         });
 
         return clinicsWithStores;
-    }
-
-    // 比較表ヘッダーの更新
-    updateComparisonHeaders() {
-        const headerRow = document.getElementById('comparison-header-row');
-        if (!headerRow) return;
-        
-        // ヘッダーをクリア
-        headerRow.innerHTML = '';
-        
-        // clinic-texts.jsonの比較表ヘッダー設定から取得
-        const headerConfig = this.dataManager.clinicTexts['比較表ヘッダー設定'] || {};
-        
-        // ヘッダーを動的に生成
-        // 最初の「クリニック」は固定、それ以降はheaderConfigから取得
-        const headers = [
-            { key: null, default: '', class: '', fixed: true },  // 固定項目
-            { key: '比較表ヘッダー1', default: '', class: '' },
-            { key: '比較表ヘッダー2', default: '', class: '' },
-            { key: '比較表ヘッダー3', default: '', class: '' },
-            { key: '比較表ヘッダー10', default: '', class: '' },
-            { key: '比較表ヘッダー4', default: '', class: 'th-none', style: 'display: none;' },
-            { key: '比較表ヘッダー5', default: '', class: 'th-none', style: 'display: none;' },
-            { key: '比較表ヘッダー6', default: '', class: 'th-none', style: 'display: none;' },
-            { key: '比較表ヘッダー7', default: '', class: 'th-none', style: 'display: none;' },
-            { key: '比較表ヘッダー8', default: '', class: 'th-none', style: 'display: none;' },
-            { key: '比較表ヘッダー9', default: '', class: 'th-none', style: 'display: none;' },
-            { key: null, default: '', class: 'th-none', style: 'display: none;', fixed: true }
-        ];
-        
-        headers.forEach(header => {
-            const th = document.createElement('th');
-            // 固定項目の場合はdefaultを使用、それ以外はheaderConfigから取得
-            if (header.fixed) {
-                th.textContent = header.default;
-            } else {
-                th.textContent = headerConfig[header.key] || header.default;
-            }
-            if (header.class) th.className = header.class;
-            if (header.style) th.setAttribute('style', header.style);
-            headerRow.appendChild(th);
-        });
-    }
-
-    // 現在表示されているクリニックのデータを取得
-    getCurrentDisplayedClinics() {
-        // 現在のランキングデータから表示中のクリニックを取得
-        // RankingAppインスタンスから実際のランキングデータを取得
-        if (this.dataManager && this.currentRegionId !== undefined) {
-            const ranking = this.dataManager.getRankingByRegionId(this.currentRegionId);
-            const clinics = this.dataManager.clinics || [];
-            
-            if (ranking && ranking.ranks) {
-                const rankedClinics = [];
-                
-                // no1からno5まで順番に処理（1位→2位→3位→4位→5位の順）
-                ['no1', 'no2', 'no3', 'no4', 'no5'].forEach((position, index) => {
-                    const clinicId = ranking.ranks[position];
-                    if (clinicId && clinicId !== '-') {
-                        const numericClinicId = parseInt(clinicId);
-                        const clinic = clinics.find(c => c.id == clinicId || c.id === numericClinicId);
-                        if (clinic) {
-                            rankedClinics.push({
-                                ...clinic,
-                                rank: index + 1
-                            });
-                        }
-                    }
-                });
-                
-                if (rankedClinics.length > 0) {
-                    return rankedClinics;
-                }
-            }
-        }
-        
-        // フォールバック：最新のランキングデータを使用
-        return this.getLatestRankingData();
-    }
-    
-    // 最新のランキングデータを取得（フォールバック用）
-    getLatestRankingData() {
-        // この関数はフォールバック用なので、実際のデータがない場合のみ使用される
-        // 実際のランキングはgetCurrentDisplayedClinicsで動的に取得される
-        console.warn('フォールバックデータが使用されています。実際のランキングデータが取得できませんでした。');
-
-        // items.csvで有効なクリニックのみを使用
-        if (window.dataManager && window.dataManager.clinics) {
-            const validClinics = window.dataManager.clinics.filter(clinic => {
-                // items.csvで有効とされているクリニックのみ
-                const validIds = ['1', '2', '3', '4', '5']; // TCB, LUNA, リゼ, 品川, 聖心
-                return validIds.includes(clinic.id);
-            });
-
-            return validClinics.slice(0, 5).map((clinic, index) => ({
-                ...clinic,
-                rank: index + 1
-            }));
-        }
-
-        // フォールバック：items.csvで有効なクリニックのみ
-      
-    }
-    
-    // 星評価の初期化
-    initializeStarRatings() {
-        // 既存の星評価初期化コードがあれば呼び出し
-        const starElements = document.querySelectorAll('.star5_rating[data-rate]');
-        starElements.forEach(element => {
-            const rate = parseFloat(element.getAttribute('data-rate'));
-            // 星評価の表示ロジックを実装（既存のものがあれば使用）
-        });
-    }
-    
-    // テーブルの列表示を更新
-    updateTableColumns(table, visibleColumns) {
-        if (!table) return;
-        
-        // ヘッダー行の列を制御
-        const headerRow = table.querySelector('thead tr');
-        if (headerRow) {
-            const headerCells = headerRow.querySelectorAll('th');
-            headerCells.forEach((cell, index) => {
-                if (visibleColumns.includes(index)) {
-                    cell.style.display = '';
-                    cell.classList.remove('th-none');
-                } else {
-                    cell.style.display = 'none';
-                    cell.classList.add('th-none');
-                }
-            });
-        }
-        
-        // データ行の列を制御
-        const bodyRows = table.querySelectorAll('tbody tr');
-        bodyRows.forEach(row => {
-            const cells = row.querySelectorAll('td');
-            cells.forEach((cell, index) => {
-                if (visibleColumns.includes(index)) {
-                    cell.style.display = '';
-                    cell.classList.remove('th-none');
-                } else {
-                    cell.style.display = 'none';
-                    cell.classList.add('th-none');
-                }
-            });
-        });
     }
 
     // 比較表の更新
@@ -3510,10 +3374,366 @@ class RankingApp {
             tbody.appendChild(row);
         });
 
+        this.applyComparisonColumnVisibility();
+
+        if (!this.boundClinicColumnVisibilityHandler) {
+            this.boundClinicColumnVisibilityHandler = () => this.applyComparisonColumnVisibility();
+            window.addEventListener('resize', this.boundClinicColumnVisibilityHandler);
+        }
+
+        this.setupComparisonSwipe();
+
         this.initializeStarRatings();
+    }
+
+    applyComparisonColumnVisibility() {
+        if (!this.isComparisonLayoutB()) {
+            return;
+        }
+        const tableElement = document.getElementById('comparison-table');
+        if (!tableElement) {
+            return;
+        }
+
+        const clinicCount = this.currentComparisonClinicCount || 0;
+        const supportsMatchMedia = typeof window !== 'undefined' && typeof window.matchMedia === 'function';
+        const isMobile = supportsMatchMedia ? window.matchMedia('(max-width: 768px)').matches : false;
+        const baseColumnsPerSlide = this.mobileComparisonColumnsPerSlide || 3;
+        const columnsPerSlide = isMobile
+            ? Math.max(clinicCount, 1)
+            : baseColumnsPerSlide;
+
+        if (!isMobile) {
+            this.mobileComparisonSlideIndex = 0;
+        }
+
+        if (clinicCount <= columnsPerSlide) {
+            this.mobileComparisonSlideIndex = 0;
+        }
+
+        const totalSlides = Math.max(1, Math.ceil(Math.max(clinicCount, 0) / columnsPerSlide));
+
+        if (isMobile && this.mobileComparisonSlideIndex >= totalSlides) {
+            this.mobileComparisonSlideIndex = Math.max(0, totalSlides - 1);
+        }
+
+        const startRank = isMobile
+            ? this.mobileComparisonSlideIndex * columnsPerSlide + 1
+            : 1;
+        const endRank = isMobile
+            ? Math.min(startRank + columnsPerSlide - 1, clinicCount)
+            : clinicCount;
+
+        const toggleVisibility = (element, shouldHide) => {
+            if (shouldHide) {
+                element.classList.add('is-hidden-mobile');
+            } else {
+                element.classList.remove('is-hidden-mobile');
+            }
+        };
+
+        const headerCells = tableElement.querySelectorAll('thead th.comparison-heading--clinic');
+        headerCells.forEach((cell) => {
+            const rank = parseInt(cell.dataset.rank, 10);
+            if (Number.isNaN(rank)) {
+                return;
+            }
+            const shouldHide = isMobile && (rank < startRank || rank > endRank);
+            toggleVisibility(cell, shouldHide);
+        });
+
+        const bodyCells = tableElement.querySelectorAll('tbody td.comparison-cell');
+        bodyCells.forEach((cell) => {
+            const rank = parseInt(cell.dataset.rank, 10);
+            if (Number.isNaN(rank)) {
+                return;
+            }
+            const shouldHide = isMobile && (rank < startRank || rank > endRank);
+            toggleVisibility(cell, shouldHide);
+        });
+
+        this.manageComparisonMobileControls({
+            isMobile,
+            totalSlides,
+            clinicCount,
+        });
+    }
+
+    manageComparisonMobileControls({ isMobile, totalSlides, clinicCount }) {
+        if (!this.isComparisonLayoutB()) {
+            if (this.comparisonMobileControls && this.comparisonMobileControls.container) {
+                this.comparisonMobileControls.container.style.display = 'none';
+            }
+            return;
+        }
+        const container = document.getElementById('comparison-table-container');
+        if (!container) {
+            return;
+        }
+
+        const columnsPerSlide = this.mobileComparisonColumnsPerSlide || 3;
+
+        if (!isMobile || clinicCount <= columnsPerSlide || totalSlides <= 1) {
+            if (this.comparisonMobileControls && this.comparisonMobileControls.container) {
+                this.comparisonMobileControls.container.style.display = 'none';
+            }
+            return;
+        }
+
+        if (!this.comparisonMobileControls) {
+            const controlsContainer = document.createElement('div');
+            controlsContainer.id = 'comparison-mobile-controls';
+            controlsContainer.className = 'comparison-mobile-controls';
+
+            const prevButton = document.createElement('button');
+            prevButton.type = 'button';
+            prevButton.className = 'comparison-mobile-control-btn prev';
+            prevButton.setAttribute('aria-label', '前のクリニック');
+            prevButton.textContent = '<';
+
+            const dotsWrapper = document.createElement('div');
+            dotsWrapper.className = 'comparison-mobile-dots';
+
+            const nextButton = document.createElement('button');
+            nextButton.type = 'button';
+            nextButton.className = 'comparison-mobile-control-btn next';
+            nextButton.setAttribute('aria-label', '次のクリニック');
+            nextButton.textContent = '>';
+
+            controlsContainer.appendChild(prevButton);
+            controlsContainer.appendChild(dotsWrapper);
+            controlsContainer.appendChild(nextButton);
+
+            const disclaimerAccordion = container.querySelector('.disclaimer-accordion');
+            if (disclaimerAccordion) {
+                container.insertBefore(controlsContainer, disclaimerAccordion);
+            } else {
+                container.appendChild(controlsContainer);
+            }
+
+            prevButton.addEventListener('click', () => {
+                this.setMobileComparisonSlide(this.mobileComparisonSlideIndex - 1);
+            });
+
+            nextButton.addEventListener('click', () => {
+                this.setMobileComparisonSlide(this.mobileComparisonSlideIndex + 1);
+            });
+
+            this.comparisonMobileControls = {
+                container: controlsContainer,
+                prevButton,
+                nextButton,
+                dotsWrapper,
+            };
+        }
+
+        const { container: controlsContainer, prevButton, nextButton, dotsWrapper } = this.comparisonMobileControls;
+        controlsContainer.style.display = 'flex';
+
+        prevButton.disabled = this.mobileComparisonSlideIndex <= 0;
+        nextButton.disabled = this.mobileComparisonSlideIndex >= totalSlides - 1;
+
+        while (dotsWrapper.children.length > totalSlides) {
+            dotsWrapper.removeChild(dotsWrapper.lastElementChild);
+        }
+
+        while (dotsWrapper.children.length < totalSlides) {
+            const dotIndex = dotsWrapper.children.length;
+            const dotButton = document.createElement('button');
+            dotButton.type = 'button';
+            dotButton.className = 'comparison-mobile-dot';
+            dotButton.setAttribute('aria-label', `クリニック ${dotIndex * columnsPerSlide + 1}位から`);
+            dotButton.addEventListener('click', () => {
+                this.setMobileComparisonSlide(dotIndex);
+            });
+            dotsWrapper.appendChild(dotButton);
+        }
+
+        Array.from(dotsWrapper.children).forEach((dot, index) => {
+            if (!(dot instanceof HTMLElement)) {
+                return;
+            }
+            const isActive = index === this.mobileComparisonSlideIndex;
+            dot.classList.toggle('is-active', isActive);
+            dot.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+        });
+    }
+
+    setMobileComparisonSlide(nextIndex) {
+        if (!this.isComparisonLayoutB()) {
+            return;
+        }
+        const clinicCount = this.currentComparisonClinicCount || 0;
+        const columnsPerSlide = this.mobileComparisonColumnsPerSlide || 3;
+        const totalSlides = Math.max(1, Math.ceil(Math.max(clinicCount, 0) / columnsPerSlide));
+
+        const clampedIndex = Math.min(Math.max(nextIndex, 0), totalSlides - 1);
+        if (clampedIndex === this.mobileComparisonSlideIndex) {
+            return;
+        }
+
+        this.mobileComparisonSlideIndex = clampedIndex;
+        this.applyComparisonColumnVisibility();
+    }
+
+    setupComparisonSwipe() {
+        if (!this.isComparisonLayoutB()) {
+            if (this.comparisonSwipeState && this.comparisonSwipeState.cleanup) {
+                this.comparisonSwipeState.cleanup();
+            }
+            this.comparisonSwipeState = null;
+            return;
+        }
+        const wrapper = document.querySelector('.comparison-table-wrapper');
+        if (!wrapper) {
+            return;
+        }
+
+        if (this.comparisonSwipeState && this.comparisonSwipeState.wrapper === wrapper) {
+            return;
+        }
+
+        if (this.comparisonSwipeState && this.comparisonSwipeState.cleanup) {
+            this.comparisonSwipeState.cleanup();
+        }
+
+        let pointerDownX = 0;
+        let pointerDownY = 0;
+        let isPointerDown = false;
+
+        const supportsMatchMedia = typeof window !== 'undefined' && typeof window.matchMedia === 'function';
+
+        const handlePointerDown = (event) => {
+            if (!event.isPrimary) {
+                return;
+            }
+            if (supportsMatchMedia && !window.matchMedia('(max-width: 768px)').matches) {
+                isPointerDown = false;
+                return;
+            }
+            isPointerDown = true;
+            pointerDownX = event.clientX;
+            pointerDownY = event.clientY;
+        };
+
+        const handlePointerUp = (event) => {
+            if (!event.isPrimary || !isPointerDown) {
+                return;
+            }
+
+            isPointerDown = false;
+
+            if (supportsMatchMedia && !window.matchMedia('(max-width: 768px)').matches) {
+                return;
+            }
+
+            const deltaX = event.clientX - pointerDownX;
+            const deltaY = event.clientY - pointerDownY;
+
+            if (Math.abs(deltaX) < 40 || Math.abs(deltaX) < Math.abs(deltaY)) {
+                return;
+            }
+
+            if (deltaX < 0) {
+                this.setMobileComparisonSlide(this.mobileComparisonSlideIndex + 1);
+            } else {
+                this.setMobileComparisonSlide(this.mobileComparisonSlideIndex - 1);
+            }
+        };
+
+        const handlePointerCancel = () => {
+            isPointerDown = false;
+        };
+
+        wrapper.addEventListener('pointerdown', handlePointerDown, { passive: true });
+        wrapper.addEventListener('pointerup', handlePointerUp, { passive: true });
+        wrapper.addEventListener('pointercancel', handlePointerCancel, { passive: true });
+        wrapper.addEventListener('pointerleave', handlePointerCancel, { passive: true });
+
+        this.comparisonSwipeState = {
+            wrapper,
+            cleanup: () => {
+                wrapper.removeEventListener('pointerdown', handlePointerDown);
+                wrapper.removeEventListener('pointerup', handlePointerUp);
+                wrapper.removeEventListener('pointercancel', handlePointerCancel);
+                wrapper.removeEventListener('pointerleave', handlePointerCancel);
+            },
+        };
+    }
+
+    // 現在表示されているクリニックのデータを取得
+    getCurrentDisplayedClinics() {
+        // 現在のランキングデータから表示中のクリニックを取得
+        // RankingAppインスタンスから実際のランキングデータを取得
+        if (this.dataManager && this.currentRegionId !== undefined) {
+            const ranking = this.dataManager.getRankingByRegionId(this.currentRegionId);
+            const clinics = this.dataManager.clinics || [];
+            
+            if (ranking && ranking.ranks) {
+                const rankedClinics = [];
+                
+                // no1からno5まで順番に処理（1位→2位→3位→4位→5位の順）
+                ['no1', 'no2', 'no3', 'no4', 'no5'].forEach((position, index) => {
+                    const clinicId = ranking.ranks[position];
+                    if (clinicId && clinicId !== '-') {
+                        const numericClinicId = parseInt(clinicId);
+                        const clinic = clinics.find(c => c.id == clinicId || c.id === numericClinicId);
+                        if (clinic) {
+                            rankedClinics.push({
+                                ...clinic,
+                                rank: index + 1
+                            });
+                        }
+                    }
+                });
+                
+                if (rankedClinics.length > 0) {
+                    return rankedClinics;
+                }
+            }
+        }
+        
+        // フォールバック：最新のランキングデータを使用
+        return this.getLatestRankingData();
+    }
+    
+    // 最新のランキングデータを取得（フォールバック用）
+    getLatestRankingData() {
+        // この関数はフォールバック用なので、実際のデータがない場合のみ使用される
+        // 実際のランキングはgetCurrentDisplayedClinicsで動的に取得される
+        console.warn('フォールバックデータが使用されています。実際のランキングデータが取得できませんでした。');
+
+        // items.csvで有効なクリニックのみを使用
+        if (window.dataManager && window.dataManager.clinics) {
+            const validClinics = window.dataManager.clinics.filter(clinic => {
+                // items.csvで有効とされているクリニックのみ
+                const validIds = ['1', '2', '3', '4', '5']; // TCB, LUNA, リゼ, 品川, 聖心
+                return validIds.includes(clinic.id);
+            });
+
+            return validClinics.slice(0, 5).map((clinic, index) => ({
+                ...clinic,
+                rank: index + 1
+            }));
+        }
+
+        // フォールバック：items.csvで有効なクリニックのみ
+      
+    }
+    
+    // 星評価の初期化
+    initializeStarRatings() {
+        // 既存の星評価初期化コードがあれば呼び出し
+        const starElements = document.querySelectorAll('.star5_rating[data-rate]');
+        starElements.forEach(element => {
+            const rate = parseFloat(element.getAttribute('data-rate'));
+            // 星評価の表示ロジックを実装（既存のものがあれば使用）
+        });
     }
     
     // 比較表の注意事項を更新
+
+
     updateComparisonDisclaimers(disclaimers) {
         const disclaimerContent = document.getElementById('main-content');
         if (!disclaimerContent) {
@@ -3864,7 +4084,7 @@ class RankingApp {
             });
 
             // 比較表のロゴ画像クリックでもモーダルを開く
-            const logoImgs = document.querySelectorAll('#comparison-table td.ranking-table_td1 img.comparison-logo');
+            const logoImgs = document.querySelectorAll('#comparison-table .comparison-logo');
             logoImgs.forEach(img => {
                 if (!img.hasAttribute('data-listener-attached')) {
                     img.setAttribute('data-listener-attached', 'true');
@@ -4202,9 +4422,12 @@ class RankingApp {
                         const nameVal = dm.getClinicText(clinicCode, `${keyBase}コース名`, '') || '—';
                         const descVal = dm.getClinicText(clinicCode, `${keyBase}施術の説明`, '') || '—';
                         const riskVal = dm.getClinicText(clinicCode, `${keyBase}副作用（リスク）`, '') || '—';
+                        const fallbackAttr = img.fallbacks[1]
+                            ? ` onerror=\"if (!this.dataset.webpFallback) { this.dataset.webpFallback = '1'; this.src='${img.fallbacks[1]}'; }\"`
+                            : '';
                         return `
                             <div class=\"case-slide\" style=\"min-width:100%;box-sizing:border-box;\">
-                                <img src=\"${img.fallbacks[0]}\" alt=\"${img.alt}\" loading=\"lazy\" style=\"width:100%;height:auto;object-fit:contain;\"${img.fallbacks[1] ? ` onerror=\"if (!this.dataset.webpFallback) { this.dataset.webpFallback = '1'; this.src='${img.fallbacks[1]}'; }\"` : ''}>
+                                <img src=\"${img.fallbacks[0]}\" alt=\"${img.alt}\" loading=\"lazy\" style=\"width:100%;height:auto;object-fit:contain;\"${fallbackAttr}>
                                 <div class=\"case-info\" style=\"margin-top: 5px; padding: 0 5%; text-align: left; font-size: 12px; line-height: 1.6; width: 100%;\">
                                     <table class=\"case-table\" style=\"width: 100% !important; border-collapse: collapse !important; font-size: 8px !important; line-height: 1.6 !important; display: table !important; table-layout: fixed !important;\">
                                         <tbody>
@@ -4783,6 +5006,9 @@ class RankingApp {
                             // クリニック名はDOMコンテキスト優先。未解決の場合のみCSVの値を採用
                             if (clinicName === 'クリニック' && matchingStore.clinicName) {
                                 clinicName = matchingStore.clinicName;
+                                if (!contextualClinic && self.dataManager?.clinics) {
+                                    contextualClinic = self.dataManager.clinics.find(c => c.name === matchingStore.clinicName) || null;
+                                }
                             }
                         } else {
                             // CSVから見つからない場合は、HTMLから取得を試みる
@@ -4818,6 +5044,7 @@ class RankingApp {
                                         );
                                         if (matchedClinic) {
                                             clinicName = matchedClinic.name;
+                                            contextualClinic = contextualClinic || matchedClinic;
                                         }
                                     }
                                 }
@@ -4834,6 +5061,7 @@ class RankingApp {
                                             const clinic = self.dataManager?.clinics?.find(c => c.id == extractedClinicId);
                                             if (clinic) {
                                                 clinicName = clinic.name;
+                                                contextualClinic = contextualClinic || clinic;
                                             }
                                         }
                                     }

@@ -3120,6 +3120,7 @@ section.clinic-rankings .ranking-header-banner {
 
 .comparison-table--matrix .comparison-table-wrapper {
     display: inline-block;
+    position: relative;
     min-width: calc(var(--comparison-fixed-col-width) + (var(--comparison-clinic-col-width) * var(--clinic-count, 1)));
 }
 
@@ -3141,9 +3142,10 @@ section.clinic-rankings .ranking-header-banner {
 }
 
 .comparison-table--matrix #comparison-table thead th.comparison-heading--item {
+    position: -webkit-sticky;
     position: sticky;
     left: 0;
-    z-index: 3;
+    z-index: 5;
     min-width: var(--comparison-fixed-col-width);
     max-width: var(--comparison-fixed-col-width);
     width: var(--comparison-fixed-col-width);
@@ -3168,9 +3170,10 @@ section.clinic-rankings .ranking-header-banner {
 }
 
 .comparison-table--matrix #comparison-table tbody th.comparison-item-label {
+    position: -webkit-sticky;
     position: sticky;
     left: 0;
-    z-index: 2;
+    z-index: 4;
     background: #f4fbfa;
     font-weight: 600;
     color: #4c4c4c;
