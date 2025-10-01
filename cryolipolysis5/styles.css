@@ -256,7 +256,21 @@ a {
     flex-direction: column;
     gap: 22px;
     box-shadow: 0 14px 32px rgba(44, 199, 197, 0.1);
+    position: relative;
 }
+
+[data-lead-variant="B"] .tips-layout-b .tips-flow::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(to right, rgba(44, 199, 197, 0.15) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(44, 199, 197, 0.15) 1px, transparent 1px);
+    background-size: 24px 24px;
+    opacity: 0.55;
+    pointer-events: none;
+    z-index: 0;
+}
+
 
 .tips-step {
     display: flex;
