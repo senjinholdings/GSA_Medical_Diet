@@ -3287,7 +3287,7 @@ section.clinic-rankings .ranking-header-banner {
 .comparison-table--matrix #comparison-table tbody td.comparison-cell.is-rank-5,
 .comparison-table--matrix #comparison-table thead th.comparison-heading--clinic.is-rank-4,
 .comparison-table--matrix #comparison-table thead th.comparison-heading--clinic.is-rank-5 {
-    background: #f4fbfa;
+    background: #eeeeee;
 }
 
 .comparison-table--matrix .comparison-clinic-header {
