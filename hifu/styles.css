@@ -1435,6 +1435,8 @@ select {
     font-size: 13px;
     margin: 10px 0px 0px;
     position: relative;
+    border-top: 6px solid #ffffff;
+    margin-top: -1px;
 }
 
 .cv_box_img a {
@@ -1451,10 +1453,6 @@ select {
 
 .cv_box_img img {
     vertical-align: middle;
-}
-
-    border-top: 6px solid #ffffff;
-    margin-top: -1px;
 }
 
 /* ボタンスタイル */
