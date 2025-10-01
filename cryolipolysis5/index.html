@@ -77,9 +77,22 @@
     <!-- 重要なリソースのpreload -->
     <link rel="preload" as="image" href="images/mv.webp" fetchpriority="high" type="image/webp">
 
-    <!-- スタイルシートを遅延読み込み -->
-    <link rel="preload" href="styles.css?v=2025092402" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="styles.css?v=2025092402"></noscript>
+    <!-- スタイルシートを遅延読み込み（開発/本番自動切り替え） -->
+    <script>
+        // 開発環境(localhost)では非圧縮版、本番環境では圧縮版を使用
+        (function() {
+            const isDev = location.hostname === 'localhost' || location.hostname === '127.0.0.1';
+            const cssFile = isDev ? 'styles.css' : 'styles.min.css';
+            const version = '2025092402';
+            const link = document.createElement('link');
+            link.rel = 'preload';
+            link.href = cssFile + '?v=' + version;
+            link.as = 'style';
+            link.onload = function() { this.onload = null; this.rel = 'stylesheet'; };
+            document.head.appendChild(link);
+        })();
+    </script>
+    <noscript><link rel="stylesheet" href="styles.min.css?v=2025092402"></noscript>
 
     <!-- Google Fontsは最後に読み込み -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
