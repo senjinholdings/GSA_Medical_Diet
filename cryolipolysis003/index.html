@@ -1606,28 +1606,61 @@ text-align: center;
         </script>
 
         <script>
-        // PR行（CSVのpr列を各クリニック分並べる）
-        (function renderPrLineWhenReady(){
+        // PR行（CSVのpr列を各クリニック分並べる - ランキング連携版）
+        (function() {
             const target = document.getElementById('pr-line');
             if (!target) return;
-            const tryRender = () => {
+
+            // PR表示を更新する関数（グローバルに公開）
+            window.updatePrLine = function(regionId) {
                 const dm = window.app?.dataManager || window.dataManager;
                 if (!dm || !dm.clinicTexts || !dm.clinics || dm.clinics.length === 0) return false;
+
+                // 地域IDが指定されていない場合はURLパラメータから取得
+                if (!regionId) {
+                    const urlParams = new URLSearchParams(window.location.search);
+                    regionId = urlParams.get('region') || '13'; // デフォルトは東京
+                }
+
+                // ランキングデータを取得
+                const ranking = dm.getRankingByRegionId(regionId);
+                if (!ranking || !ranking.ranks) {
+                    // ランキングデータがない場合は "PR" のみ表示
+                    target.innerHTML = 'PR';
+                    return true;
+                }
+
+                // ランキングに含まれるクリニックIDを取得
+                const rankedClinicIds = Object.values(ranking.ranks).filter(id => id && id !== '-');
+
+                // ランキングに含まれるクリニックのPR値のみを収集
                 const items = [];
-                dm.clinics.forEach(c => {
-                    const val = dm.getClinicText(c.code || c.name, 'pr', '').trim();
-                    if (val) items.push(val);
+                rankedClinicIds.forEach(clinicId => {
+                    const clinic = dm.clinics.find(c => c.id === clinicId);
+                    if (clinic) {
+                        const val = dm.getClinicText(clinic.code || clinic.name, 'pr', '').trim();
+                        if (val) items.push(val);
+                    }
                 });
-                if (items.length === 0) return false;
+
+                // PR値がない場合は "PR" のみ表示
+                if (items.length === 0) {
+                    target.innerHTML = 'PR';
+                    return true;
+                }
+
+                // PR値がある場合は表示
                 let html = 'PR ' + items[0];
                 for (let i = 1; i < items.length; i++) html += '<br>' + items[i];
                 target.innerHTML = html;
                 return true;
             };
-            if (!tryRender()) {
+
+            // 初回実行
+            if (!window.updatePrLine()) {
                 let count = 0;
                 const timer = setInterval(() => {
-                    if (tryRender() || ++count > 60) clearInterval(timer);
+                    if (window.updatePrLine() || ++count > 60) clearInterval(timer);
                 }, 250);
             }
         })();

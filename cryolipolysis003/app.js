@@ -2896,6 +2896,11 @@ class RankingApp {
             const allClinics = this.dataManager.getAllClinics();
             this.displayManager.updateRankingDisplay(allClinics, ranking);
 
+            // PR行の更新（ランキング連携）
+            if (typeof window.updatePrLine === 'function') {
+                window.updatePrLine(regionId);
+            }
+
             // フッターの人気クリニックを更新
             this.displayManager.updateFooterClinics(allClinics, ranking);
 
