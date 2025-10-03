@@ -77,9 +77,22 @@
     <!-- 重要なリソースのpreload -->
     <link rel="preload" as="image" href="images/mv.webp" fetchpriority="high" type="image/webp">
 
-    <!-- スタイルシートを遅延読み込み -->
-    <link rel="preload" href="styles.css?v=2025092402" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="styles.css?v=2025092402"></noscript>
+    <!-- スタイルシートを遅延読み込み（開発/本番自動切り替え） -->
+    <script>
+        // 開発環境(localhost)では非圧縮版、本番環境では圧縮版を使用
+        (function() {
+            const isDev = location.hostname === 'localhost' || location.hostname === '127.0.0.1';
+            const cssFile = isDev ? 'styles.css' : 'styles.min.css';
+            const version = '2025092402';
+            const link = document.createElement('link');
+            link.rel = 'preload';
+            link.href = cssFile + '?v=' + version;
+            link.as = 'style';
+            link.onload = function() { this.onload = null; this.rel = 'stylesheet'; };
+            document.head.appendChild(link);
+        })();
+    </script>
+    <noscript><link rel="stylesheet" href="styles.min.css?v=2025092402"></noscript>
 
     <!-- Google Fontsは最後に読み込み -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -164,10 +177,50 @@
                         </div>
                     </div>
                 </div>
-            </section>
+            </section>        <!-- ユーザーの悩みを解消するためのTips -->
+        <div class="container tips-container" data-lead-variant="A">
+            <div class="tips-layout tips-layout-a" data-tips-variant="A">
+                <div class="tips-section">
+                    <div class="tips-inner">
+                        <div class="tabs">
+                            <div class="tab active" data-tab="0">
+                                <span class="tab-text"></span>
+                            </div>
+                            <div class="tab" data-tab="1">
+                                <span class="tab-text"></span>
+                            </div>
+                            <div class="tab" data-tab="2">
+                                <span class="tab-text"></span>
+                            </div>
+                        </div>
 
-            <!-- ユーザーの悩みを解消するためのTips -->
-            <div class="container tips-container">
+                        <div class="tab-contents">
+                            <div class="tab-content active" data-tab="0">
+                                <div class="tab-figure">
+                                    <img src="images/Tips1.webp" alt="効果" class="tab-image" loading="lazy" decoding="async">
+                                </div>
+                                <p class="tab-description"></p>
+                            </div>
+
+                            <div class="tab-content" data-tab="1">
+                                <div class="tab-figure">
+                                    <img src="images/Tips2.webp" alt="クリニック選びのポイント" class="tab-image" loading="lazy" decoding="async">
+                                </div>
+                                <p class="tab-description"></p>
+                            </div>
+
+                            <div class="tab-content" data-tab="2">
+                                <div class="tab-figure">
+                                    <img src="images/Tips3.webp" alt="今がおすすめの理由" class="tab-image" loading="lazy" decoding="async">
+                                </div>
+                                <p class="tab-description"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tips-layout tips-layout-b" data-tips-variant="B" hidden>
                 <section class="tips-flow" aria-label="脂肪冷却を検討中の方向けTips">
                     <article class="tips-step" aria-label="脂肪冷却への不安に寄り添うメッセージ">
                         <div class="tips-step-content">
@@ -187,7 +240,7 @@
                                 <img src="images/Tips1.webp" alt="脂肪冷却の特徴" loading="lazy" decoding="async">
                             </figure>
                             <p>
-                                専門スタッフが肌質や脂肪のつき方を確認しながら、<span class="tips-highlight">冷却と吸引を組み合わせて脂肪細胞だけを凍結</span>。施術中の痛みはほとんどなく、ダウンタイムも短いのが魅力です。<br><br>例えば20代の田山さんは6ヶ月で体重が61.6kgから46.5kgへとマイナス15.1kg※となり、体脂肪率は-14.0％もダウン！<br><br>（※ディオクリニックの提供。効果には個人差があり、すべての方に同様の結果を保証するものではありません）
+                                専門スタッフが肌質や脂肪のつき方を確認しながら、<span class="tips-highlight">冷却と吸引を組み合わせて脂肪細胞だけを凍結</span>。施術中の痛みはほとんどなく、ダウンタイムも短いのが魅力です。<br><br>実際の症例では1ヶ月で体重が48.1kgから43kgへとマイナス5.1kg※となり、ウエストも-8.7㎝！<br><br>（※エミナルクリニックの提供。効果には個人差があり、すべての方に同様の結果を保証するものではありません）
                             </p>
                             <figure class="tips-ba-figure">
                                 <img src="images/tips-ba.webp" alt="脂肪冷却のビフォーアフター" loading="lazy" decoding="async">
@@ -221,7 +274,8 @@
                     </article>
                 </section>
             </div>
-        
+        </div>
+
         <script>
         // 詳細情報を表示する関数
         function showDisclaimerInfo(type) {
@@ -267,35 +321,19 @@
                         <h2 class="comparison-title">ー<span id="comparison-region-name">地域</span>で人気の脂肪冷却ー</h2>
                     </div>
                 </div>
+                <p class="comparison-scroll-hint">← 横スクロールできます →</p>
                 
-                <div class="comparison-table ranking-loading" id="comparison-tab-menu" data-active-tab="tab1">
-                    <div class="comparison-tab-menu">
-                        <div class="comparison-tab-menu-item tab-active" data-tab="tab1">総合</div>
-                        <div class="comparison-tab-menu-item" data-tab="tab2">施術内容</div>
-                        <div class="comparison-tab-menu-item" data-tab="tab3">サービス</div>
+                <div class="comparison-table comparison-table--matrix ranking-loading" id="comparison-table-container">
+                    <div class="comparison-table-wrapper">
+                        <table id="comparison-table">
+                            <thead>
+                                <tr id="comparison-header-row"></tr>
+                            </thead>
+                            <tbody id="comparison-tbody">
+                                <!-- 動的に生成される比較表の内容がここに表示されます -->
+                            </tbody>
+                        </table>
                     </div>
-                    <table id="comparison-table">
-                        <thead>
-                            <tr id="comparison-header-row">
-                                <!-- Headers will be dynamically generated from site-common-texts.json -->
-                                <th>クリニック</th>
-                                <th class="" style="">総合評価</th>
-                                <th class="" style="">費用</th>
-                                <th class="" style="">特徴</th>
-                                <th>公式サイト</th>
-                                <th class="th-none" style="display: none;"></th>
-                                <th class="th-none" style="display: none;"></th>
-                                <th class="th-none" style="display: none;"></th>
-                                <th class="th-none" style="display: none;"></th>
-                                <th class="th-none" style="display: none;"></th>
-                                <th class="th-none" style="display: none;"></th>
-                                <th class="th-none" style="display: none;">詳細</th>
-                            </tr>
-                        </thead>
-                        <tbody id="comparison-tbody">
-                            <!-- 動的に生成される比較表の内容がここに表示されます -->
-                        </tbody>
-                    </table>
                     <!-- 注意事項アコーディオン -->
                     <div class="disclaimer-accordion" style="margin-top: 15px;">
                         <!-- 第1段階: 各クリニックの注意事項 -->
@@ -1568,28 +1606,61 @@ text-align: center;
         </script>
 
         <script>
-        // PR行（CSVのpr列を各クリニック分並べる）
-        (function renderPrLineWhenReady(){
+        // PR行（CSVのpr列を各クリニック分並べる - ランキング連携版）
+        (function() {
             const target = document.getElementById('pr-line');
             if (!target) return;
-            const tryRender = () => {
+
+            // PR表示を更新する関数（グローバルに公開）
+            window.updatePrLine = function(regionId) {
                 const dm = window.app?.dataManager || window.dataManager;
                 if (!dm || !dm.clinicTexts || !dm.clinics || dm.clinics.length === 0) return false;
+
+                // 地域IDが指定されていない場合はURLパラメータから取得
+                if (!regionId) {
+                    const urlParams = new URLSearchParams(window.location.search);
+                    regionId = urlParams.get('region') || '13'; // デフォルトは東京
+                }
+
+                // ランキングデータを取得
+                const ranking = dm.getRankingByRegionId(regionId);
+                if (!ranking || !ranking.ranks) {
+                    // ランキングデータがない場合は "PR" のみ表示
+                    target.innerHTML = 'PR';
+                    return true;
+                }
+
+                // ランキングに含まれるクリニックIDを取得
+                const rankedClinicIds = Object.values(ranking.ranks).filter(id => id && id !== '-');
+
+                // ランキングに含まれるクリニックのPR値のみを収集
                 const items = [];
-                dm.clinics.forEach(c => {
-                    const val = dm.getClinicText(c.code || c.name, 'pr', '').trim();
-                    if (val) items.push(val);
+                rankedClinicIds.forEach(clinicId => {
+                    const clinic = dm.clinics.find(c => c.id === clinicId);
+                    if (clinic) {
+                        const val = dm.getClinicText(clinic.code || clinic.name, 'pr', '').trim();
+                        if (val) items.push(val);
+                    }
                 });
-                if (items.length === 0) return false;
+
+                // PR値がない場合は "PR" のみ表示
+                if (items.length === 0) {
+                    target.innerHTML = 'PR';
+                    return true;
+                }
+
+                // PR値がある場合は表示
                 let html = 'PR ' + items[0];
                 for (let i = 1; i < items.length; i++) html += '<br>' + items[i];
                 target.innerHTML = html;
                 return true;
             };
-            if (!tryRender()) {
+
+            // 初回実行
+            if (!window.updatePrLine()) {
                 let count = 0;
                 const timer = setInterval(() => {
-                    if (tryRender() || ++count > 60) clearInterval(timer);
+                    if (window.updatePrLine() || ++count > 60) clearInterval(timer);
                 }, 250);
             }
         })();
@@ -1724,127 +1795,6 @@ text-align: center;
         document.addEventListener('DOMContentLoaded', function() {
             // パラメータを引き継ぐ
             preserveAllParams();
-            
-            const tabMenuItems = document.querySelectorAll('.comparison-tab-menu-item');
-            const table = document.querySelector('.comparison-table table');
-            
-            function updateTableColumns(tabType) {
-                if (!table) return;
-                
-                const tableContainer = document.querySelector('.comparison-table');
-                const headers = table.querySelectorAll('th');
-                const rows = table.querySelectorAll('tbody tr');
-                
-                // タブごとの表示列インデックス（実際のHTMLの列番号に合わせて修正）
-                const tabColumnsMap = {
-                    'tab1': [0, 1, 2, 3, 10], // 総合: クリニック名, 総合評価, 費用, 特徴, 公式サイトURL
-                    'tab2': [0, 4, 5, 6, 10], // 施術内容: クリニック名, 矯正範囲, 目安期間, 通院頻度, 公式サイトURL
-                    'tab3': [0, 7, 8, 9, 10]  // サービス: クリニック名, 実績/症例数, ワイヤー矯正の紹介, サポート, 公式サイトURL
-                };
-                
-                const showIndexes = tabColumnsMap[tabType] || tabColumnsMap['tab1'];
-                
-                // コンテナにアクティブなタブを設定
-                tableContainer.setAttribute('data-active-tab', tabType);
-                
-                // タブに応じて動的にヘッダーテキストを更新（JSONファイルから取得）
-                const headerConfig = window.dataManager ? window.dataManager.getClinicHeaderConfig() : null;
-                
-                const headerTextMap = {
-                    'tab1': [
-                        headerConfig && headerConfig['比較表ヘッダー1'] || 'クリニック', 
-                        headerConfig && headerConfig['比較表ヘッダー2'] || '総合評価',
-                        headerConfig && headerConfig['比較表ヘッダー3'] || '費用',
-                        headerConfig && headerConfig['比較表ヘッダー4'] || '特徴',
-                        headerConfig && headerConfig['比較表ヘッダー11'] || '公式サイト'
-                    ],
-                    'tab2': [
-                        headerConfig && headerConfig['比較表ヘッダー1'] || 'クリニック', 
-                        headerConfig && headerConfig['比較表ヘッダー5'] || '矯正範囲',
-                        headerConfig && headerConfig['比較表ヘッダー6'] || '目安期間',
-                        headerConfig && headerConfig['比較表ヘッダー7'] || '通院頻度',
-                        headerConfig && headerConfig['比較表ヘッダー11'] || '公式サイト'
-                    ], 
-                    'tab3': [
-                        headerConfig && headerConfig['比較表ヘッダー1'] || 'クリニック', 
-                        headerConfig && headerConfig['比較表ヘッダー8'] || '実績/症例数',
-                        headerConfig && headerConfig['比較表ヘッダー9'] || 'ワイヤー矯正の紹介',
-                        headerConfig && headerConfig['比較表ヘッダー10'] || 'サポート',
-                        headerConfig && headerConfig['比較表ヘッダー11'] || '公式サイト'
-                    ]
-                };
-                
-                const currentHeaderTexts = headerTextMap[tabType] || headerTextMap['tab1'];
-                
-                // requestAnimationFrameを使用して最適化
-                requestAnimationFrame(() => {
-                    // 表示される列のヘッダーテキストを動的に更新
-                    let headerTextIndex = 0;
-                    headers.forEach((th, index) => {
-                        if (showIndexes.includes(index)) {
-                            if (headerTextIndex < currentHeaderTexts.length) {
-                                th.textContent = currentHeaderTexts[headerTextIndex];
-                                headerTextIndex++;
-                            }
-                        }
-                    });
-                    
-                    // ヘッダーの表示/非表示
-                    headers.forEach((th, index) => {
-                        if (showIndexes.includes(index)) {
-                            // 表示する列: すべてのインラインスタイルを削除
-                            th.removeAttribute('style');
-                            th.classList.remove('th-none');
-                            th.classList.remove('td-none');
-                        } else {
-                            // 非表示の列
-                            th.style.display = 'none';
-                            th.style.visibility = 'hidden';
-                            th.style.width = '0';
-                            th.style.padding = '0';
-                            th.style.border = '0';
-                            th.classList.add('th-none');
-                        }
-                    });
-                    
-                    // 各行のセルの表示/非表示
-                    rows.forEach(row => {
-                        const cells = row.querySelectorAll('td');
-                        cells.forEach((td, index) => {
-                            if (showIndexes.includes(index)) {
-                                // 表示する列: すべてのインラインスタイルを削除
-                                td.removeAttribute('style');
-                                td.classList.remove('th-none');
-                                td.classList.remove('td-none');
-                            } else {
-                                // 非表示の列
-                                td.style.display = 'none';
-                                td.style.visibility = 'hidden';
-                                td.style.width = '0';
-                                td.style.padding = '0';
-                                td.style.border = '0';
-                                td.classList.add('td-none');
-                            }
-                        });
-                    });
-                });
-            }
-            
-            tabMenuItems.forEach(item => {
-                item.addEventListener('click', function() {
-                    // すべてのタブを非アクティブに
-                    tabMenuItems.forEach(tab => tab.classList.remove('tab-active'));
-                    // クリックしたタブをアクティブに
-                    this.classList.add('tab-active');
-
-                    // タブに応じて表示列を切り替え
-                    const tabType = this.getAttribute('data-tab');
-                    updateTableColumns(tabType);
-                });
-            });
-            
-            // 初期表示
-            updateTableColumns('tab1');
             
         });
 
@@ -2191,28 +2141,22 @@ text-align: center;
             const tabs = document.querySelectorAll('.tips-container .tab');
             const tabContents = document.querySelectorAll('.tips-container .tab-content');
 
-            tabs.forEach(tab => {
-                tab.addEventListener('click', function() {
-                    const tabIndex = this.getAttribute('data-tab');
-                    
-                    // Update tab styles
-                    tabs.forEach(t => {
-                        t.style.backgroundColor = '#F1F1F1';
-                        t.style.color = '#4C4C4C';
+            if (tabs.length && tabContents.length) {
+                const activateTab = (index) => {
+                    tabs.forEach((tab, i) => {
+                        tab.classList.toggle('active', i === index);
                     });
-                    this.style.backgroundColor = '#2CC7C5';
-                    this.style.color = 'white';
-                    
-                    // Show/hide content
-                    tabContents.forEach(content => {
-                        if (content.getAttribute('data-tab') === tabIndex) {
-                            content.style.display = 'block';
-                        } else {
-                            content.style.display = 'none';
-                        }
+                    tabContents.forEach((content, i) => {
+                        content.classList.toggle('active', i === index);
                     });
+                };
+
+                tabs.forEach((tab, index) => {
+                    tab.addEventListener('click', () => activateTab(index));
                 });
-            });
+
+                activateTab(0);
+            }
         });
     </script>
     
