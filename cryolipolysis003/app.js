@@ -1554,7 +1554,7 @@ class DataManager {
                 .replace(/"/g, '&quot;')
                 .replace(/'/g, '&#39;');
 
-            return `<span class="info-icon-wrapper"><span class="info-icon" data-anno="${escapedContent}" title="クリックで詳細を表示">ℹ</span></span>`;
+            return `<span class="info-icon-wrapper"><span class="info-icon" data-anno="${escapedContent}" title="クリックで詳細を表示">i</span></span>`;
         });
 
         return processed;
@@ -3897,7 +3897,7 @@ class RankingApp {
         const achievementText = document.getElementById('first-choice-achievement-text');
         if (achievementText) {
             const achievement = window.dataManager.getClinicText(clinicCode, 'INFORMATIONサブテキスト', '');
-            achievementText.textContent = achievement;
+            achievementText.innerHTML = window.dataManager.processDecoTags(achievement);
         }
         
         // CTAテキストを更新
@@ -4616,7 +4616,7 @@ class RankingApp {
                             
                             const campaignHeader = this.dataManager.getClinicText(clinicCode, 'キャンペーンヘッダー', 'INFORMATION!');
                             const campaignDescription = this.dataManager.getClinicText(clinicCode, 'INFORMATIONキャンペーンテキスト', '');
-                            const campaignMicrocopy = this.dataManager.getClinicText(clinicCode, 'INFORMATIONサブテキスト', '');
+                            const campaignMicrocopy = this.dataManager.processDecoTags(this.dataManager.getClinicText(clinicCode, 'INFORMATIONサブテキスト', ''));
                             const ctaText = this.dataManager.getClinicText(clinicCode, 'CTAボタンテキスト', `キャンペーンの詳細を見る`);
                             
                             const logoFolder = clinicCode === 'kireiline' ? 'kireiline' : clinicCode;
