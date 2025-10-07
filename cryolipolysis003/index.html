@@ -74,6 +74,123 @@
             pointer-events: none;
         }
     </style>
+
+    <!-- 注釈モーダルとインフォアイコンのスタイル -->
+    <style>
+        /* インフォアイコン */
+        .info-icon-wrapper {
+            display: inline;
+        }
+
+        .info-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 16px;
+            height: 16px;
+            margin-left: 4px;
+            background: linear-gradient(135deg, #878787 0%, #898989 100%);
+            color: white;
+            border-radius: 50%;
+            font-size: 11px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            vertical-align: middle;
+            line-height: 1;
+            user-select: none;
+        }
+
+        .info-icon:hover {
+            transform: scale(1.15);
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.4);
+        }
+
+        .info-icon:active {
+            transform: scale(1.05);
+        }
+
+        /* モーダル */
+        .anno-modal {
+            display: none;
+            position: fixed;
+            z-index: 10000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            animation: fadeIn 0.2s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .anno-modal-content {
+            position: relative;
+            background-color: #fff;
+            margin: 15% auto;
+            padding: 30px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .anno-modal-close {
+            position: absolute;
+            right: 15px;
+            top: 5px;
+            color: #aaa;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.2s ease;
+            line-height: 1;
+        }
+
+        .anno-modal-close:hover,
+        .anno-modal-close:focus {
+            color: #000;
+        }
+
+        .anno-modal-body {
+            color: #333;
+            font-size: 14px;
+            line-height: 1.8;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        @media (max-width: 768px) {
+            .anno-modal-content {
+                margin: 20% auto;
+                padding: 20px;
+                width: 95%;
+            }
+
+            .anno-modal-body {
+                font-size: 13px;
+            }
+        }
+    </style>
+
     <!-- 重要なリソースのpreload -->
     <link rel="preload" as="image" href="images/mv.webp" fetchpriority="high" type="image/webp">
 
@@ -229,7 +346,7 @@
                                 <p class="tips-quote">「始めてみたいけど、自分に合うのか不安…」</p>
                             </div>
                             <p>
-                                そんな迷いを抱える方は少なくありません。<br><br><span class="tips-highlight">脂肪冷却は、従来のように切ったり激しい運動をしたりせず</span>、気になる部分にピンポイントでアプローチできる最新の美容医療です。<br><br>諦めかけていた部位にも“冷却するだけ”で挑める、新しい選択肢として注目されています。
+                                そんな迷いを抱える方は少なくありません。<br><br><span class="tips-highlight">脂肪冷却は、従来のように切ったり激しい運動をしたりせず</span>、気になる部分にピンポイントでアプローチできる次世代の美容医療です。<br><br>諦めかけていた部位にも“冷却するだけ”で挑める、新しい選択肢として注目されています。
                             </p>
                         </div>
                     </article>
@@ -240,7 +357,7 @@
                                 <img src="images/Tips1.webp" alt="脂肪冷却の特徴" loading="lazy" decoding="async">
                             </figure>
                             <p>
-                                専門スタッフが肌質や脂肪のつき方を確認しながら、<span class="tips-highlight">冷却と吸引を組み合わせて脂肪細胞だけを凍結</span>。施術中の痛みはほとんどなく、ダウンタイムも短いのが魅力です。<br><br>実際の症例では1ヶ月で体重が48.1kgから43kgへとマイナス5.1kg※となり、ウエストも-8.7㎝！<br><br>（※エミナルクリニックの提供。効果には個人差があり、すべての方に同様の結果を保証するものではありません）
+                                専門スタッフが肌質や脂肪のつき方を確認しながら、<span class="tips-highlight">脂肪を冷却し脂肪細胞だけを凍結</span>。施術中の痛みはほとんどなく、ダウンタイムも短いのが魅力です。<br><br>実際の症例では1ヶ月で体重が48.1kgから43kgへとマイナス5.1kg※となり、ウエストも-8.7㎝！<br><br>（※エミナルクリニックの提供。効果には個人差があり、すべての方に同様の結果を保証するものではありません）
                             </p>
                             <figure class="tips-ba-figure">
                                 <img src="images/tips-ba.webp" alt="脂肪冷却のビフォーアフター" loading="lazy" decoding="async">
@@ -2235,6 +2352,70 @@ text-align: center;
             });
         })();
     </script>
-    
+
+    <!-- 注釈モーダル -->
+    <div id="anno-modal" class="anno-modal">
+        <div class="anno-modal-content">
+            <span class="anno-modal-close">&times;</span>
+            <div class="anno-modal-body"></div>
+        </div>
+    </div>
+
+    <!-- 注釈モーダルのスクリプト -->
+    <script>
+        (function() {
+            const modal = document.getElementById('anno-modal');
+            const modalBody = modal.querySelector('.anno-modal-body');
+            const closeBtn = modal.querySelector('.anno-modal-close');
+
+            // インフォアイコンのクリックイベント（イベント委譲）
+            document.addEventListener('click', function(e) {
+                const infoIcon = e.target.closest('.info-icon');
+                if (infoIcon) {
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    // data-anno属性から注釈内容を取得
+                    const annoContent = infoIcon.getAttribute('data-anno');
+                    if (annoContent) {
+                        // HTMLエンティティをデコード
+                        const decodedContent = annoContent
+                            .replace(/&lt;/g, '<')
+                            .replace(/&gt;/g, '>')
+                            .replace(/&quot;/g, '"')
+                            .replace(/&#39;/g, "'")
+                            .replace(/&amp;/g, '&');
+
+                        modalBody.textContent = decodedContent;
+                        modal.style.display = 'block';
+                        document.body.style.overflow = 'hidden'; // スクロール防止
+                    }
+                }
+            });
+
+            // 閉じるボタンのクリックイベント
+            closeBtn.addEventListener('click', function() {
+                modal.style.display = 'none';
+                document.body.style.overflow = ''; // スクロール復元
+            });
+
+            // モーダル背景のクリックで閉じる
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                    document.body.style.overflow = ''; // スクロール復元
+                }
+            });
+
+            // ESCキーで閉じる
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && modal.style.display === 'block') {
+                    modal.style.display = 'none';
+                    document.body.style.overflow = ''; // スクロール復元
+                }
+            });
+        })();
+    </script>
+
 </body>
 </html>

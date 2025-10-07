@@ -1540,9 +1540,24 @@ class DataManager {
     // decoタグを処理してHTMLに変換する関数
     processDecoTags(text) {
         if (!text || typeof text !== 'string') return text;
-        
+
         // <deco>タグを<span class="deco-text">に変換
-        return text.replace(/<deco>(.*?)<\/deco>/g, '<span class="deco-text">$1</span>');
+        let processed = text.replace(/<deco>(.*?)<\/deco>/g, '<span class="deco-text">$1</span>');
+
+        // <anno>タグを情報アイコン付きのテキストに変換
+        processed = processed.replace(/<anno>(.*?)<\/anno>/g, (match, content) => {
+            // HTMLエスケープしてdata属性に安全に格納
+            const escapedContent = content
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+
+            return `<span class="info-icon-wrapper"><span class="info-icon" data-anno="${escapedContent}" title="クリックで詳細を表示">ℹ</span></span>`;
+        });
+
+        return processed;
     }
 
     // クリニックの口コミデータを動的に取得
