@@ -612,6 +612,9 @@ text-align: center;
     <script>
         function shouldHandleClinicLink(link) {
             if (!link) return false;
+            if (link.classList && (link.classList.contains('detail-scroll-link') || link.classList.contains('detail-static-link'))) {
+                return false;
+            }
             if (link.hasAttribute('data-handle-clinic-click')) return true;
             if (link.dataset && (link.dataset.clinicId || link.dataset.rank || link.dataset.ctaType)) return true;
             try {
