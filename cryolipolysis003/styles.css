@@ -4262,6 +4262,44 @@ body.no-scroll { overflow: hidden; }
     display: block;
 }
 
+/* 比較表ランキングトロフィーアイコン */
+.comparison-clinic-header[data-rank="1"]::before,
+.comparison-clinic-header[data-rank="2"]::before,
+.comparison-clinic-header[data-rank="3"]::before {
+    content: '';
+    display: inline-block;
+    width: 1.5em;
+    height: 1.5em;
+    margin: 0 6px 0 10px;
+    flex-shrink: 0;
+    background-size: contain;
+    background-repeat: no-repeat;
+    vertical-align: middle;
+}
+
+/* 1位: ゴールドトロフィー */
+.comparison-clinic-header[data-rank="1"]::before {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M2.00488 19H22.0049V21H2.00488V19ZM2.00488 5L7.00488 8L12.0049 2L17.0049 8L22.0049 5V17H2.00488V5Z' fill='%23ffb500'%3E%3C/path%3E%3C/svg%3E");
+}
+
+/* 2位: シルバートロフィー */
+.comparison-clinic-header[data-rank="2"]::before {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M2.00488 19H22.0049V21H2.00488V19ZM2.00488 5L7.00488 8L12.0049 2L17.0049 8L22.0049 5V17H2.00488V5Z' fill='%23C0C0C0'%3E%3C/path%3E%3C/svg%3E");
+}
+
+/* 3位: ブロンズトロフィー */
+.comparison-clinic-header[data-rank="3"]::before {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M2.00488 19H22.0049V21H2.00488V19ZM2.00488 5L7.00488 8L12.0049 2L17.0049 8L22.0049 5V17H2.00488V5Z' fill='%23CD7F32'%3E%3C/path%3E%3C/svg%3E");
+}
+
+/* トロフィーアイコン用にヘッダーをフレックスレイアウトに */
+.comparison-clinic-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
 .detail-title {
     flex: 1;
 }
