@@ -32,7 +32,7 @@ body {
 }
 
 /* メインコンテナ - PC表示でも最大768pxに制限 */
-body > *:not(.sidebar-menu):not(.sidebar-overlay):not(.map-modal):not(.disclaimer-modal):not(.banner-modal):not(.scroll-bottom-modal) {
+body > *:not(.sidebar-menu):not(.sidebar-overlay):not(.map-modal):not(.disclaimer-modal):not(.banner-modal):not(.scroll-bottom-modal):not(.anno-modal) {
     width: 100%;
     max-width: 768px;
     margin: 0 auto;
@@ -3207,24 +3207,133 @@ section.clinic-rankings .ranking-header-banner {
 
 .comparison-table--matrix {
     width: 100%;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    touch-action: pan-x;
     margin: 0 auto 20px;
     --comparison-fixed-col-width: 180px;
     --comparison-clinic-col-width: 100px;
+    position: relative;
+    z-index: 100;
+}
+
+.comparison-table-sticky-header {
+    position: fixed;
+    top: var(--comparison-sticky-offset, 0px);
+    left: var(--comparison-sticky-left, 0px);
+    width: var(--comparison-sticky-width, 100%);
+    z-index: 50;
+    display: none;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.comparison-table-sticky-header.is-visible {
+    display: block;
+}
+
+.comparison-table-sticky-inner {
+    pointer-events: auto;
+    will-change: transform;
+}
+
+.comparison-table-sticky-header table {
+    border-collapse: collapse;
+    width: max-content;
+    min-width: 100%;
+    table-layout: fixed;
+    background: #f4fbfa;
+}
+
+.comparison-table-sticky-header th {
+    background: #f4fbfa;
+    color: #2f4f4e;
+    font-weight: 700;
+    padding: 5px 5px;
+    text-align: center;
+    border: 1px solid #ecf2f1;
+    white-space: nowrap;
+    font-size: 13px;
+}
+
+.comparison-table-sticky-header th.comparison-heading--item {
+    position: relative;
+    z-index: 100;
+    min-width: var(--comparison-fixed-col-width);
+    max-width: var(--comparison-fixed-col-width);
+    width: var(--comparison-fixed-col-width);
+    background: #f4fbfa !important;
+}
+
+.comparison-table-sticky-header th.comparison-heading--clinic {
+    min-width: var(--comparison-clinic-col-width);
+    max-width: var(--comparison-clinic-col-width);
+    width: var(--comparison-clinic-col-width);
+}
+
+.comparison-table-sticky-header .comparison-clinic-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.comparison-table-sticky-header .comparison-clinic-logo-wrap {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: inset 0 0 0 1px #e1eceb;
+}
+
+.comparison-table-sticky-header .comparison-clinic-header .comparison-logo {
+    max-width: 60px;
+    max-height: 36px;
+    width: 60px;
+}
+
+.comparison-table-sticky-header .comparison-clinic-header .clinic-link {
+    font-size: 9px;
+    font-weight: 600;
+    color: #2f4f4e;
+    text-decoration: none;
+    text-align: center;
+    line-height: 1.4;
+}
+
+.comparison-table-sticky-header th.comparison-heading--clinic.is-rank-1 {
+    background: #fffbdc;
+}
+
+.comparison-table-sticky-header th.comparison-heading--clinic.is-rank-2 {
+    background: #f4f9ff;
+}
+
+.comparison-table-sticky-header th.comparison-heading--clinic.is-rank-3 {
+    background: #f3fffb;
+}
+
+.comparison-table-sticky-header th.comparison-heading--clinic.is-rank-4,
+.comparison-table-sticky-header th.comparison-heading--clinic.is-rank-5 {
+    background-color: #f9f9f9;
 }
 
 .comparison-table--matrix .comparison-table-wrapper {
-    display: inline-block;
-    min-width: calc(var(--comparison-fixed-col-width) + (var(--comparison-clinic-col-width) * var(--clinic-count, 1)));
+    overflow-x: auto;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-y pan-x;
+    overscroll-behavior-y: contain;
+    width: 100%;
+    max-width: 100%;
 }
 
 .comparison-table--matrix #comparison-table {
-    width: 100%;
     border-collapse: collapse;
     min-width: calc(75px + var(--comparison-clinic-col-width) * var(--clinic-count, 1));
     background: #ffffff;
+    box-sizing: border-box;
+    width: max-content;
 }
 
 .comparison-table--matrix #comparison-table thead th {
@@ -3423,10 +3532,6 @@ section.clinic-rankings .ranking-header-banner {
 }
 
 /* 比較表のレスポンシブ対応 */
-.comparison-table {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-}
 
 /* 比較表コンテナの最小幅 */
 .comparison-table table {
@@ -3436,10 +3541,7 @@ section.clinic-rankings .ranking-header-banner {
 
 /* モバイル対応 - 横スクロール排除 */
 @media (max-width: 768px) {
-    .comparison-table {
-        overflow-x: hidden;
-    }
-    
+
     .comparison-table table {
         min-width: 0;
         width: 100%;
@@ -8922,7 +9024,7 @@ body .case-slider .slick-slide img {
     }
     
     /* body直下の要素から特定の要素を除外 */
-    body > *:not(.sidebar-menu):not(.sidebar-overlay):not(.map-modal):not(.disclaimer-modal) {
+    body > *:not(.sidebar-menu):not(.sidebar-overlay):not(.map-modal):not(.disclaimer-modal):not(.anno-modal) {
         width: 100% !important;
         max-width: 768px !important;
         margin: 0 auto !important;
@@ -9174,8 +9276,9 @@ body .case-slider .slick-slide img {
     }
 
     .comparison-table--matrix .comparison-table-wrapper {
-        display: inline-block;
-        min-width: calc(var(--comparison-fixed-col-width) + (var(--comparison-clinic-col-width) * var(--clinic-count, 1)));
+        overflow-x: auto !important;
+        overflow-y: auto !important;
+        -webkit-overflow-scrolling: touch !important;
     }
 }
 
