@@ -5109,6 +5109,8 @@ class RankingApp {
             const togglePlayback = () => {
                 if (video.paused || video.ended) {
                     playSafely();
+                    // 再生開始時に即座に状態を更新
+                    setTimeout(() => updateState(), 100);
                 } else {
                     video.pause();
                 }
@@ -5135,6 +5137,7 @@ class RankingApp {
                 showSection();
                 updateState();
             });
+            video.addEventListener('playing', updateState); // 実際に再生が開始されたとき
             video.addEventListener('pause', updateState);
             video.addEventListener('ended', updateState);
             video.addEventListener('error', markMissing, { once: true });
@@ -6093,11 +6096,16 @@ function openClinicDetailModal(rank) {
     document.body.insertAdjacentHTML('beforeend', overlayHtml + modalHtml);
     const overlay = document.querySelector('.clinic-detail-overlay');
     const modal = document.querySelector('.clinic-detail-modal');
-    // バナースライダーの多重初期化ガード属性を除去して再初期化可能にする
+    // バナースライダーと動画の多重初期化ガード属性を除去して再初期化可能にする
     if (modal) {
         const modalSliders = modal.querySelectorAll('.banner-slider');
         modalSliders.forEach((s) => {
             s.removeAttribute('data-initialized');
+        });
+        // 動画の初期化フラグもリセット
+        const videoEmbeds = modal.querySelectorAll('.procedure-video-embed');
+        videoEmbeds.forEach((embed) => {
+            delete embed.dataset.videoInitialized;
         });
     }
     requestAnimationFrame(() => {
