@@ -2708,7 +2708,7 @@ class RankingApp {
                     td.innerHTML = `
                         <div class="classic-cta">
                             <a class="link_btn" href="${this.urlHandler.getClinicUrlWithRegionId(clinic.id, clinic.rank || rankNum)}" target="_blank" rel="noopener">公式サイト &gt;</a><br>
-                            <a class="detail_btn detail-scroll-link" href="javascript:void(0)" data-rank="${rankNum}">詳細を見る</a>
+                            <button type="button" class="detail_btn detail-scroll-link" data-rank="${rankNum}">詳細を見る</button>
                         </div>
                     `;
                 } else if (field.startsWith('comparison')) {
@@ -3650,7 +3650,7 @@ class RankingApp {
                     cell.innerHTML = `
                         <div class="comparison-cta">
                             <a class="link_btn" href="${officialLink}" target="_blank" rel="noopener">公式サイト &gt;</a>
-                            <a class="detail_btn detail-scroll-link" href="javascript:void(0)" data-rank="${rankNum}">詳細を見る</a>
+                            <button type="button" class="detail_btn detail-scroll-link" data-rank="${rankNum}">詳細を見る</button>
                         </div>
                     `;
                 } else {
@@ -4251,7 +4251,7 @@ class RankingApp {
                 <td>
                     <div class="cta-cell">
                         <a href="${this.urlHandler.getClinicUrlWithRegionId(clinic.id, clinic.rank)}" class="cta-button" target="_blank" rel="noopener">公式サイト</a>
-                        <a href="javascript:void(0)" class="cta-link detail-scroll-link" data-rank="${clinic.rank}">詳細を見る</a>
+                        <button type="button" class="cta-link detail-scroll-link" data-rank="${clinic.rank}">詳細を見る</button>
                     </div>
                 </td>
             `;
@@ -4284,7 +4284,7 @@ class RankingApp {
                 <td>
                     <div class="cta-cell">
                         <a href="${this.urlHandler.getClinicUrlWithRegionId(clinic.id, clinic.rank)}" class="cta-button" target="_blank" rel="noopener">公式サイト</a>
-                        <a href="javascript:void(0)" class="cta-link detail-scroll-link" data-rank="${clinic.rank}">詳細を見る</a>
+                        <button type="button" class="cta-link detail-scroll-link" data-rank="${clinic.rank}">詳細を見る</button>
                     </div>
                 </td>
             `;
@@ -4317,7 +4317,7 @@ class RankingApp {
                 <td>
                     <div class="cta-cell">
                         <a href="${this.urlHandler.getClinicUrlWithRegionId(clinic.id, clinic.rank)}" class="cta-button" target="_blank" rel="noopener">公式サイト</a>
-                        <a href="javascript:void(0)" class="cta-link detail-scroll-link" data-rank="${clinic.rank}">詳細を見る</a>
+                        <button type="button" class="cta-link detail-scroll-link" data-rank="${clinic.rank}">詳細を見る</button>
                     </div>
                 </td>
             `;
