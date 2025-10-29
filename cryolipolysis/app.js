@@ -1540,9 +1540,24 @@ class DataManager {
     // decoタグを処理してHTMLに変換する関数
     processDecoTags(text) {
         if (!text || typeof text !== 'string') return text;
-        
+
         // <deco>タグを<span class="deco-text">に変換
-        return text.replace(/<deco>(.*?)<\/deco>/g, '<span class="deco-text">$1</span>');
+        let processed = text.replace(/<deco>(.*?)<\/deco>/g, '<span class="deco-text">$1</span>');
+
+        // <anno>タグを情報アイコン付きのテキストに変換
+        processed = processed.replace(/<anno>(.*?)<\/anno>/g, (match, content) => {
+            // HTMLエスケープしてdata属性に安全に格納
+            const escapedContent = content
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+
+            return `<span class="info-icon-wrapper"><span class="info-icon" data-anno="${escapedContent}" title="クリックで詳細を表示">i</span></span>`;
+        });
+
+        return processed;
     }
 
     // クリニックの口コミデータを動的に取得
@@ -2136,6 +2151,11 @@ class RankingApp {
             tab2: ['クリニック名', 'comparison4', 'comparison5', 'comparison6', '公式サイト'],
             tab3: ['クリニック名', 'comparison7', 'comparison8', 'comparison9', '公式サイト']
         };
+        this.comparisonStickyHeader = null;
+        this.comparisonStickyScrollContainer = null;
+        this.boundMatrixScrollHandler = null;
+        this.boundStickyScrollHandler = null;
+        this.boundStickyResizeHandler = null;
     }
 
     normalizeRegionId(regionId) {
@@ -2213,6 +2233,7 @@ class RankingApp {
 
             this.classicTabInitialized = false;
             this.preparedComparisonLayout = 'A';
+            this.teardownComparisonStickyHeader();
             return;
         }
 
@@ -2249,6 +2270,262 @@ class RankingApp {
 
         this.classicTabInitialized = false;
         this.preparedComparisonLayout = 'B';
+    }
+
+    getComparisonStickyOffset() {
+        return 0;
+    }
+
+    getComparisonMatrix() {
+        const container = document.getElementById('comparison-table-container');
+        if (!container) {
+            return null;
+        }
+        if (container.classList && container.classList.contains('comparison-table--matrix')) {
+            return container;
+        }
+        return container.querySelector('.comparison-table--matrix');
+    }
+
+    getComparisonScrollContainer() {
+        const matrix = this.getComparisonMatrix();
+        if (!matrix) {
+            return null;
+        }
+        return matrix.querySelector('.comparison-table-wrapper');
+    }
+
+    ensureComparisonStickyHeader(matrix) {
+        if (!matrix) {
+            return;
+        }
+
+        if (!this.comparisonStickyHeader) {
+            const sticky = document.createElement('div');
+            sticky.className = 'comparison-table-sticky-header';
+            sticky.innerHTML = '<div class="comparison-table-sticky-inner"><table aria-hidden="true"><thead><tr></tr></thead></table></div>';
+            document.body.appendChild(sticky);
+            this.comparisonStickyHeader = sticky;
+
+            this.boundStickyScrollHandler = () => this.handleComparisonStickyScroll();
+            this.boundStickyResizeHandler = () => this.refreshComparisonStickyMeasurements();
+            this.boundMatrixScrollHandler = () => this.syncComparisonStickyHorizontalScroll();
+
+            window.addEventListener('scroll', this.boundStickyScrollHandler, { passive: true });
+            window.addEventListener('resize', this.boundStickyResizeHandler);
+        }
+
+        const scrollContainer = this.getComparisonScrollContainer();
+        if (this.comparisonStickyScrollContainer && this.boundMatrixScrollHandler && this.comparisonStickyScrollContainer !== scrollContainer) {
+            this.comparisonStickyScrollContainer.removeEventListener('scroll', this.boundMatrixScrollHandler);
+            this.comparisonStickyScrollContainer = null;
+        }
+
+        if (scrollContainer && this.boundMatrixScrollHandler) {
+            if (!this.comparisonStickyScrollContainer) {
+                scrollContainer.addEventListener('scroll', this.boundMatrixScrollHandler, { passive: true });
+                this.comparisonStickyScrollContainer = scrollContainer;
+            }
+        }
+
+        this.comparisonStickyHeader.style.setProperty('--comparison-sticky-offset', `${this.getComparisonStickyOffset()}px`);
+    }
+
+    refreshComparisonStickyMeasurements() {
+        if (!this.comparisonStickyHeader) {
+            return;
+        }
+        const matrix = this.getComparisonMatrix();
+        if (!matrix) {
+            this.teardownComparisonStickyHeader();
+            return;
+        }
+
+        const table = matrix.querySelector('#comparison-table');
+        const headerCells = table ? table.querySelectorAll('thead th') : [];
+        const stickyRow = this.comparisonStickyHeader.querySelector('thead tr');
+        const stickyTable = this.comparisonStickyHeader.querySelector('table');
+
+        if (!table || !stickyRow || !stickyTable) {
+            return;
+        }
+
+        const matrixStyles = window.getComputedStyle(matrix);
+        const fixedWidth = (matrixStyles.getPropertyValue('--comparison-fixed-col-width') || '180px').trim();
+        const clinicWidth = (matrixStyles.getPropertyValue('--comparison-clinic-col-width') || '100px').trim();
+
+        stickyRow.innerHTML = '';
+        headerCells.forEach((cell) => {
+            const clone = cell.cloneNode(true);
+
+            clone.removeAttribute('style');
+            clone.className = cell.className;
+
+            const cellRect = cell.getBoundingClientRect();
+            if (cellRect.width > 0) {
+                clone.style.width = `${cellRect.width}px`;
+                clone.style.minWidth = `${cellRect.width}px`;
+                clone.style.maxWidth = `${cellRect.width}px`;
+            } else if (clone.classList.contains('comparison-heading--item')) {
+                clone.style.minWidth = fixedWidth;
+                clone.style.maxWidth = fixedWidth;
+                clone.style.width = fixedWidth;
+            } else if (clone.classList.contains('comparison-heading--clinic')) {
+                clone.style.minWidth = clinicWidth;
+                clone.style.maxWidth = clinicWidth;
+                clone.style.width = clinicWidth;
+            }
+
+            stickyRow.appendChild(clone);
+
+            const stickyLogo = clone.querySelector('.comparison-logo');
+            if (stickyLogo) {
+                stickyLogo.removeAttribute('data-listener-attached');
+                stickyLogo.style.cursor = 'pointer';
+                stickyLogo.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    const rankAttr = stickyLogo.getAttribute('data-rank');
+                    const rank = parseInt(rankAttr, 10);
+                    if (rank && !Number.isNaN(rank)) {
+                        openClinicDetailModal(rank);
+                    }
+                });
+            }
+        });
+
+        const tableWidth = table.getBoundingClientRect().width;
+        if (tableWidth > 0) {
+            stickyTable.style.minWidth = `${tableWidth}px`;
+        } else {
+            stickyTable.style.removeProperty('min-width');
+        }
+
+        this.syncComparisonStickyHorizontalScroll();
+        this.updateComparisonStickyVisibility();
+    }
+
+    syncComparisonStickyHorizontalScroll() {
+        if (!this.comparisonStickyHeader) {
+            return;
+        }
+        const scrollContainer = this.getComparisonScrollContainer();
+        const inner = this.comparisonStickyHeader.querySelector('.comparison-table-sticky-inner');
+        if (!scrollContainer || !inner) {
+            return;
+        }
+        inner.style.transform = `translateX(${-scrollContainer.scrollLeft}px)`;
+
+        const itemCell = this.comparisonStickyHeader.querySelector('th.comparison-heading--item');
+        if (itemCell) {
+            itemCell.style.transform = `translateX(${scrollContainer.scrollLeft}px)`;
+        }
+    }
+
+    updateComparisonStickyVisibility() {
+        if (!this.comparisonStickyHeader) {
+            return;
+        }
+        const matrix = this.getComparisonMatrix();
+        const table = matrix ? matrix.querySelector('#comparison-table') : null;
+        if (!matrix || !table) {
+            this.comparisonStickyHeader.classList.remove('is-visible');
+            this.comparisonStickyHeader.style.display = 'none';
+            return;
+        }
+
+        const containerRect = matrix.getBoundingClientRect();
+        this.comparisonStickyHeader.style.setProperty('--comparison-sticky-left', `${containerRect.left}px`);
+        this.comparisonStickyHeader.style.setProperty('--comparison-sticky-width', `${containerRect.width}px`);
+
+        const offset = this.getComparisonStickyOffset();
+        const tableRect = table.getBoundingClientRect();
+
+        let stickyHeight = this.comparisonStickyHeader.offsetHeight;
+        if (stickyHeight === 0) {
+            const originalDisplay = this.comparisonStickyHeader.style.display;
+            this.comparisonStickyHeader.style.display = 'block';
+            stickyHeight = this.comparisonStickyHeader.offsetHeight || 0;
+            this.comparisonStickyHeader.style.display = originalDisplay;
+        }
+
+        const shouldShow = tableRect.top <= offset && tableRect.bottom > offset + stickyHeight;
+        const isCurrentlyVisible = this.comparisonStickyHeader.classList.contains('is-visible');
+
+        if (shouldShow && !isCurrentlyVisible) {
+            this.comparisonStickyHeader.classList.remove('is-hiding');
+            this.comparisonStickyHeader.style.display = 'block';
+            void this.comparisonStickyHeader.offsetHeight;
+            this.comparisonStickyHeader.classList.add('is-visible');
+        } else if (!shouldShow && isCurrentlyVisible) {
+            const isHidingFromTop = tableRect.top > offset;
+            const isHidingFromBottom = tableRect.bottom <= offset + stickyHeight;
+
+            this.comparisonStickyHeader.classList.remove('is-visible');
+
+            if (isHidingFromBottom) {
+                void this.comparisonStickyHeader.offsetHeight;
+                this.comparisonStickyHeader.classList.add('is-hiding');
+
+                setTimeout(() => {
+                    if (!this.comparisonStickyHeader || this.comparisonStickyHeader.classList.contains('is-visible')) {
+                        return;
+                    }
+                    this.comparisonStickyHeader.style.display = 'none';
+                    this.comparisonStickyHeader.classList.remove('is-hiding');
+                }, 300);
+            } else if (isHidingFromTop) {
+                this.comparisonStickyHeader.style.display = 'none';
+                this.comparisonStickyHeader.classList.remove('is-hiding');
+            } else {
+                this.comparisonStickyHeader.style.display = 'none';
+                this.comparisonStickyHeader.classList.remove('is-hiding');
+            }
+        }
+    }
+
+    handleComparisonStickyScroll() {
+        this.updateComparisonStickyVisibility();
+        this.syncComparisonStickyHorizontalScroll();
+    }
+
+    updateComparisonStickyHeaderAfterRender() {
+        if (!this.isComparisonLayoutB()) {
+            this.teardownComparisonStickyHeader();
+            return;
+        }
+
+        const matrix = this.getComparisonMatrix();
+        if (!matrix) {
+            this.teardownComparisonStickyHeader();
+            return;
+        }
+
+        this.ensureComparisonStickyHeader(matrix);
+        this.refreshComparisonStickyMeasurements();
+    }
+
+    teardownComparisonStickyHeader() {
+        if (!this.comparisonStickyHeader) {
+            return;
+        }
+
+        if (this.comparisonStickyScrollContainer && this.boundMatrixScrollHandler) {
+            this.comparisonStickyScrollContainer.removeEventListener('scroll', this.boundMatrixScrollHandler);
+        }
+        if (this.boundStickyScrollHandler) {
+            window.removeEventListener('scroll', this.boundStickyScrollHandler);
+        }
+        if (this.boundStickyResizeHandler) {
+            window.removeEventListener('resize', this.boundStickyResizeHandler);
+        }
+
+        this.comparisonStickyHeader.remove();
+        this.comparisonStickyHeader = null;
+        this.comparisonStickyScrollContainer = null;
+        this.boundMatrixScrollHandler = null;
+        this.boundStickyScrollHandler = null;
+        this.boundStickyResizeHandler = null;
     }
 
     updateLeadSection() {
@@ -2431,7 +2708,7 @@ class RankingApp {
                     td.innerHTML = `
                         <div class="classic-cta">
                             <a class="link_btn" href="${this.urlHandler.getClinicUrlWithRegionId(clinic.id, clinic.rank || rankNum)}" target="_blank" rel="noopener">公式サイト &gt;</a><br>
-                            <a class="detail_btn detail-scroll-link" href="#clinic${rankNum}" data-rank="${rankNum}">詳細を見る</a>
+                            <button type="button" class="detail_btn detail-scroll-link" data-rank="${rankNum}">詳細を見る</button>
                         </div>
                     `;
                 } else if (field.startsWith('comparison')) {
@@ -3373,7 +3650,7 @@ class RankingApp {
                     cell.innerHTML = `
                         <div class="comparison-cta">
                             <a class="link_btn" href="${officialLink}" target="_blank" rel="noopener">公式サイト &gt;</a>
-                            <a class="detail_btn detail-scroll-link" href="#clinic${rankNum}" data-rank="${rankNum}">詳細を見る</a>
+                            <button type="button" class="detail_btn detail-scroll-link" data-rank="${rankNum}">詳細を見る</button>
                         </div>
                     `;
                 } else {
@@ -3409,6 +3686,7 @@ class RankingApp {
         this.setupComparisonSwipe();
 
         this.initializeStarRatings();
+        this.updateComparisonStickyHeaderAfterRender();
     }
 
     applyComparisonColumnVisibility() {
@@ -3482,6 +3760,10 @@ class RankingApp {
             totalSlides,
             clinicCount,
         });
+
+        if (this.isComparisonLayoutB()) {
+            this.updateComparisonStickyHeaderAfterRender();
+        }
     }
 
     manageComparisonMobileControls({ isMobile, totalSlides, clinicCount }) {
@@ -3882,7 +4164,7 @@ class RankingApp {
         const achievementText = document.getElementById('first-choice-achievement-text');
         if (achievementText) {
             const achievement = window.dataManager.getClinicText(clinicCode, 'INFORMATIONサブテキスト', '');
-            achievementText.textContent = achievement;
+            achievementText.innerHTML = window.dataManager.processDecoTags(achievement);
         }
         
         // CTAテキストを更新
@@ -3969,7 +4251,7 @@ class RankingApp {
                 <td>
                     <div class="cta-cell">
                         <a href="${this.urlHandler.getClinicUrlWithRegionId(clinic.id, clinic.rank)}" class="cta-button" target="_blank" rel="noopener">公式サイト</a>
-                        <a href="#clinic${clinic.rank}" class="cta-link detail-scroll-link" data-rank="${clinic.rank}">詳細を見る</a>
+                        <button type="button" class="cta-link detail-scroll-link" data-rank="${clinic.rank}">詳細を見る</button>
                     </div>
                 </td>
             `;
@@ -4002,7 +4284,7 @@ class RankingApp {
                 <td>
                     <div class="cta-cell">
                         <a href="${this.urlHandler.getClinicUrlWithRegionId(clinic.id, clinic.rank)}" class="cta-button" target="_blank" rel="noopener">公式サイト</a>
-                        <a href="#clinic${clinic.rank}" class="cta-link detail-scroll-link" data-rank="${clinic.rank}">詳細を見る</a>
+                        <button type="button" class="cta-link detail-scroll-link" data-rank="${clinic.rank}">詳細を見る</button>
                     </div>
                 </td>
             `;
@@ -4035,7 +4317,7 @@ class RankingApp {
                 <td>
                     <div class="cta-cell">
                         <a href="${this.urlHandler.getClinicUrlWithRegionId(clinic.id, clinic.rank)}" class="cta-button" target="_blank" rel="noopener">公式サイト</a>
-                        <a href="#clinic${clinic.rank}" class="cta-link detail-scroll-link" data-rank="${clinic.rank}">詳細を見る</a>
+                        <button type="button" class="cta-link detail-scroll-link" data-rank="${clinic.rank}">詳細を見る</button>
                     </div>
                 </td>
             `;
@@ -4095,6 +4377,7 @@ class RankingApp {
                     link.addEventListener('click', (e) => {
                         e.preventDefault();
                         e.stopPropagation();
+                        e.stopImmediatePropagation();
                         let rank = parseInt(link.getAttribute('data-rank'));
                         if (!rank || Number.isNaN(rank)) {
                             const href = link.getAttribute('href') || '';
@@ -4104,6 +4387,7 @@ class RankingApp {
                         if (rank && !Number.isNaN(rank)) {
                             openClinicDetailModal(rank);
                         }
+                        return false;
                     });
                 }
             });
@@ -4132,6 +4416,8 @@ class RankingApp {
             staticLinks.forEach((link, index) => {
                 link.addEventListener('click', (e) => {
                     e.preventDefault();
+                    e.stopPropagation();
+                    e.stopImmediatePropagation();
                     let rank = parseInt(link.getAttribute('data-rank'));
                     if (!rank || Number.isNaN(rank)) {
                         const href = link.getAttribute('href') || '';
@@ -4141,6 +4427,7 @@ class RankingApp {
                     if (rank && !Number.isNaN(rank)) {
                         openClinicDetailModal(rank);
                     }
+                    return false;
                 });
             });
             
@@ -4601,7 +4888,7 @@ class RankingApp {
                             
                             const campaignHeader = this.dataManager.getClinicText(clinicCode, 'キャンペーンヘッダー', 'INFORMATION!');
                             const campaignDescription = this.dataManager.getClinicText(clinicCode, 'INFORMATIONキャンペーンテキスト', '');
-                            const campaignMicrocopy = this.dataManager.getClinicText(clinicCode, 'INFORMATIONサブテキスト', '');
+                            const campaignMicrocopy = this.dataManager.processDecoTags(this.dataManager.getClinicText(clinicCode, 'INFORMATIONサブテキスト', ''));
                             const ctaText = this.dataManager.getClinicText(clinicCode, 'CTAボタンテキスト', `キャンペーンの詳細を見る`);
                             
                             const logoFolder = clinicCode === 'kireiline' ? 'kireiline' : clinicCode;
@@ -4822,6 +5109,8 @@ class RankingApp {
             const togglePlayback = () => {
                 if (video.paused || video.ended) {
                     playSafely();
+                    // 再生開始時に即座に状態を更新
+                    setTimeout(() => updateState(), 100);
                 } else {
                     video.pause();
                 }
@@ -4848,6 +5137,7 @@ class RankingApp {
                 showSection();
                 updateState();
             });
+            video.addEventListener('playing', updateState); // 実際に再生が開始されたとき
             video.addEventListener('pause', updateState);
             video.addEventListener('ended', updateState);
             video.addEventListener('error', markMissing, { once: true });
@@ -5806,11 +6096,16 @@ function openClinicDetailModal(rank) {
     document.body.insertAdjacentHTML('beforeend', overlayHtml + modalHtml);
     const overlay = document.querySelector('.clinic-detail-overlay');
     const modal = document.querySelector('.clinic-detail-modal');
-    // バナースライダーの多重初期化ガード属性を除去して再初期化可能にする
+    // バナースライダーと動画の多重初期化ガード属性を除去して再初期化可能にする
     if (modal) {
         const modalSliders = modal.querySelectorAll('.banner-slider');
         modalSliders.forEach((s) => {
             s.removeAttribute('data-initialized');
+        });
+        // 動画の初期化フラグもリセット
+        const videoEmbeds = modal.querySelectorAll('.procedure-video-embed');
+        videoEmbeds.forEach((embed) => {
+            delete embed.dataset.videoInitialized;
         });
     }
     requestAnimationFrame(() => {
