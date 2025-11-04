@@ -240,7 +240,7 @@
                                 <img src="images/Tips1.webp" alt="脂肪冷却の特徴" loading="lazy" decoding="async">
                             </figure>
                             <p>
-                                専門スタッフが肌質や脂肪のつき方を確認しながら、<span class="tips-highlight">脂肪を冷却し脂肪細胞だけを凍結</span>。施術中の痛みはほとんどなく、ダウンタイムも短いのが魅力です。<br><br>実際の症例では1ヶ月で体重が48.1kgから43kgへとマイナス5.1kg※となり、ウエストも-8.7㎝！<br><br>（※エミナルクリニックの提供。効果には個人差があり、すべての方に同様の結果を保証するものではありません）
+                                専門スタッフが肌質や脂肪のつき方を確認しながら、<span class="tips-highlight">脂肪を冷却し脂肪細胞だけを凍結</span>。施術中の痛みはほとんどなく<span class="info-icon-wrapper"><span class="info-icon" data-anno="※個人の感想です">i</span></span>、ダウンタイムも短いのが魅力です。<br><br>実際の症例では6ヶ月で体重が61.6kgから46.5kgへとマイナス15.1kg※となり、体脂肪率も-14.0％減！<br><br>（※DIOクリニックの提供。効果には個人差があり、すべての方に同様の結果を保証するものではありません）
                             </p>
                             <figure class="tips-ba-figure">
                                 <img src="images/tips-ba.webp" alt="脂肪冷却のビフォーアフター" loading="lazy" decoding="async">
@@ -439,7 +439,6 @@ text-align: center;
                     </div>
                     
                     <div class="cv_box_img">
-                        <div class="cta-microcopy" aria-hidden="true"><span class="cta-microcopy-label">タイムセール</span></div>
                         <span id="first-choice-achievement-text"></span>
                         <p class="btn btn_second_primary" style="margin-top: 10px;">
                             <a id="first-choice-cta-link" href="https://www.xn--ecki4eoz3204ct89aepry34c.com/draft/go/dio/?max_scroll=100&amp;region_id=013" target="_blank" rel="noopener">
@@ -2235,6 +2234,70 @@ text-align: center;
             });
         })();
     </script>
-    
+
+    <!-- 注釈モーダル -->
+    <div id="anno-modal" class="anno-modal">
+        <div class="anno-modal-content">
+            <span class="anno-modal-close">&times;</span>
+            <div class="anno-modal-body"></div>
+        </div>
+    </div>
+
+    <!-- 注釈モーダルのスクリプト -->
+    <script>
+        (function() {
+            const modal = document.getElementById('anno-modal');
+            const modalBody = modal.querySelector('.anno-modal-body');
+            const closeBtn = modal.querySelector('.anno-modal-close');
+
+            // インフォアイコンのクリックイベント（イベント委譲）
+            document.addEventListener('click', function(e) {
+                const infoIcon = e.target.closest('.info-icon');
+                if (infoIcon) {
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    // data-anno属性から注釈内容を取得
+                    const annoContent = infoIcon.getAttribute('data-anno');
+                    if (annoContent) {
+                        // HTMLエンティティをデコード
+                        const decodedContent = annoContent
+                            .replace(/&lt;/g, '<')
+                            .replace(/&gt;/g, '>')
+                            .replace(/&quot;/g, '"')
+                            .replace(/&#39;/g, "'")
+                            .replace(/&amp;/g, '&');
+
+                        modalBody.textContent = decodedContent;
+                        modal.style.display = 'block';
+                        document.body.style.overflow = 'hidden'; // スクロール防止
+                    }
+                }
+            });
+
+            // 閉じるボタンのクリックイベント
+            closeBtn.addEventListener('click', function() {
+                modal.style.display = 'none';
+                document.body.style.overflow = ''; // スクロール復元
+            });
+
+            // モーダル背景のクリックで閉じる
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                    document.body.style.overflow = ''; // スクロール復元
+                }
+            });
+
+            // ESCキーで閉じる
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && modal.style.display === 'block') {
+                    modal.style.display = 'none';
+                    document.body.style.overflow = ''; // スクロール復元
+                }
+            });
+        })();
+    </script>
+
 </body>
 </html>
