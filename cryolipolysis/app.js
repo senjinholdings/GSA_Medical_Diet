@@ -278,12 +278,34 @@ class DisplayManager {
         this.errorMessage = document.getElementById('error-message');
         this.errorText = document.getElementById('error-text');
         this.heroRegionBadge = document.getElementById('hero-region-badge');
-        
+
         // ハンバーガーメニュー要素
         this.hamburgerMenu = document.getElementById('hamburger-menu');
         this.sidebarMenu = document.getElementById('sidebar-menu');
         this.sidebarOverlay = document.getElementById('sidebar-overlay');
         this.closeSidebar = document.getElementById('close-sidebar');
+
+        // 比較表関連のプロパティ
+        this.comparisonLayout = 'B';
+        this.preparedComparisonLayout = null;
+        this.currentComparisonClinics = [];
+        this.activeComparisonTab = 'tab1';
+        this.classicTabInitialized = false;
+        this.classicTabFieldMappings = {
+            tab1: ['クリニック名', 'comparison1', 'comparison2', 'comparison3', '公式サイト'],
+            tab2: ['クリニック名', 'comparison4', 'comparison5', 'comparison6', '公式サイト'],
+            tab3: ['クリニック名', 'comparison7', 'comparison8', 'comparison9', '公式サイト']
+        };
+        this.boundClinicColumnVisibilityHandler = null;
+        this.mobileComparisonColumnsPerSlide = 3;
+        this.mobileComparisonSlideIndex = 0;
+        this.comparisonMobileControls = null;
+        this.comparisonSwipeState = null;
+        this.comparisonStickyHeader = null;
+        this.boundStickyScrollHandler = null;
+        this.boundStickyResizeHandler = null;
+        this.boundMatrixScrollHandler = null;
+        this.currentComparisonClinicCount = 0;
     }
 
     // 地域セレクターを更新（検索用、現在の地域選択は反映しない）
@@ -613,6 +635,295 @@ class DisplayManager {
             li.appendChild(link);
             footerClinicsContainer.appendChild(li);
         });
+    }
+
+    // 比較表のレイアウトがAかどうか判定
+    isComparisonLayoutA() {
+        return this.comparisonLayout === 'A';
+    }
+
+    // 比較表のレイアウトがBかどうか判定
+    isComparisonLayoutB() {
+        return this.comparisonLayout !== 'A';
+    }
+
+    // 比較表のDOM構造を準備（レイアウトA/Bの切り替え）
+    prepareComparisonDom() {
+        const container = document.getElementById('comparison-table-container');
+        const scrollHint = document.querySelector('.comparison-scroll-hint');
+        if (!container) {
+            return;
+        }
+
+        const layout = this.comparisonLayout === 'A' ? 'A' : 'B';
+        if (layout === 'A') {
+            if (scrollHint) {
+                scrollHint.style.display = 'none';
+            }
+
+            if (this.preparedComparisonLayout === 'A') {
+                return;
+            }
+
+            const disclaimer = container.querySelector('.disclaimer-accordion');
+            if (disclaimer) {
+                container.removeChild(disclaimer);
+            }
+
+            container.classList.remove('comparison-table--matrix');
+            container.classList.add('comparison-table');
+            container.classList.add('comparison-table--classic');
+            container.dataset.activeTab = this.activeComparisonTab || 'tab1';
+
+            container.innerHTML = `
+                <div class="comparison-tab-menu">
+                    <div class="comparison-tab-menu-item" data-tab="tab1">総合</div>
+                    <div class="comparison-tab-menu-item" data-tab="tab2">施術内容</div>
+                    <div class="comparison-tab-menu-item" data-tab="tab3">サービス</div>
+                </div>
+                <table id="comparison-table">
+                    <thead>
+                        <tr id="comparison-header-row"></tr>
+                    </thead>
+                    <tbody id="comparison-tbody"></tbody>
+                </table>
+            `;
+
+            const activeTab = this.activeComparisonTab || 'tab1';
+            container.querySelectorAll('.comparison-tab-menu-item').forEach((item) => {
+                const tabId = item.getAttribute('data-tab') || 'tab1';
+                if (tabId === activeTab) {
+                    item.classList.add('tab-active');
+                }
+            });
+
+            if (disclaimer) {
+                container.appendChild(disclaimer);
+            }
+
+            this.classicTabInitialized = false;
+            this.preparedComparisonLayout = 'A';
+            return;
+        }
+
+        if (scrollHint) {
+            scrollHint.style.removeProperty('display');
+        }
+
+        if (this.preparedComparisonLayout === 'B') {
+            return;
+        }
+
+        const disclaimer = container.querySelector('.disclaimer-accordion');
+        if (disclaimer) {
+            container.removeChild(disclaimer);
+        }
+
+        container.classList.add('comparison-table--matrix');
+        container.classList.remove('comparison-table--classic');
+
+        container.innerHTML = `
+            <div class="comparison-table-wrapper">
+                <table id="comparison-table">
+                    <thead>
+                        <tr id="comparison-header-row"></tr>
+                    </thead>
+                    <tbody id="comparison-tbody"></tbody>
+                </table>
+            </div>
+        `;
+
+        if (disclaimer) {
+            container.appendChild(disclaimer);
+        }
+
+        this.classicTabInitialized = false;
+        this.preparedComparisonLayout = 'B';
+    }
+
+    // クラシックレイアウトのタブを設定
+    setupComparisonTabsClassic() {
+        if (!this.isComparisonLayoutA()) {
+            return;
+        }
+
+        const container = document.getElementById('comparison-table-container');
+        if (!container) {
+            return;
+        }
+
+        const tabMenu = container.querySelector('.comparison-tab-menu');
+        if (!tabMenu) {
+            return;
+        }
+
+        if (!this.classicTabInitialized) {
+            tabMenu.querySelectorAll('.comparison-tab-menu-item').forEach((item) => {
+                const tabId = item.getAttribute('data-tab') || 'tab1';
+                item.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    if (this.activeComparisonTab === tabId) {
+                        return;
+                    }
+                    this.activeComparisonTab = tabId;
+                    this.updateClassicTabActiveState();
+                    this.renderClassicComparisonForTab(tabId);
+                });
+            });
+            this.classicTabInitialized = true;
+        }
+
+        this.updateClassicTabActiveState();
+    }
+
+    // タブのアクティブ状態を更新
+    updateClassicTabActiveState() {
+        const activeTab = this.activeComparisonTab || 'tab1';
+        const tabItems = document.querySelectorAll('.comparison-tab-menu-item');
+        tabItems.forEach((item) => {
+            const tabId = item.getAttribute('data-tab') || 'tab1';
+            if (tabId === activeTab) {
+                item.classList.add('tab-active');
+            } else {
+                item.classList.remove('tab-active');
+            }
+        });
+    }
+
+    // 指定されたタブのクラシック形式比較表をレンダリング
+    renderClassicComparisonForTab(tabId) {
+        if (!this.isComparisonLayoutA()) {
+            return;
+        }
+        const targetTab = tabId || this.activeComparisonTab || 'tab1';
+        this.activeComparisonTab = targetTab;
+        const fieldNames = this.classicTabFieldMappings[targetTab] || this.classicTabFieldMappings.tab1;
+        this.updateClassicTabActiveState();
+        this.updateClassicHeaders(fieldNames);
+        const container = document.getElementById('comparison-table-container');
+        if (container) {
+            container.classList.remove('ranking-loading');
+            container.classList.add('ranking-loaded');
+        }
+        this.generateComparisonTableClassic(this.currentComparisonClinics || [], fieldNames);
+    }
+
+    // クラシック形式のヘッダーを更新
+    updateClassicHeaders(fieldNames) {
+        const headerRow = document.getElementById('comparison-header-row');
+        if (!headerRow) return;
+        const headerConfig = this.dataManager.clinicTexts && this.dataManager.clinicTexts['比較表ヘッダー設定'] ? this.dataManager.clinicTexts['比較表ヘッダー設定'] : {};
+        headerRow.innerHTML = '';
+        const defaultLabels = {
+            comparison1: '総合評価',
+            comparison2: '費用',
+            comparison3: '特徴',
+            comparison4: '施術内容',
+            comparison5: '対応機器',
+            comparison6: 'サポート',
+            comparison7: '実績',
+            comparison8: 'サービス',
+            comparison9: 'サポート'
+        };
+
+        fieldNames.forEach((field) => {
+            const th = document.createElement('th');
+            if (field === 'クリニック名') {
+                th.textContent = 'クリニック';
+            } else if (field === '公式サイト') {
+                th.textContent = '公式サイト';
+            } else if (field.startsWith('comparison')) {
+                const headerKey = `比較表ヘッダー${field.replace('comparison', '')}`;
+                th.textContent = headerConfig[headerKey] || defaultLabels[field] || '';
+            } else {
+                th.textContent = field;
+            }
+            headerRow.appendChild(th);
+        });
+    }
+
+    // クラシック形式の比較表を生成
+    generateComparisonTableClassic(clinics, fieldNames) {
+        const tbody = document.getElementById('comparison-tbody');
+        if (!tbody) return;
+        tbody.innerHTML = '';
+
+        const headerConfig = this.dataManager.clinicTexts && this.dataManager.clinicTexts['比較表ヘッダー設定'] ? this.dataManager.clinicTexts['比較表ヘッダー設定'] : {};
+        const activeFields = fieldNames || this.classicTabFieldMappings[this.activeComparisonTab] || this.classicTabFieldMappings.tab1;
+
+        clinics.forEach((clinic, index) => {
+            const tr = document.createElement('tr');
+            const rankNum = clinic.rank || index + 1;
+            if (rankNum === 1) {
+                tr.classList.add('comparison-classic-rank-1');
+            } else if (rankNum === 3 || rankNum === 5) {
+                tr.classList.add('comparison-classic-rank-alt');
+            }
+
+            const clinicCode = clinic.code;
+            const regionId = this.currentRegionId || '000';
+            const redirectUrl = `./redirect.html#clinic_id=${clinic.id}&rank=${rankNum}&region_id=${regionId}`;
+            const clinicLinkAttrs = `href="${redirectUrl}" data-handle-clinic-click="true" data-clinic-id="${clinic.id}" data-rank="${rankNum}" data-region-id="${regionId}" data-cta-type="official" data-click-section="comparison_table" target="_blank" rel="noopener"`;
+
+            activeFields.forEach((field) => {
+                const td = document.createElement('td');
+                td.classList.add('comparison-classic-cell');
+
+                if (field === 'クリニック名') {
+                    td.classList.add('ranking-table_td1');
+                    const logoPath = this.dataManager.getClinicText(clinicCode, 'meta13', '') || this.dataManager.getClinicText(clinicCode, 'クリニックロゴ画像パス', '') || `/common_data/images/clinics/${clinicCode}/${clinicCode}-logo.webp`;
+                    td.innerHTML = `
+                        <img src="${logoPath}" alt="${clinic.name}" width="80" height="80">
+                        <a ${clinicLinkAttrs} class="clinic-link" style="cursor: pointer;">${clinic.name}</a>
+                    `;
+                } else if (field === 'comparison1') {
+                    const ratingRaw = this.dataManager.getClinicText(clinicCode, 'comparison1', '4.5');
+                    const rating = this.formatRatingDisplay(ratingRaw);
+                    td.innerHTML = `
+                        <span class="ranking_evaluation">${rating.display}</span><br>
+                        <span class="star5_rating" data-rate="${rating.dataRate}" style="--star-fill: ${rating.starFill}%;"></span>
+                    `;
+                } else if (field === '公式サイト') {
+                    td.innerHTML = `
+                        <div class="classic-cta">
+                            <a class="link_btn" href="${this.urlHandler.getClinicUrlWithRegionId(clinic.id, clinic.rank || rankNum)}" target="_blank" rel="noopener">公式サイト &gt;</a><br>
+                            <button type="button" class="detail_btn detail-scroll-link" data-rank="${rankNum}">詳細を見る</button>
+                        </div>
+                    `;
+                } else if (field.startsWith('comparison')) {
+                    const headerKey = `比較表ヘッダー${field.replace('comparison', '')}`;
+                    const fieldName = headerConfig[headerKey] || field;
+                    const rawValue = this.dataManager.getClinicText(clinicCode, field, '');
+                    const processed = rawValue ? this.dataManager.processDecoTags(rawValue) : '-';
+                    td.innerHTML = processed || '-';
+                    td.setAttribute('data-field-name', fieldName);
+                } else {
+                    const rawValue = this.dataManager.getClinicText(clinicCode, field, '');
+                    const processed = rawValue ? this.dataManager.processDecoTags(rawValue) : '-';
+                    td.innerHTML = processed || '-';
+                }
+
+                tr.appendChild(td);
+            });
+
+            tbody.appendChild(tr);
+        });
+
+        this.initializeStarRatings();
+    }
+
+    // レーティング表示のフォーマット
+    formatRatingDisplay(rawValue, defaultValue = '4.5') {
+        const fallback = defaultValue ?? '4.5';
+        const value = rawValue ?? fallback;
+        const numeric = Number.parseFloat(String(value).replace(',', '.'));
+        const hasValidRating = Number.isFinite(numeric);
+        const clamped = hasValidRating ? Math.min(Math.max(numeric, 0), 5) : 0;
+        const rounded = hasValidRating ? Math.round(clamped * 10) / 10 : 0;
+        const display = hasValidRating ? rounded.toFixed(1) : '-';
+        const starFill = hasValidRating ? ((clamped / 5) * 100).toFixed(2) : '0';
+        const dataRate = hasValidRating ? display : '0';
+        return { hasValidRating, display, starFill, dataRate };
     }
 }
 // データ管理クラス
@@ -2813,16 +3124,16 @@ class RankingApp {
             window.urlHandler = this.urlHandler;
 
             this.updateLeadSection();
-            
+
+            // 比較表のレイアウト設定を取得
             const layoutValue = this.dataManager.getSectionLayout ? this.dataManager.getSectionLayout('比較表セクション', 'B') : 'B';
             if (layoutValue && typeof layoutValue === 'string') {
                 const normalized = layoutValue.trim().toUpperCase();
-                this.comparisonLayout = normalized === 'A' ? 'A' : 'B';
+                this.displayManager.comparisonLayout = normalized === 'A' ? 'A' : 'B';
             } else {
-                this.comparisonLayout = 'B';
+                this.displayManager.comparisonLayout = 'B';
             }
-            this.prepareComparisonDom();
-
+            this.displayManager.prepareComparisonDom();
 
             // 初期地域IDの取得（URLパラメータから取得、なければデフォルト）
             this.currentRegionId = this.urlHandler.getRegionId();
