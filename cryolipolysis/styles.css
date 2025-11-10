@@ -2125,7 +2125,8 @@ body > .container main section {
 
 /* ===== メインコンテンツ ===== */
 main {
-    display: grid;
+    display: flex;
+    flex-direction: column;
     gap: 30px;
     margin-bottom: 40px;
 }
