@@ -2845,8 +2845,20 @@ class RankingApp {
             return;
         }
 
+        // リードセクションの表示設定を確認
         const layoutRaw = this.dataManager.getSectionLayout ? this.dataManager.getSectionLayout('リードセクション', 'A') : 'A';
-        let variant = (layoutRaw || 'A').trim().toUpperCase() === 'B' ? 'B' : 'A';
+        const layoutNormalized = (layoutRaw || 'A').trim().toUpperCase();
+
+        // Noneの場合はリードセクション全体を非表示
+        if (layoutNormalized === 'NONE') {
+            container.style.display = 'none';
+            return;
+        } else {
+            container.style.display = '';
+        }
+
+        // A/Bのバリアント切り替え
+        let variant = layoutNormalized === 'B' ? 'B' : 'A';
 
         const layoutA = container.querySelector('.tips-layout-a');
         const layoutB = container.querySelector('.tips-layout-b');
@@ -2858,6 +2870,37 @@ class RankingApp {
         }
         if (layoutB) {
             layoutB.hidden = variant !== 'B';
+        }
+    }
+
+    updateRankingSection() {
+        if (!this.dataManager) {
+            return;
+        }
+
+        // ランキングセクションの表示設定を確認
+        const rankingLayout = this.dataManager.getSectionLayout ? this.dataManager.getSectionLayout('ランキングセクション', 'A') : 'A';
+        const rankingLayoutNormalized = (rankingLayout || 'A').trim().toUpperCase();
+
+        // ランキングセクションとその関連要素を取得
+        const rankingSection = document.querySelector('.clinic-rankings');
+        const rankingDisclaimersSection = document.getElementById('ranking-disclaimers-section');
+
+        // Noneの場合はランキングセクション全体を非表示
+        if (rankingLayoutNormalized === 'NONE') {
+            if (rankingSection) {
+                rankingSection.style.display = 'none';
+            }
+            if (rankingDisclaimersSection) {
+                rankingDisclaimersSection.style.display = 'none';
+            }
+        } else {
+            if (rankingSection) {
+                rankingSection.style.display = '';
+            }
+            if (rankingDisclaimersSection) {
+                rankingDisclaimersSection.style.display = '';
+            }
         }
     }
 
@@ -3124,6 +3167,7 @@ class RankingApp {
             window.urlHandler = this.urlHandler;
 
             this.updateLeadSection();
+            this.updateRankingSection();
 
             // 比較表のレイアウト設定を取得
             const layoutValue = this.dataManager.getSectionLayout ? this.dataManager.getSectionLayout('比較表セクション', 'B') : 'B';
@@ -3587,6 +3631,7 @@ class RankingApp {
             const isNational = this.isNationalRegion(regionId, regionForDisplay);
 
             this.updateLeadSection();
+            this.updateRankingSection();
             if (!this.boundLeadResizeHandler && typeof window !== 'undefined') {
                 this.boundLeadResizeHandler = () => this.updateLeadSection();
                 window.addEventListener('resize', this.boundLeadResizeHandler);
