@@ -3246,9 +3246,12 @@ class RankingApp {
             const layoutValue = this.dataManager.getSectionLayout ? this.dataManager.getSectionLayout('比較表セクション', 'B') : 'B';
             if (layoutValue && typeof layoutValue === 'string') {
                 const normalized = layoutValue.trim().toUpperCase();
-                this.displayManager.comparisonLayout = normalized === 'A' ? 'A' : 'B';
+                const layout = normalized === 'A' ? 'A' : 'B';
+                this.displayManager.comparisonLayout = layout;
+                this.comparisonLayout = layout; // RankingAppのcomparisonLayoutも設定
             } else {
                 this.displayManager.comparisonLayout = 'B';
+                this.comparisonLayout = 'B'; // RankingAppのcomparisonLayoutも設定
             }
             this.displayManager.prepareComparisonDom();
 
