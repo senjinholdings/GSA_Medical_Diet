@@ -627,6 +627,7 @@ class DataManager {
         this.siteTexts = {}; // サイトテキストデータ（旧）
         this.clinicTexts = {}; // クリニック別テキストデータ
         this.structureConfig = {};
+        this.structureOrder = []; // セクションの表示順序
         // Handle subdirectory paths
         if (window.SITE_CONFIG) {
             this.dataPath = window.SITE_CONFIG.dataPath + '/';
@@ -986,10 +987,12 @@ class DataManager {
         const cacheKey = this.buildCacheKey('structure-config');
         const cached = dataCache.get(cacheKey);
         if (cached && typeof cached === 'object') {
-            this.structureConfig = cached;
+            this.structureConfig = cached.config || cached;
+            this.structureOrder = cached.order || [];
         }
 
         const config = {};
+        const order = [];
         const loadFromPath = async (path) => {
             try {
                 const resp = await fetch(path, { cache: 'reload' });
@@ -1007,6 +1010,7 @@ class DataManager {
                     if (!key) continue;
                     const value = (row[valueIdx >= 0 ? valueIdx : 1] || '').trim();
                     config[key] = value;
+                    order.push(key); // 順序を保持
                 }
                 return true;
             } catch (error) {
@@ -1024,9 +1028,11 @@ class DataManager {
 
         if (Object.keys(config).length > 0) {
             this.structureConfig = config;
-            dataCache.set(cacheKey, config);
+            this.structureOrder = order;
+            dataCache.set(cacheKey, { config, order });
         } else if (!this.structureConfig) {
             this.structureConfig = {};
+            this.structureOrder = [];
         }
     }
 
@@ -2813,6 +2819,12 @@ class RankingApp {
             window.urlHandler = this.urlHandler;
 
             this.updateLeadSection();
+            this.applySectionOrder();
+
+            // コラムセクションの読み込み待機後に再度並び替え実行
+            setTimeout(() => {
+                this.applySectionOrder();
+            }, 500);
             
             const layoutValue = this.dataManager.getSectionLayout ? this.dataManager.getSectionLayout('比較表セクション', 'B') : 'B';
             if (layoutValue && typeof layoutValue === 'string') {
@@ -3194,6 +3206,7 @@ class RankingApp {
             this.updateClinicDetails(allClinics, ranking, normalizedRegionId);
 
             await this.runPostRenderTasks();
+            this.applySectionOrder();
             this.revealContent();
 
             // エラーメッセージを隠す
@@ -3208,6 +3221,67 @@ class RankingApp {
             }
             this.revealContent();
         }
+    }
+
+    applySectionOrder() {
+        if (!this.dataManager || !this.dataManager.structureOrder || this.dataManager.structureOrder.length === 0) {
+            return;
+        }
+
+        // セクション名とDOM要素のマッピング
+        const sectionMapping = {
+            'ヘッダーセクション': 'header',
+            'MVセクション': '.hero-section',
+            'ランキングセクション': '.clinic-rankings, #ranking-disclaimers-section',
+            'リードセクション': '.tips-container',
+            '比較表セクション': '.comparison-section',
+            '案件詳細セクション': '.clinic-details-section',
+            'コラムセクション': '#medical-columns-root',
+            'おすすめセクション': '#first-choice-recommendation-section',
+            'フッターセクション': 'footer'
+        };
+
+        const mainElement = document.querySelector('main');
+        const bodyElement = document.body;
+        if (!mainElement) {
+            return;
+        }
+
+        // mainをflexboxに設定
+        mainElement.style.display = 'flex';
+        mainElement.style.flexDirection = 'column';
+
+        // bodyもflexboxに設定（main外の要素も順序制御するため）
+        if (bodyElement) {
+            bodyElement.style.display = 'flex';
+            bodyElement.style.flexDirection = 'column';
+        }
+
+        // 各セクションにorderを設定
+        this.dataManager.structureOrder.forEach((sectionName, index) => {
+            const selector = sectionMapping[sectionName];
+            if (!selector) {
+                return;
+            }
+
+            // 複数のセレクタに対応（カンマ区切り）
+            const selectors = selector.split(',').map(s => s.trim());
+            selectors.forEach(sel => {
+                const elements = document.querySelectorAll(sel);
+                elements.forEach(element => {
+                    // main直下の要素、body直下の要素、またはheader/footerにorderを設定
+                    if (element.parentElement === mainElement ||
+                        element.parentElement === bodyElement ||
+                        sel === 'header' ||
+                        sel === 'footer') {
+                        element.style.order = index;
+                    } else if (element.parentElement && element.parentElement.parentElement === mainElement) {
+                        // 1階層下の要素の場合、親にorderを設定
+                        element.parentElement.style.order = index;
+                    }
+                });
+            });
+        });
     }
 
     async runPostRenderTasks() {

@@ -1636,12 +1636,17 @@ text-align: center;
                     return true;
                 }
 
-                // ランキングに含まれるクリニックIDを取得
-                const rankedClinicIds = Object.values(ranking.ranks).filter(id => id && id !== '-');
+                // ランキング順に表示（no1, no2, no3...の順番でソート）
+                const sortedRanks = Object.entries(ranking.ranks).sort((a, b) => {
+                    const numA = parseInt(a[0].replace('no', ''));
+                    const numB = parseInt(b[0].replace('no', ''));
+                    return numA - numB;
+                });
 
-                // ランキングに含まれるクリニックのPR値のみを収集
+                // ランキングに含まれるクリニックのPR値のみを収集（順位順に）
                 const items = [];
-                rankedClinicIds.forEach(clinicId => {
+                sortedRanks.forEach(([position, clinicId]) => {
+                    if (!clinicId || clinicId === '-') return;
                     const clinic = dm.clinics.find(c => c.id === clinicId);
                     if (clinic) {
                         const val = dm.getClinicText(clinic.code || clinic.name, 'pr', '').trim();
