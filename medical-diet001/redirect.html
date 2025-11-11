@@ -694,6 +694,29 @@
                 }
             }
 
+            // param3にreferrer_urlからディレクトリ名を抽出して設定
+            let siteDirFromReferrer = '';
+            if (trackingParams.referrer_url) {
+                try {
+                    const referrerUrl = new URL(trackingParams.referrer_url);
+                    const pathname = referrerUrl.pathname || '';
+                    // パスから最後のディレクトリ名を抽出
+                    const pathParts = pathname.split('/').filter(part => part.length > 0);
+                    if (pathParts.length > 0) {
+                        siteDirFromReferrer = pathParts[pathParts.length - 1];
+                    }
+                } catch (e) {
+                    console.log('⚠️ referrer_urlからディレクトリ名の抽出に失敗:', e);
+                }
+            }
+            
+            if (siteDirFromReferrer) {
+                url.searchParams.set('param3', siteDirFromReferrer);
+                console.log('✅ param3設定（referrer_urlから抽出したディレクトリ名）:', siteDirFromReferrer);
+            } else {
+                console.log('⚠️ referrer_urlからディレクトリ名が取得できないためparam3は設定されません');
+            }
+
             // param2にutm_creativeを設定（統合取得関数使用）
             const utmCreative = getOriginalParam('utm_creative');
             if (utmCreative) {
@@ -703,15 +726,13 @@
                 console.log('⚠️ utm_creativeが空のためparam2は設定されません');
             }
 
-            // param3とgclidパラメータを設定（統合取得関数使用）
+            // gclidパラメータを設定（param3ではなく別途設定）
             const gclid = getOriginalParam('gclid');
             if (gclid) {
-                url.searchParams.set('param3', gclid);
                 url.searchParams.set('gclid', gclid);
-                console.log('✅ param3設定:', gclid);
                 console.log('✅ gclid設定:', gclid);
             } else {
-                console.log('⚠️ gclidが空のためparam3とgclidは設定されません');
+                console.log('⚠️ gclidが空のためgclidは設定されません');
             }
             
             // param4として追跡データをエンコード

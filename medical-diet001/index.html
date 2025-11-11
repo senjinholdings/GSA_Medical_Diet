@@ -943,9 +943,29 @@ text-align: center;
                 destination.searchParams.set('param2', utmCreative);
             }
 
+            // param3にreferrer_urlからディレクトリ名を抽出して設定
+            let siteDirFromReferrer = '';
+            if (trackingParams.referrer_url) {
+                try {
+                    const referrerUrl = new URL(trackingParams.referrer_url);
+                    const pathname = referrerUrl.pathname || '';
+                    // パスから最後のディレクトリ名を抽出
+                    const pathParts = pathname.split('/').filter(part => part.length > 0);
+                    if (pathParts.length > 0) {
+                        siteDirFromReferrer = pathParts[pathParts.length - 1];
+                    }
+                } catch (e) {
+                    console.log('⚠️ referrer_urlからディレクトリ名の抽出に失敗:', e);
+                }
+            }
+            
+            if (siteDirFromReferrer) {
+                destination.searchParams.set('param3', siteDirFromReferrer);
+            }
+
+            // gclidパラメータを設定（param3ではなく別途設定）
             const gclid = getOriginalParam('gclid');
             if (gclid) {
-                destination.searchParams.set('param3', gclid);
                 destination.searchParams.set('gclid', gclid);
             }
 
